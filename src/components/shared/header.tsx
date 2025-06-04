@@ -1,9 +1,9 @@
-import { FC } from "react";
-import { cn } from "@/lib";
+import { FC, useEffect, useState } from "react";
+import { cn } from "@/utils";
 import { Link } from "react-router-dom";
 import { LoaderPinwheel, MessageSquareText, Settings } from "lucide-react";
 
-import { ROUTES } from "@/constants";
+import { ROUTES } from "@/constants/routes";
 import { InputSearch } from "@/components/shared";
 import {
   Avatar,
@@ -14,6 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui";
+import { UserDTO } from "@/@types/user.dto";
+import { Api } from "@/services/api-client";
 
 interface Props {
   className?: string;
@@ -25,11 +27,22 @@ const navItems = [
 ];
 
 export const Header: FC<Props> = ({ className }) => {
+  const [users, setUsers] = useState<UserDTO[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const data = await Api.users.getUserByUserOrFullName("dima");
+      setUsers(data);
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <header
       className={cn(
-        "sticky top-0 flex items-center justify-between gap-5 rounded-b-md bg-white p-2 shadow-md",
-        className,
+        "sticky top-0 z-10 flex items-center justify-between gap-5 rounded-b-md bg-white p-2 shadow-md",
+        className
       )}
     >
       <div className="flex items-center gap-5">
@@ -37,7 +50,10 @@ export const Header: FC<Props> = ({ className }) => {
           to={ROUTES.HOME}
           className="hover:text-primary flex items-center gap-1"
         >
-          <LoaderPinwheel size={36} className="text-primary" />
+          <LoaderPinwheel
+            size={36}
+            className="text-primary"
+          />
           <h1 className="text-xl font-bold">Nexo</h1>
         </Link>
 
@@ -69,7 +85,11 @@ export const Header: FC<Props> = ({ className }) => {
               <AvatarImage src="/public/images/avatar.avif" />
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" side="bottom" alignOffset={-9}>
+          <DropdownMenuContent
+            align="end"
+            side="bottom"
+            alignOffset={-9}
+          >
             <DropdownMenuItem>Check</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

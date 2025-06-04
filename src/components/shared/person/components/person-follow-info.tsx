@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { cn } from "@/lib";
+import { cn } from "@/utils";
 import { Separator } from "@/components/ui";
 
 interface Props {

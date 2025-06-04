@@ -1,11 +1,10 @@
-import { FC } from "react";
-import { cn } from "@/lib";
+import { FC, HTMLAttributes } from "react";
+import { cn } from "@/utils";
 import { Button, Input } from "@/components/ui";
 import { Search, X } from "lucide-react";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLInputElement> {
   onButtonClearClick?: () => void;
-  className?: string;
 }
 
 export const InputSearch: FC<Props> = ({ onButtonClearClick, className }) => {
@@ -26,7 +25,10 @@ export const InputSearch: FC<Props> = ({ onButtonClearClick, className }) => {
           variant="link"
           type="button"
         >
-          <X size={16} className="text-gray-600" />
+          <X
+            size={16}
+            className="text-gray-600"
+          />
         </Button>
       )}
     </div>

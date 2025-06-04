@@ -1,9 +1,7 @@
-import { FC, PropsWithChildren } from "react";
-import { cn } from "@/lib";
+import { FC, HTMLAttributes, PropsWithChildren } from "react";
+import { cn } from "@/utils";
 
-interface Props {
-  className?: string;
-}
+interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 export const Card: FC<PropsWithChildren<Props>> = ({ children, className }) => {
   return (

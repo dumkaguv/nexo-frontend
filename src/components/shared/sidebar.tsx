@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { cn } from "@/lib";
+import { cn } from "@/utils";
 import { Link } from "react-router-dom";
 import { MessageSquareText, Newspaper } from "lucide-react";
 

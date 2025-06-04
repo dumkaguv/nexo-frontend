@@ -1,10 +1,9 @@
-import { FC, PropsWithChildren } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { AppRouter } from "@/routes/app-router";
 
-export const Providers: FC<PropsWithChildren> = ({ children }) => {
+export const Providers = () => {
   return (
     <>
-      <Router>{children}</Router>
+      <AppRouter />
     </>
   );
 };

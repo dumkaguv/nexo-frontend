@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from "react";
-import { cn } from "@/lib";
+import { cn } from "@/utils";
 
 interface Props {
   nickname?: string;
