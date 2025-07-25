@@ -1,15 +1,15 @@
-import { FC, PropsWithChildren } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/utils";
 
-interface Props {
-  className?: string;
-}
+type Props = ComponentPropsWithoutRef<"div">;
 
-export const Container: FC<PropsWithChildren<Props>> = ({
-  children,
-  className,
-}) => {
+export const Container = ({ children, className, ...rest }: Props) => {
   return (
-    <div className={cn("mx-auto max-w-[1280px]", className)}>{children}</div>
+    <div
+      className={cn("mx-auto max-w-[1280px]", className)}
+      {...rest}
+    >
+      {children}
+    </div>
   );
 };

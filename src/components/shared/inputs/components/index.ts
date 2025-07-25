@@ -1,2 +1,2 @@
-export { InputSearch } from "./input-search";
-export { InputPassword } from "./input-password";
+export { InputSearch } from "./InputSearch";
+export { InputPassword } from "./InputPassword";

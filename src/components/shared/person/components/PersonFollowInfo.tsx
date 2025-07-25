@@ -1,26 +1,32 @@
-import { FC } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/utils";
 import { Separator } from "@/components/ui";
 
-interface Props {
+type Props = ComponentPropsWithoutRef<"div"> & {
   followersCount?: number;
   followingCount?: number;
-  className?: string;
-}
+};
 
-export const PersonFollowInfo: FC<Props> = ({
+export const PersonFollowInfo = ({
   followersCount,
   followingCount,
   className,
-}) => {
+  ...rest
+}: Props) => {
   return (
-    <div className={cn("flex h-12 gap-4", className)}>
+    <div
+      className={cn("flex h-12 gap-4", className)}
+      {...rest}
+    >
       <div className="flex flex-col items-center">
         <span className="font-bold">{followersCount ?? 0}</span>
         <p className="text-muted-foreground">Followers</p>
       </div>
 
-      <Separator className="h-10 w-10" orientation="vertical" />
+      <Separator
+        className="h-10 w-10"
+        orientation="vertical"
+      />
 
       <div className="flex flex-col items-center">
         <span className="font-bold">{followingCount ?? 0}</span>

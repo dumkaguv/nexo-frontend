@@ -1,15 +1,16 @@
-import { Button, Input } from "@/components/ui";
-import { ROUTES } from "@/constants/routes";
 import { Link } from "react-router-dom";
+import { Routes } from "@/config";
+import { InputPassword } from "@/components/shared";
+import { Button, Input } from "@/components/ui";
 
-export default function LoginPage() {
+export const LoginPage = () => {
   return (
     <div className="rounded-lg border-[1px] bg-white p-8 text-center shadow-sm">
       <h1 className="mb-2 text-4xl font-bold">Sign in</h1>
       <p>
         Don't have an account?{" "}
         <Link
-          to={ROUTES.REGISTER}
+          to={Routes.register}
           className="text-primary underline-offset-3 hover:underline"
         >
           Click here to sign up
@@ -25,19 +26,17 @@ export default function LoginPage() {
         />
 
         <label htmlFor="password">Password</label>
-        <Input
+        <InputPassword
           className="mt-1 mb-5 px-3 py-6"
           placeholder="sHa$#as34Kh^"
           id="password"
-          type="password"
         />
 
         <label htmlFor="confirm-password">Confirm password</label>
-        <Input
+        <InputPassword
           className="mt-1 px-3 py-6"
           placeholder="sHa$#as34Kh^"
           id="confirm-password"
-          type="password"
         />
 
         <Button
@@ -49,4 +48,4 @@ export default function LoginPage() {
       </form>
     </div>
   );
-}
+};

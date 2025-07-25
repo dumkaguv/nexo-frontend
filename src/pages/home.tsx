@@ -1,6 +1,6 @@
 import { Card, Sidebar } from "@/components/shared";
 
-export default function HomePage() {
+export const HomePage = () => {
   return (
     <div className="flex gap-5">
       <aside className="w-[260px] max-w-[260px]">
@@ -14,4 +14,4 @@ export default function HomePage() {
       </main>
     </div>
   );
-}
+};

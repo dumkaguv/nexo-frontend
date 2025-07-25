@@ -1,8 +1,7 @@
-import { FC } from "react";
-import { Header, Container } from "@/components/shared";
 import { Outlet } from "react-router-dom";
+import { Header, Container } from "@/components/shared";
 
-export const AuthorizedLayout: FC = () => {
+export const AuthorizedLayout = () => {
   return (
     <Container>
       <Header className="mb-6" />

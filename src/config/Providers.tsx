@@ -1,4 +1,4 @@
-import { AppRouter } from "@/routes/app-router";
+import { AppRouter } from "./";
 
 export const Providers = () => {
   return (

@@ -1,7 +1,7 @@
-export { Button } from "./button";
-export { Input } from "./input";
-export { Skeleton } from "./skeleton";
-export { Separator } from "./separator";
+export { Button } from "./Button";
+export { Input } from "./Input";
+export { Skeleton } from "./Skeleton";
+export { Separator } from "./Separator";
 
-export * from "./avatar";
-export * from "./dropdown-menu";
+export * from "./Avatar";
+export * from "./DropdownMenu";

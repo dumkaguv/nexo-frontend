@@ -1,2 +1,2 @@
-export { AuthorizedLayout } from "./authorized";
-export { LoginLayout } from "./login";
+export { AuthorizedLayout } from "./Authorized";
+export { LoginLayout } from "./Login";

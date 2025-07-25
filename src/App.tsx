@@ -1,8 +1,6 @@
 import "@/assets/styles/styles.css";
-import { Providers } from "@/components/shared";
+import { Providers } from "@/config";
 
-function App() {
+export const App = () => {
   return <Providers />;
-}
-
-export default App;
+};

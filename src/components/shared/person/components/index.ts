@@ -1,3 +1,3 @@
-export { PersonName as Name } from "./person-name";
-export { PersonNickname as Nickname } from "./person-nickname";
-export { PersonFollowInfo as FollowInfo } from "./person-follow-info";
+export { PersonName as Name } from "./PersonName";
+export { PersonNickname as Nickname } from "./PersonNickname";
+export { PersonFollowInfo as FollowInfo } from "./PersonFollowInfo";

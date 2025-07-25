@@ -1,11 +1,19 @@
-import { ROUTES } from "@/constants/routes";
-import { AuthorizedLayout, LoginLayout } from "@/layouts";
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthorizedLayout, LoginLayout } from "@/layouts";
+import { Routes as RoutesConfig } from "./";
 
-const HomePage = lazy(() => import("@/pages/home"));
-const LoginPage = lazy(() => import("@/pages/login"));
-const RegisterPage = lazy(() => import("@/pages/register"));
+const HomePage = lazy(() =>
+  import("@/pages").then((module) => ({ default: module.HomePage }))
+);
+const LoginPage = lazy(() =>
+  import("@/pages").then((module) => ({ default: module.LoginPage }))
+);
+const RegisterPage = lazy(() =>
+  import("@/pages").then((module) => ({
+    default: module.RegisterPage,
+  }))
+);
 
 export const AppRouter = () => {
   return (
@@ -14,18 +22,18 @@ export const AppRouter = () => {
         <Routes>
           <Route element={<AuthorizedLayout />}>
             <Route
-              path={ROUTES.HOME}
+              path={RoutesConfig.home}
               element={<HomePage />}
             />
           </Route>
 
           <Route element={<LoginLayout />}>
             <Route
-              path={ROUTES.LOGIN}
+              path={RoutesConfig.login}
               element={<LoginPage />}
             />
             <Route
-              path={ROUTES.REGISTER}
+              path={RoutesConfig.register}
               element={<RegisterPage />}
             />
           </Route>

@@ -1,24 +1,25 @@
-import { FC } from "react";
-import { cn } from "@/utils";
+import { ComponentPropsWithoutRef } from "react";
 import { Link } from "react-router-dom";
 import { MessageSquareText, Newspaper } from "lucide-react";
-
+import { cn } from "@/utils";
 import { Card } from "@/components/shared";
-import * as PersonInfo from "@/components/shared/person";
 import { Avatar, AvatarImage, Button, Separator } from "@/components/ui";
+import * as PersonInfo from "@/components/shared/person";
+import { Routes } from "@/config";
 
-interface Props {
-  className?: string;
-}
+type Props = ComponentPropsWithoutRef<"div">;
 
 const navItems = [
-  { name: "Feed", href: "/", icon: Newspaper },
-  { name: "Messages", href: "/messages", icon: MessageSquareText },
+  { name: "Feed", href: Routes.home, icon: Newspaper },
+  { name: "Messages", href: Routes.messages, icon: MessageSquareText },
 ];
 
-export const Sidebar: FC<Props> = ({ className }) => {
+export const Sidebar = ({ className, ...rest }: Props) => {
   return (
-    <div className={cn("", className)}>
+    <div
+      className={cn("", className)}
+      {...rest}
+    >
       <Card className="flex flex-col items-center">
         <Avatar className="h-18 w-18">
           <AvatarImage src="/public/images/avatar.avif" />
@@ -26,7 +27,11 @@ export const Sidebar: FC<Props> = ({ className }) => {
 
         <PersonInfo.Name name="Dima" />
         <PersonInfo.Nickname>
-          <Button asChild className="h-fit p-0" variant="link">
+          <Button
+            asChild
+            className="h-fit p-0"
+            variant="link"
+          >
             <Link to="">@dima</Link>
           </Button>
         </PersonInfo.Nickname>

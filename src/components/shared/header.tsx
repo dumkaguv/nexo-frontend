@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from "react";
-import { cn } from "@/utils";
+import { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoaderPinwheel, MessageSquareText, Settings } from "lucide-react";
-
-import { ROUTES } from "@/constants/routes";
+import { cn } from "@/utils";
+import { Routes } from "@/config";
+import { Api } from "@/services/apiClient";
 import { InputSearch } from "@/components/shared";
 import {
   Avatar,
@@ -14,20 +14,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui";
-import { UserDTO } from "@/@types/user.dto";
-import { Api } from "@/services/api-client";
+import type { User } from "@/types";
 
-interface Props {
-  className?: string;
-}
+type Props = ComponentPropsWithoutRef<"header">;
 
 const navItems = [
-  { name: "Messages", href: ROUTES.MESSAGES, icon: MessageSquareText },
-  { name: "Settings", href: ROUTES.SETTINGS, icon: Settings },
+  { name: "Messages", href: Routes.messages, icon: MessageSquareText },
+  { name: "Settings", href: Routes.settings, icon: Settings },
 ];
 
-export const Header: FC<Props> = ({ className }) => {
-  const [users, setUsers] = useState<UserDTO[]>([]);
+export const Header = ({ className, ...rest }: Props) => {
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -44,10 +41,11 @@ export const Header: FC<Props> = ({ className }) => {
         "sticky top-0 z-10 flex items-center justify-between gap-5 rounded-b-md bg-white p-2 shadow-md",
         className
       )}
+      {...rest}
     >
       <div className="flex items-center gap-5">
         <Link
-          to={ROUTES.HOME}
+          to={Routes.home}
           className="hover:text-primary flex items-center gap-1"
         >
           <LoaderPinwheel
