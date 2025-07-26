@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useEffect, useState } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoaderPinwheel, MessageSquareText, Settings } from "lucide-react";
 import { cn } from "@/utils";
@@ -14,7 +14,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui";
-import type { User } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { useDebouncedValue } from "@/hooks";
 
 type Props = ComponentPropsWithoutRef<"header">;
 
@@ -24,16 +25,14 @@ const navItems = [
 ];
 
 export const Header = ({ className, ...rest }: Props) => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedValue = useDebouncedValue(searchValue, 400);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const data = await Api.users.getUserByUserOrFullName("dima");
-      setUsers(data);
-    };
-
-    fetchUsers();
-  }, []);
+  const { data: users, isPending } = useQuery({
+    queryKey: ["usersSearch", debouncedValue],
+    queryFn: () => Api.users.getUserByUserOrFullName(debouncedValue),
+    enabled: !!debouncedValue,
+  });
 
   return (
     <header
@@ -55,7 +54,11 @@ export const Header = ({ className, ...rest }: Props) => {
           <h1 className="text-xl font-bold">Nexo</h1>
         </Link>
 
-        <InputSearch className="w-[400px]" />
+        <InputSearch
+          value={searchValue}
+          onChange={(event) => setSearchValue(event.target.value)}
+          className="w-[400px]"
+        />
       </div>
 
       <div className="flex items-center gap-3">

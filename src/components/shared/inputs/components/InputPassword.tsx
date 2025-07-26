@@ -9,22 +9,24 @@ export const InputPassword = ({ className, ...rest }: Props) => {
   const [isShowed, setIsShowed] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="flex items-center">
       <Input
-        className={cn("", className)}
+        type={isShowed ? "text" : "password"}
         placeholder="Enter password..."
-        type={`${isShowed ? "text" : "password"}`}
+        className={cn("flex-1 rounded-r-none", className)}
         {...rest}
       />
       <Button
-        className="bg-custom-gray hover:bg-primary/25 absolute top-0 right-0 h-full"
+        type="button"
         onClick={() => setIsShowed((prev) => !prev)}
-        variant="link"
+        variant="outline"
+        size="icon"
+        className="rounded-l-none border-l-0 h-full"
       >
         {isShowed ? (
-          <Eye className="!h-5 !w-5" />
+          <Eye className="h-5 w-5" />
         ) : (
-          <EyeOff className="!h-5 !w-5" />
+          <EyeOff className="h-5 w-5" />
         )}
       </Button>
     </div>
