@@ -8,8 +8,10 @@ type Props = ComponentPropsWithoutRef<"input">;
 export const InputPassword = ({ className, ...rest }: Props) => {
   const [isShowed, setIsShowed] = useState(false);
 
+  const handleShow = () => setIsShowed((prev) => !prev);
+
   return (
-    <div className="flex items-center">
+    <div className="flex h-12 items-center">
       <Input
         type={isShowed ? "text" : "password"}
         placeholder="Enter password..."
@@ -18,16 +20,12 @@ export const InputPassword = ({ className, ...rest }: Props) => {
       />
       <Button
         type="button"
-        onClick={() => setIsShowed((prev) => !prev)}
+        onClick={handleShow}
         variant="outline"
         size="icon"
-        className="rounded-l-none border-l-0 h-full"
+        className="h-full rounded-l-none border-l-0"
       >
-        {isShowed ? (
-          <Eye className="h-5 w-5" />
-        ) : (
-          <EyeOff className="h-5 w-5" />
-        )}
+        {isShowed ? <Eye /> : <EyeOff />}
       </Button>
     </div>
   );

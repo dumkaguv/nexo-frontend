@@ -13,9 +13,19 @@ type AuthResponse = {
   createdAt: string;
 };
 
-export const register = async () => {
+export type RegistrationPayload = {
+  email: string;
+  password: string;
+  userName: string;
+  fullName: string;
+};
+
+export const register = async (payload: RegistrationPayload) => {
   return (
-    await axiosInstance.post<ApiResponse<AuthResponse>>(ApiRoutes.auth.register)
+    await axiosInstance.post<ApiResponse<AuthResponse>>(
+      ApiRoutes.auth.registration,
+      payload
+    )
   ).data;
 };
 

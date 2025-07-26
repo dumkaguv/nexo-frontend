@@ -3,9 +3,9 @@ export const ApiRoutes = {
     base: "/users",
   },
   auth: {
-    login: "/login",
-    logout: "/logout",
-    refresh: "/refresh",
-    register: "/register",
+    login: "/auth/login",
+    logout: "/auth/logout",
+    refresh: "/auth/refresh",
+    registration: "/auth/registration",
   },
 } as const;
