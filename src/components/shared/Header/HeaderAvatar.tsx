@@ -37,23 +37,21 @@ export const HeaderAvatar = () => {
 
   const menuItems = [
     {
-      icon: <MessageSquareText />,
+      icon: <MessageSquareText className="text-primary" />,
       label: "Messages",
       to: Routes.messages,
     },
     {
-      icon: <Settings />,
+      icon: <Settings className="text-primary" />,
       label: "Settings",
       to: Routes.settings,
     },
     {
-      icon: <LogOut />,
+      icon: <LogOut className="text-primary" />,
       label: "Logout",
       onClick: onButtonLogoutClick,
     },
   ];
-
-  console.log(user);
 
   return (
     <DropdownMenu>
