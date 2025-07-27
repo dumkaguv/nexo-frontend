@@ -1,11 +1,11 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 import { cn } from "@/utils";
 import { HeaderButtons } from "./HeaderButtons";
 import { HeaderAvatar } from "./HeaderAvatar";
 import { HeaderLogo } from "./HeaderLogo";
 import { HeaderSearch } from "./HeaderSearch";
 
-type Props = ComponentPropsWithoutRef<"header">;
+type Props = ComponentProps<"header">;
 
 export const Header = ({ className, ...rest }: Props) => {
   return (

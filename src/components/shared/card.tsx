@@ -1,7 +1,7 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 import { cn } from "@/utils";
 
-type Props = ComponentPropsWithoutRef<"div">;
+type Props = ComponentProps<"div">;
 
 export const Card = ({ children, className, ...rest }: Props) => {
   return (

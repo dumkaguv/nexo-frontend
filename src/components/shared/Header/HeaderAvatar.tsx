@@ -13,22 +13,24 @@ import {
   Skeleton,
 } from "@/components/ui";
 import { LocalStorage, Routes } from "@/config";
-import { useHeader } from "@/hooks";
 import { Api } from "@/services/apiClient";
 import { handleMutationError } from "@/utils";
+import { useAuthStore } from "@/stores";
 
 export const HeaderAvatar = () => {
-  const { isPendingProfile } = useHeader();
+  const { user, setUser, isPending } = useAuthStore();
+
   const navigate = useNavigate();
 
   const { mutateAsync: logout } = useMutation({
     mutationFn: Api.auth.logout,
-    onSuccess: (response) => {
-      toast.success(response.message ?? "Logout successfully");
+    onSuccess: ({ message }) => {
+      toast.success(message ?? "Logout successfully");
       localStorage.removeItem(LocalStorage.token);
+      setUser(null);
       navigate(Routes.login);
     },
-    onError: handleMutationError,
+    onError: (error) => handleMutationError(error),
   });
 
   const onButtonLogoutClick = async () => await logout();
@@ -51,10 +53,12 @@ export const HeaderAvatar = () => {
     },
   ];
 
+  console.log(user);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        {isPendingProfile ? (
+        {isPending ? (
           <Skeleton className="h-10 w-10 rounded-full" />
         ) : (
           <Avatar className="h-10 w-10 cursor-pointer">

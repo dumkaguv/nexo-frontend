@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 import { Search, X } from "lucide-react";
 import { cn } from "@/utils";
 import { Button, Input } from "@/components/ui";
 
-type Props = ComponentPropsWithoutRef<"input"> & {
+type Props = ComponentProps<"input"> & {
   onButtonClearClick?: () => void;
 };
 

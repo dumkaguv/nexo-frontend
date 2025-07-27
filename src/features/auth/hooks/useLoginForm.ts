@@ -4,14 +4,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { Api } from "@/services/apiClient";
-import { LoginPayload } from "@/services/auth";
 import {
   loginFormSchema,
   type LoginFormSchema,
 } from "@/features/auth/zodSchemas";
 import { Routes } from "@/config";
+import {
+  handleMutationError,
+  saveAccessToken,
+  getUserFromAuthResponse,
+} from "@/utils";
+import { useAuthStore } from "@/stores";
 import type { InputField } from "@/features/auth/types";
-import { handleMutationError, saveAccessToken } from "@/utils";
+import type { LoginPayload } from "@/services/auth";
 
 export const useLoginForm = () => {
   const {
@@ -22,14 +27,21 @@ export const useLoginForm = () => {
     resolver: zodResolver(loginFormSchema),
   });
 
+  const { setUser } = useAuthStore();
+
   const navigate = useNavigate();
 
   const { mutateAsync: loginMutate, isPending } = useMutation({
     mutationFn: (payload: LoginPayload) => Api.auth.login(payload),
-    onSuccess: (response) => {
-      toast.success(response.message ?? "Login successfully!");
-      saveAccessToken(response.data?.accessToken ?? "");
-      navigate(Routes.home);
+    onSuccess: ({ data, message }) => {
+      if (data) {
+        toast.success(message ?? "Login successfully!");
+        saveAccessToken(data.accessToken);
+        setUser(getUserFromAuthResponse(data));
+        navigate(Routes.home);
+      } else {
+        toast.error("Error occurred. Please, log in one more time");
+      }
     },
     onError: (error) => {
       handleMutationError(error);

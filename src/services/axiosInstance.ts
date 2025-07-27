@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getAccessToken, saveAccessToken } from "@/utils";
+import { LocalStorage, Routes } from "@/config";
+import type { ApiResponse } from "@/types";
 import { ApiRoutes } from "./apiRoutes";
-import { ApiResponse } from "@/types";
 import { AuthResponse } from "./auth";
-import { Routes } from "@/config";
 
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL;
 
@@ -29,7 +29,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const response = await axios.get<ApiResponse<AuthResponse>>(
-          ApiRoutes.auth.refresh,
+          baseURL + ApiRoutes.auth.refresh,
           {
             withCredentials: true,
           }
@@ -37,9 +37,10 @@ axiosInstance.interceptors.response.use(
 
         const newAccessToken = response.data.data?.accessToken;
         if (!newAccessToken) {
-          window.location.href = Routes.login;
+          localStorage.removeItem(LocalStorage.token);
+          return (window.location.href = Routes.login);
         }
-        saveAccessToken(newAccessToken ?? "");
+        saveAccessToken(newAccessToken);
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);

@@ -11,7 +11,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Routes } from "@/config";
 import type { InputField } from "@/features/auth/types";
-import { handleMutationError, saveAccessToken } from "@/utils";
+import {
+  handleMutationError,
+  saveAccessToken,
+  getUserFromAuthResponse,
+} from "@/utils";
+import { useAuthStore } from "@/stores";
 
 export const useRegisterForm = () => {
   const {
@@ -21,15 +26,20 @@ export const useRegisterForm = () => {
   } = useForm<RegisterFormSchema>({
     resolver: zodResolver(registerFormSchema),
   });
+  const { setUser } = useAuthStore();
 
   const navigate = useNavigate();
-
   const { mutateAsync: registerMutate, isPending } = useMutation({
     mutationFn: (payload: RegistrationPayload) => Api.auth.register(payload),
-    onSuccess: (response) => {
-      toast.success(response.message ?? "Register successfully!");
-      saveAccessToken(response.data?.accessToken ?? "");
-      navigate(`${Routes.activate}/${response.data?.userId}`);
+    onSuccess: ({ data, message }) => {
+      if (data) {
+        toast.success(message ?? "Register successfully!");
+        saveAccessToken(data.accessToken);
+        setUser(getUserFromAuthResponse(data));
+        navigate(`${Routes.activate}/${data.userId}`);
+      } else {
+        toast.error("Error occurred. Please, register one more time");
+      }
     },
     onError: (error) => {
       handleMutationError(error);

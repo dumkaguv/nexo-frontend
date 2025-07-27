@@ -1,6 +1,6 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 
-type Props = ComponentPropsWithoutRef<"p">;
+type Props = ComponentProps<"p">;
 
 export const PersonNickname = ({ children, className, ...rest }: Props) => {
   return (

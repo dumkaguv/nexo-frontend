@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, memo, useState } from "react";
+import { ComponentProps, memo, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/utils";
 import { Button, Input } from "@/components/ui";
 
-type Props = ComponentPropsWithoutRef<"input">;
+type Props = ComponentProps<"input">;
 
 export const InputPassword = ({ className, ...rest }: Props) => {
   const [isShowed, setIsShowed] = useState(false);

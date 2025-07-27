@@ -1,13 +1,13 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 import { Link } from "react-router-dom";
 import { MessageSquareText, Newspaper } from "lucide-react";
 import { cn } from "@/utils";
 import { Card } from "@/components/shared";
 import { Avatar, AvatarImage, Button, Separator } from "@/components/ui";
-import * as PersonInfo from "@/components/shared/person";
+import * as PersonInfo from "@/components/shared/Person";
 import { Routes } from "@/config";
 
-type Props = ComponentPropsWithoutRef<"div">;
+type Props = ComponentProps<"div">;
 
 const navItems = [
   { name: "Feed", href: Routes.home, icon: Newspaper },

@@ -1,14 +1,14 @@
 import { Routes } from "@/config";
-import { getAccessToken } from "@/utils";
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+import { useProtectedRoute } from "../hooks";
 
 type Props = {
   children: ReactNode;
 };
 
 export const ProtectedRoute = ({ children }: Props) => {
-  const isAuth = getAccessToken();
+  const isAuth = useProtectedRoute();
 
   if (!isAuth) {
     return <Navigate to={Routes.login} />;

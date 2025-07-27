@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 import { cn } from "@/utils";
 import { Separator } from "@/components/ui";
 
-type Props = ComponentPropsWithoutRef<"div"> & {
+type Props = ComponentProps<"div"> & {
   followersCount?: number;
   followingCount?: number;
 };

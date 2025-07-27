@@ -1,7 +1,7 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentProps } from "react";
 import { cn } from "@/utils";
 
-type Props = ComponentPropsWithoutRef<"h2"> & {
+type Props = ComponentProps<"h2"> & {
   name: string;
 };
 
