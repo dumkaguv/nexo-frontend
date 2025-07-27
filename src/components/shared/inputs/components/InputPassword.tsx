@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from "react";
+import { ComponentPropsWithoutRef, memo, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/utils";
 import { Button, Input } from "@/components/ui";

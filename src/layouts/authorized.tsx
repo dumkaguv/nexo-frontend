@@ -1,12 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { Header, Container } from "@/components/shared";
+import { Header, Container, ProtectedRoute } from "@/components/shared";
 
 export const AuthorizedLayout = () => {
   return (
-    <Container>
-      <Header className="mb-6" />
+    <ProtectedRoute>
+      <Container>
+        <Header className="mb-6" />
 
-      <Outlet />
-    </Container>
+        <Outlet />
+      </Container>
+    </ProtectedRoute>
   );
 };

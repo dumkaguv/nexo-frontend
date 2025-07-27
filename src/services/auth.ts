@@ -2,7 +2,7 @@ import { ApiResponse } from "@/types";
 import { ApiRoutes } from "./apiRoutes";
 import { axiosInstance } from "./axiosInstance";
 
-type AuthResponse = {
+export type AuthResponse = {
   accessToken: string;
   refreshToken: string;
   userId: number;

@@ -4,4 +4,5 @@ export const Routes = {
   register: "/register",
   messages: "/messages",
   settings: "/settings",
+  activate: "/activate",
 } as const;

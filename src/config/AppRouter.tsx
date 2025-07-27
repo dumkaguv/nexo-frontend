@@ -7,11 +7,16 @@ const HomePage = lazy(() =>
   import("@/pages").then((module) => ({ default: module.HomePage }))
 );
 const LoginPage = lazy(() =>
-  import("@/pages").then((module) => ({ default: module.LoginPage }))
+  import("@/features/auth").then((module) => ({ default: module.LoginPage }))
 );
 const RegisterPage = lazy(() =>
-  import("@/pages").then((module) => ({
+  import("@/features/auth").then((module) => ({
     default: module.RegisterPage,
+  }))
+);
+const ActivateAccountPage = lazy(() =>
+  import("@/features/auth").then((module) => ({
+    default: module.ActivateAccountPage,
   }))
 );
 
@@ -35,6 +40,10 @@ export const AppRouter = () => {
             <Route
               path={RoutesConfig.register}
               element={<RegisterPage />}
+            />
+            <Route
+              path={`${RoutesConfig.activate}/:userId`}
+              element={<ActivateAccountPage />}
             />
           </Route>
         </Routes>
