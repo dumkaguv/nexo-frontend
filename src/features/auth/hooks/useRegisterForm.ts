@@ -1,22 +1,18 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Api } from "@/services/apiClient";
 import { RegistrationPayload } from "@/services/auth";
-import { registerFormSchema, RegisterFormSchema } from "@/zodSchemas";
+import {
+  registerFormSchema,
+  type RegisterFormSchema,
+} from "@/features/auth/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
-import { ApiResponse } from "@/types";
 import { LocalStorage, Routes } from "@/config";
-
-export type InputField = {
-  name: keyof RegisterFormSchema;
-  label: string;
-  type: "text" | "password";
-  placeholder: string;
-  id: string;
-};
+import type { ApiResponse } from "@/types";
+import type { InputField } from "@/features/auth/types";
 
 export const useRegisterForm = () => {
   const {
@@ -52,7 +48,7 @@ export const useRegisterForm = () => {
   const onSubmit = async (data: RegisterFormSchema) =>
     await registerMutate(data);
 
-  const inputFields: InputField[] = [
+  const inputFields: InputField<RegisterFormSchema>[] = [
     {
       name: "email",
       label: "Email",

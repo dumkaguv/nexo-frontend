@@ -29,9 +29,17 @@ export const register = async (payload: RegistrationPayload) => {
   ).data;
 };
 
-export const login = async () => {
+export type LoginPayload = {
+  email: string;
+  password: string;
+};
+
+export const login = async (payload: LoginPayload) => {
   return (
-    await axiosInstance.post<ApiResponse<AuthResponse>>(ApiRoutes.auth.login)
+    await axiosInstance.post<ApiResponse<AuthResponse>>(
+      ApiRoutes.auth.login,
+      payload
+    )
   ).data;
 };
 
