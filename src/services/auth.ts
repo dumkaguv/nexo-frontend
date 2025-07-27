@@ -44,8 +44,7 @@ export const login = async (payload: LoginPayload) => {
 };
 
 export const logout = async () => {
-  return (await axiosInstance.post<ApiResponse<null>>(ApiRoutes.auth.logout))
-    .data;
+  return (await axiosInstance.post<ApiResponse>(ApiRoutes.auth.logout)).data;
 };
 
 export const refresh = async () => {

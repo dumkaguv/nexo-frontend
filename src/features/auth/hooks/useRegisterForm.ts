@@ -1,7 +1,6 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { Api } from "@/services/apiClient";
 import { RegistrationPayload } from "@/services/auth";
@@ -10,9 +9,9 @@ import {
   type RegisterFormSchema,
 } from "@/features/auth/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LocalStorage, Routes } from "@/config";
-import type { ApiResponse } from "@/types";
+import { Routes } from "@/config";
 import type { InputField } from "@/features/auth/types";
+import { handleMutationError, saveAccessToken } from "@/utils";
 
 export const useRegisterForm = () => {
   const {
@@ -29,19 +28,11 @@ export const useRegisterForm = () => {
     mutationFn: (payload: RegistrationPayload) => Api.auth.register(payload),
     onSuccess: (response) => {
       toast.success(response.message ?? "Register successfully!");
-      localStorage.setItem(
-        LocalStorage.token,
-        response.data?.accessToken ?? ""
-      );
+      saveAccessToken(response.data?.accessToken ?? "");
       navigate(`${Routes.activate}/${response.data?.userId}`);
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<ApiResponse>;
-      toast.error(
-        axiosError.response?.data.message ?? "Register error! Please try again."
-      );
-
-      console.log(error);
+      handleMutationError(error);
     },
   });
 

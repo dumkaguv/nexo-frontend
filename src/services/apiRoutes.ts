@@ -8,4 +8,7 @@ export const ApiRoutes = {
     refresh: "/auth/refresh",
     registration: "/auth/registration",
   },
+  profile: {
+    base: "/profile",
+  },
 } as const;

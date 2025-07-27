@@ -1,7 +1,6 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { Api } from "@/services/apiClient";
@@ -10,9 +9,9 @@ import {
   loginFormSchema,
   type LoginFormSchema,
 } from "@/features/auth/zodSchemas";
-import { LocalStorage, Routes } from "@/config";
-import type { ApiResponse } from "@/types";
+import { Routes } from "@/config";
 import type { InputField } from "@/features/auth/types";
+import { handleMutationError, saveAccessToken } from "@/utils";
 
 export const useLoginForm = () => {
   const {
@@ -29,19 +28,11 @@ export const useLoginForm = () => {
     mutationFn: (payload: LoginPayload) => Api.auth.login(payload),
     onSuccess: (response) => {
       toast.success(response.message ?? "Login successfully!");
-      localStorage.setItem(
-        LocalStorage.token,
-        response.data?.accessToken ?? ""
-      );
+      saveAccessToken(response.data?.accessToken ?? "");
       navigate(Routes.home);
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<ApiResponse>;
-      toast.error(
-        axiosError.response?.data.message ?? "Login error! Please try again."
-      );
-
-      console.log(error);
+      handleMutationError(error);
     },
   });
 

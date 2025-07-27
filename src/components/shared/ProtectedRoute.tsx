@@ -1,4 +1,5 @@
-import { LocalStorage, Routes } from "@/config";
+import { Routes } from "@/config";
+import { getAccessToken } from "@/utils";
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -7,7 +8,7 @@ type Props = {
 };
 
 export const ProtectedRoute = ({ children }: Props) => {
-  const isAuth = localStorage.getItem(LocalStorage.token);
+  const isAuth = getAccessToken();
 
   if (!isAuth) {
     return <Navigate to={Routes.login} />;
