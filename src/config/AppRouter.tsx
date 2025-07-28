@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthorizedLayout, LoginLayout } from "@/layouts";
+import { AuthorizedLayout, NotAuthorizedLayout } from "@/layouts";
 import { Routes as RoutesConfig } from "./";
 
 const HomePage = lazy(() =>
@@ -32,7 +32,7 @@ export const AppRouter = () => {
             />
           </Route>
 
-          <Route element={<LoginLayout />}>
+          <Route element={<NotAuthorizedLayout />}>
             <Route
               path={RoutesConfig.login}
               element={<LoginPage />}
