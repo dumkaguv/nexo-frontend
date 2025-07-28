@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Api } from "@/services/apiClient";
 import { RegistrationPayload } from "@/services/auth";
 import {
-  registerFormSchema,
+  createRegisterFormSchema,
   type RegisterFormSchema,
 } from "@/features/auth/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,31 +20,34 @@ import {
 import { useAuthStore } from "@/stores";
 
 export const useRegisterForm = () => {
+  const { t } = useTranslation();
+
+  const schema = createRegisterFormSchema(t);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormSchema>({
-    resolver: zodResolver(registerFormSchema),
+    resolver: zodResolver(schema),
   });
   const { setUser } = useAuthStore();
 
   const navigate = useNavigate();
+
   const { mutateAsync: registerMutate, isPending } = useMutation({
     mutationFn: (payload: RegistrationPayload) => Api.auth.register(payload),
     onSuccess: ({ data, message }) => {
       if (data) {
-        toast.success(message ?? "Register successfully!");
+        toast.success(message ?? t("auth.registerSuccess"));
         saveAccessToken(data.accessToken);
         setUser(getUserFromAuthResponse(data));
         navigate(`${Routes.activate}/${data.userId}`);
       } else {
-        toast.error("Error occurred. Please, register one more time");
+        toast.error(t("auth.registerError"));
       }
     },
-    onError: (error) => {
-      handleMutationError(error);
-    },
+    onError: (error) => handleMutationError(error),
   });
 
   const onSubmit = async (data: RegisterFormSchema) =>
@@ -52,38 +56,43 @@ export const useRegisterForm = () => {
   const inputFields: InputField<RegisterFormSchema>[] = [
     {
       name: "email",
-      label: "Email",
+      label: t("auth.email"),
       type: "text",
       placeholder: "alex-johnson@gmail.com",
       id: "email",
+      autoComplete: "email",
     },
     {
       name: "userName",
-      label: "Username",
+      label: t("auth.username"),
       type: "text",
       placeholder: "alex_j",
       id: "username",
+      autoComplete: "username",
     },
     {
       name: "fullName",
-      label: "Full name",
+      label: t("auth.fullName"),
       type: "text",
       placeholder: "Alex Johnson",
       id: "full-name",
+      autoComplete: "name",
     },
     {
       name: "password",
-      label: "Password",
+      label: t("auth.password"),
       type: "password",
       placeholder: "sHa$#as34Kh^",
       id: "password",
+      autoComplete: "new-password",
     },
     {
       name: "confirmPassword",
-      label: "Confirm password",
+      label: t("auth.confirmPassword"),
       type: "password",
       placeholder: "sHa$#as34Kh^",
       id: "confirm-password",
+      autoComplete: "new-password",
     },
   ];
 

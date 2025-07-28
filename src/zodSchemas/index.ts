@@ -1,1 +1,1 @@
-export { passwordSchema } from "./password";
+export { createPasswordSchema } from "./password";

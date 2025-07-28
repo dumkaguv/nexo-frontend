@@ -11,10 +11,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui";
 import { useThemeStore } from "@/stores";
+import { useTranslation } from "react-i18next";
 
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useThemeStore();
+
   const [tooltipEnabled, setTooltipEnabled] = useState(true);
+
+  const { t } = useTranslation();
 
   const handleThemeChange = (value: typeof theme) => {
     setTheme(value);
@@ -48,17 +52,17 @@ export const ThemeSwitcher = () => {
             >
               <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              <span className="sr-only">Toggle theme</span>
+              <span className="sr-only">{t("theme.toggleTheme")}</span>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
-        <TooltipContent>Switch theme</TooltipContent>
+        <TooltipContent>{t("theme.toggleTheme")}</TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent align="end">
-        {renderMenuItem("light", "Light", <Sun size={16} />)}
-        {renderMenuItem("dark", "Dark", <Moon size={16} />)}
-        {renderMenuItem("system", "System", <Laptop size={16} />)}
+        {renderMenuItem("light", t("theme.light"), <Sun size={16} />)}
+        {renderMenuItem("dark", t("theme.dark"), <Moon size={16} />)}
+        {renderMenuItem("system", t("theme.system"), <Laptop size={16} />)}
       </DropdownMenuContent>
     </DropdownMenu>
   );

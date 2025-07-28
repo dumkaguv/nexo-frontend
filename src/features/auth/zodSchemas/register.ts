@@ -1,17 +1,25 @@
 import { z } from "zod";
-import { passwordSchema } from "@/zodSchemas";
+import type { TFunction } from "i18next";
+import { createPasswordSchema } from "@/zodSchemas";
 
-export const registerFormSchema = z
-  .object({
-    email: z.email({ error: "Invalid email" }),
-    userName: z.string().min(2, { error: "At least 2 symbols" }),
-    fullName: z.string().min(2, { error: "At least 2 symbols" }),
-    password: passwordSchema,
-    confirmPassword: z.string(),
-  })
-  .refine((fields) => fields.password === fields.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+export const createRegisterFormSchema = (t: TFunction) =>
+  z
+    .object({
+      email: z.email({ error: t("validation.email_invalid") }),
+      userName: z
+        .string()
+        .min(2, { error: t("validation.min_length", { count: 2 }) }),
+      fullName: z
+        .string()
+        .min(2, { error: t("validation.min_length", { count: 2 }) }),
+      password: createPasswordSchema(t),
+      confirmPassword: z.string().min(1, { error: t("validation.required") }),
+    })
+    .refine((fields) => fields.password === fields.confirmPassword, {
+      error: t("validation.passwords_mismatch"),
+      path: ["confirmPassword"],
+    });
 
-export type RegisterFormSchema = z.infer<typeof registerFormSchema>;
+export type RegisterFormSchema = z.infer<
+  ReturnType<typeof createRegisterFormSchema>
+>;

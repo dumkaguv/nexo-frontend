@@ -16,11 +16,14 @@ import { LocalStorage, Routes } from "@/config";
 import { Api } from "@/services/apiClient";
 import { handleMutationError } from "@/utils";
 import { useAuthStore } from "@/stores";
+import { useTranslation } from "react-i18next";
 
 export const HeaderAvatar = () => {
   const { user, setUser, isPending } = useAuthStore();
 
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const { mutateAsync: logout } = useMutation({
     mutationFn: Api.auth.logout,
@@ -38,17 +41,17 @@ export const HeaderAvatar = () => {
   const menuItems = [
     {
       icon: <MessageSquareText className="text-primary" />,
-      label: "Messages",
+      label: t("messages"),
       to: Routes.messages,
     },
     {
       icon: <Settings className="text-primary" />,
-      label: "Settings",
+      label: t("settings"),
       to: Routes.settings,
     },
     {
       icon: <LogOut className="text-primary" />,
-      label: "Logout",
+      label: t("auth.logout"),
       onClick: onButtonLogoutClick,
     },
   ];

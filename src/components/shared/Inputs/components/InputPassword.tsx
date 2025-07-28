@@ -16,6 +16,7 @@ export const InputPassword = ({ className, ...rest }: Props) => {
         type={isShowed ? "text" : "password"}
         placeholder="Enter password..."
         className={cn("flex-1 rounded-r-none", className)}
+        autoComplete="current-password"
         {...rest}
       />
       <Button

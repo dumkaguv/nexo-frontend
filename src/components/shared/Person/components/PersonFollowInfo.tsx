@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ComponentProps } from "react";
 import { cn } from "@/utils";
 import { Separator } from "@/components/ui";
@@ -13,6 +14,8 @@ export const PersonFollowInfo = ({
   className,
   ...rest
 }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className={cn("flex h-12 gap-4", className)}
@@ -20,7 +23,7 @@ export const PersonFollowInfo = ({
     >
       <div className="flex flex-col items-center">
         <span className="font-bold">{followersCount ?? 0}</span>
-        <p className="text-muted-foreground">Followers</p>
+        <p className="text-muted-foreground">{t("followers")}</p>
       </div>
 
       <Separator
@@ -30,7 +33,7 @@ export const PersonFollowInfo = ({
 
       <div className="flex flex-col items-center">
         <span className="font-bold">{followingCount ?? 0}</span>
-        <p className="text-muted-foreground">Following</p>
+        <p className="text-muted-foreground">{t("following")}</p>
       </div>
     </div>
   );

@@ -21,7 +21,9 @@ const languages = [
 export const LanguageSwitcher = () => {
   const [tooltipEnabled, setTooltipEnabled] = useState(true);
   const { i18n: i18nInstance } = useTranslation();
-  const currentLang = i18nInstance.language;
+  const currentLang = i18nInstance.language.split("-")[0];
+
+  const { t } = useTranslation();
 
   const handleLanguageChange = (code: string) => {
     i18n.changeLanguage(code);
@@ -59,11 +61,11 @@ export const LanguageSwitcher = () => {
               className="hover:bg-primary/25"
             >
               <Globe className="h-[1.2rem] w-[1.2rem]" />
-              <span className="sr-only">Switch language</span>
+              <span className="sr-only">{t("changeLanguage")}</span>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
-        <TooltipContent>Switch language</TooltipContent>
+        <TooltipContent>{t("changeLanguage")}</TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent align="end">

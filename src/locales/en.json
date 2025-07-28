@@ -1,3 +1,46 @@
 {
-  "hello": "Hello!"
+  "auth": {
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "logout": "Logout",
+    "haveAccount": "Have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "clickHereToSignIn": "Click here to sign in",
+    "clickHereToSignUp": "Click here to sign up",
+    "email": "Email",
+    "username": "Username",
+    "fullName": "Full name",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "registerSuccess": "Register successfully!",
+    "loginSuccess": "Login successfully!",
+    "registerError": "Error occurred. Please, register one more time",
+    "loginError": "Error occurred. Please, log in one more time"
+  },
+  "theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "toggleTheme": "Toggle theme"
+  },
+  "error": {
+    "generic": "Error occurred! Please try again."
+  },
+  "validation": {
+    "email_invalid": "Invalid email",
+    "min_length": "At least {{count}} symbols",
+    "passwords_mismatch": "Passwords don't match",
+    "required": "This field is required",
+    "password_lowercase": "Password must contain a lowercase letter",
+    "password_uppercase": "Password must contain an uppercase letter",
+    "password_number": "Password must contain a number",
+    "password_special": "Password must contain a special character"
+  },
+  "messages": "Messages",
+  "settings": "Settings",
+  "feed": "Feed",
+  "inputSearch": "Search...",
+  "followers": "Followers",
+  "following": "Following",
+  "changeLanguage": "Change language"
 }

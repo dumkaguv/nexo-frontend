@@ -1,6 +1,7 @@
 import { ComponentProps } from "react";
 import { Link } from "react-router-dom";
 import { MessageSquareText, Newspaper } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/utils";
 import { Card } from "@/components/shared";
 import { Avatar, AvatarImage, Button, Separator } from "@/components/ui";
@@ -9,12 +10,14 @@ import { Routes } from "@/config";
 
 type Props = ComponentProps<"div">;
 
-const navItems = [
-  { name: "Feed", href: Routes.home, icon: Newspaper },
-  { name: "Messages", href: Routes.messages, icon: MessageSquareText },
-];
-
 export const Sidebar = ({ className, ...rest }: Props) => {
+  const { t } = useTranslation();
+
+  const navItems = [
+    { name: t("feed"), href: Routes.home, icon: Newspaper },
+    { name: t("messages"), href: Routes.messages, icon: MessageSquareText },
+  ];
+
   return (
     <div
       className={cn("", className)}
@@ -48,8 +51,10 @@ export const Sidebar = ({ className, ...rest }: Props) => {
                   asChild
                 >
                   <Link to={item.href}>
-                    <item.icon className="text-primary !h-5 !w-5" />
-                    <p>{item.name}</p>
+                    <item.icon className="text-primary" />
+                    <p className="text-foreground hover:text-foreground/85 transition-colors duration-200">
+                      {item.name}
+                    </p>
                   </Link>
                 </Button>
               </nav>
