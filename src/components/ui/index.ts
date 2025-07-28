@@ -6,3 +6,4 @@ export { Label } from "./Label";
 
 export * from "./Avatar";
 export * from "./DropdownMenu";
+export * from "./Tooltip";

@@ -37,7 +37,7 @@ export const LoginForm = () => {
       <Button
         type="submit"
         loading={isPending}
-        className="mt-2 h-12 w-full text-lg"
+        className="mt-2 h-12 w-full text-lg text-white"
       >
         Login
       </Button>

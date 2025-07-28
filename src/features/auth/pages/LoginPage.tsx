@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { Routes } from "@/config";
 import { LoginForm } from "@/features/auth/components";
+import { Card } from "@/components/shared";
 
 export const LoginPage = () => {
   return (
-    <div className="flex flex-col gap-2 rounded-lg border-[1px] bg-white p-8 text-center shadow-sm">
+    <Card>
       <h1 className="mb-2 text-4xl font-bold">Sign in</h1>
       <p>
         Don't have an account?{" "}
@@ -17,6 +18,6 @@ export const LoginPage = () => {
       </p>
 
       <LoginForm />
-    </div>
+    </Card>
   );
 };

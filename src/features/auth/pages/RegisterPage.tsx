@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { Routes } from "@/config";
 import { RegisterForm } from "@/features/auth/components";
+import { Card } from "@/components/shared";
 
 export const RegisterPage = () => {
   return (
-    <div className="flex flex-col gap-2 rounded-lg border-[1px] bg-white p-8 text-center shadow-sm">
-      <h1 className="mb-2 text-4xl font-bold">Sign in</h1>
+    <Card>
+      <h1 className="mb-2 text-4xl font-bold">Sign up</h1>
       <p>
         Have an account?{" "}
         <Link
@@ -17,6 +18,6 @@ export const RegisterPage = () => {
       </p>
 
       <RegisterForm />
-    </div>
+    </Card>
   );
 };
