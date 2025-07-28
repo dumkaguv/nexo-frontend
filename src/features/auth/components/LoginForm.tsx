@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { InputFieldErrors, InputPassword } from "@/components/shared";
 import { Button, Input, Label } from "@/components/ui";
 import { useLoginForm } from "@/features/auth/hooks";
@@ -5,6 +6,8 @@ import { useLoginForm } from "@/features/auth/hooks";
 export const LoginForm = () => {
   const { handleSubmit, inputFields, register, errors, onSubmit, isPending } =
     useLoginForm();
+
+  const { t } = useTranslation();
 
   return (
     <form
@@ -39,7 +42,7 @@ export const LoginForm = () => {
         loading={isPending}
         className="mt-2 h-12 w-full text-lg text-white"
       >
-        Login
+        {t("hello")}
       </Button>
     </form>
   );

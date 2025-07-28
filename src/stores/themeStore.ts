@@ -44,7 +44,7 @@ export const useThemeStore = create<ThemeStore>((set) => ({
         : current;
 
     document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add("light" /*appliedTheme*/);
+    document.documentElement.classList.add(appliedTheme);
 
     set({ theme: current });
   },
