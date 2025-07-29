@@ -1,14 +1,26 @@
 import { ComponentProps } from "react";
+import { Link } from "react-router-dom";
+import { Button, Skeleton } from "@/components/ui";
+import { Routes } from "@/config";
+import { cn } from "@/utils";
 
-type Props = ComponentProps<"p">;
+type Props = ComponentProps<"button"> & {
+  nickname?: string;
+};
 
-export const PersonNickname = ({ children, className, ...rest }: Props) => {
+export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
   return (
-    <p
-      className={className}
+    <Button
+      asChild
+      className={cn("h-fit p-0", className)}
+      variant="link"
       {...rest}
     >
-      {children}
-    </p>
+      {nickname ? (
+        <Link to={Routes.settings}>{`@${nickname}`}</Link>
+      ) : (
+        <Skeleton className="mt-1.5 h-4 w-14" />
+      )}
+    </Button>
   );
 };

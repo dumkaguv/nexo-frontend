@@ -1,17 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { ComponentProps } from "react";
 import { cn } from "@/utils";
-import { Separator } from "@/components/ui";
+import { Separator, Skeleton } from "@/components/ui";
 
 type Props = ComponentProps<"div"> & {
   followersCount?: number;
   followingCount?: number;
+  isLoading?: boolean;
 };
 
 export const PersonFollowInfo = ({
   followersCount,
   followingCount,
   className,
+  isLoading = false,
   ...rest
 }: Props) => {
   const { t } = useTranslation();
@@ -22,7 +24,11 @@ export const PersonFollowInfo = ({
       {...rest}
     >
       <div className="flex flex-col items-center">
-        <span className="font-bold">{followersCount ?? 0}</span>
+        {isLoading ? (
+          <Skeleton className="h-5 w-8 rounded" />
+        ) : (
+          <span className="font-bold">{followersCount ?? 0}</span>
+        )}
         <p className="text-muted-foreground">{t("followers")}</p>
       </div>
 
@@ -32,7 +38,11 @@ export const PersonFollowInfo = ({
       />
 
       <div className="flex flex-col items-center">
-        <span className="font-bold">{followingCount ?? 0}</span>
+        {isLoading ? (
+          <Skeleton className="h-5 w-8 rounded" />
+        ) : (
+          <span className="font-bold">{followingCount ?? 0}</span>
+        )}
         <p className="text-muted-foreground">{t("following")}</p>
       </div>
     </div>

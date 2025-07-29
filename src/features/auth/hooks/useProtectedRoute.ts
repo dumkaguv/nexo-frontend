@@ -5,24 +5,47 @@ import { getAccessToken } from "@/utils";
 import { Api } from "@/services/apiClient";
 
 export const useProtectedRoute = () => {
-  const { setUser, setIsPending } = useAuthStore();
+  const { setProfile, setUser, setIsPendingProfile, setIsPendingUser } =
+    useAuthStore();
 
-  const isAuth = Boolean(getAccessToken());
+  const token = getAccessToken();
+  const isAuth = Boolean(token);
 
-  const { data: response, isPending } = useQuery({
-    queryKey: ["getProfile"],
+  const { data: responseProfile, isPending: isPendingProfile } = useQuery({
+    queryKey: ["getProfile", token],
     queryFn: Api.profile.getProfile,
     enabled: isAuth,
   });
 
-  useEffect(() => setIsPending(isPending), [isPending, setIsPending]);
+  const userId = responseProfile?.data?.userRef;
+  const { data: responseUser, isPending: isPendingUser } = useQuery({
+    queryKey: ["getUser", userId],
+    queryFn: () => {
+      if (userId == null) throw new Error("userId is undefined");
+      return Api.users.getUserById(userId);
+    },
+    enabled: typeof userId === "number",
+  });
 
   useEffect(() => {
-    const profile = response?.data;
-    if (profile) {
-      setUser(profile);
+    setIsPendingProfile(isPendingProfile);
+  }, [isPendingProfile, setIsPendingProfile]);
+
+  useEffect(() => {
+    setIsPendingUser(isPendingUser);
+  }, [isPendingUser, setIsPendingUser]);
+
+  useEffect(() => {
+    if (responseProfile?.data) {
+      setProfile(responseProfile.data);
     }
-  }, [response?.data, setUser]);
+  }, [responseProfile?.data, setProfile]);
+
+  useEffect(() => {
+    if (responseUser?.data) {
+      setUser(responseUser.data);
+    }
+  }, [responseUser?.data, setUser]);
 
   return isAuth;
 };

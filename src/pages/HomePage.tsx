@@ -3,9 +3,7 @@ import { Card, Sidebar } from "@/components/shared";
 export const HomePage = () => {
   return (
     <div className="flex gap-5">
-      <aside className="w-[260px] max-w-[260px]">
-        <Sidebar />
-      </aside>
+      <Sidebar className="w-[260px] max-w-[260px]" />
 
       <main className="w-full flex-1">
         <Card>

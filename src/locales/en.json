@@ -14,8 +14,10 @@
     "confirmPassword": "Confirm password",
     "registerSuccess": "Register successfully!",
     "loginSuccess": "Login successfully!",
+    "logoutSuccess": "Logout successfully!",
     "registerError": "Error occurred. Please, register one more time",
-    "loginError": "Error occurred. Please, log in one more time"
+    "loginError": "Error occurred. Please, log in one more time",
+    "logoutError": "Error occurred. Please, logout one more time"
   },
   "theme": {
     "dark": "Dark",
