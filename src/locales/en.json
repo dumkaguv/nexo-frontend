@@ -36,6 +36,10 @@
     "password_number": "Password must contain a number",
     "password_special": "Password must contain a special character"
   },
+  "languages": {
+    "en": "English",
+    "ru": "Russian"
+  },
   "messages": "Messages",
   "settings": "Settings",
   "feed": "Feed",

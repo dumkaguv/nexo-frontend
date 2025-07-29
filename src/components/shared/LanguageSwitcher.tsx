@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Check, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { i18n } from "@/config";
@@ -13,17 +13,17 @@ import {
   TooltipTrigger,
 } from "@/components/ui";
 
-const languages = [
-  { code: "en", label: "English" },
-  { code: "ru", label: "Русский" },
-];
-
 export const LanguageSwitcher = () => {
   const [tooltipEnabled, setTooltipEnabled] = useState(true);
   const { i18n: i18nInstance } = useTranslation();
   const currentLang = i18nInstance.language.split("-")[0];
 
   const { t } = useTranslation();
+
+  const languages = [
+    { code: "en", label: t("languages.en") },
+    { code: "ru", label: t("languages.ru") },
+  ];
 
   const handleLanguageChange = (code: string) => {
     i18n.changeLanguage(code);
@@ -33,11 +33,7 @@ export const LanguageSwitcher = () => {
     }, 400);
   };
 
-  const renderMenuItem = (
-    value: string,
-    label: string,
-    icon: React.ReactNode
-  ) => (
+  const renderMenuItem = (value: string, label: string, icon: ReactNode) => (
     <DropdownMenuItem
       key={value}
       onClick={() => handleLanguageChange(value)}
