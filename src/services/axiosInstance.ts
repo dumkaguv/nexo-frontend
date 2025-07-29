@@ -1,9 +1,8 @@
 import axios from "axios";
 import { getAccessToken, saveAccessToken } from "@/utils";
 import { LocalStorage, Routes } from "@/config";
-import type { ApiResponse } from "@/types";
+import type { ApiResponse, AuthResponse } from "@/types";
 import { ApiRoutes } from "./apiRoutes";
-import { AuthResponse } from "./auth";
 
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL;
 
@@ -35,7 +34,7 @@ axiosInstance.interceptors.response.use(
           }
         );
 
-        const newAccessToken = response.data.data?.accessToken;
+        const newAccessToken = response.data.data?.tokens.accessToken;
         if (!newAccessToken) {
           localStorage.removeItem(LocalStorage.token);
           return (window.location.href = Routes.login);

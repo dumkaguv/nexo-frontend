@@ -1,17 +1,6 @@
-import { ApiResponse } from "@/types";
+import type { ApiResponse, AuthResponse } from "@/types";
 import { ApiRoutes } from "./apiRoutes";
 import { axiosInstance } from "./axiosInstance";
-
-export type AuthResponse = {
-  accessToken: string;
-  refreshToken: string;
-  userId: number;
-  userName: string;
-  fullName: string;
-  email: string;
-  isActivated: boolean;
-  createdAt: string;
-};
 
 export type RegistrationPayload = {
   email: string;

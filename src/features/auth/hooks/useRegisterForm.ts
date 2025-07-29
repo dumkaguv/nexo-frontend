@@ -40,9 +40,9 @@ export const useRegisterForm = () => {
     onSuccess: ({ data, message }) => {
       if (data) {
         toast.success(message ?? t("auth.registerSuccess"));
-        saveAccessToken(data.accessToken);
+        saveAccessToken(data.tokens.accessToken);
         setUser(getUserFromAuthResponse(data));
-        navigate(`${Routes.activate}/${data.userId}`);
+        navigate(`${Routes.activate}/${data.user.userId}`);
       } else {
         toast.error(t("auth.registerError"));
       }

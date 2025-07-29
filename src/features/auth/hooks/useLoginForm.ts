@@ -39,18 +39,14 @@ export const useLoginForm = () => {
   const { mutateAsync: loginMutate, isPending } = useMutation({
     mutationFn: (payload: LoginPayload) => Api.auth.login(payload),
     onSuccess: ({ data, message }) => {
-      if (data) {
+      if (data?.tokens.accessToken) {
         toast.success(message ?? t("auth.loginSuccess"));
-        saveAccessToken(data.accessToken);
+        saveAccessToken(data.tokens.accessToken);
         setUser(getUserFromAuthResponse(data));
         navigate(Routes.home);
-      } else {
-        toast.error(t("auth.loginError"));
       }
     },
-    onError: (error) => {
-      handleMutationError(error);
-    },
+    onError: (error) => handleMutationError(error, t("auth.loginError")),
   });
 
   const onSubmit = async (data: LoginPayload) => await loginMutate(data);
