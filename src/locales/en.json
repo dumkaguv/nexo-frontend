@@ -33,6 +33,7 @@
     "min_length": "At least {{count}} symbols",
     "required": "This field is required",
     "phone": "The number must contain only numbers and an optional + at the beginning",
+    "fileTooLarge": "File must be less than {{max}} MB",
     "password": {
       "mismatch": "Passwords do not match",
       "lowercase": "Password must contain at least one lowercase letter",
@@ -69,5 +70,8 @@
   "saveChanges": "Save changes",
   "accountSettings": "Account settings",
   "closeAccount": "Close account",
-  "mainSettings": "Main settings"
+  "mainSettings": "Main settings",
+  "uploadFile": "Upload file",
+  "uploadAvatar": "Upload avatar",
+  "uploadSuccess": "Uploaded successfully!"
 }

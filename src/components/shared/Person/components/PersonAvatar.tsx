@@ -14,7 +14,10 @@ export const PersonAvatar = ({ src, isLoading, className }: Props) => {
       {isLoading ? (
         <Skeleton className={cn("rounded-full", className)} />
       ) : (
-        <AvatarImage src={src ?? ImageFallbacks.avatar} />
+        <AvatarImage
+          className="object-cover"
+          src={src ?? ImageFallbacks.avatar}
+        />
       )}
     </Avatar>
   );

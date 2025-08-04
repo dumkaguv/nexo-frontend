@@ -8,6 +8,10 @@ export const ApiRoutes = {
     refresh: "/auth/refresh",
     registration: "/auth/registration",
   },
+  upload: {
+    base: "upload",
+    avatar: "/upload/avatar",
+  },
   profile: {
     base: "/profile",
   },

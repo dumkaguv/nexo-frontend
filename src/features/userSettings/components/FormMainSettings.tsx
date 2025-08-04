@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { Button, Input, Label } from "@/components/ui";
+import { Input, Label } from "@/components/ui";
 import { useMainAccountSettingsForm } from "@/features/userSettings/hooks";
 import { DatePicker, InputFieldErrors } from "@/components/shared";
 import { Section } from "./Section";
@@ -12,9 +12,9 @@ export const FormMainSettings = () => {
   const { t } = useTranslation();
 
   return (
-    <Section title="mainSettings">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Section
+        title="mainSettings"
         className="flex flex-col gap-6"
       >
         <div className="flex gap-5">
@@ -66,15 +66,7 @@ export const FormMainSettings = () => {
             </div>
           )}
         />
-
-        <Button
-          type="submit"
-          size="lg"
-          className="self-start"
-        >
-          {t("saveChanges")}
-        </Button>
-      </form>
-    </Section>
+      </Section>
+    </form>
   );
 };

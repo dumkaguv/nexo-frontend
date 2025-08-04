@@ -37,6 +37,8 @@ export const HeaderAvatar = () => {
 
   const onLogoutClick = async () => {
     await logout();
+    setProfile(null);
+    setUser(null);
     setOpen(false);
   };
 

@@ -1,5 +1,6 @@
-import { ComponentProps } from "react";
+import { ComponentProps, useEffect } from "react";
 import { cn } from "@/utils";
+import { defineHeaderHeightCssVar } from "@/utils";
 import { ThemeSwitcher, LanguageSwitcher } from "@/components/shared";
 import { HeaderAvatar } from "./HeaderAvatar";
 import { HeaderLogo } from "./HeaderLogo";
@@ -8,6 +9,10 @@ import { HeaderSearch } from "./HeaderSearch";
 type Props = ComponentProps<"header">;
 
 export const Header = ({ className, ...rest }: Props) => {
+  useEffect(() => {
+    defineHeaderHeightCssVar();
+  }, []);
+
   return (
     <header
       className={cn(
