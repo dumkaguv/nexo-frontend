@@ -4,6 +4,8 @@ export type Profile = {
   fullName: string;
   userName: string;
   avatarUrl?: string;
+  birthDay?: string;
+  phone?: string;
   updatedAt: string;
   createdAt: string;
 };
