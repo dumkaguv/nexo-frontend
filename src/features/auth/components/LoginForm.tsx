@@ -4,14 +4,13 @@ import { Button, Input, Label } from "@/components/ui";
 import { useLoginForm } from "@/features/auth/hooks";
 
 export const LoginForm = () => {
-  const { handleSubmit, inputFields, register, errors, onSubmit, isPending } =
-    useLoginForm();
+  const { inputFields, register, errors, onSubmit, isPending } = useLoginForm();
 
   const { t } = useTranslation();
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       className="mt-3 flex flex-col gap-5 text-start"
     >
       {inputFields.map(

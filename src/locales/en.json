@@ -31,22 +31,43 @@
   "validation": {
     "email_invalid": "Invalid email",
     "min_length": "At least {{count}} symbols",
-    "passwords_mismatch": "Passwords don't match",
     "required": "This field is required",
-    "password_lowercase": "Password must contain a lowercase letter",
-    "password_uppercase": "Password must contain an uppercase letter",
-    "password_number": "Password must contain a number",
-    "password_special": "Password must contain a special character"
+    "phone": "The number must contain only numbers and an optional + at the beginning",
+    "password": {
+      "mismatch": "Passwords do not match",
+      "lowercase": "Password must contain at least one lowercase letter",
+      "uppercase": "Password must contain at least one uppercase letter",
+      "number": "Password must contain at least one number",
+      "special": "Password must contain at least one special character"
+    },
+    "birthDay": {
+      "required": "Birth date is required",
+      "invalid": "Please provide a valid date",
+      "futureDate": "Date cannot be in the future"
+    }
   },
   "languages": {
     "en": "English",
     "ru": "Russian"
   },
+  "inputs": {
+    "defaultPlaceholder": "Input here...",
+    "selectPlaceholder": "Select here...",
+    "inputSearch": "Search...",
+    "inputPassword": "Enter password..."
+  },
   "messages": "Messages",
   "settings": "Settings",
   "feed": "Feed",
-  "inputSearch": "Search...",
   "followers": "Followers",
   "following": "Following",
-  "changeLanguage": "Change language"
+  "changeLanguage": "Change language",
+  "birthDay": "Birth day",
+  "nickName": "Nickname",
+  "fullName": "Full Name",
+  "phone": "Phone",
+  "saveChanges": "Save changes",
+  "accountSettings": "Account settings",
+  "closeAccount": "Close account",
+  "mainSettings": "Main settings"
 }

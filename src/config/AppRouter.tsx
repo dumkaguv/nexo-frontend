@@ -19,6 +19,11 @@ const ActivateAccountPage = lazy(() =>
     default: module.ActivateAccountPage,
   }))
 );
+const SettingsPage = lazy(() =>
+  import("@/features/userSettings").then((module) => ({
+    default: module.SettingsPage,
+  }))
+);
 
 export const AppRouter = () => {
   return (
@@ -29,6 +34,10 @@ export const AppRouter = () => {
             <Route
               path={RoutesConfig.home}
               element={<HomePage />}
+            />
+            <Route
+              path={RoutesConfig.settings.account}
+              element={<SettingsPage />}
             />
           </Route>
 

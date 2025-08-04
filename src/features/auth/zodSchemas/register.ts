@@ -16,7 +16,7 @@ export const createRegisterFormSchema = (t: TFunction) =>
       confirmPassword: z.string().min(1, { error: t("validation.required") }),
     })
     .refine((fields) => fields.password === fields.confirmPassword, {
-      error: t("validation.passwords_mismatch"),
+      error: t("validation.password.mismatch"),
       path: ["confirmPassword"],
     });
 

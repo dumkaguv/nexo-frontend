@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,9 +16,8 @@ import {
   getUserFromAuthResponse,
 } from "@/utils";
 import { useAuthStore } from "@/stores";
-import type { InputField } from "@/features/auth/types";
+import type { InputField } from "@/types";
 import type { LoginPayload } from "@/services/auth";
-import { useNavigate } from "react-router-dom";
 
 export const useLoginForm = () => {
   const { t } = useTranslation();
@@ -72,10 +72,9 @@ export const useLoginForm = () => {
 
   return {
     isPending,
-    onSubmit,
+    onSubmit: handleSubmit(onSubmit),
     loginMutate,
     register,
-    handleSubmit,
     errors,
     inputFields,
   };

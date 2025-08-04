@@ -2,11 +2,14 @@ import { ComponentProps, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/utils";
 import { Button, Input } from "@/components/ui";
+import { useTranslation } from "react-i18next";
 
 type Props = ComponentProps<"input">;
 
 export const InputPassword = ({ className, ...rest }: Props) => {
   const [isShowed, setIsShowed] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleShow = () => setIsShowed((prev) => !prev);
 
@@ -14,7 +17,7 @@ export const InputPassword = ({ className, ...rest }: Props) => {
     <div className="flex h-12 items-center">
       <Input
         type={isShowed ? "text" : "password"}
-        placeholder="Enter password..."
+        placeholder={t("inputs.inputPassword")}
         className={cn("flex-1 rounded-r-none", className)}
         autoComplete="current-password"
         {...rest}

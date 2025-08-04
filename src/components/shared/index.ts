@@ -4,6 +4,7 @@ export { Card } from "./Card";
 export { InputFieldErrors } from "./InputFieldErrors";
 export { ThemeSwitcher } from "./ThemeSwitcher";
 export { LanguageSwitcher } from "./LanguageSwitcher";
+export { DatePicker } from "./DatePicker";
 
 export * from "./Inputs";
 export * from "./Person";

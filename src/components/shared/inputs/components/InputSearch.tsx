@@ -1,4 +1,5 @@
 import { ComponentProps } from "react";
+import { useTranslation } from "react-i18next";
 import { Search, X } from "lucide-react";
 import { cn } from "@/utils";
 import { Button, Input } from "@/components/ui";
@@ -13,11 +14,13 @@ export const InputSearch = ({
   className,
   ...rest
 }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <div className={cn("relative h-fit", className)}>
       <Input
         className="bg-custom-gray px-8"
-        placeholder={placeholder}
+        placeholder={placeholder ?? t("inputs.inputSearch")}
         {...rest}
       />
       <Search

@@ -17,7 +17,7 @@ export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
       {...rest}
     >
       {nickname ? (
-        <Link to={Routes.settings}>{`@${nickname}`}</Link>
+        <Link to={Routes.settings.account}>{`@${nickname}`}</Link>
       ) : (
         <Skeleton className="mt-1.5 h-4 w-14" />
       )}

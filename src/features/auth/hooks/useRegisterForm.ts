@@ -11,13 +11,13 @@ import {
 } from "@/features/auth/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Routes } from "@/config";
-import type { InputField } from "@/features/auth/types";
 import {
   handleMutationError,
   saveAccessToken,
   getUserFromAuthResponse,
 } from "@/utils";
 import { useAuthStore } from "@/stores";
+import type { InputField } from "@/types";
 
 export const useRegisterForm = () => {
   const { t } = useTranslation();
@@ -98,10 +98,9 @@ export const useRegisterForm = () => {
 
   return {
     isPending,
-    onSubmit,
+    onSubmit: handleSubmit(onSubmit),
     registerMutate,
     register,
-    handleSubmit,
     errors,
     inputFields,
   };

@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { LogOut, MessageSquareText, Settings } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -17,10 +17,10 @@ import { useAuthStore } from "@/stores";
 import * as PersonInfo from "@/components/shared/Person";
 
 export const HeaderAvatar = () => {
+  const [open, setOpen] = useState(false);
+
   const { profile, setProfile, setUser, isPendingProfile } = useAuthStore();
-
   const navigate = useNavigate();
-
   const { t } = useTranslation();
 
   const { mutateAsync: logout } = useMutation({
@@ -35,7 +35,12 @@ export const HeaderAvatar = () => {
     onError: (error) => handleMutationError(error),
   });
 
-  const onButtonLogoutClick = async () => await logout();
+  const onLogoutClick = async () => {
+    await logout();
+    setOpen(false);
+  };
+
+  const closeMenu = () => setOpen(false);
 
   const menuItems = [
     {
@@ -46,17 +51,20 @@ export const HeaderAvatar = () => {
     {
       icon: <Settings className="text-primary" />,
       label: t("settings"),
-      to: Routes.settings,
+      to: Routes.settings.account,
     },
     {
       icon: <LogOut className="text-primary" />,
       label: t("auth.logout"),
-      onClick: onButtonLogoutClick,
+      onClick: onLogoutClick,
     },
   ];
 
   return (
-    <DropdownMenu>
+    <DropdownMenu
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DropdownMenuTrigger>
         <PersonInfo.Avatar
           src={profile?.avatarUrl}
@@ -64,6 +72,7 @@ export const HeaderAvatar = () => {
           className="h-10 w-10 cursor-pointer"
         />
       </DropdownMenuTrigger>
+
       <DropdownMenuContent
         align="end"
         side="bottom"
@@ -73,27 +82,26 @@ export const HeaderAvatar = () => {
           <DropdownMenuItem
             key={index}
             className="p-0"
+            asChild
           >
             {"to" in item ? (
-              <Button
-                asChild
-                variant="text"
-                className="w-full justify-start"
+              <Link
+                to={item.to ?? Routes.home}
+                onClick={closeMenu}
               >
-                <Link to={item.to ?? Routes.home}>
+                <div className="flex items-center gap-2 px-3 py-2">
                   {item.icon}
                   {item.label}
-                </Link>
-              </Button>
+                </div>
+              </Link>
             ) : (
-              <Button
+              <button
                 onClick={item.onClick}
-                variant="text"
-                className="w-full justify-start"
+                className="flex w-full items-center gap-2 px-3 py-2"
               >
                 {item.icon}
                 {item.label}
-              </Button>
+              </button>
             )}
           </DropdownMenuItem>
         ))}

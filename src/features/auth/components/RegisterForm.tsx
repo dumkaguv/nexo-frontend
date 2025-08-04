@@ -4,14 +4,14 @@ import { useRegisterForm } from "@/features/auth/hooks";
 import { useTranslation } from "react-i18next";
 
 export const RegisterForm = () => {
-  const { handleSubmit, inputFields, register, errors, onSubmit, isPending } =
+  const { inputFields, register, errors, onSubmit, isPending } =
     useRegisterForm();
 
   const { t } = useTranslation();
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       className="mt-3 flex flex-col gap-5 text-start"
     >
       {inputFields.map(
