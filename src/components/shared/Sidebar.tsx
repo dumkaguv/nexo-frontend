@@ -30,7 +30,10 @@ export const Sidebar = ({ className, ...rest }: Props) => {
         className="h-18 w-18"
       />
 
-      <PersonInfo.Name name={profile?.fullName} />
+      <PersonInfo.Name
+        name={profile?.fullName}
+        className="text-center"
+      />
       <PersonInfo.Nickname nickname={profile?.userName} />
 
       <PersonInfo.FollowInfo

@@ -12,6 +12,7 @@ export const createAccountSettingsSchema = (t: TFunction) =>
     password: createPasswordSchema(t).optional(),
     birthDay: createBirthdaySchema(t).optional(),
     phone: createPhoneSchema(t).optional(),
+    bio: z.string(),
     fullName: z
       .string()
       .min(2, { error: t("validation.min_length", { count: 2 }) }),

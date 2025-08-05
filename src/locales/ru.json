@@ -54,6 +54,7 @@
   "inputs": {
     "defaultPlaceholder": "Вводите здесь...",
     "selectPlaceholder": "Выберите здесь...",
+    "bioPlaceholder": "Введите информацию о себе здесь...",
     "inputSearch": "Поиск...",
     "inputPassword": "Введите пароль..."
   },
@@ -73,5 +74,7 @@
   "mainSettings": "Основные настройки",
   "uploadFile": "Загрузить файл",
   "uploadAvatar": "Загрузить аватар",
-  "uploadSuccess": "Успешно загружено!"
+  "uploadSuccess": "Успешно загружено!",
+  "bio": "Биография",
+  "success": "Успешно!"
 }

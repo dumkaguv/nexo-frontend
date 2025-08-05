@@ -1,12 +1,12 @@
 import { Controller } from "react-hook-form";
-import { Input, Label } from "@/components/ui";
+import { Input, Label, Textarea } from "@/components/ui";
 import { useMainAccountSettingsForm } from "@/features/userSettings/hooks";
 import { DatePicker, InputFieldErrors } from "@/components/shared";
 import { Section } from "./Section";
 import { useTranslation } from "react-i18next";
 
 export const FormMainSettings = () => {
-  const { handleSubmit, onSubmit, register, control, errors } =
+  const { handleSubmit, onSubmit, register, control, errors, isPending } =
     useMainAccountSettingsForm();
 
   const { t } = useTranslation();
@@ -15,6 +15,7 @@ export const FormMainSettings = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Section
         title="mainSettings"
+        isPending={isPending}
         className="flex flex-col gap-6"
       >
         <div className="flex gap-5">
@@ -53,6 +54,16 @@ export const FormMainSettings = () => {
             />
             <InputFieldErrors message={errors.phone?.message} />
           </div>
+        </div>
+
+        <div className="flex w-full flex-col gap-1">
+          <Label htmlFor="bio">{t("bio")}</Label>
+          <Textarea
+            id="bio"
+            {...register("bio")}
+            placeholder={t("inputs.bioPlaceholder")}
+          />{" "}
+          <InputFieldErrors message={errors.bio?.message} />
         </div>
 
         <Controller

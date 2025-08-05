@@ -54,6 +54,7 @@
   "inputs": {
     "defaultPlaceholder": "Input here...",
     "selectPlaceholder": "Select here...",
+    "bioPlaceholder": "Input some bio here...",
     "inputSearch": "Search...",
     "inputPassword": "Enter password..."
   },
@@ -73,5 +74,7 @@
   "mainSettings": "Main settings",
   "uploadFile": "Upload file",
   "uploadAvatar": "Upload avatar",
-  "uploadSuccess": "Uploaded successfully!"
+  "uploadSuccess": "Uploaded successfully!",
+  "bio": "Biography",
+  "success": "Success!"
 }

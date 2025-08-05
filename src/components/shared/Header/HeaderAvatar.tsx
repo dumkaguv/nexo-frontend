@@ -3,7 +3,7 @@ import { LogOut, MessageSquareText, Settings } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,25 +22,22 @@ export const HeaderAvatar = () => {
   const { profile, setProfile, setUser, isPendingProfile } = useAuthStore();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const { mutateAsync: logout } = useMutation({
     mutationFn: Api.auth.logout,
     onSuccess: ({ message }) => {
-      toast.success(message ?? t("auth.logoutSuccess"));
       localStorage.removeItem(LocalStorage.token);
       setProfile(null);
       setUser(null);
+      setOpen(false);
+      queryClient.cancelQueries();
+      queryClient.clear();
+      toast.success(message ?? t("auth.logoutSuccess"));
       navigate(Routes.login);
     },
     onError: (error) => handleMutationError(error),
   });
-
-  const onLogoutClick = async () => {
-    await logout();
-    setProfile(null);
-    setUser(null);
-    setOpen(false);
-  };
 
   const closeMenu = () => setOpen(false);
 
@@ -58,7 +55,7 @@ export const HeaderAvatar = () => {
     {
       icon: <LogOut className="text-primary" />,
       label: t("auth.logout"),
-      onClick: onLogoutClick,
+      onClick: () => logout(),
     },
   ];
 

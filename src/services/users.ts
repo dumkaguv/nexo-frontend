@@ -15,3 +15,11 @@ export const getUserById = async (id: number) => {
     await axiosInstance.get<ApiResponse<User>>(`${ApiRoutes.users.base}/${id}`)
   ).data;
 };
+
+type UpdateUserPayload = Partial<Omit<User, "following" | "followers">>;
+
+export const updateUser = async (payload: UpdateUserPayload) => {
+  return (
+    await axiosInstance.patch<ApiResponse<User>>(ApiRoutes.users.base, payload)
+  ).data;
+};
