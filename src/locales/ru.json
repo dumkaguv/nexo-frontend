@@ -80,5 +80,6 @@
   "changePassword": "Поменять пароль",
   "currentPassword": "Текущий пароль",
   "newPassword": "Новый пароль",
-  "confirmNewPassword": "Подтвердите новый пароль"
+  "confirmNewPassword": "Подтвердите новый пароль",
+  "shareYourThoughts": "Поделись своими мыслями..."
 }

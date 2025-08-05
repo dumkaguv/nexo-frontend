@@ -1,4 +1,5 @@
-import { Card, Sidebar } from "@/components/shared";
+import { Sidebar } from "@/components/shared";
+import { FormCreatePost } from "@/features/posts/components";
 
 export const HomePage = () => {
   return (
@@ -6,9 +7,7 @@ export const HomePage = () => {
       <Sidebar />
 
       <main className="w-full flex-1">
-        <Card>
-          <h1>App</h1>
-        </Card>
+        <FormCreatePost />
       </main>
     </div>
   );

@@ -80,5 +80,6 @@
   "changePassword": "Change password",
   "currentPassword": "Current password",
   "newPassword": "New password",
-  "confirmNewPassword": "Confirm new password"
+  "confirmNewPassword": "Confirm new password",
+  "shareYourThoughts": "Share your thoughts..."
 }

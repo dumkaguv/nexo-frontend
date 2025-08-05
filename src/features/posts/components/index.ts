@@ -1,0 +1,1 @@
+export { FormCreatePost } from "./FormCreatePost";

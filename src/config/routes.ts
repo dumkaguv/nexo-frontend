@@ -9,4 +9,5 @@ export const Routes = {
     delete: "/settings/delete",
   },
   activate: "/activate",
+  profile: "/profile",
 } as const;
