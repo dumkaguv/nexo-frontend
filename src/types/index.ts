@@ -6,3 +6,8 @@ export type { AuthResponse } from "./AuthResponse";
 export type { Follower } from "./Follower";
 export type { Following } from "./Following";
 export type { InputField } from "./InputField";
+export type { Post } from "./Post";
+export type { PostFile } from "./PostFile";
+export type { PostLike } from "./PostLike";
+export type { PostComment } from "./PostComment";
+export type { MessageFile } from "./MessageFile";

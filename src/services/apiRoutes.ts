@@ -10,10 +10,14 @@ export const ApiRoutes = {
     registration: "/auth/registration",
   },
   upload: {
-    base: "upload",
+    base: "/upload",
     avatar: "/upload/avatar",
   },
   profile: {
     base: "/profile",
+  },
+  posts: {
+    base: "/posts",
+    byId: (postId: number) => `/posts/${postId}`,
   },
 } as const;
