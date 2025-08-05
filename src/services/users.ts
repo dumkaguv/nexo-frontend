@@ -23,3 +23,17 @@ export const updateUser = async (payload: UpdateUserPayload) => {
     await axiosInstance.patch<ApiResponse<User>>(ApiRoutes.users.base, payload)
   ).data;
 };
+
+type ChangePasswordPayload = {
+  currentPassword: string;
+  newPassword: string;
+};
+
+export const changePassword = async (payload: ChangePasswordPayload) => {
+  return (
+    await axiosInstance.put<ApiResponse>(
+      ApiRoutes.users.changePassword,
+      payload
+    )
+  ).data;
+};

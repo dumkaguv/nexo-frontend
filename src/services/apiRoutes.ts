@@ -1,6 +1,7 @@
 export const ApiRoutes = {
   users: {
     base: "/users",
+    changePassword: "/users/change-password",
   },
   auth: {
     login: "/auth/login",

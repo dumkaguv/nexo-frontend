@@ -76,5 +76,9 @@
   "uploadAvatar": "Загрузить аватар",
   "uploadSuccess": "Успешно загружено!",
   "bio": "Биография",
-  "success": "Успешно!"
+  "success": "Успешно!",
+  "changePassword": "Поменять пароль",
+  "currentPassword": "Текущий пароль",
+  "newPassword": "Новый пароль",
+  "confirmNewPassword": "Подтвердите новый пароль"
 }

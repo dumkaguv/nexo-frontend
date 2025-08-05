@@ -76,5 +76,9 @@
   "uploadAvatar": "Upload avatar",
   "uploadSuccess": "Uploaded successfully!",
   "bio": "Biography",
-  "success": "Success!"
+  "success": "Success!",
+  "changePassword": "Change password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "confirmNewPassword": "Confirm new password"
 }

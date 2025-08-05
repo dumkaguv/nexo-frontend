@@ -17,7 +17,7 @@ export const Section = ({ title, isPending, children, className }: Props) => {
     <section
       className={cn("border-foreground/20 rounded-xl border p-4", className)}
     >
-      <h2 className="text-primary font-bold">{t(title)}</h2>
+      <h2 className="text-primary text-lg font-bold">{t(title)}</h2>
 
       {children}
 

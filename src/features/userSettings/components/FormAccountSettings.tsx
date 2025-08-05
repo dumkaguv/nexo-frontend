@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { FormMainSettings } from "./FormMainSettings";
 import { FormUploadAvatar } from "./FormUploadAvatar";
+import { FormChangePassword } from "./FormChangePassword";
 
 export const FormAccountSettings = () => {
   const { t } = useTranslation();
@@ -11,6 +12,7 @@ export const FormAccountSettings = () => {
 
       <FormMainSettings />
       <FormUploadAvatar />
+      <FormChangePassword />
     </div>
   );
 };
