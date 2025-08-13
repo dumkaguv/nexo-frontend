@@ -81,5 +81,10 @@
   "currentPassword": "Current password",
   "newPassword": "New password",
   "confirmNewPassword": "Confirm new password",
-  "shareYourThoughts": "Share your thoughts..."
+  "shareYourThoughts": "Share your thoughts...",
+  "video": "Video",
+  "photo": "Photo",
+  "attach": "Attach",
+  "publish": "Publish",
+  "post": "Post"
 }

@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Api } from "@/services/apiClient";
 import { handleMutationError } from "@/utils";
 import type { ApiResponse, Profile, User } from "@/types";
+import { QueryKeys } from "@/config";
 
 export const useMainAccountSettingsForm = () => {
   const { user, setUser, profile, setProfile } = useAuthStore();
@@ -53,7 +54,7 @@ export const useMainAccountSettingsForm = () => {
     },
     onSuccess: (response) => {
       queryClient.invalidateQueries({
-        queryKey: ["getProfile", "getUserById"],
+        queryKey: [QueryKeys.Profile.root, QueryKeys.Users.byId],
       });
 
       if (response.responseUser.data) {

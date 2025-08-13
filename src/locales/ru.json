@@ -81,5 +81,10 @@
   "currentPassword": "Текущий пароль",
   "newPassword": "Новый пароль",
   "confirmNewPassword": "Подтвердите новый пароль",
-  "shareYourThoughts": "Поделись своими мыслями..."
+  "shareYourThoughts": "Поделись своими мыслями...",
+  "video": "Видео",
+  "photo": "Фото",
+  "attach": "Прикрепить",
+  "publish": "Опубликовать",
+  "post": "Пост"
 }

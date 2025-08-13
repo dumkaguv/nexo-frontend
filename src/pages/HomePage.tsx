@@ -1,13 +1,15 @@
 import { Sidebar } from "@/components/shared";
-import { FormCreatePost } from "@/features/posts/components";
+import { FormCreatePost, PostsList } from "@/features/posts/components";
 
 export const HomePage = () => {
   return (
     <div className="flex gap-5">
       <Sidebar />
 
-      <main className="w-full flex-1">
+      <main className="flex w-full flex-1 flex-col gap-8">
         <FormCreatePost />
+
+        <PostsList />
       </main>
     </div>
   );

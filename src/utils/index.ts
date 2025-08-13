@@ -4,3 +4,4 @@ export { saveAccessToken } from "./saveAccessToken";
 export { handleMutationError } from "./handleMutationError";
 export { getUserFromAuthResponse } from "./getUserFromAuthResponse";
 export { defineHeaderHeightCssVar } from "./defineHeaderHeightCssVar";
+export { withDeps } from "./queryKeyFactory";

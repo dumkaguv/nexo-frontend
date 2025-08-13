@@ -1,14 +1,14 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/shared";
-import { Routes } from "@/config";
+import { QueryKeys, Routes } from "@/config";
 import { Api } from "@/services/apiClient";
 
 export const ActivateAccountPage = () => {
   const { userId } = useParams<{ userId?: string }>();
 
   const { data: user } = useQuery({
-    queryKey: ["getUserById", userId],
+    queryKey: [QueryKeys.Users.byId(Number(userId))],
     queryFn: () => Api.users.getUserById(Number(userId)),
     enabled: !!userId,
     refetchInterval: 3000,

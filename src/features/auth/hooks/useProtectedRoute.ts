@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores";
 import { getAccessToken } from "@/utils";
 import { Api } from "@/services/apiClient";
+import { QueryKeys } from "@/config";
 
 export const useProtectedRoute = () => {
   const { setProfile, setUser, setIsPendingProfile, setIsPendingUser } =
@@ -12,16 +13,19 @@ export const useProtectedRoute = () => {
   const isAuth = Boolean(token);
 
   const { data: responseProfile, isPending: isPendingProfile } = useQuery({
-    queryKey: ["getProfile", token],
+    queryKey: [QueryKeys.Profile.root({ token })],
     queryFn: Api.profile.getProfile,
     enabled: isAuth,
   });
 
   const userId = responseProfile?.data?.userRef;
   const { data: responseUser, isPending: isPendingUser } = useQuery({
-    queryKey: ["getUser", userId],
+    queryKey: [QueryKeys.Users.byId(Number(userId))],
     queryFn: () => {
-      if (userId == null) throw new Error("userId is undefined");
+      if (userId == null) {
+        throw new Error("userId is undefined");
+      }
+
       return Api.users.getUserById(userId);
     },
     enabled: typeof userId === "number",

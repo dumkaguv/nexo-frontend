@@ -9,6 +9,7 @@ import { Api } from "@/services/apiClient";
 import { handleMutationError } from "@/utils";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/stores";
+import { QueryKeys } from "@/config";
 
 const MAX_FILE_SIZE_MB = 4;
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -61,7 +62,7 @@ export const useUploadAvatar = () => {
 
   const onSubmit = async () => {
     const response = await uploadAvatar();
-    queryClient.invalidateQueries({ queryKey: ["getProfile"] });
+    queryClient.invalidateQueries({ queryKey: [QueryKeys.Profile.root] });
 
     if (response.data) {
       setProfile(response.data);
