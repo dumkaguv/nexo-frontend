@@ -10,7 +10,7 @@ export const useHeader = () => {
   const debouncedValue = useDebouncedValue(searchValue, 400)
 
   const { data: usersSearch, isPending: isPendingSearch } = useQuery({
-    queryKey: [QueryKeys.Users.search({ debouncedValue })],
+    queryKey: [QueryKeys.Users.search, debouncedValue],
     queryFn: () => Api.users.getUserByUserOrFullName(debouncedValue),
     enabled: !!debouncedValue
   })

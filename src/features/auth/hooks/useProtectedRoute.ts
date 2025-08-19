@@ -14,14 +14,14 @@ export const useProtectedRoute = () => {
   const isAuth = Boolean(token)
 
   const { data: responseProfile, isPending: isPendingProfile } = useQuery({
-    queryKey: [QueryKeys.Profile.root({ token })],
+    queryKey: [QueryKeys.Profile.root, token],
     queryFn: Api.profile.getProfile,
     enabled: isAuth
   })
 
   const userId = responseProfile?.data?.userRef
   const { data: responseUser, isPending: isPendingUser } = useQuery({
-    queryKey: [QueryKeys.Users.byId(Number(userId))],
+    queryKey: [QueryKeys.Users.byId, userId],
     queryFn: () => {
       if (userId == null) {
         throw new Error('userId is undefined')

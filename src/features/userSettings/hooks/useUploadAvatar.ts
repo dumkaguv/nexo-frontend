@@ -13,10 +13,6 @@ import { createAvatarSchema } from '@/zodSchemas'
 
 import type { CreateAvatarSchema } from '@/zodSchemas'
 
-
-
-
-
 const MAX_FILE_SIZE_MB = 4
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 

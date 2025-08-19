@@ -5,9 +5,7 @@ import { I18nextProvider } from 'react-i18next'
 
 import { useThemeStore } from '@/stores'
 
-import { AppRouter, i18n } from './'
-import dayjs from './dayjs'
-import { queryClient } from './tanstackQueryClient'
+import { AppRouter, i18n, queryClient } from './'
 
 export const Providers = () => {
   const { applyTheme } = useThemeStore()

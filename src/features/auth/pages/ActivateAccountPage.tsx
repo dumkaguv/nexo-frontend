@@ -9,7 +9,7 @@ export const ActivateAccountPage = () => {
   const { userId } = useParams<{ userId?: string }>()
 
   const { data: user } = useQuery({
-    queryKey: [QueryKeys.Users.byId(Number(userId))],
+    queryKey: [QueryKeys.Users.byId, userId],
     queryFn: () => Api.users.getUserById(Number(userId)),
     enabled: !!userId,
     refetchInterval: 3000,

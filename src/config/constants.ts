@@ -1,5 +1,3 @@
-import { withDeps } from '@/utils'
-
 export const LocalStorage = {
   token: 'token'
 } as const
@@ -10,17 +8,17 @@ export const ImageFallbacks = {
 
 export const QueryKeys = {
   Posts: {
-    root: withDeps('posts'),
-    byId: (id: number) => withDeps('retrievePost', id)
+    root: 'posts',
+    byId: 'retrievePost'
   },
 
   Profile: {
-    root: withDeps('profile')
+    root: 'profile'
   },
 
   Users: {
-    root: withDeps('users'),
-    byId: withDeps('retrieveProfile'),
-    search: withDeps('usersSearch')
+    root: 'users',
+    byId: 'retrieveProfile',
+    search: 'usersSearch'
   }
 } as const

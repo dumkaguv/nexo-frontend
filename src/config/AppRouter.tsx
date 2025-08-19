@@ -6,7 +6,7 @@ import { AuthorizedLayout, NotAuthorizedLayout } from '@/layouts'
 import { Routes as RoutesConfig } from './'
 
 const HomePage = lazy(() =>
-  import('@/pages').then((module) => ({ default: module.HomePage }))
+  import('@/features/home').then((module) => ({ default: module.HomePage }))
 )
 const LoginPage = lazy(() =>
   import('@/features/auth').then((module) => ({ default: module.LoginPage }))
