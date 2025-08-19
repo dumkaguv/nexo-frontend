@@ -1,6 +1,6 @@
-import { FormHeader, LoginForm } from "@/features/auth/components";
-import { Card } from "@/components/shared";
-import { Routes } from "@/config";
+import { Card } from '@/components/shared'
+import { Routes } from '@/config'
+import { FormHeader, LoginForm } from '@/features/auth/components'
 
 export const LoginPage = () => {
   return (
@@ -13,5 +13,5 @@ export const LoginPage = () => {
       />
       <LoginForm />
     </Card>
-  );
-};
+  )
+}

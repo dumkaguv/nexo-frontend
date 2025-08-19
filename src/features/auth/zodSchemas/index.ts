@@ -1,2 +1,2 @@
-export { createRegisterFormSchema, type RegisterFormSchema } from "./register";
-export { createLoginFormSchema, type LoginFormSchema } from "./login";
+export { type RegisterFormSchema, createRegisterFormSchema } from './register'
+export { type LoginFormSchema, createLoginFormSchema } from './login'

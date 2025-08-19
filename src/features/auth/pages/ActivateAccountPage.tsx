@@ -1,11 +1,12 @@
-import { Navigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { Card } from "@/components/shared";
-import { QueryKeys, Routes } from "@/config";
-import { Api } from "@/services/apiClient";
+import { useQuery } from '@tanstack/react-query'
+import { Navigate, useParams } from 'react-router-dom'
+
+import { Card } from '@/components/shared'
+import { QueryKeys, Routes } from '@/config'
+import { Api } from '@/services/apiClient'
 
 export const ActivateAccountPage = () => {
-  const { userId } = useParams<{ userId?: string }>();
+  const { userId } = useParams<{ userId?: string }>()
 
   const { data: user } = useQuery({
     queryKey: [QueryKeys.Users.byId(Number(userId))],
@@ -14,12 +15,12 @@ export const ActivateAccountPage = () => {
     refetchInterval: 3000,
     refetchOnWindowFocus: true,
     refetchIntervalInBackground: true,
-    staleTime: 0,
-  });
+    staleTime: 0
+  })
 
-  const isActivated = user?.data?.isActivated;
+  const isActivated = user?.data?.isActivated
   if (isActivated) {
-    return <Navigate to={Routes.home} />;
+    return <Navigate to={Routes.home} />
   }
 
   return (
@@ -29,5 +30,5 @@ export const ActivateAccountPage = () => {
         link and activate account.
       </h1>
     </Card>
-  );
-};
+  )
+}

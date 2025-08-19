@@ -1,18 +1,19 @@
-import { create } from "zustand";
-import type { Profile, User } from "@/types";
+import { create } from 'zustand'
+
+import type { Profile, User } from '@/types'
 
 type AuthStoreState = {
-  user: User | null;
-  profile: Profile | null;
+  user: User | null
+  profile: Profile | null
 
-  isPendingUser: boolean;
-  isPendingProfile: boolean;
+  isPendingUser: boolean
+  isPendingProfile: boolean
 
-  setUser: (user: User | null) => void;
-  setProfile: (profile: Profile | null) => void;
-  setIsPendingUser: (isPendingUser: boolean) => void;
-  setIsPendingProfile: (isPendingProfile: boolean) => void;
-};
+  setUser: (user: User | null) => void
+  setProfile: (profile: Profile | null) => void
+  setIsPendingUser: (isPendingUser: boolean) => void
+  setIsPendingProfile: (isPendingProfile: boolean) => void
+}
 
 export const useAuthStore = create<AuthStoreState>((set) => ({
   user: null,
@@ -24,5 +25,5 @@ export const useAuthStore = create<AuthStoreState>((set) => ({
   setUser: (user) => set({ user }),
   setIsPendingUser: (isPendingUser) => set({ isPendingUser }),
   setProfile: (profile) => set({ profile }),
-  setIsPendingProfile: (isPendingProfile) => set({ isPendingProfile }),
-}));
+  setIsPendingProfile: (isPendingProfile) => set({ isPendingProfile })
+}))

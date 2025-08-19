@@ -1,7 +1,8 @@
-import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
-import { en, ru } from "@/locales";
+import i18n from 'i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import { initReactI18next } from 'react-i18next'
+
+import { en, ru } from '@/locales'
 
 i18n
   .use(LanguageDetector)
@@ -9,14 +10,14 @@ i18n
   .init({
     resources: {
       en: { translation: en },
-      ru: { translation: ru },
+      ru: { translation: ru }
     },
-    fallbackLng: "en",
+    fallbackLng: 'en',
     interpolation: { escapeValue: false },
     detection: {
-      order: ["localStorage", "navigator"],
-      caches: ["localStorage"],
-    },
-  });
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage']
+    }
+  })
 
-export { i18n };
+export { i18n }

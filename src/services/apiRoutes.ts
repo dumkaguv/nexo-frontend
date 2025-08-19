@@ -1,23 +1,23 @@
 export const ApiRoutes = {
   users: {
-    base: "/users",
-    changePassword: "/users/change-password",
+    base: '/users',
+    changePassword: '/users/change-password'
   },
   auth: {
-    login: "/auth/login",
-    logout: "/auth/logout",
-    refresh: "/auth/refresh",
-    registration: "/auth/registration",
+    login: '/auth/login',
+    logout: '/auth/logout',
+    refresh: '/auth/refresh',
+    registration: '/auth/registration'
   },
   upload: {
-    base: "/upload",
-    avatar: "/upload/avatar",
+    base: '/upload',
+    avatar: '/upload/avatar'
   },
   profile: {
-    base: "/profile",
+    base: '/profile'
   },
   posts: {
-    base: "/posts",
-    byId: (postId: number) => `/posts/${postId}`,
-  },
-} as const;
+    base: '/posts',
+    byId: (postId: number) => `/posts/${postId}`
+  }
+} as const

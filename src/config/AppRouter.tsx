@@ -1,29 +1,31 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthorizedLayout, NotAuthorizedLayout } from "@/layouts";
-import { Routes as RoutesConfig } from "./";
+import { lazy, Suspense } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+
+import { AuthorizedLayout, NotAuthorizedLayout } from '@/layouts'
+
+import { Routes as RoutesConfig } from './'
 
 const HomePage = lazy(() =>
-  import("@/pages").then((module) => ({ default: module.HomePage }))
-);
+  import('@/pages').then((module) => ({ default: module.HomePage }))
+)
 const LoginPage = lazy(() =>
-  import("@/features/auth").then((module) => ({ default: module.LoginPage }))
-);
+  import('@/features/auth').then((module) => ({ default: module.LoginPage }))
+)
 const RegisterPage = lazy(() =>
-  import("@/features/auth").then((module) => ({
-    default: module.RegisterPage,
+  import('@/features/auth').then((module) => ({
+    default: module.RegisterPage
   }))
-);
+)
 const ActivateAccountPage = lazy(() =>
-  import("@/features/auth").then((module) => ({
-    default: module.ActivateAccountPage,
+  import('@/features/auth').then((module) => ({
+    default: module.ActivateAccountPage
   }))
-);
+)
 const SettingsPage = lazy(() =>
-  import("@/features/userSettings").then((module) => ({
-    default: module.SettingsPage,
+  import('@/features/userSettings').then((module) => ({
+    default: module.SettingsPage
   }))
-);
+)
 
 export const AppRouter = () => {
   return (
@@ -31,10 +33,7 @@ export const AppRouter = () => {
       <Suspense>
         <Routes>
           <Route element={<AuthorizedLayout />}>
-            <Route
-              path={RoutesConfig.home}
-              element={<HomePage />}
-            />
+            <Route path={RoutesConfig.home} element={<HomePage />} />
             <Route
               path={RoutesConfig.settings.account}
               element={<SettingsPage />}
@@ -42,14 +41,8 @@ export const AppRouter = () => {
           </Route>
 
           <Route element={<NotAuthorizedLayout />}>
-            <Route
-              path={RoutesConfig.login}
-              element={<LoginPage />}
-            />
-            <Route
-              path={RoutesConfig.register}
-              element={<RegisterPage />}
-            />
+            <Route path={RoutesConfig.login} element={<LoginPage />} />
+            <Route path={RoutesConfig.register} element={<RegisterPage />} />
             <Route
               path={`${RoutesConfig.activate}/:userId`}
               element={<ActivateAccountPage />}
@@ -58,5 +51,5 @@ export const AppRouter = () => {
         </Routes>
       </Suspense>
     </Router>
-  );
-};
+  )
+}

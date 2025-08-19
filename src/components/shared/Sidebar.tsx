@@ -1,39 +1,34 @@
-import { ComponentProps } from "react";
-import { Link } from "react-router-dom";
-import { MessageSquareText, Newspaper } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { Button, Separator, Sidebar as SidebarUi } from "@/components/ui";
-import * as PersonInfo from "@/components/shared/Person";
-import { Routes } from "@/config";
-import { useAuthStore } from "@/stores";
+import { MessageSquareText, Newspaper } from 'lucide-react'
+import { ComponentProps } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
-type Props = ComponentProps<"aside">;
+import * as PersonInfo from '@/components/shared/Person'
+import { Button, Separator, Sidebar as SidebarUi } from '@/components/ui'
+import { Routes } from '@/config'
+import { useAuthStore } from '@/stores'
+
+type Props = ComponentProps<'aside'>
 
 export const Sidebar = ({ className, ...rest }: Props) => {
-  const { profile, user, isPendingProfile, isPendingUser } = useAuthStore();
+  const { profile, user, isPendingProfile, isPendingUser } = useAuthStore()
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   const navItems = [
-    { name: t("feed"), href: Routes.home, icon: Newspaper },
-    { name: t("messages"), href: Routes.messages, icon: MessageSquareText },
-  ];
+    { name: t('feed'), href: Routes.home, icon: Newspaper },
+    { name: t('messages'), href: Routes.messages, icon: MessageSquareText }
+  ]
 
   return (
-    <SidebarUi
-      className={className}
-      {...rest}
-    >
+    <SidebarUi className={className} {...rest}>
       <PersonInfo.Avatar
         src={profile?.avatarUrl}
         isLoading={isPendingProfile}
         className="h-18 w-18"
       />
 
-      <PersonInfo.Name
-        name={profile?.fullName}
-        className="text-center"
-      />
+      <PersonInfo.Name name={profile?.fullName} className="text-center" />
       <PersonInfo.Nickname nickname={profile?.userName} />
 
       <PersonInfo.FollowInfo
@@ -66,5 +61,5 @@ export const Sidebar = ({ className, ...rest }: Props) => {
         ))}
       </ul>
     </SidebarUi>
-  );
-};
+  )
+}

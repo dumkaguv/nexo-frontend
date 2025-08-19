@@ -1,3 +1,3 @@
-export { ProtectedRoute } from "./components";
+export { ProtectedRoute } from './components'
 
-export * from "./pages";
+export * from './pages'

@@ -1,79 +1,85 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createAvatarSchema } from "@/zodSchemas";
-import type { CreateAvatarSchema } from "@/zodSchemas";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Api } from "@/services/apiClient";
-import { handleMutationError } from "@/utils";
-import toast from "react-hot-toast";
-import { useAuthStore } from "@/stores";
-import { QueryKeys } from "@/config";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 
-const MAX_FILE_SIZE_MB = 4;
-const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024;
+import { QueryKeys } from '@/config'
+import { Api } from '@/services/apiClient'
+import { useAuthStore } from '@/stores'
+import { handleMutationError } from '@/utils'
+import { createAvatarSchema } from '@/zodSchemas'
+
+import type { CreateAvatarSchema } from '@/zodSchemas'
+
+
+
+
+
+const MAX_FILE_SIZE_MB = 4
+const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 
 export const useUploadAvatar = () => {
-  const { profile, setProfile } = useAuthStore();
+  const { profile, setProfile } = useAuthStore()
 
-  const [file, setFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [fileSizeError, setFileSizeError] = useState<string | undefined>(
     undefined
-  );
+  )
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<CreateAvatarSchema>({
-    resolver: zodResolver(createAvatarSchema(t)),
-  });
+    resolver: zodResolver(createAvatarSchema(t))
+  })
 
   const { mutateAsync: uploadAvatar, isPending } = useMutation({
     mutationFn: () => Api.upload.uploadAvatar(file!),
-    onSuccess: ({ message }) => toast.success(message ?? t("uploadSuccess")),
-    onError: (error) => handleMutationError(error),
-  });
+    onSuccess: ({ message }) => toast.success(message ?? t('uploadSuccess')),
+    onError: (error) => handleMutationError(error)
+  })
 
   const onFileChange = (files: FileList | null) => {
     if (files && files.length > 0) {
-      const file = files[0];
+      const file = files[0]
 
       if (file.size > MAX_FILE_SIZE) {
         setFileSizeError(
-          t("validation.fileTooLarge", { max: MAX_FILE_SIZE_MB })
-        );
-        return;
+          t('validation.fileTooLarge', { max: MAX_FILE_SIZE_MB })
+        )
+        return
       }
 
-      setFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
+      setFile(file)
+      setPreviewUrl(URL.createObjectURL(file))
     } else {
-      setPreviewUrl(null);
-      setFile(null);
+      setPreviewUrl(null)
+      setFile(null)
     }
-  };
+  }
 
   const onSubmit = async () => {
-    const response = await uploadAvatar();
-    queryClient.invalidateQueries({ queryKey: [QueryKeys.Profile.root] });
+    const response = await uploadAvatar()
+    queryClient.invalidateQueries({ queryKey: [QueryKeys.Profile.root] })
 
     if (response.data) {
-      setProfile(response.data);
+      setProfile(response.data)
     }
-  };
+  }
 
   useEffect(() => {
     if (profile) {
-      setPreviewUrl(profile.avatarUrl ?? null);
+      setPreviewUrl(profile.avatarUrl ?? null)
     }
-  }, [profile]);
+  }, [profile])
 
   return {
     handleSubmit,
@@ -85,6 +91,6 @@ export const useUploadAvatar = () => {
     fileSizeError,
     uploadAvatar,
     isPending,
-    file,
-  };
-};
+    file
+  }
+}

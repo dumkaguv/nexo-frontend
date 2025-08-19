@@ -1,12 +1,13 @@
-import { ComponentProps } from "react";
-import { useTranslation } from "react-i18next";
-import { Search, X } from "lucide-react";
-import { cn } from "@/utils";
-import { Button, Input } from "@/components/ui";
+import { Search, X } from 'lucide-react'
+import { ComponentProps } from 'react'
+import { useTranslation } from 'react-i18next'
 
-type Props = ComponentProps<"input"> & {
-  onButtonClearClick?: () => void;
-};
+import { Button, Input } from '@/components/ui'
+import { cn } from '@/utils'
+
+type Props = ComponentProps<'input'> & {
+  onButtonClearClick?: () => void
+}
 
 export const InputSearch = ({
   placeholder,
@@ -14,13 +15,13 @@ export const InputSearch = ({
   className,
   ...rest
 }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
-    <div className={cn("relative h-fit", className)}>
+    <div className={cn('relative h-fit', className)}>
       <Input
         className="bg-custom-gray px-8"
-        placeholder={placeholder ?? t("inputs.inputSearch")}
+        placeholder={placeholder ?? t('inputs.inputSearch')}
         {...rest}
       />
       <Search
@@ -33,12 +34,9 @@ export const InputSearch = ({
           onClick={onButtonClearClick}
           variant="link"
         >
-          <X
-            size={16}
-            className="text-gray-600"
-          />
+          <X size={16} className="text-gray-600" />
         </Button>
       )}
     </div>
-  );
-};
+  )
+}

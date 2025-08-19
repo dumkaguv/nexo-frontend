@@ -1,5 +1,5 @@
-import { Sidebar } from "@/components/shared";
-import { FormCreatePost, PostsList } from "@/features/posts/components";
+import { Sidebar, SidebarRight } from '@/components/shared'
+import { FormCreatePost, PostsList } from '@/features/posts/components'
 
 export const HomePage = () => {
   return (
@@ -11,6 +11,8 @@ export const HomePage = () => {
 
         <PostsList />
       </main>
+
+      <SidebarRight />
     </div>
-  );
-};
+  )
+}

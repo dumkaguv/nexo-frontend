@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom";
-import { Header, Container } from "@/components/shared";
-import { ProtectedRoute } from "@/features/auth";
+import { Outlet } from 'react-router-dom'
+
+import { Container, Header } from '@/components/shared'
+import { ProtectedRoute } from '@/features/auth'
 
 export const AuthorizedLayout = () => {
   return (
@@ -11,5 +12,5 @@ export const AuthorizedLayout = () => {
         <Outlet />
       </Container>
     </ProtectedRoute>
-  );
-};
+  )
+}

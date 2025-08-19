@@ -1,6 +1,6 @@
 export type Follower = {
-  id: number;
-  followerId: number;
-  followingId: number;
-  createdAt: string;
-};
+  id: number
+  followerId: number
+  followingId: number
+  createdAt: string
+}

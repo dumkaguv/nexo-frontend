@@ -1,7 +1,9 @@
-import { Controller } from "react-hook-form";
-import { InputFieldErrors, InputUpload } from "@/components/shared";
-import { Section } from "./Section";
-import { useUploadAvatar } from "../hooks";
+import { Controller } from 'react-hook-form'
+
+import { InputFieldErrors, InputUpload } from '@/components/shared'
+
+import { Section } from './Section'
+import { useUploadAvatar } from '../hooks'
 
 export const FormUploadAvatar = () => {
   const {
@@ -12,15 +14,12 @@ export const FormUploadAvatar = () => {
     errors,
     previewUrl,
     fileSizeError,
-    isPending,
-  } = useUploadAvatar();
+    isPending
+  } = useUploadAvatar()
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Section
-        title="uploadAvatar"
-        isPending={isPending}
-      >
+      <Section title="uploadAvatar" isPending={isPending}>
         {previewUrl ? (
           <img
             src={previewUrl}
@@ -41,8 +40,8 @@ export const FormUploadAvatar = () => {
                 multiple={false}
                 value={field.value}
                 onChange={(files) => {
-                  field.onChange(files);
-                  onFileChange(files);
+                  field.onChange(files)
+                  onFileChange(files)
                 }}
               />
               <InputFieldErrors
@@ -53,5 +52,5 @@ export const FormUploadAvatar = () => {
         />
       </Section>
     </form>
-  );
-};
+  )
+}

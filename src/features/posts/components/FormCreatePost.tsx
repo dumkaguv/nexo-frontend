@@ -1,33 +1,33 @@
-import { FormEvent } from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { Image, Video } from "lucide-react";
-import { Card, TextAreaAutoHeight } from "@/components/shared";
-import * as Person from "@/components/shared/Person";
+import { Image, Video } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+
+import { Card, TextAreaAutoHeight } from '@/components/shared'
+import * as Person from '@/components/shared/Person'
 import {
   Button,
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui";
-import { Routes } from "@/config";
-import { useAuthStore } from "@/stores";
+  TooltipTrigger
+} from '@/components/ui'
+import { Routes } from '@/config'
+import { useAuthStore } from '@/stores'
 
 export const FormCreatePost = () => {
-  const { profile, isPendingProfile } = useAuthStore();
+  const { profile, isPendingProfile } = useAuthStore()
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   const actionButtons = [
     {
       icon: <Image className="text-green-500" />,
-      label: t("photo"),
+      label: t('photo')
     },
     {
       icon: <Video className="text-primary" />,
-      label: t("video"),
-    },
-  ];
+      label: t('video')
+    }
+  ]
 
   return (
     <Card>
@@ -49,10 +49,9 @@ export const FormCreatePost = () => {
         <div className="flex items-center justify-between gap-3 pt-5">
           <div className="flex items-center gap-3">
             {actionButtons.map(({ icon, label }, i) => (
-              <Tooltip>
+              <Tooltip key={i}>
                 <TooltipTrigger asChild>
                   <Button
-                    key={i}
                     variant="text"
                     className="bg-muted-foreground/15 hover:bg-muted-foreground/25 gap-1 rounded-lg p-3"
                   >
@@ -61,17 +60,17 @@ export const FormCreatePost = () => {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  {t("attach")} {label.toLowerCase()}
+                  {t('attach')} {label.toLowerCase()}
                 </TooltipContent>
               </Tooltip>
             ))}
           </div>
 
           <Button>
-            {t("publish")} {t("post").toLowerCase()}
+            {t('publish')} {t('post').toLowerCase()}
           </Button>
         </div>
       </div>
     </Card>
-  );
-};
+  )
+}

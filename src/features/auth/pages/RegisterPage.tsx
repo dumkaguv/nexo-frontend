@@ -1,6 +1,6 @@
-import { FormHeader, RegisterForm } from "@/features/auth/components";
-import { Card } from "@/components/shared";
-import { Routes } from "@/config";
+import { Card } from '@/components/shared'
+import { Routes } from '@/config'
+import { FormHeader, RegisterForm } from '@/features/auth/components'
 
 export const RegisterPage = () => {
   return (
@@ -13,5 +13,5 @@ export const RegisterPage = () => {
       />
       <RegisterForm />
     </Card>
-  );
-};
+  )
+}

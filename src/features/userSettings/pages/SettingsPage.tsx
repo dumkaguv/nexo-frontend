@@ -1,8 +1,8 @@
-import { Card } from "@/components/shared";
+import { Card } from '@/components/shared'
 import {
   FormAccountSettings,
-  SidebarSettings,
-} from "@/features/userSettings/components";
+  SidebarSettings
+} from '@/features/userSettings/components'
 
 export const SettingsPage = () => {
   return (
@@ -15,5 +15,5 @@ export const SettingsPage = () => {
         </Card>
       </main>
     </div>
-  );
-};
+  )
+}

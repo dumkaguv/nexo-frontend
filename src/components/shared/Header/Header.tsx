@@ -1,22 +1,24 @@
-import { ComponentProps, useEffect } from "react";
-import { cn } from "@/utils";
-import { defineHeaderHeightCssVar } from "@/utils";
-import { ThemeSwitcher, LanguageSwitcher } from "@/components/shared";
-import { HeaderAvatar } from "./HeaderAvatar";
-import { HeaderLogo } from "./HeaderLogo";
-import { HeaderSearch } from "./HeaderSearch";
+import { ComponentProps, useEffect } from 'react'
 
-type Props = ComponentProps<"header">;
+import { LanguageSwitcher, ThemeSwitcher } from '@/components/shared'
+import { cn } from '@/utils'
+import { defineHeaderHeightCssVar } from '@/utils'
+
+import { HeaderAvatar } from './HeaderAvatar'
+import { HeaderLogo } from './HeaderLogo'
+import { HeaderSearch } from './HeaderSearch'
+
+type Props = ComponentProps<'header'>
 
 export const Header = ({ className, ...rest }: Props) => {
   useEffect(() => {
-    defineHeaderHeightCssVar();
-  }, []);
+    defineHeaderHeightCssVar()
+  }, [])
 
   return (
     <header
       className={cn(
-        "bg-card sticky top-0 z-10 flex items-center justify-between gap-5 rounded-b-md p-2 shadow-md",
+        'bg-card sticky top-0 z-10 flex items-center justify-between gap-5 rounded-b-md p-2 shadow-md',
         className
       )}
       {...rest}
@@ -32,5 +34,5 @@ export const Header = ({ className, ...rest }: Props) => {
         <HeaderAvatar />
       </div>
     </header>
-  );
-};
+  )
+}

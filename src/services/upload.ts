@@ -1,10 +1,11 @@
-import type { ApiResponse, Profile } from "@/types";
-import { axiosInstance } from "./axiosInstance";
-import { ApiRoutes } from "./apiRoutes";
+import { ApiRoutes } from './apiRoutes'
+import { axiosInstance } from './axiosInstance'
+
+import type { ApiResponse, Profile } from '@/types'
 
 export const uploadAvatar = async (file: File) => {
-  const formData = new FormData();
-  formData.append("avatar", file);
+  const formData = new FormData()
+  formData.append('avatar', file)
 
   return (
     await axiosInstance.put<ApiResponse<Profile>>(
@@ -12,9 +13,9 @@ export const uploadAvatar = async (file: File) => {
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          'Content-Type': 'multipart/form-data'
+        }
       }
     )
-  ).data;
-};
+  ).data
+}

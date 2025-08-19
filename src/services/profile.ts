@@ -1,13 +1,14 @@
-import type { ApiResponse, Profile } from "@/types";
-import { axiosInstance } from "./axiosInstance";
-import { ApiRoutes } from "./apiRoutes";
+import { ApiRoutes } from './apiRoutes'
+import { axiosInstance } from './axiosInstance'
+
+import type { ApiResponse, Profile } from '@/types'
 
 export const getProfile = async () => {
   return (await axiosInstance.get<ApiResponse<Profile>>(ApiRoutes.profile.base))
-    .data;
-};
+    .data
+}
 
-type UpdateProfilePayload = Partial<Profile>;
+type UpdateProfilePayload = Partial<Profile>
 
 export const updateProfile = async (payload: UpdateProfilePayload) => {
   return (
@@ -15,5 +16,5 @@ export const updateProfile = async (payload: UpdateProfilePayload) => {
       ApiRoutes.profile.base,
       payload
     )
-  ).data;
-};
+  ).data
+}

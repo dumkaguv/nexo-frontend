@@ -1,5 +1,6 @@
-import { Outlet } from "react-router-dom";
-import { Container, HeaderUnAuthorized } from "@/components/shared";
+import { Outlet } from 'react-router-dom'
+
+import { Container, HeaderUnAuthorized } from '@/components/shared'
 
 export const NotAuthorizedLayout = () => {
   return (
@@ -9,5 +10,5 @@ export const NotAuthorizedLayout = () => {
         <Outlet />
       </Container>
     </>
-  );
-};
+  )
+}

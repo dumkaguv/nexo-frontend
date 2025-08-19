@@ -3,6 +3,10 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
+import stylisticTs from "@stylistic/eslint-plugin";
+import unusedImports from "eslint-plugin-unused-imports";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
+import importPlugin from "eslint-plugin-import";
 
 export default tseslint.config(
   { ignores: ["dist"] },
@@ -16,6 +20,10 @@ export default tseslint.config(
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      import: importPlugin,
+      unicorn: eslintPluginUnicorn,
+      "@stylistic/ts": stylisticTs,
+      "unused-imports": unusedImports,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -28,6 +36,40 @@ export default tseslint.config(
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+      "@stylistic/ts/padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "const", next: "return" },
+      ],
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            ["parent", "sibling", "index"],
+            "object",
+            "type",
+          ],
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+          "newlines-between": "always-and-inside-groups",
+          named: {
+            import: true,
+            export: true,
+            require: false,
+            cjsExports: false,
+            types: "types-first",
+          },
+        },
+      ],
+    },
+    settings: {
+      "import/resolver": {
+        typescript: {},
+      },
     },
   }
 );

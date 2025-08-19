@@ -86,5 +86,6 @@
   "photo": "Photo",
   "attach": "Attach",
   "publish": "Publish",
-  "post": "Post"
+  "post": "Post",
+  "today_at": "Today at"
 }

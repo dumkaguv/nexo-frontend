@@ -1,53 +1,57 @@
-import axios from "axios";
-import { getAccessToken, saveAccessToken } from "@/utils";
-import { LocalStorage, Routes } from "@/config";
-import type { ApiResponse, AuthResponse } from "@/types";
-import { ApiRoutes } from "./apiRoutes";
+import axios from 'axios'
 
-const baseURL = import.meta.env.VITE_PUBLIC_API_URL;
+import { LocalStorage, Routes } from '@/config'
+import { getAccessToken, saveAccessToken } from '@/utils'
+
+import { ApiRoutes } from './apiRoutes'
+
+import type { ApiResponse, AuthResponse } from '@/types'
+
+
+const baseURL = import.meta.env.VITE_PUBLIC_API_URL
 
 export const axiosInstance = axios.create({
   baseURL,
-  withCredentials: true,
-});
+  withCredentials: true
+})
 
 axiosInstance.interceptors.request.use((config) => {
-  const accessToken = getAccessToken();
-  config.headers.Authorization = `Bearer ${accessToken}`;
+  const accessToken = getAccessToken()
+  config.headers.Authorization = `Bearer ${accessToken}`
 
-  return config;
-});
+  return config
+})
 
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      originalRequest._retry = true
 
       try {
         const response = await axios.get<ApiResponse<AuthResponse>>(
           baseURL + ApiRoutes.auth.refresh,
           {
-            withCredentials: true,
+            withCredentials: true
           }
-        );
+        )
 
-        const newAccessToken = response.data.data?.tokens.accessToken;
+        const newAccessToken = response.data.data?.tokens.accessToken
         if (!newAccessToken) {
-          localStorage.removeItem(LocalStorage.token);
-          return (window.location.href = Routes.login);
+          localStorage.removeItem(LocalStorage.token)
+          return (window.location.href = Routes.login)
         }
-        saveAccessToken(newAccessToken);
+        saveAccessToken(newAccessToken)
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+        return axiosInstance(originalRequest)
       } catch (err) {
-        return Promise.reject(err);
+        return Promise.reject(err)
       }
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)

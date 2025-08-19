@@ -1,17 +1,18 @@
-import { ChangeEvent, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Upload } from "lucide-react";
-import { Button, Input, Label } from "@/components/ui";
-import { cn } from "@/utils";
+import { Upload } from 'lucide-react'
+import { ChangeEvent, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import { Button, Input, Label } from '@/components/ui'
+import { cn } from '@/utils'
 
 type Props = {
-  label?: string;
-  accept?: string;
-  multiple?: boolean;
-  className?: string;
-  onChange?: (files: FileList | null) => void;
-  value?: FileList | null;
-};
+  label?: string
+  accept?: string
+  multiple?: boolean
+  className?: string
+  onChange?: (files: FileList | null) => void
+  value?: FileList | null
+}
 
 export const InputUpload = ({
   label,
@@ -19,25 +20,25 @@ export const InputUpload = ({
   multiple,
   className,
   onChange,
-  value,
+  value
 }: Props) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [_F, setSelectedFiles] = useState<FileList | null>(value ?? null);
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [_F, setSelectedFiles] = useState<FileList | null>(value ?? null)
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   const handleButtonClick = () => {
-    inputRef.current?.click();
-  };
+    inputRef.current?.click()
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    setSelectedFiles(files);
-    onChange?.(files);
-  };
+    const files = e.target.files
+    setSelectedFiles(files)
+    onChange?.(files)
+  }
 
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className={cn('space-y-2', className)}>
       {label && <Label>{t(label)}</Label>}
 
       <Input
@@ -56,8 +57,8 @@ export const InputUpload = ({
         className="flex items-center gap-2"
       >
         <Upload className="h-4 w-4" />
-        {t("uploadFile")}
+        {t('uploadFile')}
       </Button>
     </div>
-  );
-};
+  )
+}

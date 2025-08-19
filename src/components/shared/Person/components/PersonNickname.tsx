@@ -1,18 +1,19 @@
-import { ComponentProps } from "react";
-import { Link } from "react-router-dom";
-import { Button, Skeleton } from "@/components/ui";
-import { Routes } from "@/config";
-import { cn } from "@/utils";
+import { ComponentProps } from 'react'
+import { Link } from 'react-router-dom'
 
-type Props = ComponentProps<"button"> & {
-  nickname?: string;
-};
+import { Button, Skeleton } from '@/components/ui'
+import { Routes } from '@/config'
+import { cn } from '@/utils'
+
+type Props = ComponentProps<'button'> & {
+  nickname?: string
+}
 
 export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
   return (
     <Button
       asChild
-      className={cn("h-fit p-0", className)}
+      className={cn('h-fit p-0', className)}
       variant="link"
       {...rest}
     >
@@ -22,5 +23,5 @@ export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
         <Skeleton className="mt-1.5 h-4 w-14" />
       )}
     </Button>
-  );
-};
+  )
+}

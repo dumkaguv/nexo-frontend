@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
-@import "../fonts/fonts.css";
+@import '../fonts/fonts.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -124,7 +124,7 @@
   body {
     @apply bg-background text-foreground;
     /*background-color: var(--color-gray);*/
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 }
 
@@ -145,10 +145,10 @@ svg * {
   transition: all var(--transition-duration);
 }
 
-:where([fill]:not([fill="none"], [fill^="url"])) {
+:where([fill]:not([fill='none'], [fill^='url'])) {
   fill: currentColor;
 }
 
-:where([stroke]:not([stroke="none"], [stroke^="url"])) {
+:where([stroke]:not([stroke='none'], [stroke^='url'])) {
   stroke: currentColor;
 }

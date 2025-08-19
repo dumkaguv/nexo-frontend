@@ -1,17 +1,20 @@
-import { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
-import { I18nextProvider } from "react-i18next";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { useThemeStore } from "@/stores";
-import { queryClient } from "./tanstackQueryClient";
-import { AppRouter, i18n } from "./";
+import { QueryClientProvider } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
+import { I18nextProvider } from 'react-i18next'
+
+import { useThemeStore } from '@/stores'
+
+import { AppRouter, i18n } from './'
+import dayjs from './dayjs'
+import { queryClient } from './tanstackQueryClient'
 
 export const Providers = () => {
-  const { applyTheme } = useThemeStore();
+  const { applyTheme } = useThemeStore()
 
   useEffect(() => {
-    applyTheme();
-  }, [applyTheme]);
+    applyTheme()
+  }, [applyTheme])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -20,5 +23,5 @@ export const Providers = () => {
         <Toaster />
       </I18nextProvider>
     </QueryClientProvider>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import { ReactNode, useState } from "react";
-import { Check, Globe } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { i18n } from "@/config";
+import { Check, Globe } from 'lucide-react'
+import { ReactNode, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import {
   Button,
   DropdownMenu,
@@ -10,58 +10,52 @@ import {
   DropdownMenuTrigger,
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui";
+  TooltipTrigger
+} from '@/components/ui'
+import { i18n } from '@/config'
 
 export const LanguageSwitcher = () => {
-  const [tooltipEnabled, setTooltipEnabled] = useState(true);
-  const { i18n: i18nInstance } = useTranslation();
-  const currentLang = i18nInstance.language.split("-")[0];
+  const [tooltipEnabled, setTooltipEnabled] = useState(true)
+  const { i18n: i18nInstance } = useTranslation()
+  const currentLang = i18nInstance.language.split('-')[0]
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   const languages = [
-    { code: "en", label: t("languages.en") },
-    { code: "ru", label: t("languages.ru") },
-  ];
+    { code: 'en', label: t('languages.en') },
+    { code: 'ru', label: t('languages.ru') }
+  ]
 
   const handleLanguageChange = (code: string) => {
-    i18n.changeLanguage(code);
-    setTooltipEnabled(false);
+    i18n.changeLanguage(code)
+    setTooltipEnabled(false)
     setTimeout(() => {
-      setTooltipEnabled(true);
-    }, 400);
-  };
+      setTooltipEnabled(true)
+    }, 400)
+  }
 
   const renderMenuItem = (value: string, label: string, icon: ReactNode) => (
-    <DropdownMenuItem
-      key={value}
-      onClick={() => handleLanguageChange(value)}
-    >
+    <DropdownMenuItem key={value} onClick={() => handleLanguageChange(value)}>
       {icon}
       <span>{label}</span>
       <span className="ml-auto">
         {currentLang === value && <Check size={16} />}
       </span>
     </DropdownMenuItem>
-  );
+  )
 
   return (
     <DropdownMenu>
       <Tooltip open={tooltipEnabled ? undefined : false}>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="link"
-              size="icon"
-              className="hover:bg-primary/25"
-            >
+            <Button variant="link" size="icon" className="hover:bg-primary/25">
               <Globe className="h-[1.2rem] w-[1.2rem]" />
-              <span className="sr-only">{t("changeLanguage")}</span>
+              <span className="sr-only">{t('changeLanguage')}</span>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
-        <TooltipContent>{t("changeLanguage")}</TooltipContent>
+        <TooltipContent>{t('changeLanguage')}</TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent align="end">
@@ -70,5 +64,5 @@ export const LanguageSwitcher = () => {
         )}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
