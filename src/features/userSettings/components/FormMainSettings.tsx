@@ -8,7 +8,6 @@ import { useMainAccountSettingsForm } from '@/features/userSettings/hooks'
 
 import { Section } from './Section'
 
-
 export const FormMainSettings = () => {
   const { handleSubmit, onSubmit, register, control, errors, isPending } =
     useMainAccountSettingsForm()

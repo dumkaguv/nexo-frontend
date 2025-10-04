@@ -15,7 +15,6 @@ import {
 } from '@/components/ui'
 import { useThemeStore } from '@/stores'
 
-
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useThemeStore()
 

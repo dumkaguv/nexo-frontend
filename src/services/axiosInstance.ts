@@ -7,7 +7,6 @@ import { ApiRoutes } from './apiRoutes'
 
 import type { ApiResponse, AuthResponse } from '@/types'
 
-
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL
 
 export const axiosInstance = axios.create({

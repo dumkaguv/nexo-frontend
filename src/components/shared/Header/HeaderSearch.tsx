@@ -2,8 +2,7 @@ import { InputSearch } from '@/components/shared'
 import { useHeader } from '@/hooks'
 
 export const HeaderSearch = () => {
-  const { usersSearch, searchValue, setSearchValue, isPendingSearch } =
-    useHeader()
+  const { searchValue, setSearchValue } = useHeader()
 
   return (
     <InputSearch

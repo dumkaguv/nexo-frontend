@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
