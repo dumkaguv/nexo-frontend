@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { Button, Input } from '@/components/ui'
 import { cn } from '@/utils'
 
-
 type Props = ComponentProps<'input'>
 
 export const InputPassword = ({ className, ...rest }: Props) => {
