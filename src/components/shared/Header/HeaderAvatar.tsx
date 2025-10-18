@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 import * as PersonInfo from '@/components/shared/Person'
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -25,7 +26,7 @@ export const HeaderAvatar = () => {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
-  const { mutateAsync: logout } = useMutation({
+  const { mutateAsync: logout, isPending } = useMutation({
     mutationFn: Api.auth.logout,
     onSuccess: ({ message }) => {
       localStorage.removeItem(LocalStorage.token)
@@ -81,13 +82,15 @@ export const HeaderAvatar = () => {
                 </div>
               </Link>
             ) : (
-              <button
+              <Button
                 onClick={item.onClick}
-                className="flex w-full items-center gap-2 px-3 py-2"
+                className="flex w-full items-center justify-start gap-2 px-3 py-2"
+                variant="text"
+                loading={isPending}
               >
                 {item.icon}
                 {item.label}
-              </button>
+              </Button>
             )}
           </DropdownMenuItem>
         ))}

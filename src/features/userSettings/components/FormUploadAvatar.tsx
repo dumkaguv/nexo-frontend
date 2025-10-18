@@ -1,6 +1,10 @@
 import { Controller } from 'react-hook-form'
 
-import { InputFieldErrors, InputUpload } from '@/components/shared'
+import {
+  ImagePreview,
+  InputFieldErrors,
+  InputUpload
+} from '@/components/shared'
 
 import { Section } from './Section'
 import { useUploadAvatar } from '../hooks'
@@ -17,11 +21,13 @@ export const FormUploadAvatar = () => {
     isPending
   } = useUploadAvatar()
 
+  console.log(previewUrl)
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Section title="uploadAvatar" isPending={isPending}>
         {previewUrl ? (
-          <img
+          <ImagePreview
             src={previewUrl}
             alt=""
             className="my-4 h-48 w-48 rounded-full border border-dashed object-cover"

@@ -3,10 +3,17 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthorizedLayout, NotAuthorizedLayout } from '@/layouts'
 
 import { Routes as RoutesConfig } from './'
+import { RouteLoader } from './RouteLoader'
 
 const router = createBrowserRouter([
   {
-    element: <AuthorizedLayout />,
+    hydrateFallbackElement: <div></div>,
+    element: (
+      <>
+        <RouteLoader />
+        <AuthorizedLayout />
+      </>
+    ),
     children: [
       {
         path: RoutesConfig.home,
@@ -27,7 +34,13 @@ const router = createBrowserRouter([
     ]
   },
   {
-    element: <NotAuthorizedLayout />,
+    hydrateFallbackElement: <div></div>,
+    element: (
+      <>
+        <RouteLoader />
+        <NotAuthorizedLayout />
+      </>
+    ),
     children: [
       {
         path: RoutesConfig.login,
@@ -58,5 +71,9 @@ const router = createBrowserRouter([
 ])
 
 export const AppRouter = () => {
-  return <RouterProvider router={router} />
+  return (
+    <RouterProvider router={router} fallbackElement={<div>Loading...</div>}>
+      <RouteLoader />
+    </RouterProvider>
+  )
 }

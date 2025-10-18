@@ -8,6 +8,7 @@ export { DatePicker } from './DatePicker'
 export { TextAreaAutoHeight } from './TextAreaAutoHeight'
 export { DayLabel } from './DayLabel'
 export { SidebarRight } from './SidebarRight'
+export { ImagePreview } from './ImagePreview'
 
 export * from './Inputs'
 export * from './Person'

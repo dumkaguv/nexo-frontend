@@ -10,7 +10,7 @@ export const fetchPostById = async (postId: number) =>
   (await axiosInstance.get<ApiResponse<Post>>(ApiRoutes.posts.byId(postId)))
     .data
 
-type CreatePostPayload = {
+export type CreatePostPayload = {
   content: string
 }
 
