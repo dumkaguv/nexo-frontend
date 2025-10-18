@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { LogOut, MessageSquareText, Settings } from 'lucide-react'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 import * as PersonInfo from '@/components/shared/Person'
 import {

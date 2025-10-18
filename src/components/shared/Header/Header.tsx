@@ -8,14 +8,12 @@ import { HeaderAvatar } from './HeaderAvatar'
 import { HeaderLogo } from './HeaderLogo'
 import { HeaderSearch } from './HeaderSearch'
 
-import type { ComponentProps} from 'react';
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'header'>
 
 export const Header = ({ className, ...rest }: Props) => {
-  useEffect(() => {
-    defineHeaderHeightCssVar()
-  }, [])
+  useEffect(() => defineHeaderHeightCssVar(), [])
 
   return (
     <header

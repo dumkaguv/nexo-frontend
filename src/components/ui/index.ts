@@ -6,6 +6,7 @@ export { Label } from './Label'
 export { Sidebar } from './Sidebar'
 export { Calendar } from './Calendar'
 export { Textarea } from './Textarea'
+export { Toaster } from './Sonner'
 
 export * from './Avatar'
 export * from './DropdownMenu'

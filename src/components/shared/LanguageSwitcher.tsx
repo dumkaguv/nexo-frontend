@@ -1,6 +1,5 @@
 import { Check, Globe } from 'lucide-react'
 
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -18,7 +17,6 @@ import { i18n } from '@/config'
 import type { ReactNode } from 'react'
 
 export const LanguageSwitcher = () => {
-  const [tooltipEnabled, setTooltipEnabled] = useState(true)
   const { i18n: i18nInstance } = useTranslation()
   const currentLang = i18nInstance.language.split('-')[0]
 
@@ -29,16 +27,10 @@ export const LanguageSwitcher = () => {
     { code: 'ru', label: t('languages.ru') }
   ]
 
-  const handleLanguageChange = (code: string) => {
-    i18n.changeLanguage(code)
-    setTooltipEnabled(false)
-    setTimeout(() => {
-      setTooltipEnabled(true)
-    }, 400)
-  }
+  const onLanguageChange = (code: string) => i18n.changeLanguage(code)
 
   const renderMenuItem = (value: string, label: string, icon: ReactNode) => (
-    <DropdownMenuItem key={value} onClick={() => handleLanguageChange(value)}>
+    <DropdownMenuItem key={value} onClick={() => onLanguageChange(value)}>
       {icon}
       <span>{label}</span>
       <span className="ml-auto">
@@ -49,7 +41,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <DropdownMenu>
-      <Tooltip open={tooltipEnabled ? undefined : false}>
+      <Tooltip>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger asChild>
             <Button variant="link" size="icon" className="hover:bg-primary/25">
@@ -61,7 +53,10 @@ export const LanguageSwitcher = () => {
         <TooltipContent>{t('changeLanguage')}</TooltipContent>
       </Tooltip>
 
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         {languages.map(({ code, label }) =>
           renderMenuItem(code, label, <Globe size={16} />)
         )}

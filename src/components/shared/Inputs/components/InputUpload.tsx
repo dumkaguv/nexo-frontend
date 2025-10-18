@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Input, Label } from '@/components/ui'
 import { cn } from '@/utils'
 
-import type { ChangeEvent} from 'react';
+import type { ChangeEvent, ComponentProps } from 'react'
 
 type Props = {
   label?: string
@@ -15,7 +15,7 @@ type Props = {
   className?: string
   onChange?: (files: FileList | null) => void
   value?: FileList | null
-}
+} & ComponentProps<'input'>
 
 export const InputUpload = ({
   label,
@@ -23,18 +23,17 @@ export const InputUpload = ({
   multiple,
   className,
   onChange,
-  value
+  value,
+  ...props
 }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [_F, setSelectedFiles] = useState<FileList | null>(value ?? null)
 
   const { t } = useTranslation()
 
-  const handleButtonClick = () => {
-    inputRef.current?.click()
-  }
+  const onButtonClick = () => inputRef.current?.click()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     setSelectedFiles(files)
     onChange?.(files)
@@ -47,16 +46,17 @@ export const InputUpload = ({
       <Input
         type="file"
         ref={inputRef}
-        onChange={handleChange}
+        onChange={onChangeInput}
         accept={accept}
         multiple={multiple}
         className="hidden"
+        {...props}
       />
 
       <Button
         type="button"
         variant="outline"
-        onClick={handleButtonClick}
+        onClick={onButtonClick}
         className="flex items-center gap-2"
       >
         <Upload className="h-4 w-4" />

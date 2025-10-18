@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,7 +11,6 @@ import {
   createRegisterFormSchema
 } from '@/features/auth/zodSchemas'
 import { Api } from '@/services/apiClient'
-
 
 import { useAuthStore } from '@/stores'
 import {

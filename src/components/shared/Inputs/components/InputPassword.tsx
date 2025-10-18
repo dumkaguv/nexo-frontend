@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Button, Input } from '@/components/ui'
 import { cn } from '@/utils'
 
-import type { ComponentProps} from 'react';
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'input'>
 
@@ -16,7 +16,7 @@ export const InputPassword = ({ className, ...rest }: Props) => {
 
   const { t } = useTranslation()
 
-  const handleShow = () => setIsShowed((prev) => !prev)
+  const onShow = () => setIsShowed((prev) => !prev)
 
   return (
     <div className="flex h-12 items-center">
@@ -29,7 +29,7 @@ export const InputPassword = ({ className, ...rest }: Props) => {
       />
       <Button
         type="button"
-        onClick={handleShow}
+        onClick={onShow}
         variant="outline"
         size="icon"
         className="h-full rounded-l-none border-l-0"

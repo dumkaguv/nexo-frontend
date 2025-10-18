@@ -1,4 +1,4 @@
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 import { i18n } from '@/config'
 
@@ -10,6 +10,4 @@ export const handleMutationError = (error: unknown, message?: string) => {
   toast.error(
     axiosError.response?.data.message ?? message ?? i18n.t('error.generic')
   )
-
-  console.log(error)
 }

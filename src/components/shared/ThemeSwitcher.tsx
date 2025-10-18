@@ -14,6 +14,8 @@ import {
 } from '@/components/ui'
 import { useThemeStore } from '@/stores'
 
+import type { ReactNode } from 'react'
+
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useThemeStore()
 
@@ -24,7 +26,7 @@ export const ThemeSwitcher = () => {
   const renderMenuItem = (
     value: typeof theme,
     label: string,
-    icon: React.ReactNode
+    icon: ReactNode
   ) => (
     <DropdownMenuItem onClick={() => onThemeChange(value)}>
       {icon}

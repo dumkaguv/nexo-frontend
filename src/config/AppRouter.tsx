@@ -1,55 +1,62 @@
-import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { AuthorizedLayout, NotAuthorizedLayout } from '@/layouts'
 
 import { Routes as RoutesConfig } from './'
 
-const HomePage = lazy(() =>
-  import('@/features/home').then((module) => ({ default: module.HomePage }))
-)
-const LoginPage = lazy(() =>
-  import('@/features/auth').then((module) => ({ default: module.LoginPage }))
-)
-const RegisterPage = lazy(() =>
-  import('@/features/auth').then((module) => ({
-    default: module.RegisterPage
-  }))
-)
-const ActivateAccountPage = lazy(() =>
-  import('@/features/auth').then((module) => ({
-    default: module.ActivateAccountPage
-  }))
-)
-const SettingsPage = lazy(() =>
-  import('@/features/userSettings').then((module) => ({
-    default: module.SettingsPage
-  }))
-)
+const router = createBrowserRouter([
+  {
+    element: <AuthorizedLayout />,
+    children: [
+      {
+        path: RoutesConfig.home,
+        lazy: async () => {
+          const { HomePage } = await import('@/features/home')
+
+          return { Component: HomePage }
+        }
+      },
+      {
+        path: RoutesConfig.settings.account,
+        lazy: async () => {
+          const { SettingsPage } = await import('@/features/userSettings')
+
+          return { Component: SettingsPage }
+        }
+      }
+    ]
+  },
+  {
+    element: <NotAuthorizedLayout />,
+    children: [
+      {
+        path: RoutesConfig.login,
+        lazy: async () => {
+          const { LoginPage } = await import('@/features/auth')
+
+          return { Component: LoginPage }
+        }
+      },
+      {
+        path: RoutesConfig.register,
+        lazy: async () => {
+          const { RegisterPage } = await import('@/features/auth')
+
+          return { Component: RegisterPage }
+        }
+      },
+      {
+        path: `${RoutesConfig.activate}/:userId`,
+        lazy: async () => {
+          const { ActivateAccountPage } = await import('@/features/auth')
+
+          return { Component: ActivateAccountPage }
+        }
+      }
+    ]
+  }
+])
 
 export const AppRouter = () => {
-  return (
-    <Router>
-      <Suspense>
-        <Routes>
-          <Route element={<AuthorizedLayout />}>
-            <Route path={RoutesConfig.home} element={<HomePage />} />
-            <Route
-              path={RoutesConfig.settings.account}
-              element={<SettingsPage />}
-            />
-          </Route>
-
-          <Route element={<NotAuthorizedLayout />}>
-            <Route path={RoutesConfig.login} element={<LoginPage />} />
-            <Route path={RoutesConfig.register} element={<RegisterPage />} />
-            <Route
-              path={`${RoutesConfig.activate}/:userId`}
-              element={<ActivateAccountPage />}
-            />
-          </Route>
-        </Routes>
-      </Suspense>
-    </Router>
-  )
+  return <RouterProvider router={router} />
 }
