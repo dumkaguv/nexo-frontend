@@ -11,7 +11,7 @@ import {
   createRegisterFormSchema
 } from '@/features/auth/zodSchemas'
 import { Api } from '@/services/apiClient'
-import { RegistrationPayload } from '@/services/auth'
+
 
 import { useAuthStore } from '@/stores'
 import {
@@ -19,6 +19,8 @@ import {
   handleMutationError,
   saveAccessToken
 } from '@/utils'
+
+import type { RegistrationPayload } from '@/services/auth'
 
 import type { InputField } from '@/types'
 

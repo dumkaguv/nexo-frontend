@@ -1,5 +1,5 @@
 import { MessageSquareText, Newspaper } from 'lucide-react'
-import { ComponentProps } from 'react'
+
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -7,6 +7,8 @@ import * as PersonInfo from '@/components/shared/Person'
 import { Button, Separator, Sidebar as SidebarUi } from '@/components/ui'
 import { Routes } from '@/config'
 import { useAuthStore } from '@/stores'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'aside'>
 

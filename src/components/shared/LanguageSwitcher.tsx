@@ -1,5 +1,6 @@
 import { Check, Globe } from 'lucide-react'
-import { ReactNode, useState } from 'react'
+
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -13,6 +14,8 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 import { i18n } from '@/config'
+
+import type { ReactNode } from 'react'
 
 export const LanguageSwitcher = () => {
   const [tooltipEnabled, setTooltipEnabled] = useState(true)

@@ -1,7 +1,8 @@
-import { ComponentProps } from 'react'
 
 import { Skeleton } from '@/components/ui'
 import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'h2'> & {
   name?: string

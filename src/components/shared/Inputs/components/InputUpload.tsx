@@ -1,9 +1,12 @@
 import { Upload } from 'lucide-react'
-import { ChangeEvent, useRef, useState } from 'react'
+
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, Input, Label } from '@/components/ui'
 import { cn } from '@/utils'
+
+import type { ChangeEvent} from 'react';
 
 type Props = {
   label?: string

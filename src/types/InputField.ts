@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import type { ComponentProps } from 'react'
 
 export type InputField<T> = ComponentProps<'input'> & {
   name: keyof T

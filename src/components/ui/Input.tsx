@@ -1,9 +1,10 @@
 'use client'
 
-import { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
 
 function Input({
   placeholder,

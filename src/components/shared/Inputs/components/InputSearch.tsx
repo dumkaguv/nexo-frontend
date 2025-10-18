@@ -1,9 +1,11 @@
 import { Search, X } from 'lucide-react'
-import { ComponentProps } from 'react'
+
 import { useTranslation } from 'react-i18next'
 
 import { Button, Input } from '@/components/ui'
 import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'input'> & {
   onButtonClearClick?: () => void

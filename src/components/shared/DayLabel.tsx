@@ -1,15 +1,17 @@
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 
 import 'dayjs/locale/ru'
 import 'dayjs/locale/en'
-import { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { i18n } from '@/config/i18n'
 import { cn } from '@/utils'
+
+import type { Dayjs } from 'dayjs'
+import type { ComponentProps } from 'react'
 
 dayjs.extend(relativeTime)
 dayjs.extend(utc)

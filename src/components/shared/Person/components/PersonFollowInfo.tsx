@@ -1,8 +1,9 @@
-import { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Separator, Skeleton } from '@/components/ui'
 import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'div'> & {
   followersCount?: number

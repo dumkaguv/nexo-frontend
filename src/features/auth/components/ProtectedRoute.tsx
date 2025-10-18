@@ -1,9 +1,10 @@
-import { ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Routes } from '@/config'
 
 import { useProtectedRoute } from '../hooks'
+
+import type { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode

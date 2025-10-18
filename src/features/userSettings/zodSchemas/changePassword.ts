@@ -1,7 +1,8 @@
-import { TFunction } from 'i18next'
 import z from 'zod'
 
 import { createPasswordSchema } from '@/zodSchemas'
+
+import type { TFunction } from 'i18next'
 
 export const createChangePasswordSchema = (t: TFunction) =>
   z

@@ -1,9 +1,10 @@
-import { ComponentProps } from 'react'
 
 import { LanguageSwitcher, ThemeSwitcher } from '@/components/shared'
 import { cn } from '@/utils'
 
 import { HeaderLogo } from './HeaderLogo'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'header'>
 

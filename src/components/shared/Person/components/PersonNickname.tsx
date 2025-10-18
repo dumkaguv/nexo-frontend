@@ -1,9 +1,10 @@
-import { ComponentProps } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, Skeleton } from '@/components/ui'
 import { Routes } from '@/config'
 import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'button'> & {
   nickname?: string

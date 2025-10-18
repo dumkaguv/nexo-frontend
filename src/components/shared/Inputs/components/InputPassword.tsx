@@ -1,10 +1,13 @@
 import { Eye, EyeOff } from 'lucide-react'
-import { ComponentProps, useState } from 'react'
+
+import { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
 import { Button, Input } from '@/components/ui'
 import { cn } from '@/utils'
+
+import type { ComponentProps} from 'react';
 
 type Props = ComponentProps<'input'>
 

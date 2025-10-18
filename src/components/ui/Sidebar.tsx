@@ -1,7 +1,8 @@
-import { ComponentProps } from 'react'
 
 import { Card } from '@/components/shared'
 import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
 
 type Props = ComponentProps<'aside'> & {
   bodyClassName?: string

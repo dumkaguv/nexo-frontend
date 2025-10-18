@@ -1,4 +1,4 @@
-import { ComponentProps, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { LanguageSwitcher, ThemeSwitcher } from '@/components/shared'
 import { cn } from '@/utils'
@@ -7,6 +7,8 @@ import { defineHeaderHeightCssVar } from '@/utils'
 import { HeaderAvatar } from './HeaderAvatar'
 import { HeaderLogo } from './HeaderLogo'
 import { HeaderSearch } from './HeaderSearch'
+
+import type { ComponentProps} from 'react';
 
 type Props = ComponentProps<'header'>
 
