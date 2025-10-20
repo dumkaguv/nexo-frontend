@@ -10,6 +10,7 @@ export { DayLabel } from './DayLabel'
 export { SidebarRight } from './SidebarRight'
 export { ImagePreview } from './ImagePreview'
 
+export * from './Typography'
 export * from './Inputs'
 export * from './Person'
 export * from './Header'

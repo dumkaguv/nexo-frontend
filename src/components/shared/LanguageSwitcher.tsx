@@ -14,7 +14,11 @@ import {
 } from '@/components/ui'
 import { i18n } from '@/config'
 
+import { Typography } from './Typography'
+
 import type { ReactNode } from 'react'
+
+const { Text } = Typography
 
 export const LanguageSwitcher = () => {
   const { i18n: i18nInstance } = useTranslation()
@@ -32,10 +36,10 @@ export const LanguageSwitcher = () => {
   const renderMenuItem = (value: string, label: string, icon: ReactNode) => (
     <DropdownMenuItem key={value} onClick={() => onLanguageChange(value)}>
       {icon}
-      <span>{label}</span>
-      <span className="ml-auto">
+      <Text>{label}</Text>
+      <Text className="ml-auto">
         {currentLang === value && <Check size={16} />}
-      </span>
+      </Text>
     </DropdownMenuItem>
   )
 
@@ -46,7 +50,7 @@ export const LanguageSwitcher = () => {
           <DropdownMenuTrigger asChild>
             <Button variant="link" size="icon" className="hover:bg-primary/25">
               <Globe className="h-[1.2rem] w-[1.2rem]" />
-              <span className="sr-only">{t('changeLanguage')}</span>
+              <Text className="sr-only">{t('changeLanguage')}</Text>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>

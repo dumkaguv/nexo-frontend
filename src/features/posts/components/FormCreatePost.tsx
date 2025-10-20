@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { toast } from 'sonner'
 
-import { Card, TextAreaAutoHeight } from '@/components/shared'
+import { Card, TextAreaAutoHeight, Typography } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
 import {
   Button,
@@ -20,6 +20,8 @@ import { useAuthStore } from '@/stores'
 import { handleMutationError } from '@/utils'
 
 import type { CreatePostPayload } from '@/services/posts'
+
+const { Text } = Typography
 
 export const FormCreatePost = () => {
   const { profile, isPendingProfile } = useAuthStore()
@@ -71,7 +73,7 @@ export const FormCreatePost = () => {
                       className="bg-muted-foreground/15 hover:bg-muted-foreground/25 gap-1 rounded-lg p-3"
                     >
                       {icon}
-                      <span className="opacity-70">{label}</span>
+                      <Text className="opacity-70">{label}</Text>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>

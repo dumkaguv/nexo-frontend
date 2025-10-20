@@ -14,7 +14,11 @@ import {
 } from '@/components/ui'
 import { useThemeStore } from '@/stores'
 
+import { Typography } from './Typography'
+
 import type { ReactNode } from 'react'
+
+const { Text } = Typography
 
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useThemeStore()
@@ -30,8 +34,8 @@ export const ThemeSwitcher = () => {
   ) => (
     <DropdownMenuItem onClick={() => onThemeChange(value)}>
       {icon}
-      <span>{label}</span>
-      <span className="ml-auto">{theme === value && <Check size={16} />}</span>
+      <Text>{label}</Text>
+      <Text className="ml-auto">{theme === value && <Check size={16} />}</Text>
     </DropdownMenuItem>
   )
 
@@ -43,7 +47,7 @@ export const ThemeSwitcher = () => {
             <Button variant="link" size="icon" className="hover:bg-primary/25">
               <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              <span className="sr-only">{t('theme.toggleTheme')}</span>
+              <Text className="sr-only">{t('theme.toggleTheme')}</Text>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>

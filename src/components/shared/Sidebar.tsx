@@ -8,7 +8,11 @@ import { Button, Separator, Sidebar as SidebarUi } from '@/components/ui'
 import { Routes } from '@/config'
 import { useAuthStore } from '@/stores'
 
+import { Typography } from './Typography'
+
 import type { ComponentProps } from 'react'
+
+const { Paragraph } = Typography
 
 type Props = ComponentProps<'aside'>
 
@@ -53,9 +57,9 @@ export const Sidebar = ({ className, ...rest }: Props) => {
               >
                 <Link to={href}>
                   <Icon className="text-primary" />
-                  <p className="text-foreground hover:text-foreground/85 transition-colors duration-200">
+                  <Paragraph className="text-foreground hover:text-foreground/85 transition-colors duration-200">
                     {name}
-                  </p>
+                  </Paragraph>
                 </Link>
               </Button>
             </nav>

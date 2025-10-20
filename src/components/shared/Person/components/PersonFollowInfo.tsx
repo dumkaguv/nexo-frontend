@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
+import { Typography } from '@/components/shared'
 import { Separator, Skeleton } from '@/components/ui'
 import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
+
+const { Paragraph, Text } = Typography
 
 type Props = ComponentProps<'div'> & {
   followersCount?: number
@@ -26,9 +29,11 @@ export const PersonFollowInfo = ({
         {isLoading ? (
           <Skeleton className="h-5 w-8 rounded" />
         ) : (
-          <span className="font-bold">{followersCount ?? 0}</span>
+          <Text className="font-bold">{followersCount ?? 0}</Text>
         )}
-        <p className="text-muted-foreground">{t('followers')}</p>
+        <Paragraph className="text-muted-foreground">
+          {t('followers')}
+        </Paragraph>
       </div>
 
       <Separator className="h-10 w-10" orientation="vertical" />
@@ -37,9 +42,11 @@ export const PersonFollowInfo = ({
         {isLoading ? (
           <Skeleton className="h-5 w-8 rounded" />
         ) : (
-          <span className="font-bold">{followingCount ?? 0}</span>
+          <Text className="font-bold">{followingCount ?? 0}</Text>
         )}
-        <p className="text-muted-foreground">{t('following')}</p>
+        <Paragraph className="text-muted-foreground">
+          {t('following')}
+        </Paragraph>
       </div>
     </div>
   )
