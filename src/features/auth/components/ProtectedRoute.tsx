@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom'
 
 import { Routes } from '@/config'
 
-import { useProtectedRoute } from '../hooks'
+import { useProtectedRoute } from '@/features/auth/hooks'
 
 import type { ReactNode } from 'react'
 

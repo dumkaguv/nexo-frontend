@@ -1,0 +1,1 @@
+export { useFormCreatePost } from './useFormCreatePost'

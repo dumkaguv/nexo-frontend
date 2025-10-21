@@ -6,8 +6,6 @@ import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
 
-const { Paragraph, Text } = Typography
-
 type Props = ComponentProps<'div'> & {
   followersCount?: number
   followingCount?: number
@@ -23,31 +21,26 @@ export const PersonFollowInfo = ({
 }: Props) => {
   const { t } = useTranslation()
 
+  const renderFollowInfo = (translationKey: string, count?: number) => (
+    <div className="flex flex-col items-center">
+      {isLoading ? (
+        <Skeleton className="h-5 w-8 rounded" />
+      ) : (
+        <Typography.Text className="font-bold">{count ?? 0}</Typography.Text>
+      )}
+      <Typography.Paragraph className="text-muted-foreground">
+        {t(translationKey)}
+      </Typography.Paragraph>
+    </div>
+  )
+
   return (
     <div className={cn('flex h-12 gap-4', className)} {...rest}>
-      <div className="flex flex-col items-center">
-        {isLoading ? (
-          <Skeleton className="h-5 w-8 rounded" />
-        ) : (
-          <Text className="font-bold">{followersCount ?? 0}</Text>
-        )}
-        <Paragraph className="text-muted-foreground">
-          {t('followers')}
-        </Paragraph>
-      </div>
+      {renderFollowInfo('followers', followersCount)}
 
       <Separator className="h-10 w-10" orientation="vertical" />
 
-      <div className="flex flex-col items-center">
-        {isLoading ? (
-          <Skeleton className="h-5 w-8 rounded" />
-        ) : (
-          <Text className="font-bold">{followingCount ?? 0}</Text>
-        )}
-        <Paragraph className="text-muted-foreground">
-          {t('following')}
-        </Paragraph>
-      </div>
+      {renderFollowInfo('following', followingCount)}
     </div>
   )
 }

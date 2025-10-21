@@ -1,15 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
 import { QueryKeys } from '@/config'
 import {
   type AccountSettingsFormSchema,
   createAccountSettingsSchema
 } from '@/features/userSettings/zodSchemas'
+import { useInvalidateQueries } from '@/hooks'
 import { Api } from '@/services/apiClient'
 import { useAuthStore } from '@/stores'
 
@@ -22,7 +23,7 @@ export const useMainAccountSettingsForm = () => {
   const { t } = useTranslation()
   const schema = createAccountSettingsSchema(t)
 
-  const queryClient = useQueryClient()
+  const { invalidateQueries } = useInvalidateQueries()
 
   const {
     register,
@@ -55,10 +56,12 @@ export const useMainAccountSettingsForm = () => {
 
       return { responseUser, responseProfile }
     },
-    onSuccess: (response) => {
-      queryClient.invalidateQueries({
-        queryKey: [QueryKeys.Profile.root, QueryKeys.Users.byId]
-      })
+    onSuccess: async (response) => {
+      await invalidateQueries([
+        QueryKeys.Posts.root,
+        QueryKeys.Profile.root,
+        QueryKeys.Users.byId
+      ])
 
       if (response.responseUser.data) {
         setUser(response.responseUser.data)
@@ -88,8 +91,7 @@ export const useMainAccountSettingsForm = () => {
   }, [user, profile, reset])
 
   return {
-    onSubmit,
-    handleSubmit,
+    onSubmit: handleSubmit(onSubmit),
     control,
     register,
     errors,

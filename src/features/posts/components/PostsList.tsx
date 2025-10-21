@@ -7,7 +7,7 @@ import { PostCard, PostCardListSkeleton } from './'
 
 export const PostsList = () => {
   const { data: posts, isPending } = useQuery({
-    queryKey: [QueryKeys.Users.root],
+    queryKey: [QueryKeys.Posts.root],
     queryFn: Api.posts.fetchAllPosts
   })
 
