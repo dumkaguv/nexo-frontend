@@ -6,8 +6,9 @@ import {
   InputUpload
 } from '@/components/shared'
 
+import { useUploadAvatar } from '@/features/userSettings/hooks'
+
 import { Section } from './Section'
-import { useUploadAvatar } from '../hooks'
 
 export const FormUploadAvatar = () => {
   const {
@@ -20,8 +21,6 @@ export const FormUploadAvatar = () => {
     fileSizeError,
     isPending
   } = useUploadAvatar()
-
-  console.log(previewUrl)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

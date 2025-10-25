@@ -9,13 +9,13 @@ import { useMainAccountSettingsForm } from '@/features/userSettings/hooks'
 import { Section } from './Section'
 
 export const FormMainSettings = () => {
-  const { handleSubmit, onSubmit, register, control, errors, isPending } =
+  const { onSubmit, register, control, errors, isPending } =
     useMainAccountSettingsForm()
 
   const { t } = useTranslation()
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <Section
         title="mainSettings"
         isPending={isPending}

@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { Card } from '@/components/shared'
+import { Card, Typography } from '@/components/shared'
 import { QueryKeys, Routes } from '@/config'
 import { Api } from '@/services/apiClient'
+
+const { Title } = Typography
 
 export const ActivateAccountPage = () => {
   const { userId } = useParams<{ userId?: string }>()
@@ -25,10 +27,10 @@ export const ActivateAccountPage = () => {
 
   return (
     <Card className="max-w-96">
-      <h1>
+      <Title level={1}>
         Hey, we've just sent you activation link on your email. Please follow up
         link and activate account.
-      </h1>
+      </Title>
     </Card>
   )
 }

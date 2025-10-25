@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import { QueryKeys } from '@/config'
+import { useInvalidateQueries } from '@/hooks'
 import { Api } from '@/services/apiClient'
 import { useAuthStore } from '@/stores'
 import { handleMutationError } from '@/utils'
@@ -25,8 +26,7 @@ export const useUploadAvatar = () => {
     undefined
   )
 
-  const queryClient = useQueryClient()
-
+  const { invalidateQueries } = useInvalidateQueries()
   const { t } = useTranslation()
 
   const {
@@ -64,7 +64,7 @@ export const useUploadAvatar = () => {
 
   const onSubmit = async () => {
     const response = await uploadAvatar()
-    queryClient.invalidateQueries({ queryKey: [QueryKeys.Profile.root] })
+    invalidateQueries([QueryKeys.Profile.root])
 
     if (response.data) {
       setProfile(response.data)

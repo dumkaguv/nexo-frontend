@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import { Typography } from '@/components/shared'
+
+const { Title, Paragraph } = Typography
+
 type Props = {
   titleKey: string
   accountTextKey: string
@@ -18,8 +22,10 @@ export const FormHeader = ({
 
   return (
     <>
-      <h1 className="mb-2 text-center text-4xl font-bold">{t(titleKey)}</h1>
-      <p className="mb-5">
+      <Title level={1} className="mb-2 text-center text-4xl font-bold">
+        {t(titleKey)}
+      </Title>
+      <Paragraph className="mb-5">
         {t(accountTextKey)}{' '}
         <Link
           to={url}
@@ -27,7 +33,7 @@ export const FormHeader = ({
         >
           {t(urlTextKey)}
         </Link>
-      </p>
+      </Paragraph>
     </>
   )
 }

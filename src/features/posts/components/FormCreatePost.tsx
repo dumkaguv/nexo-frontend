@@ -1,11 +1,13 @@
-import { useMutation } from '@tanstack/react-query'
 import { Image, Video } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { toast } from 'sonner'
-
-import { Card, TextAreaAutoHeight } from '@/components/shared'
+import {
+  Card,
+  InputFieldErrors,
+  TextAreaAutoHeight,
+  Typography
+} from '@/components/shared'
 import * as Person from '@/components/shared/Person'
 import {
   Button,
@@ -14,23 +16,18 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 import { paths } from '@/config'
-import { Api } from '@/services/apiClient'
+
+import { useFormCreatePost } from '@/features/posts/hooks'
 import { useAuthStore } from '@/stores'
 
-import { handleMutationError } from '@/utils'
-
-import type { CreatePostPayload } from '@/services/posts'
+const { Text } = Typography
 
 export const FormCreatePost = () => {
   const { profile, isPendingProfile } = useAuthStore()
 
-  const { t } = useTranslation()
+  const { register, onSubmit, errors, isPending } = useFormCreatePost()
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: (payload: CreatePostPayload) => Api.posts.createPost(payload),
-    onSuccess: ({ message }) => toast.success(message),
-    onError: (e) => handleMutationError(e)
-  })
+  const { t } = useTranslation()
 
   const actionButtons = [
     {
@@ -44,11 +41,11 @@ export const FormCreatePost = () => {
   ]
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <Card>
         <div className="flex flex-col">
           <div className="flex gap-4">
-            <Link to={paths.profile}>
+            <Link to={paths.profile.root}>
               <Person.Avatar
                 src={profile?.avatarUrl}
                 isLoading={isPendingProfile}
@@ -57,7 +54,8 @@ export const FormCreatePost = () => {
             </Link>
 
             <div className="flex w-full flex-col gap-2">
-              <TextAreaAutoHeight />
+              <TextAreaAutoHeight {...register('content')} />
+              <InputFieldErrors message={errors.content?.message} />
             </div>
           </div>
 
@@ -71,7 +69,7 @@ export const FormCreatePost = () => {
                       className="bg-muted-foreground/15 hover:bg-muted-foreground/25 gap-1 rounded-lg p-3"
                     >
                       {icon}
-                      <span className="opacity-70">{label}</span>
+                      <Text className="opacity-70">{label}</Text>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -81,7 +79,7 @@ export const FormCreatePost = () => {
               ))}
             </div>
 
-            <Button loading={isPending}>
+            <Button type="submit" loading={isPending}>
               {t('publish')} {t('post').toLowerCase()}
             </Button>
           </div>

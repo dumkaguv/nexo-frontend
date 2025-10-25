@@ -10,8 +10,12 @@ import { useTranslation } from 'react-i18next'
 import { i18n } from '@/config/i18n'
 import { cn } from '@/utils'
 
+import { Typography } from './Typography'
+
 import type { Dayjs } from 'dayjs'
 import type { ComponentProps } from 'react'
+
+const { Text } = Typography
 
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
@@ -55,14 +59,14 @@ export const DayLabel = ({
       {showIcon ? (
         <div className="ml-1 flex items-center justify-center gap-1.5">
           <div className="bg-primary -mt-0.5 size-2 rounded-full" />
-          <span className={cn('text-sm', className)} {...props}>
+          <Text className={cn('text-sm', className)} {...props}>
             {label}
-          </span>
+          </Text>
         </div>
       ) : (
-        <span className={cn('', className)} {...props}>
+        <Text className={className} {...props}>
           {label}
-        </span>
+        </Text>
       )}
     </>
   )
