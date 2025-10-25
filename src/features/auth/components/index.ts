@@ -1,4 +1,4 @@
-export { RegisterForm } from './RegisterForm'
-export { LoginForm } from './LoginForm'
-export { ProtectedRoute } from './ProtectedRoute'
-export { FormHeader } from './FormHeader'
+export * from './RegisterForm'
+export * from './LoginForm'
+export * from './ProtectedRoute'
+export * from './FormHeader'

@@ -9,7 +9,7 @@ export const uploadAvatar = async (file: File) => {
 
   return (
     await axiosInstance.put<ApiResponse<Profile>>(
-      ApiRoutes.upload.avatar,
+      Apipaths.upload.avatar,
       formData,
       {
         headers: {

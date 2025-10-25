@@ -1,5 +1,5 @@
 import { Card } from '@/components/shared'
-import { Routes } from '@/config'
+import { paths } from '@/config'
 import { FormHeader, LoginForm } from '@/features/auth/components'
 
 export const LoginPage = () => {
@@ -9,7 +9,7 @@ export const LoginPage = () => {
         titleKey="auth.signIn"
         accountTextKey="auth.dontHaveAccount"
         urlTextKey="auth.clickHereToSignUp"
-        url={Routes.register}
+        url={paths.auth.register}
       />
       <LoginForm />
     </Card>

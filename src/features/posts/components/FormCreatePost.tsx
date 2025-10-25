@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui'
-import { Routes } from '@/config'
+import { paths } from '@/config'
 import { Api } from '@/services/apiClient'
 import { useAuthStore } from '@/stores'
 
@@ -48,7 +48,7 @@ export const FormCreatePost = () => {
       <Card>
         <div className="flex flex-col">
           <div className="flex gap-4">
-            <Link to={Routes.profile}>
+            <Link to={paths.profile}>
               <Person.Avatar
                 src={profile?.avatarUrl}
                 isLoading={isPendingProfile}

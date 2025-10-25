@@ -11,9 +11,12 @@
     "format": "prettier --write ./src/**/*.{ts,tsx,js,jsx,json,css,scss,md}",
     "fix": "npm run lint:fix && npm run format",
     "lint-staged": "lint-staged",
+    "openapi": "openapi-ts",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hey-api/client-axios": "^0.9.1",
+    "@hey-api/openapi-ts": "^0.86.4",
     "@hookform/resolvers": "^5.2.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dropdown-menu": "^2.1.15",

@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const response = await axios.get<ApiResponse<AuthResponse>>(
-          baseURL + ApiRoutes.auth.refresh,
+          baseURL + Apipaths.auth.refresh,
           {
             withCredentials: true
           }
@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
         const newAccessToken = response.data.data?.tokens.accessToken
         if (!newAccessToken) {
           localStorage.removeItem(LocalStorage.token)
-          return (window.location.href = Routes.login)
+          return (window.location.href = paths.login)
         }
         saveAccessToken(newAccessToken)
 

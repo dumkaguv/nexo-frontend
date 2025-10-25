@@ -5,7 +5,7 @@ import type { ApiResponse, User } from '@/types'
 
 export const getUserByUserOrFullName = async (name: string) => {
   return (
-    await axiosInstance.get<ApiResponse<User[]>>(ApiRoutes.users.base, {
+    await axiosInstance.get<ApiResponse<User[]>>(Apipaths.users.base, {
       params: { name }
     })
   ).data
@@ -13,7 +13,7 @@ export const getUserByUserOrFullName = async (name: string) => {
 
 export const getUserById = async (id: number) => {
   return (
-    await axiosInstance.get<ApiResponse<User>>(`${ApiRoutes.users.base}/${id}`)
+    await axiosInstance.get<ApiResponse<User>>(`${Apipaths.users.base}/${id}`)
   ).data
 }
 
@@ -21,7 +21,7 @@ type UpdateUserPayload = Partial<Omit<User, 'following' | 'followers'>>
 
 export const updateUser = async (payload: UpdateUserPayload) => {
   return (
-    await axiosInstance.patch<ApiResponse<User>>(ApiRoutes.users.base, payload)
+    await axiosInstance.patch<ApiResponse<User>>(Apipaths.users.base, payload)
   ).data
 }
 
@@ -32,9 +32,6 @@ type ChangePasswordPayload = {
 
 export const changePassword = async (payload: ChangePasswordPayload) => {
   return (
-    await axiosInstance.put<ApiResponse>(
-      ApiRoutes.users.changePassword,
-      payload
-    )
+    await axiosInstance.put<ApiResponse>(Apipaths.users.changePassword, payload)
   ).data
 }

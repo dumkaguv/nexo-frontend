@@ -1,27 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
-import { Routes } from '@/config'
+import { authControllerRegisterMutation } from '@/api'
+import { paths } from '@/config'
 import {
   type RegisterFormSchema,
   createRegisterFormSchema
 } from '@/features/auth/zodSchemas'
-import { Api } from '@/services/apiClient'
 
 import { useAuthStore } from '@/stores'
-import {
-  getUserFromAuthResponse,
-  handleMutationError,
-  saveAccessToken
-} from '@/utils'
+import { handleMutationError, saveAccessToken } from '@/utils'
 
-import type { RegistrationPayload } from '@/services/auth'
-
-import type { InputField } from '@/types'
+import type { InputField } from '@/features/auth/types'
 
 export const useRegisterForm = () => {
   const { t } = useTranslation()
@@ -40,22 +34,20 @@ export const useRegisterForm = () => {
   const navigate = useNavigate()
 
   const { mutateAsync: registerMutate, isPending } = useMutation({
-    mutationFn: (payload: RegistrationPayload) => Api.auth.register(payload),
-    onSuccess: ({ data, message }) => {
-      if (data) {
-        toast.success(message ?? t('auth.registerSuccess'))
-        saveAccessToken(data.tokens.accessToken)
-        setUser(getUserFromAuthResponse(data))
-        navigate(`${Routes.activate}/${data.user.userId}`)
-      } else {
-        toast.error(t('auth.registerError'))
+    ...authControllerRegisterMutation(),
+    onSuccess: ({ data: { accessToken, user } }) => {
+      if (accessToken) {
+        toast.success(t('auth.loginSuccess'))
+        saveAccessToken(accessToken)
+        setUser(user)
+        navigate(paths.home.root)
       }
     },
-    onError: (error) => handleMutationError(error)
+    onError: (error) => handleMutationError(error, t('auth.loginError'))
   })
 
-  const onSubmit = async (data: RegisterFormSchema) =>
-    await registerMutate(data)
+  const onSubmit = async (body: RegisterFormSchema) =>
+    await registerMutate({ body })
 
   const inputFields: InputField<RegisterFormSchema>[] = [
     {
@@ -103,7 +95,6 @@ export const useRegisterForm = () => {
   return {
     isPending,
     onSubmit: handleSubmit(onSubmit),
-    registerMutate,
     register,
     errors,
     inputFields

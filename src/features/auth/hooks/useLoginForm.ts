@@ -1,25 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
-import { Routes } from '@/config'
+import { authControllerLoginMutation } from '@/api'
+import { paths } from '@/config'
 import {
   type LoginFormSchema,
   createLoginFormSchema
 } from '@/features/auth/zodSchemas'
-import { Api } from '@/services/apiClient'
 import { useAuthStore } from '@/stores'
-import {
-  getUserFromAuthResponse,
-  handleMutationError,
-  saveAccessToken
-} from '@/utils'
+import { handleMutationError, saveAccessToken } from '@/utils'
 
-import type { LoginPayload } from '@/services/auth'
-import type { InputField } from '@/types'
+import type { LoginRequestDto } from '@/api'
+
+import type { InputField } from '@/features/auth/types'
 
 export const useLoginForm = () => {
   const { t } = useTranslation()
@@ -39,19 +36,20 @@ export const useLoginForm = () => {
   const navigate = useNavigate()
 
   const { mutateAsync: loginMutate, isPending } = useMutation({
-    mutationFn: (payload: LoginPayload) => Api.auth.login(payload),
-    onSuccess: ({ data, message }) => {
-      if (data?.tokens.accessToken) {
-        toast.success(message ?? t('auth.loginSuccess'))
-        saveAccessToken(data.tokens.accessToken)
-        setUser(getUserFromAuthResponse(data))
-        navigate(Routes.home)
+    ...authControllerLoginMutation(),
+    onSuccess: ({ data: { accessToken, user } }) => {
+      if (accessToken) {
+        toast.success(t('auth.loginSuccess'))
+        saveAccessToken(accessToken)
+        setUser(user)
+        navigate(paths.home.root)
       }
     },
     onError: (error) => handleMutationError(error, t('auth.loginError'))
   })
 
-  const onSubmit = async (data: LoginPayload) => await loginMutate(data)
+  const onSubmit = async (data: LoginRequestDto) =>
+    await loginMutate({ body: data })
 
   const inputFields: InputField<LoginFormSchema>[] = [
     {

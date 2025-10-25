@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { Card, DayLabel } from '@/components/shared'
 import * as User from '@/components/shared/Person'
-import { Routes } from '@/config'
+import { paths } from '@/config'
 import { getFileType } from '@/features/posts/utils'
 
 import type { Post } from '@/types'
@@ -27,14 +27,14 @@ export const PostCard = ({ post }: Props) => {
   return (
     <Card className="flex flex-col gap-6">
       <div className="flex items-center gap-4">
-        <Link to={Routes.profile}>
+        <Link to={paths.profile}>
           <User.Avatar
             src={post.author?.profile.avatarUrl}
             className="size-12"
           />
         </Link>
         <div className="flex items-center gap-2">
-          <Link to={Routes.profile}>
+          <Link to={paths.profile}>
             <User.Name
               name={post.author?.profile.fullName}
               className="text-base"

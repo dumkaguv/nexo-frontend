@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { Button, Skeleton } from '@/components/ui'
-import { Routes } from '@/config'
+import { paths } from '@/config'
 import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
@@ -19,7 +19,7 @@ export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
       {...rest}
     >
       {nickname ? (
-        <Link to={Routes.settings.account}>{`@${nickname}`}</Link>
+        <Link to={paths.settings.account}>{`@${nickname}`}</Link>
       ) : (
         <Skeleton className="mt-1.5 h-4 w-14" />
       )}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
 import { Sidebar } from '@/components/ui'
-import { Routes } from '@/config'
+import { paths } from '@/config'
 import { cn } from '@/utils'
 
 export const SidebarSettings = () => {
@@ -13,12 +13,12 @@ export const SidebarSettings = () => {
     {
       label: <h2>{t('settings')}</h2>,
       icon: UserPen,
-      href: Routes.settings.account
+      href: paths.settings.account
     },
     {
       label: <h2>{t('closeAccount')}</h2>,
       icon: Trash2,
-      href: Routes.settings.delete
+      href: paths.settings.delete
     }
   ]
 

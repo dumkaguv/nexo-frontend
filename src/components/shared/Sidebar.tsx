@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import * as PersonInfo from '@/components/shared/Person'
 import { Button, Separator, Sidebar as SidebarUi } from '@/components/ui'
-import { Routes } from '@/config'
+import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
 
 import type { ComponentProps } from 'react'
@@ -18,8 +18,8 @@ export const Sidebar = ({ className, ...rest }: Props) => {
   const { t } = useTranslation()
 
   const navItems = [
-    { name: t('feed'), href: Routes.home, icon: Newspaper },
-    { name: t('messages'), href: Routes.messages, icon: MessageSquareText }
+    { name: t('feed'), href: paths.home.root, icon: Newspaper },
+    { name: t('messages'), href: paths.messages.root, icon: MessageSquareText }
   ]
 
   return (

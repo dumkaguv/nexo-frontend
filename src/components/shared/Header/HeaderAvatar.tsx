@@ -36,7 +36,7 @@ export const HeaderAvatar = () => {
       queryClient.cancelQueries()
       queryClient.clear()
       toast.success(message ?? t('auth.logoutSuccess'))
-      navigate(Routes.login)
+      navigate(paths.login)
     },
     onError: (error) => handleMutationError(error)
   })
@@ -47,12 +47,12 @@ export const HeaderAvatar = () => {
     {
       icon: <MessageSquareText className="text-primary" />,
       label: t('messages'),
-      to: Routes.messages
+      to: paths.messages
     },
     {
       icon: <Settings className="text-primary" />,
       label: t('settings'),
-      to: Routes.settings.account
+      to: paths.settings.account
     },
     {
       icon: <LogOut className="text-primary" />,
@@ -75,7 +75,7 @@ export const HeaderAvatar = () => {
         {menuItems.map((item, index) => (
           <DropdownMenuItem key={index} className="p-0" asChild>
             {'to' in item ? (
-              <Link to={item.to ?? Routes.home} onClick={closeMenu}>
+              <Link to={item.to ?? paths.home} onClick={closeMenu}>
                 <div className="flex items-center gap-2 px-3 py-2">
                   {item.icon}
                   {item.label}

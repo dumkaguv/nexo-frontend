@@ -1,22 +1,24 @@
 import { create } from 'zustand'
 
-import type { Profile, User } from '@/types'
+import type { UserResponseDto } from '@/api'
+
+import type { Profile } from '@/types'
 
 type AuthStoreState = {
-  user: User | null
+  user?: UserResponseDto
   profile: Profile | null
 
   isPendingUser: boolean
   isPendingProfile: boolean
 
-  setUser: (user: User | null) => void
+  setUser: (user?: UserResponseDto) => void
   setProfile: (profile: Profile | null) => void
   setIsPendingUser: (isPendingUser: boolean) => void
   setIsPendingProfile: (isPendingProfile: boolean) => void
 }
 
 export const useAuthStore = create<AuthStoreState>((set) => ({
-  user: null,
+  user: undefined,
   profile: null,
 
   isPendingUser: false,

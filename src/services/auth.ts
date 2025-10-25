@@ -13,7 +13,7 @@ export type RegistrationPayload = {
 export const register = async (payload: RegistrationPayload) => {
   return (
     await axiosInstance.post<ApiResponse<AuthResponse>>(
-      ApiRoutes.auth.registration,
+      Apipaths.auth.registration,
       payload
     )
   ).data
@@ -27,18 +27,18 @@ export type LoginPayload = {
 export const login = async (payload: LoginPayload) => {
   return (
     await axiosInstance.post<ApiResponse<AuthResponse>>(
-      ApiRoutes.auth.login,
+      Apipaths.auth.login,
       payload
     )
   ).data
 }
 
 export const logout = async () => {
-  return (await axiosInstance.post<ApiResponse>(ApiRoutes.auth.logout)).data
+  return (await axiosInstance.post<ApiResponse>(Apipaths.auth.logout)).data
 }
 
 export const refresh = async () => {
   return (
-    await axiosInstance.get<ApiResponse<AuthResponse>>(ApiRoutes.auth.logout)
+    await axiosInstance.get<ApiResponse<AuthResponse>>(Apipaths.auth.logout)
   ).data
 }

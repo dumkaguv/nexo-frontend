@@ -20,7 +20,7 @@ export const ActivateAccountPage = () => {
 
   const isActivated = user?.data?.isActivated
   if (isActivated) {
-    return <Navigate to={Routes.home} />
+    return <Navigate to={paths.home} />
   }
 
   return (
