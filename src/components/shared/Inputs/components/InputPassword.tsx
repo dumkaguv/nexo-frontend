@@ -1,7 +1,6 @@
 import { Eye, EyeOff } from 'lucide-react'
 
 import { useState } from 'react'
-
 import { useTranslation } from 'react-i18next'
 
 import { Button, Input } from '@/components/ui'

@@ -12,6 +12,7 @@ import {
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
+
 import { createAvatarSchema } from '@/zodSchemas'
 
 import type { CreateAvatarSchema } from '@/zodSchemas'

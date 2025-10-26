@@ -13,7 +13,6 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 import { paths } from '@/config'
-
 import { useFormCreatePost } from '@/features/posts/hooks'
 import { useAuthStore } from '@/stores'
 

@@ -18,7 +18,6 @@ import {
 } from '@/features/userSettings/zodSchemas'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
-
 import { showApiErrors } from '@/utils'
 
 export const useMainAccountSettingsForm = () => {

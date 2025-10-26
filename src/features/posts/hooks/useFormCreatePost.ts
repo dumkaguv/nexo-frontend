@@ -9,7 +9,6 @@ import {
   postControllerFindAllQueryKey
 } from '@/api'
 import { createPostSchema } from '@/features/posts/zodSchemas'
-
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { showApiErrors } from '@/utils'
 

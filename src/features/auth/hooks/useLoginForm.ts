@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 import { authControllerLoginMutation } from '@/api'
 import { paths } from '@/config'
+
 import {
   type LoginFormSchema,
   createLoginFormSchema
@@ -14,7 +15,6 @@ import {
 import { saveAccessToken, showApiErrors } from '@/utils'
 
 import type { LoginRequestDto } from '@/api'
-
 import type { InputField } from '@/features/auth/types'
 
 export const useLoginForm = () => {

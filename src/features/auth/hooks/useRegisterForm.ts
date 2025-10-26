@@ -7,11 +7,11 @@ import { toast } from 'sonner'
 
 import { authControllerRegisterMutation } from '@/api'
 import { paths } from '@/config'
+
 import {
   type RegisterFormSchema,
   createRegisterFormSchema
 } from '@/features/auth/zodSchemas'
-
 import { saveAccessToken, showApiErrors } from '@/utils'
 
 import type { InputField } from '@/features/auth/types'

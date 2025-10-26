@@ -1,7 +1,6 @@
 import { Controller } from 'react-hook-form'
 
 import { ImagePreview, InputUpload } from '@/components/shared'
-
 import { Field, FieldError } from '@/components/ui'
 import { useUploadAvatar } from '@/features/userSettings/hooks'
 
