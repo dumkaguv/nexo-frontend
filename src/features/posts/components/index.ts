@@ -1,4 +1,4 @@
-export { FormCreatePost } from './FormCreatePost'
-export { PostsList } from './PostsList'
-export { PostCard } from './PostCard'
-export { PostCardListSkeleton } from './PostCardListSkeleton'
+export * from './FormCreatePost'
+export * from './PostsList'
+export * from './PostCard'
+export * from './PostCardListSkeleton'

@@ -1,2 +1,2 @@
-export { Header } from './Header'
-export { HeaderUnAuthorized } from './HeaderUnAuthorized'
+export * from './Header'
+export * from './HeaderUnAuthorized'

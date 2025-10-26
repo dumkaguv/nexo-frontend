@@ -1,3 +1,3 @@
-export { InputSearch } from './InputSearch'
-export { InputPassword } from './InputPassword'
-export { InputUpload } from './InputUpload'
+export * from './InputSearch'
+export * from './InputPassword'
+export * from './InputUpload'

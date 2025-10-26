@@ -1,3 +1,3 @@
-export { useRegisterForm } from './useRegisterForm'
-export { useLoginForm } from './useLoginForm'
-export { useProtectedRoute } from './useProtectedRoute'
+export * from './useRegisterForm'
+export * from './useLoginForm'
+export * from './useProtectedRoute'

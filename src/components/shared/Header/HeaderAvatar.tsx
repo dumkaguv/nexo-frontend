@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
+import { authControllerLogoutMutation } from '@/api'
 import * as PersonInfo from '@/components/shared/Person'
 import {
   Button,
@@ -13,41 +14,39 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui'
-import { LocalStorage, Routes } from '@/config'
-import { Api } from '@/services/apiClient'
+import { LocalStorage, paths } from '@/config'
 import { useAuthStore } from '@/stores'
-import { handleMutationError } from '@/utils'
+import { showApiErrors } from '@/utils'
 
 export const HeaderAvatar = () => {
-  const [open, setOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
-  const { profile, setProfile, setUser, isPendingProfile } = useAuthStore()
+  const { user, setUser, isPendingUser } = useAuthStore()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
   const { mutateAsync: logout, isPending } = useMutation({
-    mutationFn: Api.auth.logout,
-    onSuccess: ({ message }) => {
+    ...authControllerLogoutMutation(),
+    onSuccess: () => {
       localStorage.removeItem(LocalStorage.token)
-      setProfile(null)
-      setUser(null)
-      setOpen(false)
+      setUser(undefined)
+      setIsOpen(false)
       queryClient.cancelQueries()
       queryClient.clear()
-      toast.success(message ?? t('auth.logoutSuccess'))
-      navigate(paths.login)
+      toast.success(t('auth.logoutSuccess'))
+      navigate(paths.auth.login)
     },
-    onError: (error) => handleMutationError(error)
+    onError: (error) => showApiErrors(error)
   })
 
-  const closeMenu = () => setOpen(false)
+  const onCloseMenu = () => setIsOpen(false)
 
   const menuItems = [
     {
       icon: <MessageSquareText className="text-primary" />,
       label: t('messages'),
-      to: paths.messages
+      to: paths.messages.root
     },
     {
       icon: <Settings className="text-primary" />,
@@ -57,16 +56,16 @@ export const HeaderAvatar = () => {
     {
       icon: <LogOut className="text-primary" />,
       label: t('auth.logout'),
-      onClick: () => logout()
+      onClick: () => logout({})
     }
   ]
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger>
         <PersonInfo.Avatar
-          src={profile?.avatarUrl}
-          isLoading={isPendingProfile}
+          src={user?.profile?.avatarUrl}
+          isLoading={isPendingUser}
           className="h-10 w-10 cursor-pointer"
         />
       </DropdownMenuTrigger>
@@ -75,7 +74,7 @@ export const HeaderAvatar = () => {
         {menuItems.map((item, index) => (
           <DropdownMenuItem key={index} className="p-0" asChild>
             {'to' in item ? (
-              <Link to={item.to ?? paths.home} onClick={closeMenu}>
+              <Link to={item.to ?? paths.home.root} onClick={onCloseMenu}>
                 <div className="flex items-center gap-2 px-3 py-2">
                   {item.icon}
                   {item.label}

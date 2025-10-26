@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 
 import { LanguageSwitcher, ThemeSwitcher } from '@/components/shared'
 import { cn } from '@/utils'
-import { defineHeaderHeightCssVar } from '@/utils'
 
 import { HeaderAvatar } from './HeaderAvatar'
 import { HeaderLogo } from './HeaderLogo'
@@ -13,7 +12,20 @@ import type { ComponentProps } from 'react'
 type Props = ComponentProps<'header'>
 
 export const Header = ({ className, ...rest }: Props) => {
-  useEffect(() => defineHeaderHeightCssVar(), [])
+  useEffect(() => {
+    const defineHeaderHeightCssVar = () => {
+      const header = document.querySelector<HTMLElement>('header')
+      if (!header) return
+
+      const height = header.offsetHeight
+      document.documentElement.style.setProperty(
+        '--header-height',
+        `${height}px`
+      )
+    }
+
+    defineHeaderHeightCssVar()
+  }, [])
 
   return (
     <header

@@ -17,7 +17,15 @@ export default defineConfig({
     port: 4300,
     host: 'localhost'
   },
-  plugins: [react(), tailwindcss(), svgr()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [['babel-plugin-react-compiler']]
+      }
+    }),
+    tailwindcss(),
+    svgr()
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

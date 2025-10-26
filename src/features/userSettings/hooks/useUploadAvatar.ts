@@ -5,11 +5,13 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
-import { QueryKeys } from '@/config'
-import { useInvalidateQueries } from '@/hooks'
-import { Api } from '@/services/apiClient'
+import {
+  profileControllerMeQueryKey,
+  uploadControllerUploadAvatarMutation
+} from '@/api'
+import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
-import { handleMutationError } from '@/utils'
+import { showApiErrors } from '@/utils'
 import { createAvatarSchema } from '@/zodSchemas'
 
 import type { CreateAvatarSchema } from '@/zodSchemas'
@@ -18,15 +20,13 @@ const MAX_FILE_SIZE_MB = 4
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 
 export const useUploadAvatar = () => {
-  const { profile, setProfile } = useAuthStore()
+  const { setUser, user } = useAuthStore()
 
-  const [file, setFile] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [fileSizeError, setFileSizeError] = useState<string | undefined>(
-    undefined
-  )
+  const [file, setFile] = useState<File>()
+  const [previewUrl, setPreviewUrl] = useState<string>()
+  const [fileSizeError, setFileSizeError] = useState<string | undefined>()
 
-  const { invalidateQueries } = useInvalidateQueries()
+  const { invalidateQueries } = useInvalidatePredicateQueries()
   const { t } = useTranslation()
 
   const {
@@ -38,10 +38,19 @@ export const useUploadAvatar = () => {
   })
 
   const { mutateAsync: uploadAvatar, isPending } = useMutation({
-    mutationFn: () => Api.upload.uploadAvatar(file!),
-    onSuccess: ({ message }) => toast.success(message ?? t('uploadSuccess')),
-    onError: (error) => handleMutationError(error)
+    ...uploadControllerUploadAvatarMutation(),
+    onSuccess: async ({ data }) => {
+      await invalidateQueries(profileControllerMeQueryKey())
+      setUser(data)
+      toast.success(t('uploadSuccess'))
+    },
+    onError: (e) => showApiErrors(e)
   })
+
+  useEffect(() => {
+    if (!user?.profile?.avatarUrl) return
+    setPreviewUrl(user.profile.avatarUrl)
+  }, [user])
 
   const onFileChange = (files: FileList | null) => {
     if (files && files.length > 0) {
@@ -57,25 +66,12 @@ export const useUploadAvatar = () => {
       setFile(file)
       setPreviewUrl(URL.createObjectURL(file))
     } else {
-      setPreviewUrl(null)
-      setFile(null)
+      setPreviewUrl(undefined)
+      setFile(undefined)
     }
   }
 
-  const onSubmit = async () => {
-    const response = await uploadAvatar()
-    invalidateQueries([QueryKeys.Profile.root])
-
-    if (response.data) {
-      setProfile(response.data)
-    }
-  }
-
-  useEffect(() => {
-    if (profile) {
-      setPreviewUrl(profile.avatarUrl ?? null)
-    }
-  }, [profile])
+  const onSubmit = async () => await uploadAvatar({ body: { file: file! } })
 
   return {
     handleSubmit,

@@ -4,7 +4,7 @@ import { cn } from '@/utils'
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
 type HeadingTag<L extends HeadingLevel> = `h${L}`
-type Props<L extends HeadingLevel> = {
+export type TitleProps<L extends HeadingLevel> = {
   level: L
 } & ComponentProps<HeadingTag<L>>
 
@@ -24,7 +24,7 @@ export const Title = <L extends HeadingLevel>({
   children,
   className,
   ...rest
-}: Props<L>) =>
+}: TitleProps<L>) =>
   createElement(
     `h${level}`,
     {

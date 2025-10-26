@@ -1,2 +1,2 @@
-export { AuthorizedLayout } from './Authorized'
-export { NotAuthorizedLayout } from './NotAuthorized'
+export * from './Authorized'
+export * from './NotAuthorized'

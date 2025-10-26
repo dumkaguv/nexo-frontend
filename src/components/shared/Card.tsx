@@ -1,10 +1,20 @@
+import { Skeleton } from '@/components/ui'
 import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
 
-type Props = ComponentProps<'div'>
+type Props = {
+  rows?: number
+  loading?: boolean
+} & ComponentProps<'div'>
 
-export const Card = ({ children, className, ...rest }: Props) => {
+export const Card = ({
+  children,
+  className,
+  rows = 3,
+  loading = false,
+  ...rest
+}: Props) => {
   return (
     <div
       className={cn(
@@ -13,7 +23,15 @@ export const Card = ({ children, className, ...rest }: Props) => {
       )}
       {...rest}
     >
-      {children}
+      {loading ? (
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: rows }).map((_, i) => (
+            <Skeleton key={i} className="h-4 w-full" />
+          ))}
+        </div>
+      ) : (
+        children
+      )}
     </div>
   )
 }

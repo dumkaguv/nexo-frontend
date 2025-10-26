@@ -5,10 +5,10 @@ import * as User from '@/components/shared/Person'
 import { paths } from '@/config'
 import { getFileType } from '@/features/posts/utils'
 
-import type { Post } from '@/types'
+import type { PostResponseDto } from '@/api'
 
 type Props = {
-  post: Post
+  post: PostResponseDto
 }
 
 export const PostCard = ({ post }: Props) => {
@@ -27,16 +27,13 @@ export const PostCard = ({ post }: Props) => {
   return (
     <Card className="flex flex-col gap-6">
       <div className="flex items-center gap-4">
-        <Link to={paths.profile}>
-          <User.Avatar
-            src={post.author?.profile.avatarUrl}
-            className="size-12"
-          />
+        <Link to={paths.profile.root}>
+          <User.Avatar src={post.user.profile?.avatarUrl} className="size-12" />
         </Link>
         <div className="flex items-center gap-2">
-          <Link to={paths.profile}>
+          <Link to={paths.profile.root}>
             <User.Name
-              name={post.author?.profile.fullName}
+              name={post.user.profile?.fullName}
               className="text-base"
             />
           </Link>

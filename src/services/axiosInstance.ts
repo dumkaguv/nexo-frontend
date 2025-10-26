@@ -1,9 +1,7 @@
 import axios from 'axios'
 
-import { LocalStorage, Routes } from '@/config'
+import { LocalStorage } from '@/config'
 import { getAccessToken, saveAccessToken } from '@/utils'
-
-import { ApiRoutes } from './apiRoutes'
 
 import type { ApiResponse, AuthResponse } from '@/types'
 

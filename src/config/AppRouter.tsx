@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { AuthorizedLayout, NotAuthorizedLayout } from '@/layouts'
 
-import { Routes as RoutesConfig } from './'
+import { paths } from './paths'
 import { RouteLoader } from './RouteLoader'
 
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: RoutesConfig.home,
+        path: paths.home.root,
         lazy: async () => {
           const { HomePage } = await import('@/features/home')
 
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: RoutesConfig.settings.account,
+        path: paths.settings.account,
         lazy: async () => {
           const { SettingsPage } = await import('@/features/userSettings')
 
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: RoutesConfig.login,
+        path: paths.auth.login,
         lazy: async () => {
           const { LoginPage } = await import('@/features/auth')
 
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: RoutesConfig.register,
+        path: paths.auth.register,
         lazy: async () => {
           const { RegisterPage } = await import('@/features/auth')
 
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: `${RoutesConfig.activate}/:userId`,
+        path: `:userId`,
         lazy: async () => {
           const { ActivateAccountPage } = await import('@/features/auth')
 

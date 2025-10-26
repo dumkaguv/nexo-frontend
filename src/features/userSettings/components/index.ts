@@ -1,2 +1,2 @@
-export { FormAccountSettings } from './FormAccountSettings'
-export { SidebarSettings } from './SidebarSettings'
+export * from './FormAccountSettings'
+export * from './SidebarSettings'

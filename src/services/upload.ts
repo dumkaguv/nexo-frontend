@@ -1,4 +1,3 @@
-import { ApiRoutes } from './apiRoutes'
 import { axiosInstance } from './axiosInstance'
 
 import type { ApiResponse, Profile } from '@/types'

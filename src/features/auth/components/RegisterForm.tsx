@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import { InputFieldErrors, InputPassword } from '@/components/shared'
-import { Button, Input, Label } from '@/components/ui'
+import { InputPassword } from '@/components/shared'
+import { Button, Field, FieldError, FieldLabel, Input } from '@/components/ui'
 import { useRegisterForm } from '@/features/auth/hooks'
 
 export const RegisterForm = () => {
@@ -22,15 +22,15 @@ export const RegisterForm = () => {
           }
 
           return (
-            <div key={name} className="flex flex-col gap-1">
-              <Label htmlFor={id}>{label}</Label>
+            <Field key={name} className="flex flex-col gap-1">
+              <FieldLabel htmlFor={id}>{label}</FieldLabel>
               {type === 'password' ? (
                 <InputPassword {...inputProps} />
               ) : (
                 <Input {...inputProps} />
               )}
-              <InputFieldErrors message={errors[name]?.message} />
-            </div>
+              <FieldError>{errors[name]?.message}</FieldError>
+            </Field>
           )
         }
       )}

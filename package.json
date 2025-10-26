@@ -6,13 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
-    "lint:fix": "eslint ./src/**/*.{ts,tsx,js,jsx} --fix",
-    "format": "prettier --write ./src/**/*.{ts,tsx,js,jsx,json,css,scss,md}",
+    "preview": "vite preview",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"src/api/**\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\"",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore",
     "fix": "npm run lint:fix && npm run format",
-    "lint-staged": "lint-staged",
     "openapi": "openapi-ts",
-    "preview": "vite preview"
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
   },
   "dependencies": {
     "@hey-api/client-axios": "^0.9.1",
@@ -62,6 +63,7 @@
     "@types/react-dom": "^19.1.2",
     "@types/react-i18next": "^7.8.3",
     "@vitejs/plugin-react": "^4.4.1",
+    "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.25.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
@@ -83,9 +85,8 @@
     "vite-plugin-svgr": "^4.3.0"
   },
   "lint-staged": {
-    "apps/*/src/**/*.{ts,tsx}": [
-      "prettier --ignore-path .prettierignore --write",
-      "eslint --fix"
+    "src/**/*.{ts,tsx}": [
+      "npm run fix"
     ]
   }
 }

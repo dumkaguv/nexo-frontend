@@ -1,15 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { QueryKeys } from '@/config'
-import { Api } from '@/services/apiClient'
+import { postControllerFindAllOptions } from '@/api'
 
 import { PostCard, PostCardListSkeleton } from './'
 
 export const PostsList = () => {
-  const { data: posts, isPending } = useQuery({
-    queryKey: [QueryKeys.Posts.root],
-    queryFn: Api.posts.fetchAllPosts
-  })
+  const { data, isPending } = useQuery(postControllerFindAllOptions())
 
   if (isPending) {
     return <PostCardListSkeleton />
@@ -17,8 +13,8 @@ export const PostsList = () => {
 
   return (
     <ul className="flex flex-col gap-8">
-      {posts?.data?.map((post) => (
-        <li key={post.postId}>
+      {data?.data.map((post) => (
+        <li key={post.id}>
           <PostCard post={post} />
         </li>
       ))}

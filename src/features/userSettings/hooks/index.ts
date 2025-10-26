@@ -1,3 +1,3 @@
-export { useMainAccountSettingsForm } from './useMainAccountSettingsForm'
-export { useUploadAvatar } from './useUploadAvatar'
-export { useFormChangePassword } from './useFormChangePassword'
+export * from './useMainAccountSettingsForm'
+export * from './useUploadAvatar'
+export * from './useFormChangePassword'

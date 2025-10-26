@@ -1,3 +1,4 @@
+import { Typography } from '@/components/shared'
 import { Skeleton } from '@/components/ui'
 import { cn } from '@/utils'
 
@@ -9,8 +10,12 @@ type Props = ComponentProps<'h2'> & {
 
 export const PersonName = ({ name, className, ...rest }: Props) => {
   return (
-    <h2 className={cn('text-xl font-bold', className)} {...rest}>
+    <Typography.Title
+      level={2}
+      className={cn('text-xl font-bold', className)}
+      {...rest}
+    >
       {name ? name : <Skeleton className="mt-1.5 h-6 w-36" />}
-    </h2>
+    </Typography.Title>
   )
 }

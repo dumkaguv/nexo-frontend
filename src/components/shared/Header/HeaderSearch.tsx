@@ -1,8 +1,9 @@
+import { useState } from 'react'
+
 import { InputSearch } from '@/components/shared'
-import { useHeader } from '@/hooks'
 
 export const HeaderSearch = () => {
-  const { searchValue, setSearchValue } = useHeader()
+  const [searchValue, setSearchValue] = useState('')
 
   return (
     <InputSearch

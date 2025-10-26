@@ -1,3 +1,3 @@
-export { LoginPage } from './LoginPage'
-export { RegisterPage } from './RegisterPage'
-export { ActivateAccountPage } from './ActivateAccountPage'
+export * from './LoginPage'
+export * from './RegisterPage'
+export * from './ActivateAccountPage'

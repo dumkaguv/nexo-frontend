@@ -8,7 +8,7 @@ export const createRegisterFormSchema = (t: TFunction) =>
   z
     .object({
       email: z.email({ error: t('validation.email_invalid') }),
-      userName: z
+      username: z
         .string()
         .min(2, { error: t('validation.min_length', { count: 2 }) }),
       fullName: z

@@ -2,8 +2,8 @@ import { Controller } from 'react-hook-form'
 
 import { useTranslation } from 'react-i18next'
 
-import { DatePicker, InputFieldErrors } from '@/components/shared'
-import { Input, Label, Textarea } from '@/components/ui'
+import { DatePicker } from '@/components/shared'
+import { Field, FieldError, FieldLabel, Input, Textarea } from '@/components/ui'
 import { useMainAccountSettingsForm } from '@/features/userSettings/hooks'
 
 import { Section } from './Section'
@@ -22,50 +22,52 @@ export const FormMainSettings = () => {
         className="flex flex-col gap-6"
       >
         <div className="flex gap-5">
-          <div className="flex w-full flex-col gap-1">
-            <Label htmlFor="email">{t('auth.email')}</Label>
+          <Field className="flex w-full flex-col gap-1">
+            <FieldLabel htmlFor="email">{t('auth.email')}</FieldLabel>
             <Input id="email" {...register('email')} />
-            <InputFieldErrors message={errors.email?.message} />
-          </div>
-          <div className="flex w-full flex-col gap-1">
-            <Label htmlFor="userName">{t('nickName')}</Label>
-            <Input id="userName" {...register('userName')} />
-            <InputFieldErrors message={errors.userName?.message} />
-          </div>
+            <FieldError>{errors.email?.message}</FieldError>
+          </Field>
+
+          <Field className="flex w-full flex-col gap-1">
+            <FieldLabel htmlFor="userName">{t('nickName')}</FieldLabel>
+            <Input id="userName" {...register('username')} />
+            <FieldError>{errors.username?.message}</FieldError>
+          </Field>
         </div>
 
         <div className="flex gap-5">
-          <div className="flex w-full flex-col gap-1">
-            <Label htmlFor="fullName">{t('fullName')}</Label>
+          <Field className="flex w-full flex-col gap-1">
+            <FieldLabel htmlFor="fullName">{t('fullName')}</FieldLabel>
             <Input id="fullName" {...register('fullName')} />
-            <InputFieldErrors message={errors.fullName?.message} />
-          </div>
-          <div className="flex w-full flex-col gap-1">
-            <Label htmlFor="phone">{t('phone')}</Label>
+            <FieldError>{errors.fullName?.message}</FieldError>
+          </Field>
+
+          <Field className="flex w-full flex-col gap-1">
+            <FieldLabel htmlFor="phone">{t('phone')}</FieldLabel>
             <Input id="phone" {...register('phone')} />
-            <InputFieldErrors message={errors.phone?.message} />
-          </div>
+            <FieldError>{errors.phone?.message}</FieldError>
+          </Field>
         </div>
 
-        <div className="flex w-full flex-col gap-1">
-          <Label htmlFor="bio">{t('bio')}</Label>
+        <Field className="flex w-full flex-col gap-1">
+          <FieldLabel htmlFor="biography">{t('bio')}</FieldLabel>
           <Textarea
-            id="bio"
-            {...register('bio')}
+            id="biography"
+            {...register('biography')}
             placeholder={t('inputs.bioPlaceholder')}
-          />{' '}
-          <InputFieldErrors message={errors.bio?.message} />
-        </div>
+          />
+          <FieldError>{errors.biography?.message}</FieldError>
+        </Field>
 
         <Controller
           control={control}
           name="birthDay"
           render={({ field }) => (
-            <div className="flex w-full flex-col gap-1">
-              <Label htmlFor="birthDay">{t('birthDay')}</Label>
+            <Field className="flex w-full flex-col gap-1">
+              <FieldLabel htmlFor="birthDay">{t('birthDay')}</FieldLabel>
               <DatePicker field={field} />
-              <InputFieldErrors message={errors.birthDay?.message} />
-            </div>
+              <FieldError>{errors.birthDay?.message}</FieldError>
+            </Field>
           )}
         />
       </Section>

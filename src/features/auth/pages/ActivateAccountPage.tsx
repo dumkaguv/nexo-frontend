@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { Navigate, useParams } from 'react-router-dom'
 
+import { userControllerFindOneOptions } from '@/api'
 import { Card, Typography } from '@/components/shared'
-import { QueryKeys, Routes } from '@/config'
-import { Api } from '@/services/apiClient'
+import { paths } from '@/config'
 
 const { Title } = Typography
 
@@ -11,8 +11,7 @@ export const ActivateAccountPage = () => {
   const { userId } = useParams<{ userId?: string }>()
 
   const { data: user } = useQuery({
-    queryKey: [QueryKeys.Users.byId, userId],
-    queryFn: () => Api.users.getUserById(Number(userId)),
+    ...userControllerFindOneOptions({ path: { id: String(userId) } }),
     enabled: !!userId,
     refetchInterval: 3000,
     refetchOnWindowFocus: true,
@@ -20,9 +19,8 @@ export const ActivateAccountPage = () => {
     staleTime: 0
   })
 
-  const isActivated = user?.data?.isActivated
-  if (isActivated) {
-    return <Navigate to={paths.home} />
+  if (user?.data.isActivated) {
+    return <Navigate to={paths.home.root} />
   }
 
   return (

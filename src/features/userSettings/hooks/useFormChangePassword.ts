@@ -1,17 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 
+import { userControllerChangePasswordMutation } from '@/api'
 import {
   type CreateChangePasswordSchema,
   createChangePasswordSchema
 } from '@/features/userSettings/zodSchemas'
-import { Api } from '@/services/apiClient'
-import { handleMutationError } from '@/utils'
+import { useAuthStore } from '@/stores'
+import { showApiErrors } from '@/utils'
 
 export const useFormChangePassword = () => {
+  const { user } = useAuthStore()
+
   const { t } = useTranslation()
 
   const schema = createChangePasswordSchema(t)
@@ -24,23 +27,26 @@ export const useFormChangePassword = () => {
     resolver: zodResolver(schema)
   })
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data: CreateChangePasswordSchema) =>
-      Api.users.changePassword({
-        currentPassword: data.currentPassword,
-        newPassword: data.newPassword
-      }),
-    onSuccess: (response) => toast.success(response.message ?? t('success')),
-    onError: (error) => handleMutationError(error)
+  const { mutateAsync, isPending } = useMutation({
+    ...userControllerChangePasswordMutation(),
+    onSuccess: () => toast.success(t('success')),
+    onError: (error) => showApiErrors(error)
   })
 
-  const onSubmit = (data: CreateChangePasswordSchema) => mutate(data)
+  const onSubmit = async ({
+    oldPassword,
+    newPassword
+  }: CreateChangePasswordSchema) =>
+    await mutateAsync({
+      body: { oldPassword, newPassword },
+      path: { id: String(user?.id) }
+    })
 
   return {
     register,
     handleSubmit,
     errors,
-    onSubmit,
+    onSubmit: handleSubmit(onSubmit),
     isPending
   }
 }

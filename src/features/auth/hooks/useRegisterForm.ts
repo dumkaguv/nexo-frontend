@@ -12,8 +12,7 @@ import {
   createRegisterFormSchema
 } from '@/features/auth/zodSchemas'
 
-import { useAuthStore } from '@/stores'
-import { handleMutationError, saveAccessToken } from '@/utils'
+import { saveAccessToken, showApiErrors } from '@/utils'
 
 import type { InputField } from '@/features/auth/types'
 
@@ -29,21 +28,17 @@ export const useRegisterForm = () => {
   } = useForm<RegisterFormSchema>({
     resolver: zodResolver(schema)
   })
-  const { setUser } = useAuthStore()
 
   const navigate = useNavigate()
 
   const { mutateAsync: registerMutate, isPending } = useMutation({
     ...authControllerRegisterMutation(),
-    onSuccess: ({ data: { accessToken, user } }) => {
-      if (accessToken) {
-        toast.success(t('auth.loginSuccess'))
-        saveAccessToken(accessToken)
-        setUser(user)
-        navigate(paths.home.root)
-      }
+    onSuccess: ({ data: { accessToken } }) => {
+      toast.success(t('auth.loginSuccess'))
+      saveAccessToken(accessToken)
+      navigate(paths.home.root)
     },
-    onError: (error) => handleMutationError(error, t('auth.loginError'))
+    onError: (error) => showApiErrors(error, t('auth.loginError'))
   })
 
   const onSubmit = async (body: RegisterFormSchema) =>
@@ -59,7 +54,7 @@ export const useRegisterForm = () => {
       autoComplete: 'email'
     },
     {
-      name: 'userName',
+      name: 'username',
       label: t('auth.username'),
       type: 'text',
       placeholder: 'alex_j',

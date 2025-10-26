@@ -1,1 +1,1 @@
-export { type CreatePostSchema, createPostSchema } from './post'
+export * from './post'

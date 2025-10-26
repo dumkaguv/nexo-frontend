@@ -3,7 +3,7 @@ import { Upload } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button, Input, Label } from '@/components/ui'
+import { Button, FieldLabel, Input } from '@/components/ui'
 import { cn } from '@/utils'
 
 import type { ChangeEvent, ComponentProps } from 'react'
@@ -41,7 +41,7 @@ export const InputUpload = ({
 
   return (
     <div className={cn('space-y-2', className)}>
-      {label && <Label>{t(label)}</Label>}
+      {label && <FieldLabel>{t(label)}</FieldLabel>}
 
       <Input
         type="file"

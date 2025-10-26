@@ -1,1 +1,1 @@
-export { getFileType } from './getFileType'
+export * from './getFileType'

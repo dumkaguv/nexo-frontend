@@ -3,7 +3,8 @@ import axios, { type AxiosInstance } from 'axios'
 import { LocalStorage, paths } from '@/config'
 import { getAccessToken, saveAccessToken } from '@/utils'
 
-import type { ApiResponse, AuthResponse } from '@/types'
+import type { RefreshResponseDto } from '@/api'
+import type { AxiosResponse } from 'axios'
 
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL
 
@@ -20,7 +21,7 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
   })
 
   axiosInstance.interceptors.response.use(
-    (response) => response,
+    (response: AxiosResponse<RefreshResponseDto>) => response,
     async (error) => {
       const originalRequest = error.config
 
@@ -28,14 +29,13 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
         originalRequest._retry = true
 
         try {
-          const response = await axios.get<ApiResponse<AuthResponse>>(
+          const response = await axios.post(
             baseURL + '/api/auth/refresh',
-            {
-              withCredentials: true
-            }
+            {},
+            { withCredentials: true }
           )
 
-          const newAccessToken = response.data.data?.tokens.accessToken
+          const newAccessToken = response.data?.data.accessToken
           if (!newAccessToken) {
             localStorage.removeItem(LocalStorage.token)
             return (window.location.href = paths.auth.login)

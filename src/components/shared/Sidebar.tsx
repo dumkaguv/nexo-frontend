@@ -17,7 +17,7 @@ const { Paragraph } = Typography
 type Props = ComponentProps<'aside'>
 
 export const Sidebar = ({ className, ...rest }: Props) => {
-  const { profile, user, isPendingProfile, isPendingUser } = useAuthStore()
+  const { user, isPendingUser } = useAuthStore()
 
   const { t } = useTranslation()
 
@@ -29,13 +29,13 @@ export const Sidebar = ({ className, ...rest }: Props) => {
   return (
     <SidebarUi className={className} {...rest}>
       <PersonInfo.Avatar
-        src={profile?.avatarUrl}
-        isLoading={isPendingProfile}
+        src={user?.profile?.avatarUrl}
+        isLoading={isPendingUser}
         className="h-18 w-18"
       />
 
-      <PersonInfo.Name name={profile?.fullName} className="text-center" />
-      <PersonInfo.Nickname nickname={profile?.userName} />
+      <PersonInfo.Name name={user?.profile?.fullName} className="text-center" />
+      <PersonInfo.Nickname nickname={user?.username} />
 
       <PersonInfo.FollowInfo
         followersCount={user?.followers?.length}

@@ -2,21 +2,32 @@ import { Trash2, UserPen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
+import { Typography } from '@/components/shared'
 import { Sidebar } from '@/components/ui'
 import { paths } from '@/config'
 import { cn } from '@/utils'
+
+const { Title } = Typography
 
 export const SidebarSettings = () => {
   const { t } = useTranslation()
 
   const settings = [
     {
-      label: <h2>{t('settings')}</h2>,
+      label: (
+        <Title level={2} className="text-sm">
+          {t('settings')}
+        </Title>
+      ),
       icon: UserPen,
       href: paths.settings.account
     },
     {
-      label: <h2>{t('closeAccount')}</h2>,
+      label: (
+        <Title level={2} className="text-sm">
+          {t('closeAccount')}
+        </Title>
+      ),
       icon: Trash2,
       href: paths.settings.delete
     }

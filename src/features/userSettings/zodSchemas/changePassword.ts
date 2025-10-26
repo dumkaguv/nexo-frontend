@@ -7,7 +7,7 @@ import type { TFunction } from 'i18next'
 export const createChangePasswordSchema = (t: TFunction) =>
   z
     .object({
-      currentPassword: z.string().min(1, { error: t('validation.required') }),
+      oldPassword: z.string().min(1, { error: t('validation.required') }),
       newPassword: createPasswordSchema(t),
       confirmNewPassword: z.string().min(1, { error: t('validation.required') })
     })

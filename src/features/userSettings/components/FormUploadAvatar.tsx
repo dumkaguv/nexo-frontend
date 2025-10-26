@@ -1,11 +1,8 @@
 import { Controller } from 'react-hook-form'
 
-import {
-  ImagePreview,
-  InputFieldErrors,
-  InputUpload
-} from '@/components/shared'
+import { ImagePreview, InputUpload } from '@/components/shared'
 
+import { Field, FieldError } from '@/components/ui'
 import { useUploadAvatar } from '@/features/userSettings/hooks'
 
 import { Section } from './Section'
@@ -39,7 +36,7 @@ export const FormUploadAvatar = () => {
           name="avatar"
           control={control}
           render={({ field }) => (
-            <div className="mb-5">
+            <Field className="mb-5">
               <InputUpload
                 accept="image/*"
                 multiple={false}
@@ -49,10 +46,8 @@ export const FormUploadAvatar = () => {
                   onFileChange(files)
                 }}
               />
-              <InputFieldErrors
-                message={errors.avatar?.message || fileSizeError}
-              />
-            </div>
+              <FieldError>{errors.avatar?.message || fileSizeError}</FieldError>
+            </Field>
           )}
         />
       </Section>

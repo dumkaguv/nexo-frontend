@@ -1,1 +1,1 @@
-export { useFormCreatePost } from './useFormCreatePost'
+export * from './useFormCreatePost'

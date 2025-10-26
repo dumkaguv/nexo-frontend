@@ -2,15 +2,12 @@ import { Image, Video } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import {
-  Card,
-  InputFieldErrors,
-  TextAreaAutoHeight,
-  Typography
-} from '@/components/shared'
+import { Card, TextAreaAutoHeight, Typography } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
 import {
   Button,
+  Field,
+  FieldError,
   Tooltip,
   TooltipContent,
   TooltipTrigger
@@ -23,7 +20,7 @@ import { useAuthStore } from '@/stores'
 const { Text } = Typography
 
 export const FormCreatePost = () => {
-  const { profile, isPendingProfile } = useAuthStore()
+  const { user, isPendingUser } = useAuthStore()
 
   const { register, onSubmit, errors, isPending } = useFormCreatePost()
 
@@ -47,16 +44,16 @@ export const FormCreatePost = () => {
           <div className="flex gap-4">
             <Link to={paths.profile.root}>
               <Person.Avatar
-                src={profile?.avatarUrl}
-                isLoading={isPendingProfile}
+                src={user?.profile?.avatarUrl}
+                isLoading={isPendingUser}
                 className="size-12"
               />
             </Link>
 
-            <div className="flex w-full flex-col gap-2">
+            <Field className="flex w-full flex-col gap-2">
               <TextAreaAutoHeight {...register('content')} />
-              <InputFieldErrors message={errors.content?.message} />
-            </div>
+              <FieldError>{errors.content?.message}</FieldError>
+            </Field>
           </div>
 
           <div className="flex items-center justify-between gap-3 pt-5">

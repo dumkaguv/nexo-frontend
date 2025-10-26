@@ -25,6 +25,7 @@ export const FormHeader = ({
       <Title level={1} className="mb-2 text-center text-4xl font-bold">
         {t(titleKey)}
       </Title>
+
       <Paragraph className="mb-5">
         {t(accountTextKey)}{' '}
         <Link

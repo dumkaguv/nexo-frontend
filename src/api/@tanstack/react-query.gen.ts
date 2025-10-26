@@ -8,7 +8,6 @@ import {
   queryOptions
 } from '@tanstack/react-query'
 
-
 import { client } from '../client.gen'
 import {
   type Options,
@@ -16,9 +15,18 @@ import {
   authControllerLogout,
   authControllerRefresh,
   authControllerRegister,
-  profileControllerFindOne,
+  postControllerCreate,
+  postControllerFindAll,
+  postControllerFindOne,
+  postControllerRemove,
+  postControllerUpdate,
+  profileControllerMe,
+  profileControllerUpdate,
+  uploadControllerUploadAvatar,
+  userControllerChangePassword,
   userControllerFindAll,
   userControllerFindOne,
+  userControllerFindOneMinified,
   userControllerRemove,
   userControllerUpdate
 } from '../sdk.gen'
@@ -32,10 +40,26 @@ import type {
   AuthControllerRefreshResponse,
   AuthControllerRegisterData,
   AuthControllerRegisterResponse,
-  ProfileControllerFindOneData,
+  PostControllerCreateData,
+  PostControllerCreateResponse,
+  PostControllerFindAllData,
+  PostControllerFindAllResponse,
+  PostControllerFindOneData,
+  PostControllerRemoveData,
+  PostControllerRemoveResponse,
+  PostControllerUpdateData,
+  PostControllerUpdateResponse,
+  ProfileControllerMeData,
+  ProfileControllerUpdateData,
+  ProfileControllerUpdateResponse,
+  UploadControllerUploadAvatarData,
+  UploadControllerUploadAvatarResponse,
+  UserControllerChangePasswordData,
+  UserControllerChangePasswordResponse,
   UserControllerFindAllData,
   UserControllerFindAllResponse,
   UserControllerFindOneData,
+  UserControllerFindOneMinifiedData,
   UserControllerRemoveData,
   UserControllerRemoveResponse,
   UserControllerUpdateData,
@@ -43,6 +67,10 @@ import type {
 } from '../types.gen'
 import type { AxiosError } from 'axios'
 
+/**
+ * Validation pattern for password:
+ * `/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]).{8,}$/`
+ */
 export const authControllerRegisterMutation = (
   options?: Partial<Options<AuthControllerRegisterData>>
 ): UseMutationOptions<
@@ -367,16 +395,16 @@ export const userControllerUpdateMutation = (
   return mutationOptions
 }
 
-export const profileControllerFindOneQueryKey = (
-  options?: Options<ProfileControllerFindOneData>
-) => createQueryKey('profileControllerFindOne', options)
+export const userControllerFindOneMinifiedQueryKey = (
+  options: Options<UserControllerFindOneMinifiedData>
+) => createQueryKey('userControllerFindOneMinified', options)
 
-export const profileControllerFindOneOptions = (
-  options?: Options<ProfileControllerFindOneData>
+export const userControllerFindOneMinifiedOptions = (
+  options: Options<UserControllerFindOneMinifiedData>
 ) => {
   return queryOptions({
     queryFn: async ({ queryKey, signal }) => {
-      const { data } = await profileControllerFindOne({
+      const { data } = await userControllerFindOneMinified({
         ...options,
         ...queryKey[0],
         signal,
@@ -385,6 +413,277 @@ export const profileControllerFindOneOptions = (
 
       return data
     },
-    queryKey: profileControllerFindOneQueryKey(options)
+    queryKey: userControllerFindOneMinifiedQueryKey(options)
   })
+}
+
+export const userControllerChangePasswordMutation = (
+  options?: Partial<Options<UserControllerChangePasswordData>>
+): UseMutationOptions<
+  UserControllerChangePasswordResponse,
+  AxiosError<DefaultError>,
+  Options<UserControllerChangePasswordData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    UserControllerChangePasswordResponse,
+    AxiosError<DefaultError>,
+    Options<UserControllerChangePasswordData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await userControllerChangePassword({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const profileControllerMeQueryKey = (
+  options?: Options<ProfileControllerMeData>
+) => createQueryKey('profileControllerMe', options)
+
+export const profileControllerMeOptions = (
+  options?: Options<ProfileControllerMeData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await profileControllerMe({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: profileControllerMeQueryKey(options)
+  })
+}
+
+export const profileControllerUpdateMutation = (
+  options?: Partial<Options<ProfileControllerUpdateData>>
+): UseMutationOptions<
+  ProfileControllerUpdateResponse,
+  AxiosError<DefaultError>,
+  Options<ProfileControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ProfileControllerUpdateResponse,
+    AxiosError<DefaultError>,
+    Options<ProfileControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await profileControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerFindAllQueryKey = (
+  options?: Options<PostControllerFindAllData>
+) => createQueryKey('postControllerFindAll', options)
+
+export const postControllerFindAllOptions = (
+  options?: Options<PostControllerFindAllData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postControllerFindAll({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: postControllerFindAllQueryKey(options)
+  })
+}
+
+export const postControllerFindAllInfiniteQueryKey = (
+  options?: Options<PostControllerFindAllData>
+): QueryKey<Options<PostControllerFindAllData>> =>
+  createQueryKey('postControllerFindAll', options, true)
+
+export const postControllerFindAllInfiniteOptions = (
+  options?: Options<PostControllerFindAllData>
+) => {
+  return infiniteQueryOptions<
+    PostControllerFindAllResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<PostControllerFindAllResponse>,
+    QueryKey<Options<PostControllerFindAllData>>,
+    | number
+    | Pick<
+        QueryKey<Options<PostControllerFindAllData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<PostControllerFindAllData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await postControllerFindAll({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+
+        return data
+      },
+      queryKey: postControllerFindAllInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const postControllerCreateMutation = (
+  options?: Partial<Options<PostControllerCreateData>>
+): UseMutationOptions<
+  PostControllerCreateResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerCreateResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerRemoveMutation = (
+  options?: Partial<Options<PostControllerRemoveData>>
+): UseMutationOptions<
+  PostControllerRemoveResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerRemoveResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerFindOneQueryKey = (
+  options: Options<PostControllerFindOneData>
+) => createQueryKey('postControllerFindOne', options)
+
+export const postControllerFindOneOptions = (
+  options: Options<PostControllerFindOneData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postControllerFindOne({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: postControllerFindOneQueryKey(options)
+  })
+}
+
+export const postControllerUpdateMutation = (
+  options?: Partial<Options<PostControllerUpdateData>>
+): UseMutationOptions<
+  PostControllerUpdateResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerUpdateResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const uploadControllerUploadAvatarMutation = (
+  options?: Partial<Options<UploadControllerUploadAvatarData>>
+): UseMutationOptions<
+  UploadControllerUploadAvatarResponse,
+  AxiosError<DefaultError>,
+  Options<UploadControllerUploadAvatarData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    UploadControllerUploadAvatarResponse,
+    AxiosError<DefaultError>,
+    Options<UploadControllerUploadAvatarData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await uploadControllerUploadAvatar({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
 }
