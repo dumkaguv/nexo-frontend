@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"src/api/**\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\"",
+    "typecheck": "tsc --noEmit -p .",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore",
     "fix": "npm run lint:fix && npm run format",
     "openapi": "openapi-ts",

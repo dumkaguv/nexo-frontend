@@ -21,12 +21,12 @@ import {
   postControllerRemove,
   postControllerUpdate,
   profileControllerMe,
+  profileControllerMeDetailed,
   profileControllerUpdate,
   uploadControllerUploadAvatar,
   userControllerChangePassword,
   userControllerFindAll,
   userControllerFindOne,
-  userControllerFindOneMinified,
   userControllerRemove,
   userControllerUpdate
 } from '../sdk.gen'
@@ -50,6 +50,7 @@ import type {
   PostControllerUpdateData,
   PostControllerUpdateResponse,
   ProfileControllerMeData,
+  ProfileControllerMeDetailedData,
   ProfileControllerUpdateData,
   ProfileControllerUpdateResponse,
   UploadControllerUploadAvatarData,
@@ -59,7 +60,6 @@ import type {
   UserControllerFindAllData,
   UserControllerFindAllResponse,
   UserControllerFindOneData,
-  UserControllerFindOneMinifiedData,
   UserControllerRemoveData,
   UserControllerRemoveResponse,
   UserControllerUpdateData,
@@ -395,28 +395,6 @@ export const userControllerUpdateMutation = (
   return mutationOptions
 }
 
-export const userControllerFindOneMinifiedQueryKey = (
-  options: Options<UserControllerFindOneMinifiedData>
-) => createQueryKey('userControllerFindOneMinified', options)
-
-export const userControllerFindOneMinifiedOptions = (
-  options: Options<UserControllerFindOneMinifiedData>
-) => {
-  return queryOptions({
-    queryFn: async ({ queryKey, signal }) => {
-      const { data } = await userControllerFindOneMinified({
-        ...options,
-        ...queryKey[0],
-        signal,
-        throwOnError: true
-      })
-
-      return data
-    },
-    queryKey: userControllerFindOneMinifiedQueryKey(options)
-  })
-}
-
 export const userControllerChangePasswordMutation = (
   options?: Partial<Options<UserControllerChangePasswordData>>
 ): UseMutationOptions<
@@ -462,6 +440,28 @@ export const profileControllerMeOptions = (
       return data
     },
     queryKey: profileControllerMeQueryKey(options)
+  })
+}
+
+export const profileControllerMeDetailedQueryKey = (
+  options?: Options<ProfileControllerMeDetailedData>
+) => createQueryKey('profileControllerMeDetailed', options)
+
+export const profileControllerMeDetailedOptions = (
+  options?: Options<ProfileControllerMeDetailedData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await profileControllerMeDetailed({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: profileControllerMeDetailedQueryKey(options)
   })
 }
 

@@ -64,7 +64,7 @@ export const HeaderAvatar = () => {
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger>
         <PersonInfo.Avatar
-          src={user?.profile?.avatarUrl}
+          src={user?.profile.avatarUrl}
           isLoading={isPendingUser}
           className="h-10 w-10 cursor-pointer"
         />

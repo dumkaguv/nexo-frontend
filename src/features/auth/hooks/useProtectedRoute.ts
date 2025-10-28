@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-import { profileControllerMeOptions } from '@/api'
+import { profileControllerMeDetailedOptions } from '@/api'
 import { useAuthStore } from '@/stores'
 import { getAccessToken } from '@/utils'
 
@@ -12,7 +12,7 @@ export const useProtectedRoute = () => {
   const isAuth = !!token
 
   const { data: user, isPending: isPendingUser } = useQuery({
-    ...profileControllerMeOptions(),
+    ...profileControllerMeDetailedOptions(),
     enabled: isAuth
   })
 
@@ -21,10 +21,10 @@ export const useProtectedRoute = () => {
   }, [isPendingUser, setIsPendingUser])
 
   useEffect(() => {
-    if (user?.data) {
-      setUser(user.data)
+    if (user?.data.user) {
+      setUser(user?.data.user)
     }
-  }, [user?.data, setUser])
+  }, [user?.data.user, setUser])
 
   return isAuth
 }

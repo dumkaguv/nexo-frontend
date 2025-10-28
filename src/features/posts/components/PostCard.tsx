@@ -5,10 +5,10 @@ import * as User from '@/components/shared/Person'
 import { paths } from '@/config'
 import { getFileType } from '@/features/posts/utils'
 
-import type { PostResponseDto } from '@/api'
+import type { ResponsePostDto } from '@/api'
 
 type Props = {
-  post: PostResponseDto
+  post: ResponsePostDto
 }
 
 export const PostCard = ({ post }: Props) => {

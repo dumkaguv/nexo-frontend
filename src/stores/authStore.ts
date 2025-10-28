@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 
-import type { UserResponseWithRelationsDto } from '@/api'
+import type { ResponseProfileDetailedDto } from '@/api'
 
 type AuthStoreState = {
-  user?: UserResponseWithRelationsDto
+  user?: ResponseProfileDetailedDto['user']
   isPendingUser: boolean
 
-  setUser: (user?: UserResponseWithRelationsDto) => void
+  setUser: (user?: ResponseProfileDetailedDto['user']) => void
   setIsPendingUser: (isPendingUser: boolean) => void
 }
 

@@ -28,6 +28,8 @@ import type {
   PostControllerUpdateData,
   PostControllerUpdateResponses,
   ProfileControllerMeData,
+  ProfileControllerMeDetailedData,
+  ProfileControllerMeDetailedResponses,
   ProfileControllerMeResponses,
   ProfileControllerUpdateData,
   ProfileControllerUpdateResponses,
@@ -38,8 +40,6 @@ import type {
   UserControllerFindAllData,
   UserControllerFindAllResponses,
   UserControllerFindOneData,
-  UserControllerFindOneMinifiedData,
-  UserControllerFindOneMinifiedResponses,
   UserControllerFindOneResponses,
   UserControllerRemoveData,
   UserControllerRemoveResponses,
@@ -215,28 +215,6 @@ export const userControllerUpdate = <ThrowOnError extends boolean = false>(
   })
 }
 
-export const userControllerFindOneMinified = <
-  ThrowOnError extends boolean = false
->(
-  options: Options<UserControllerFindOneMinifiedData, ThrowOnError>
-) => {
-  return (options.client ?? client).get<
-    UserControllerFindOneMinifiedResponses,
-    unknown,
-    ThrowOnError
-  >({
-    responseType: 'json',
-    security: [
-      {
-        scheme: 'bearer',
-        type: 'http'
-      }
-    ],
-    url: '/api/users/minified/{id}',
-    ...options
-  })
-}
-
 export const userControllerChangePassword = <
   ThrowOnError extends boolean = false
 >(
@@ -279,6 +257,28 @@ export const profileControllerMe = <ThrowOnError extends boolean = false>(
       }
     ],
     url: '/api/profile/me',
+    ...options
+  })
+}
+
+export const profileControllerMeDetailed = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<ProfileControllerMeDetailedData, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    ProfileControllerMeDetailedResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/profile/me/detailed',
     ...options
   })
 }

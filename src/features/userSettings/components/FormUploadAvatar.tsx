@@ -6,9 +6,12 @@ import { useUploadAvatar } from '@/features/userSettings/hooks'
 
 import { Section } from './Section'
 
+import type { CreateAvatarSchema } from '@/zodSchemas'
+
+import type { ControllerRenderProps } from 'react-hook-form'
+
 export const FormUploadAvatar = () => {
   const {
-    handleSubmit,
     onSubmit,
     onFileChange,
     control,
@@ -18,8 +21,16 @@ export const FormUploadAvatar = () => {
     isPending
   } = useUploadAvatar()
 
+  const onChange = (
+    files: FileList | null,
+    field: ControllerRenderProps<CreateAvatarSchema>
+  ) => {
+    field.onChange(files)
+    onFileChange(files)
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <Section title="uploadAvatar" isPending={isPending}>
         {previewUrl ? (
           <ImagePreview
@@ -40,10 +51,7 @@ export const FormUploadAvatar = () => {
                 accept="image/*"
                 multiple={false}
                 value={field.value}
-                onChange={(files) => {
-                  field.onChange(files)
-                  onFileChange(files)
-                }}
+                onChange={(files) => onChange(files, field)}
               />
               <FieldError>{errors.avatar?.message || fileSizeError}</FieldError>
             </Field>

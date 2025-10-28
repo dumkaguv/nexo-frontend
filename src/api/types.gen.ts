@@ -4,31 +4,28 @@ export type ClientOptions = {
   baseURL: string
 }
 
-export type ProfileDto = {
-  id: number
+export type ResponseProfileDto = {
+  readonly id: number
   fullName: string
-  avatarUrl: string | null
-  birthDay: string | null
-  phone: string | null
-  biography: string | null
-  createdAt: string
-  updatedAt: string
+  avatarUrl?: string | null
+  birthDay?: string | null
+  phone?: string | null
+  biography?: string | null
+  readonly createdAt: string
 }
 
-export type UserResponseDto = {
-  id: number
+export type ResponseUserProfileDto = {
+  readonly id: number
   username: string
   email: string
-  activationLink: string | null
-  isActivated: boolean
-  createdAt: string
-  updatedAt: string
-  activatedAt: string | null
-  profile: ProfileDto
+  readonly activationLink?: string | null
+  readonly isActivated: boolean
+  profile: ResponseProfileDto
+  readonly createdAt: string
 }
 
-export type LoginResponseDto = {
-  user: UserResponseDto
+export type ResponseRegisterDto = {
+  user: ResponseUserProfileDto
   accessToken: string
 }
 
@@ -46,7 +43,12 @@ export type CreateUserDto = {
   password: string
 }
 
-export type LoginRequestDto = {
+export type ResponseLoginDto = {
+  user: ResponseUserProfileDto
+  accessToken: string
+}
+
+export type CreateLoginDto = {
   email: string
   password: string
 }
@@ -55,65 +57,26 @@ export type EmptyResponseDto = {
   [key: string]: unknown
 }
 
-export type RefreshResponseDto = {
-  accessToken: string
+export type ResponseRefreshDto = {
+  readonly accessToken: string
 }
 
-export type UpdateProfileDto = {
-  fullName?: string
-  avatarUrl?: string | null
-  birthDay?: string | null
-  phone?: string | null
-  biography?: string | null
+export type ResponseSubscriptionDto = {
+  readonly id: number
+  user: ResponseUserProfileDto
+  readonly createdAt: string
 }
 
-export type PostDto = {
-  id: number
-  content: string
-  createdAt: string
-  updatedAt: string
-}
-
-export type MessageDto = {
-  id: number
-  content: string | null
-  createdAt: string
-  readAt: string | null
-}
-
-export type PostLikeDto = {
-  id: number
-  createdAt: string
-}
-
-export type PostCommentDto = {
-  id: number
-  content: string
-  createdAt: string
-}
-
-export type SubscriptionDto = {
-  id: number
-  createdAt: string
-}
-
-export type UserResponseWithRelationsDto = {
-  id: number
+export type ResponseUserDto = {
+  readonly id: number
   username: string
   email: string
-  activationLink: string | null
-  isActivated: boolean
-  profile?: UpdateProfileDto
-  posts?: Array<PostDto>
-  sentMessages?: Array<MessageDto>
-  receivedMessages?: Array<MessageDto>
-  likesOnPosts?: Array<PostLikeDto>
-  comments?: Array<PostCommentDto>
-  following?: Array<SubscriptionDto>
-  followers?: Array<SubscriptionDto>
-  createdAt: string
-  updatedAt: string
-  activatedAt: string | null
+  readonly activationLink?: string | null
+  readonly isActivated: boolean
+  profile: ResponseProfileDto
+  following?: Array<ResponseSubscriptionDto> | null
+  followers?: Array<ResponseSubscriptionDto> | null
+  readonly createdAt: string
 }
 
 export type PaginatedResponseDto = {
@@ -132,30 +95,55 @@ export type PaginatedResponseDto = {
 export type UpdateUserDto = {
   email?: string
   username?: string
-  fullName?: string
 }
 
-export type ChangePasswordDto = {
+export type CreateChangePasswordDto = {
   oldPassword: string
   newPassword: string
 }
 
-export type PostFileDto = {
-  id: number
-  url: string
-  type: string | null
-  uploadedAt: string
+export type ResponseProfileDetailedDto = {
+  user: ResponseUserDto
 }
 
-export type PostResponseDto = {
-  id: number
+export type UpdateProfileDto = {
+  phone?: string | null
+  biography?: string | null
+  fullName?: string
+  avatarUrl?: string | null
+  birthDay?: string | null
+}
+
+export type ResponsePostFileDto = {
+  readonly id: number
+  url: string
+  type?: string | null
+  readonly uploadedAt: string
+}
+
+export type ResponsePostLikeDto = {
+  readonly id: number
+  user: ResponseUserProfileDto
+  readonly createdAt: string
+}
+
+export type ResponsePostCommentDto = {
+  readonly id: number
+  readonly postId: number
+  user: ResponseUserProfileDto
   content: string
-  createdAt: string
-  updatedAt: string
-  user: UserResponseDto
-  files?: Array<PostFileDto>
-  likes?: Array<PostLikeDto>
-  comments?: Array<PostCommentDto>
+  readonly createdAt: string
+}
+
+export type ResponsePostDto = {
+  readonly id: number
+  content: string
+  user: ResponseUserDto
+  files?: Array<ResponsePostFileDto> | null
+  likes?: Array<ResponsePostLikeDto> | null
+  comments?: Array<ResponsePostCommentDto> | null
+  readonly createdAt: string
+  readonly updatedAt: string
 }
 
 export type CreatePostDto = {
@@ -166,8 +154,60 @@ export type UpdatePostDto = {
   content?: string
 }
 
-export type UploadAvatarPayload = {
+export type CreateUploadAvatarDto = {
   file: Blob | File
+}
+
+export type ResponseProfileDtoWritable = {
+  fullName: string
+  avatarUrl?: string | null
+  birthDay?: string | null
+  phone?: string | null
+  biography?: string | null
+}
+
+export type ResponseUserProfileDtoWritable = {
+  username: string
+  email: string
+  profile: ResponseProfileDtoWritable
+}
+
+export type EmptyResponseDtoWritable = {
+  [key: string]: unknown
+}
+
+export type ResponseSubscriptionDtoWritable = {
+  user: ResponseUserProfileDtoWritable
+}
+
+export type ResponseUserDtoWritable = {
+  username: string
+  email: string
+  profile: ResponseProfileDtoWritable
+  following?: Array<ResponseSubscriptionDtoWritable> | null
+  followers?: Array<ResponseSubscriptionDtoWritable> | null
+}
+
+export type ResponsePostFileDtoWritable = {
+  url: string
+  type?: string | null
+}
+
+export type ResponsePostLikeDtoWritable = {
+  user: ResponseUserProfileDtoWritable
+}
+
+export type ResponsePostCommentDtoWritable = {
+  user: ResponseUserProfileDtoWritable
+  content: string
+}
+
+export type ResponsePostDtoWritable = {
+  content: string
+  user: ResponseUserDtoWritable
+  files?: Array<ResponsePostFileDtoWritable> | null
+  likes?: Array<ResponsePostLikeDtoWritable> | null
+  comments?: Array<ResponsePostCommentDtoWritable> | null
 }
 
 export type AuthControllerRegisterData = {
@@ -179,7 +219,7 @@ export type AuthControllerRegisterData = {
 
 export type AuthControllerRegisterResponses = {
   200: BaseResponseDto & {
-    data?: LoginResponseDto
+    data?: ResponseRegisterDto
   }
 }
 
@@ -187,7 +227,7 @@ export type AuthControllerRegisterResponse =
   AuthControllerRegisterResponses[keyof AuthControllerRegisterResponses]
 
 export type AuthControllerLoginData = {
-  body: LoginRequestDto
+  body: CreateLoginDto
   path?: never
   query?: never
   url: '/api/auth/login'
@@ -195,7 +235,7 @@ export type AuthControllerLoginData = {
 
 export type AuthControllerLoginResponses = {
   200: BaseResponseDto & {
-    data?: LoginResponseDto
+    data?: ResponseLoginDto
   }
 }
 
@@ -227,7 +267,7 @@ export type AuthControllerRefreshData = {
 
 export type AuthControllerRefreshResponses = {
   200: BaseResponseDto & {
-    data?: RefreshResponseDto
+    data?: ResponseRefreshDto
   }
 }
 
@@ -260,7 +300,7 @@ export type UserControllerFindAllData = {
 
 export type UserControllerFindAllResponses = {
   200: PaginatedResponseDto & {
-    data?: Array<UserResponseWithRelationsDto>
+    data?: Array<ResponseUserDto>
   }
 }
 
@@ -294,7 +334,7 @@ export type UserControllerFindOneData = {
 
 export type UserControllerFindOneResponses = {
   200: BaseResponseDto & {
-    data?: UserResponseWithRelationsDto
+    data?: ResponseUserDto
   }
 }
 
@@ -312,33 +352,15 @@ export type UserControllerUpdateData = {
 
 export type UserControllerUpdateResponses = {
   200: BaseResponseDto & {
-    data?: UserResponseWithRelationsDto
+    data?: ResponseUserDto
   }
 }
 
 export type UserControllerUpdateResponse =
   UserControllerUpdateResponses[keyof UserControllerUpdateResponses]
 
-export type UserControllerFindOneMinifiedData = {
-  body?: never
-  path: {
-    id: string
-  }
-  query?: never
-  url: '/api/users/minified/{id}'
-}
-
-export type UserControllerFindOneMinifiedResponses = {
-  200: BaseResponseDto & {
-    data?: UserResponseDto
-  }
-}
-
-export type UserControllerFindOneMinifiedResponse =
-  UserControllerFindOneMinifiedResponses[keyof UserControllerFindOneMinifiedResponses]
-
 export type UserControllerChangePasswordData = {
-  body: ChangePasswordDto
+  body: CreateChangePasswordDto
   path: {
     id: string
   }
@@ -348,7 +370,7 @@ export type UserControllerChangePasswordData = {
 
 export type UserControllerChangePasswordResponses = {
   200: BaseResponseDto & {
-    data?: UserResponseWithRelationsDto
+    data?: EmptyResponseDto
   }
 }
 
@@ -364,12 +386,28 @@ export type ProfileControllerMeData = {
 
 export type ProfileControllerMeResponses = {
   200: BaseResponseDto & {
-    data?: UserResponseWithRelationsDto
+    data?: ResponseProfileDto
   }
 }
 
 export type ProfileControllerMeResponse =
   ProfileControllerMeResponses[keyof ProfileControllerMeResponses]
+
+export type ProfileControllerMeDetailedData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/api/profile/me/detailed'
+}
+
+export type ProfileControllerMeDetailedResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseProfileDetailedDto
+  }
+}
+
+export type ProfileControllerMeDetailedResponse =
+  ProfileControllerMeDetailedResponses[keyof ProfileControllerMeDetailedResponses]
 
 export type ProfileControllerUpdateData = {
   body: UpdateProfileDto
@@ -380,7 +418,7 @@ export type ProfileControllerUpdateData = {
 
 export type ProfileControllerUpdateResponses = {
   200: BaseResponseDto & {
-    data?: UpdateProfileDto
+    data?: ResponseProfileDto
   }
 }
 
@@ -413,7 +451,7 @@ export type PostControllerFindAllData = {
 
 export type PostControllerFindAllResponses = {
   200: PaginatedResponseDto & {
-    data?: Array<PostResponseDto>
+    data?: Array<ResponsePostDto>
   }
 }
 
@@ -429,7 +467,7 @@ export type PostControllerCreateData = {
 
 export type PostControllerCreateResponses = {
   200: BaseResponseDto & {
-    data?: PostResponseDto
+    data?: ResponsePostDto
   }
 }
 
@@ -463,7 +501,7 @@ export type PostControllerFindOneData = {
 
 export type PostControllerFindOneResponses = {
   200: BaseResponseDto & {
-    data?: PostResponseDto
+    data?: ResponsePostDto
   }
 }
 
@@ -481,7 +519,7 @@ export type PostControllerUpdateData = {
 
 export type PostControllerUpdateResponses = {
   200: BaseResponseDto & {
-    data?: PostResponseDto
+    data?: ResponsePostDto
   }
 }
 
@@ -489,7 +527,7 @@ export type PostControllerUpdateResponse =
   PostControllerUpdateResponses[keyof PostControllerUpdateResponses]
 
 export type UploadControllerUploadAvatarData = {
-  body: UploadAvatarPayload
+  body: CreateUploadAvatarDto
   path?: never
   query?: never
   url: '/api/upload/avatar'
@@ -497,7 +535,7 @@ export type UploadControllerUploadAvatarData = {
 
 export type UploadControllerUploadAvatarResponses = {
   200: BaseResponseDto & {
-    data?: UserResponseDto
+    data?: ResponseUserDto
   }
 }
 

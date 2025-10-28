@@ -14,7 +14,7 @@ import {
 } from '@/features/auth/zodSchemas'
 import { saveAccessToken, showApiErrors } from '@/utils'
 
-import type { LoginRequestDto } from '@/api'
+import type { CreateLoginDto } from '@/api'
 import type { InputField } from '@/features/auth/types'
 
 export const useLoginForm = () => {
@@ -42,7 +42,7 @@ export const useLoginForm = () => {
     onError: (error) => showApiErrors(error, t('auth.loginError'))
   })
 
-  const onSubmit = async (data: LoginRequestDto) =>
+  const onSubmit = async (data: CreateLoginDto) =>
     await loginMutate({ body: data })
 
   const inputFields: InputField<LoginFormSchema>[] = [

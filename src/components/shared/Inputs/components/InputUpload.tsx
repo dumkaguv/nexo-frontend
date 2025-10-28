@@ -15,7 +15,7 @@ type Props = {
   className?: string
   onChange?: (files: FileList | null) => void
   value?: FileList | null
-} & ComponentProps<'input'>
+} & Omit<ComponentProps<'input'>, 'value' | 'onChange'>
 
 export const InputUpload = ({
   label,
@@ -59,7 +59,7 @@ export const InputUpload = ({
         onClick={onButtonClick}
         className="flex items-center gap-2"
       >
-        <Upload className="h-4 w-4" />
+        <Upload size={16} />
         {t('uploadFile')}
       </Button>
     </div>

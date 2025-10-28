@@ -75,8 +75,7 @@ export const useUploadAvatar = () => {
   const onSubmit = async () => await uploadAvatar({ body: { file: file! } })
 
   return {
-    handleSubmit,
-    onSubmit,
+    onSubmit: handleSubmit(onSubmit),
     onFileChange,
     control,
     errors,

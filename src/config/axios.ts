@@ -3,7 +3,7 @@ import axios, { type AxiosInstance } from 'axios'
 import { LocalStorage, paths } from '@/config'
 import { getAccessToken, saveAccessToken } from '@/utils'
 
-import type { RefreshResponseDto } from '@/api'
+import type { ResponseRefreshDto } from '@/api'
 import type { AxiosResponse } from 'axios'
 
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL
@@ -21,7 +21,7 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
   })
 
   axiosInstance.interceptors.response.use(
-    (response: AxiosResponse<RefreshResponseDto>) => response,
+    (response: AxiosResponse<ResponseRefreshDto>) => response,
     async (error) => {
       const originalRequest = error.config
 
