@@ -11,6 +11,7 @@ type ButtonProps = React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean
+    showChildrenWhenLoading?: boolean
   }
 
 function Button({
@@ -20,6 +21,7 @@ function Button({
   asChild = false,
   loading = false,
   children,
+  showChildrenWhenLoading = true,
   disabled,
   ...props
 }: ButtonProps) {
@@ -35,7 +37,7 @@ function Button({
     >
       {loading ? (
         <>
-          {children}
+          {showChildrenWhenLoading && children}
           <Loader2 className="h-4 w-4 animate-spin" />
         </>
       ) : (

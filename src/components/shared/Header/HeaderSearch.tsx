@@ -31,10 +31,13 @@ import {
 } from '@/components/ui'
 import { paths } from '@/config'
 import { useDebouncedValue } from '@/hooks'
+import { useQueryUpdate } from '@/hooks/useQueryUpdate'
 
 export const HeaderSearch = () => {
+  const { updateQuery, params } = useQueryUpdate()
+
   const [isOpenPopover, setIsOpenPopover] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState(params.search ?? '')
   const debouncedSearch = useDebouncedValue(searchValue)
 
   const { t } = useTranslation()
@@ -59,7 +62,10 @@ export const HeaderSearch = () => {
     }
   }, [searchValue, data])
 
-  const onValueChange = (value: string) => setSearchValue(value)
+  const onValueChange = (value: string) => {
+    setSearchValue(value)
+    updateQuery({ search: value })
+  }
 
   const onOpenChange = (open: boolean) => {
     if (open && !searchValue) {

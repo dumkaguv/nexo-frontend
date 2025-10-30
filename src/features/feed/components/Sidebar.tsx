@@ -28,7 +28,7 @@ export const Sidebar = ({ className, ...rest }: Props) => {
 
       <PersonInfo.Name className="text-center" />
 
-      <PersonInfo.Nickname />
+      <PersonInfo.Nickname asLink />
 
       <PersonInfo.FollowInfo className="mt-4" />
 

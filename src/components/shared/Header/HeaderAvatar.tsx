@@ -67,7 +67,7 @@ export const HeaderAvatar = () => {
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <Tooltip>
         <TooltipContent>{t('menu')}</TooltipContent>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <DropdownMenuTrigger>
             <PersonInfo.Avatar className="size-10 cursor-pointer" />
           </DropdownMenuTrigger>

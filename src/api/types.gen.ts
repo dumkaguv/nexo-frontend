@@ -22,6 +22,7 @@ export type ResponseUserDto = {
   readonly isActivated: boolean
   readonly followersCount: number
   readonly followingCount: number
+  readonly isFollowing: boolean
   profile: ResponseProfileDto
   readonly createdAt: string
 }
@@ -61,16 +62,6 @@ export type EmptyResponseDto = {
 
 export type ResponseRefreshDto = {
   readonly accessToken: string
-}
-
-export type ResponseUserPaginateDto = {
-  readonly id: number
-  username: string
-  email: string
-  readonly activationLink?: string | null
-  readonly isActivated: boolean
-  profile: ResponseProfileDto
-  readonly createdAt: string
 }
 
 export type PaginatedResponseDto = {
@@ -201,12 +192,6 @@ export type EmptyResponseDtoWritable = {
   [key: string]: unknown
 }
 
-export type ResponseUserPaginateDtoWritable = {
-  username: string
-  email: string
-  profile: ResponseProfileDtoWritable
-}
-
 export type ResponsePostFileDtoWritable = {
   url: string
   type?: string | null
@@ -333,7 +318,7 @@ export type UserControllerFindAllData = {
 
 export type UserControllerFindAllResponses = {
   200: PaginatedResponseDto & {
-    data?: Array<ResponseUserPaginateDto>
+    data?: Array<ResponseUserDto>
   }
 }
 

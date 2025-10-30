@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useQueryParams } from './useQueryParams'
 
+import type { AnyObject } from '@/types'
+
 import type { ParsedQuery } from 'query-string'
 
 export const useQueryUpdate = () => {
@@ -12,7 +14,7 @@ export const useQueryUpdate = () => {
   const params = useQueryParams()
 
   const updateQuery = useCallback(
-    (filters: ParsedQuery, reset = false) => {
+    (filters: ParsedQuery | AnyObject, reset = false) => {
       const { pathname, search, hash } = location
       const parsedSearchQuery = queryString.parse(search)
 
