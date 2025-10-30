@@ -28,14 +28,11 @@ export const PostCard = ({ post }: Props) => {
     <Card className="flex flex-col gap-6">
       <div className="flex items-center gap-4">
         <Link to={paths.profile.root}>
-          <User.Avatar src={post.user.profile?.avatarUrl} className="size-12" />
+          <User.Avatar className="size-12" />
         </Link>
         <div className="flex items-center gap-2">
           <Link to={paths.profile.root}>
-            <User.Name
-              name={post.user.profile?.fullName}
-              className="text-base"
-            />
+            <User.Name className="text-base" />
           </Link>
           <DayLabel date={post.createdAt} />
         </div>

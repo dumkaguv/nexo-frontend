@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
+import { Textarea } from '@/components/ui'
 import { cn } from '@/utils'
 
 import type { ComponentProps, FormEvent } from 'react'
@@ -14,9 +15,9 @@ export const TextAreaAutoHeight = (props: ComponentProps<'textarea'>) => {
   }
 
   return (
-    <textarea
+    <Textarea
       className={cn(
-        'h-auto w-full resize-none overflow-hidden pt-3 outline-0',
+        'field-sizing-fixed h-auto resize-none overflow-hidden pt-3 outline-0',
         props.className
       )}
       placeholder={props.placeholder ?? t('shareYourThoughts')}

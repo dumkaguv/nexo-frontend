@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import { Typography } from '@/components/shared'
 import { paths } from '@/config'
 
-const { Title } = Typography
-
 export const HeaderLogo = () => {
   return (
     <Link
@@ -13,9 +11,9 @@ export const HeaderLogo = () => {
       className="hover:text-primary flex items-center gap-1"
     >
       <LoaderPinwheel size={36} className="text-primary" />
-      <Title level={1} className="text-xl font-bold">
+      <Typography.Title level={1} className="text-xl font-bold">
         Nexo
-      </Title>
+      </Typography.Title>
     </Link>
   )
 }

@@ -14,13 +14,10 @@ import {
 } from '@/components/ui'
 import { paths } from '@/config'
 import { useFormCreatePost } from '@/features/posts/hooks'
-import { useAuthStore } from '@/stores'
 
 const { Text } = Typography
 
 export const FormCreatePost = () => {
-  const { user, isPendingUser } = useAuthStore()
-
   const { register, onSubmit, errors, isPending } = useFormCreatePost()
 
   const { t } = useTranslation()
@@ -42,11 +39,7 @@ export const FormCreatePost = () => {
         <div className="flex flex-col">
           <div className="flex gap-4">
             <Link to={paths.profile.root}>
-              <Person.Avatar
-                src={user?.profile?.avatarUrl}
-                isLoading={isPendingUser}
-                className="size-12"
-              />
+              <Person.Avatar className="size-12" />
             </Link>
 
             <Field className="flex w-full flex-col gap-2">

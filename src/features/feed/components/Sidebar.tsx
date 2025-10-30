@@ -1,0 +1,64 @@
+import { MessageSquareText, Newspaper } from 'lucide-react'
+
+import { useTranslation } from 'react-i18next'
+import { Link, useLocation } from 'react-router-dom'
+
+import * as PersonInfo from '@/components/shared/Person'
+import { Button, Separator, Sidebar as SidebarUi } from '@/components/ui'
+import { paths } from '@/config'
+
+import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
+
+type Props = ComponentProps<'aside'>
+
+export const Sidebar = ({ className, ...rest }: Props) => {
+  const { t } = useTranslation()
+  const location = useLocation()
+
+  const navItems = [
+    { name: t('feed'), href: paths.home.root, icon: Newspaper },
+    { name: t('messages'), href: paths.messages.root, icon: MessageSquareText }
+  ]
+
+  return (
+    <SidebarUi className={className} {...rest}>
+      <PersonInfo.Avatar />
+
+      <PersonInfo.Name className="text-center" />
+
+      <PersonInfo.Nickname />
+
+      <PersonInfo.FollowInfo className="mt-4" />
+
+      <Separator className="my-4" />
+
+      <ul className="flex w-full flex-col items-start">
+        {navItems.map(({ name, href, icon: Icon }) => {
+          const isActiveLink = href === location.pathname
+
+          return (
+            <li key={name}>
+              <nav>
+                <Button
+                  className={cn(
+                    'hover:text-primary/85 flex h-fit items-center text-base text-black hover:no-underline',
+                    isActiveLink && 'text-primary font-semibold'
+                  )}
+                  variant="link"
+                  asChild
+                >
+                  <Link to={href}>
+                    <Icon className="text-primary" />
+                    {name}
+                  </Link>
+                </Button>
+              </nav>
+            </li>
+          )
+        })}
+      </ul>
+    </SidebarUi>
+  )
+}

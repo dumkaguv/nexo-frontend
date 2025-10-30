@@ -33,6 +33,16 @@ import type {
   ProfileControllerMeResponses,
   ProfileControllerUpdateData,
   ProfileControllerUpdateResponses,
+  SubscriptionControllerFindAllFollowersData,
+  SubscriptionControllerFindAllFollowersResponses,
+  SubscriptionControllerFindAllFollowingData,
+  SubscriptionControllerFindAllFollowingResponses,
+  SubscriptionControllerFindOneCountData,
+  SubscriptionControllerFindOneCountResponses,
+  SubscriptionControllerFollowData,
+  SubscriptionControllerFollowResponses,
+  SubscriptionControllerUnfollowData,
+  SubscriptionControllerUnfollowResponses,
   UploadControllerUploadAvatarData,
   UploadControllerUploadAvatarResponses,
   UserControllerChangePasswordData,
@@ -438,5 +448,115 @@ export const uploadControllerUploadAvatar = <
       'Content-Type': null,
       ...options.headers
     }
+  })
+}
+
+export const subscriptionControllerFindAllFollowers = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<SubscriptionControllerFindAllFollowersData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    SubscriptionControllerFindAllFollowersResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/subscription/followers/{id}',
+    ...options
+  })
+}
+
+export const subscriptionControllerFindAllFollowing = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<SubscriptionControllerFindAllFollowingData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    SubscriptionControllerFindAllFollowingResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/subscription/following/{id}',
+    ...options
+  })
+}
+
+export const subscriptionControllerFindOneCount = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<SubscriptionControllerFindOneCountData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    SubscriptionControllerFindOneCountResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/subscription/count/{id}',
+    ...options
+  })
+}
+
+export const subscriptionControllerFollow = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<SubscriptionControllerFollowData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    SubscriptionControllerFollowResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/subscription/follow/{id}',
+    ...options
+  })
+}
+
+export const subscriptionControllerUnfollow = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<SubscriptionControllerUnfollowData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    SubscriptionControllerUnfollowResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/subscription/unfollow/{id}',
+    ...options
   })
 }

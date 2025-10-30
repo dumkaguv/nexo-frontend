@@ -6,36 +6,47 @@ import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui'
 import { cn } from '@/utils'
 
+import { Image } from './'
+
 import type { ComponentProps } from 'react'
 
-type Props = {
-  file?: File
-  src?: string
-  files?: File[]
-  srcs?: string[]
-  className?: string
-} & ComponentProps<'img'>
+type Props =
+  | {
+      files: File[]
+      srcs?: never
+    }
+  | {
+      srcs: string[]
+      files?: never
+    }
+
+type ImagePreviewProps = Props & ComponentProps<'img'>
 
 export const ImagePreview = ({
-  file,
-  src,
   files,
   srcs,
   className,
   ...props
-}: Props) => {
+}: ImagePreviewProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
+
   const { t } = useTranslation()
 
   const slides = useMemo(() => {
-    if (files?.length)
-      return files.map((f) => ({ src: URL.createObjectURL(f) }))
-    if (srcs?.length) return srcs.map((s) => ({ src: s }))
-    if (file) return [{ src: URL.createObjectURL(file) }]
-    if (src) return [{ src }]
+    if (files?.length) {
+      return files.map((file) => ({ src: URL.createObjectURL(file) }))
+    }
+    if (srcs?.length) {
+      return srcs.map((src) => ({ src }))
+    }
     return []
-  }, [file, src, files, srcs])
+  }, [files, srcs])
+
+  const onImageClick = (index: number) => {
+    setCurrentIndex(index)
+    setIsOpen(true)
+  }
 
   if (!slides.length) return null
 
@@ -46,15 +57,11 @@ export const ImagePreview = ({
           <Tooltip key={index}>
             <TooltipContent>{t('preview')}</TooltipContent>
             <TooltipTrigger asChild>
-              <img
+              <Image
                 src={slide.src}
                 width={120}
                 height={100}
-                onClick={() => {
-                  setIsOpen(true)
-                  setCurrentIndex(index)
-                }}
-                alt=""
+                onClick={() => onImageClick(index)}
                 className={cn(
                   'h-[100px] w-[120px] cursor-pointer rounded-sm object-cover',
                   className

@@ -1,15 +1,161 @@
-import { useState } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { BookMinus } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { InputSearch } from '@/components/shared'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { Link } from 'react-router-dom'
+
+import { userControllerFindAllInfiniteOptions } from '@/api'
+import {
+  AvatarWithColorInitials,
+  InputSearch,
+  Typography
+} from '@/components/shared'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Spinner
+} from '@/components/ui'
+import { paths } from '@/config'
+import { useDebouncedValue } from '@/hooks'
 
 export const HeaderSearch = () => {
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
   const [searchValue, setSearchValue] = useState('')
+  const debouncedSearch = useDebouncedValue(searchValue)
+
+  const { t } = useTranslation()
+
+  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    ...userControllerFindAllInfiniteOptions({
+      query: { search: debouncedSearch }
+    }),
+    getNextPageParam: (response) => response.nextPage,
+    enabled: !!debouncedSearch,
+    initialPageParam: 1
+  })
+
+  const allUsers = data?.pages.flatMap((page) => page.data) ?? []
+  const total = data?.pages[0]?.total ?? 0
+
+  useEffect(() => {
+    if (searchValue && data) {
+      setIsOpenPopover(true)
+    } else {
+      setIsOpenPopover(false)
+    }
+  }, [searchValue, data])
+
+  const onValueChange = (value: string) => setSearchValue(value)
+
+  const onOpenChange = (open: boolean) => {
+    if (open && !searchValue) {
+      return
+    }
+
+    setIsOpenPopover(open)
+  }
+
+  const renderLoadingState = () => (
+    <div className="flex items-center gap-2 px-2">
+      <Spinner className="size-3" />{' '}
+      <Typography.Text className="text-muted-foreground text-sm">
+        {t('loading')}
+      </Typography.Text>
+    </div>
+  )
 
   return (
-    <InputSearch
-      value={searchValue}
-      onChange={(event) => setSearchValue(event.target.value)}
-      className="w-[400px]"
-    />
+    <Popover open={isOpenPopover} onOpenChange={onOpenChange} modal={false}>
+      <PopoverTrigger asChild>
+        <div className="relative">
+          <InputSearch
+            value={searchValue}
+            onChange={(e) => onValueChange(e.target.value)}
+            placeholder={t('usersSearch') + '...'}
+            className="w-[300px]"
+          />
+
+          {isLoading && (
+            <div className="absolute top-1/2 right-11 -translate-y-1/2">
+              {renderLoadingState()}
+            </div>
+          )}
+        </div>
+      </PopoverTrigger>
+
+      <PopoverContent
+        className="w-[300px] overflow-y-hidden p-0"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
+        <Command className="bg-input/50">
+          {total === 0 && !isLoading && (
+            <CommandEmpty>
+              <Empty className="p-2 md:p-4">
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <BookMinus />
+                  </EmptyMedia>
+
+                  <EmptyTitle>{t('noResultsFound')}</EmptyTitle>
+                  <EmptyDescription>
+                    {t('tryToTypeAnythingElse')}
+                  </EmptyDescription>
+                </EmptyHeader>
+              </Empty>
+            </CommandEmpty>
+          )}
+
+          {allUsers.length > 0 && (
+            <CommandList className="overflow-y-hidden">
+              <div
+                id="users-scrollable-list"
+                className="max-h-[300px] overflow-y-auto"
+              >
+                <InfiniteScroll
+                  dataLength={allUsers.length}
+                  next={fetchNextPage}
+                  hasMore={!!hasNextPage}
+                  loader={renderLoadingState()}
+                  scrollableTarget="users-scrollable-list"
+                  scrollThreshold={0.9}
+                >
+                  <CommandGroup>
+                    {allUsers.map((user) => (
+                      <Link
+                        key={user.id}
+                        to={paths.user.byId(user.id)}
+                        onClick={() => setIsOpenPopover(false)}
+                      >
+                        <CommandItem className="cursor-pointer">
+                          <AvatarWithColorInitials
+                            name={user.profile?.fullName}
+                            id={user.id}
+                            src={user.profile?.avatarUrl}
+                          />
+                          <span className="ml-2">{user.username}</span>
+                        </CommandItem>
+                      </Link>
+                    ))}
+                  </CommandGroup>
+                </InfiniteScroll>
+              </div>
+            </CommandList>
+          )}
+        </Command>
+      </PopoverContent>
+    </Popover>
   )
 }

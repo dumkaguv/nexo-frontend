@@ -23,6 +23,11 @@ import {
   profileControllerMe,
   profileControllerMeDetailed,
   profileControllerUpdate,
+  subscriptionControllerFindAllFollowers,
+  subscriptionControllerFindAllFollowing,
+  subscriptionControllerFindOneCount,
+  subscriptionControllerFollow,
+  subscriptionControllerUnfollow,
   uploadControllerUploadAvatar,
   userControllerChangePassword,
   userControllerFindAll,
@@ -53,6 +58,15 @@ import type {
   ProfileControllerMeDetailedData,
   ProfileControllerUpdateData,
   ProfileControllerUpdateResponse,
+  SubscriptionControllerFindAllFollowersData,
+  SubscriptionControllerFindAllFollowersResponse,
+  SubscriptionControllerFindAllFollowingData,
+  SubscriptionControllerFindAllFollowingResponse,
+  SubscriptionControllerFindOneCountData,
+  SubscriptionControllerFollowData,
+  SubscriptionControllerFollowResponse,
+  SubscriptionControllerUnfollowData,
+  SubscriptionControllerUnfollowResponse,
   UploadControllerUploadAvatarData,
   UploadControllerUploadAvatarResponse,
   UserControllerChangePasswordData,
@@ -676,6 +690,222 @@ export const uploadControllerUploadAvatarMutation = (
   > = {
     mutationFn: async (fnOptions) => {
       const { data } = await uploadControllerUploadAvatar({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const subscriptionControllerFindAllFollowersQueryKey = (
+  options: Options<SubscriptionControllerFindAllFollowersData>
+) => createQueryKey('subscriptionControllerFindAllFollowers', options)
+
+export const subscriptionControllerFindAllFollowersOptions = (
+  options: Options<SubscriptionControllerFindAllFollowersData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await subscriptionControllerFindAllFollowers({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: subscriptionControllerFindAllFollowersQueryKey(options)
+  })
+}
+
+export const subscriptionControllerFindAllFollowersInfiniteQueryKey = (
+  options: Options<SubscriptionControllerFindAllFollowersData>
+): QueryKey<Options<SubscriptionControllerFindAllFollowersData>> =>
+  createQueryKey('subscriptionControllerFindAllFollowers', options, true)
+
+export const subscriptionControllerFindAllFollowersInfiniteOptions = (
+  options: Options<SubscriptionControllerFindAllFollowersData>
+) => {
+  return infiniteQueryOptions<
+    SubscriptionControllerFindAllFollowersResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<SubscriptionControllerFindAllFollowersResponse>,
+    QueryKey<Options<SubscriptionControllerFindAllFollowersData>>,
+    | number
+    | Pick<
+        QueryKey<Options<SubscriptionControllerFindAllFollowersData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<SubscriptionControllerFindAllFollowersData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await subscriptionControllerFindAllFollowers({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+
+        return data
+      },
+      queryKey: subscriptionControllerFindAllFollowersInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const subscriptionControllerFindAllFollowingQueryKey = (
+  options: Options<SubscriptionControllerFindAllFollowingData>
+) => createQueryKey('subscriptionControllerFindAllFollowing', options)
+
+export const subscriptionControllerFindAllFollowingOptions = (
+  options: Options<SubscriptionControllerFindAllFollowingData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await subscriptionControllerFindAllFollowing({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: subscriptionControllerFindAllFollowingQueryKey(options)
+  })
+}
+
+export const subscriptionControllerFindAllFollowingInfiniteQueryKey = (
+  options: Options<SubscriptionControllerFindAllFollowingData>
+): QueryKey<Options<SubscriptionControllerFindAllFollowingData>> =>
+  createQueryKey('subscriptionControllerFindAllFollowing', options, true)
+
+export const subscriptionControllerFindAllFollowingInfiniteOptions = (
+  options: Options<SubscriptionControllerFindAllFollowingData>
+) => {
+  return infiniteQueryOptions<
+    SubscriptionControllerFindAllFollowingResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<SubscriptionControllerFindAllFollowingResponse>,
+    QueryKey<Options<SubscriptionControllerFindAllFollowingData>>,
+    | number
+    | Pick<
+        QueryKey<Options<SubscriptionControllerFindAllFollowingData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<SubscriptionControllerFindAllFollowingData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await subscriptionControllerFindAllFollowing({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+
+        return data
+      },
+      queryKey: subscriptionControllerFindAllFollowingInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const subscriptionControllerFindOneCountQueryKey = (
+  options: Options<SubscriptionControllerFindOneCountData>
+) => createQueryKey('subscriptionControllerFindOneCount', options)
+
+export const subscriptionControllerFindOneCountOptions = (
+  options: Options<SubscriptionControllerFindOneCountData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await subscriptionControllerFindOneCount({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: subscriptionControllerFindOneCountQueryKey(options)
+  })
+}
+
+export const subscriptionControllerFollowMutation = (
+  options?: Partial<Options<SubscriptionControllerFollowData>>
+): UseMutationOptions<
+  SubscriptionControllerFollowResponse,
+  AxiosError<DefaultError>,
+  Options<SubscriptionControllerFollowData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    SubscriptionControllerFollowResponse,
+    AxiosError<DefaultError>,
+    Options<SubscriptionControllerFollowData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await subscriptionControllerFollow({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const subscriptionControllerUnfollowMutation = (
+  options?: Partial<Options<SubscriptionControllerUnfollowData>>
+): UseMutationOptions<
+  SubscriptionControllerUnfollowResponse,
+  AxiosError<DefaultError>,
+  Options<SubscriptionControllerUnfollowData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    SubscriptionControllerUnfollowResponse,
+    AxiosError<DefaultError>,
+    Options<SubscriptionControllerUnfollowData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await subscriptionControllerUnfollow({
         ...options,
         ...fnOptions,
         throwOnError: true

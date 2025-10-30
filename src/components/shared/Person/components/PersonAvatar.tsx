@@ -1,22 +1,29 @@
 import { Avatar, AvatarImage, Skeleton } from '@/components/ui'
 import { ImageFallbacks } from '@/config'
+import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
 type Props = {
   src?: string | null
   className?: string
-  isLoading?: boolean
+  avatarImageClassName?: string
 }
 
-export const PersonAvatar = ({ src, isLoading, className }: Props) => {
+export const PersonAvatar = ({
+  src,
+  className,
+  avatarImageClassName
+}: Props) => {
+  const { user, isPendingUser } = useAuthStore()
+
   return (
-    <Avatar className={className}>
-      {isLoading ? (
-        <Skeleton className={cn('rounded-full', className)} />
+    <Avatar className={cn('size-16', className)}>
+      {isPendingUser ? (
+        <Skeleton className={cn('size-16 rounded-full', className)} />
       ) : (
         <AvatarImage
-          className="object-cover"
-          src={src ?? ImageFallbacks.avatar}
+          className={cn('object-cover', avatarImageClassName)}
+          src={src ?? user?.profile.avatarUrl ?? ImageFallbacks.avatar}
         />
       )}
     </Avatar>

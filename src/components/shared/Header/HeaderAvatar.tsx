@@ -21,7 +21,7 @@ import { showApiErrors } from '@/utils'
 export const HeaderAvatar = () => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const { user, setUser, isPendingUser } = useAuthStore()
+  const { setUser } = useAuthStore()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
@@ -63,11 +63,7 @@ export const HeaderAvatar = () => {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger>
-        <PersonInfo.Avatar
-          src={user?.profile.avatarUrl}
-          isLoading={isPendingUser}
-          className="h-10 w-10 cursor-pointer"
-        />
+        <PersonInfo.Avatar className="size-10 cursor-pointer" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" side="bottom" alignOffset={-8}>

@@ -8,6 +8,12 @@ export const paths = {
     register: '/register'
   },
 
+  user: {
+    root: '/user',
+    byId: (id: string | number) => `/user/${id}`
+  },
+
+  // todo: replace all profile paths to user paths
   profile: {
     root: '/profile'
   },

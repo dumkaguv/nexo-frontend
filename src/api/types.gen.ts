@@ -14,18 +14,20 @@ export type ResponseProfileDto = {
   readonly createdAt: string
 }
 
-export type ResponseUserProfileDto = {
+export type ResponseUserDto = {
   readonly id: number
   username: string
   email: string
   readonly activationLink?: string | null
   readonly isActivated: boolean
+  readonly followersCount: number
+  readonly followingCount: number
   profile: ResponseProfileDto
   readonly createdAt: string
 }
 
 export type ResponseRegisterDto = {
-  user: ResponseUserProfileDto
+  user: ResponseUserDto
   accessToken: string
 }
 
@@ -44,7 +46,7 @@ export type CreateUserDto = {
 }
 
 export type ResponseLoginDto = {
-  user: ResponseUserProfileDto
+  user: ResponseUserDto
   accessToken: string
 }
 
@@ -61,21 +63,13 @@ export type ResponseRefreshDto = {
   readonly accessToken: string
 }
 
-export type ResponseSubscriptionDto = {
-  readonly id: number
-  user: ResponseUserProfileDto
-  readonly createdAt: string
-}
-
-export type ResponseUserDto = {
+export type ResponseUserPaginateDto = {
   readonly id: number
   username: string
   email: string
   readonly activationLink?: string | null
   readonly isActivated: boolean
   profile: ResponseProfileDto
-  following?: Array<ResponseSubscriptionDto> | null
-  followers?: Array<ResponseSubscriptionDto> | null
   readonly createdAt: string
 }
 
@@ -121,6 +115,16 @@ export type ResponsePostFileDto = {
   readonly uploadedAt: string
 }
 
+export type ResponseUserProfileDto = {
+  readonly id: number
+  username: string
+  email: string
+  readonly activationLink?: string | null
+  readonly isActivated: boolean
+  profile: ResponseProfileDto
+  readonly createdAt: string
+}
+
 export type ResponsePostLikeDto = {
   readonly id: number
   user: ResponseUserProfileDto
@@ -154,8 +158,29 @@ export type UpdatePostDto = {
   content?: string
 }
 
+export type ResponseUploadAvatarDto = {
+  user: ResponseUserDto
+}
+
 export type CreateUploadAvatarDto = {
   file: Blob | File
+}
+
+export type ResponseSubscriptionDto = {
+  readonly id: number
+  user: ResponseUserProfileDto
+  readonly createdAt: string
+}
+
+export type ResponseSubscriptionFollowingDto = {
+  readonly id: number
+  user: ResponseUserProfileDto
+  readonly createdAt: string
+}
+
+export type ResponseSubscriptionCountDto = {
+  followers: number
+  following: number
 }
 
 export type ResponseProfileDtoWritable = {
@@ -166,7 +191,7 @@ export type ResponseProfileDtoWritable = {
   biography?: string | null
 }
 
-export type ResponseUserProfileDtoWritable = {
+export type ResponseUserDtoWritable = {
   username: string
   email: string
   profile: ResponseProfileDtoWritable
@@ -176,21 +201,21 @@ export type EmptyResponseDtoWritable = {
   [key: string]: unknown
 }
 
-export type ResponseSubscriptionDtoWritable = {
-  user: ResponseUserProfileDtoWritable
-}
-
-export type ResponseUserDtoWritable = {
+export type ResponseUserPaginateDtoWritable = {
   username: string
   email: string
   profile: ResponseProfileDtoWritable
-  following?: Array<ResponseSubscriptionDtoWritable> | null
-  followers?: Array<ResponseSubscriptionDtoWritable> | null
 }
 
 export type ResponsePostFileDtoWritable = {
   url: string
   type?: string | null
+}
+
+export type ResponseUserProfileDtoWritable = {
+  username: string
+  email: string
+  profile: ResponseProfileDtoWritable
 }
 
 export type ResponsePostLikeDtoWritable = {
@@ -208,6 +233,14 @@ export type ResponsePostDtoWritable = {
   files?: Array<ResponsePostFileDtoWritable> | null
   likes?: Array<ResponsePostLikeDtoWritable> | null
   comments?: Array<ResponsePostCommentDtoWritable> | null
+}
+
+export type ResponseSubscriptionDtoWritable = {
+  user: ResponseUserProfileDtoWritable
+}
+
+export type ResponseSubscriptionFollowingDtoWritable = {
+  user: ResponseUserProfileDtoWritable
 }
 
 export type AuthControllerRegisterData = {
@@ -300,7 +333,7 @@ export type UserControllerFindAllData = {
 
 export type UserControllerFindAllResponses = {
   200: PaginatedResponseDto & {
-    data?: Array<ResponseUserDto>
+    data?: Array<ResponseUserPaginateDto>
   }
 }
 
@@ -535,9 +568,133 @@ export type UploadControllerUploadAvatarData = {
 
 export type UploadControllerUploadAvatarResponses = {
   200: BaseResponseDto & {
-    data?: ResponseUserDto
+    data?: ResponseUploadAvatarDto
   }
 }
 
 export type UploadControllerUploadAvatarResponse =
   UploadControllerUploadAvatarResponses[keyof UploadControllerUploadAvatarResponses]
+
+export type SubscriptionControllerFindAllFollowersData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/subscription/followers/{id}'
+}
+
+export type SubscriptionControllerFindAllFollowersResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseSubscriptionDto>
+  }
+}
+
+export type SubscriptionControllerFindAllFollowersResponse =
+  SubscriptionControllerFindAllFollowersResponses[keyof SubscriptionControllerFindAllFollowersResponses]
+
+export type SubscriptionControllerFindAllFollowingData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/subscription/following/{id}'
+}
+
+export type SubscriptionControllerFindAllFollowingResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseSubscriptionFollowingDto>
+  }
+}
+
+export type SubscriptionControllerFindAllFollowingResponse =
+  SubscriptionControllerFindAllFollowingResponses[keyof SubscriptionControllerFindAllFollowingResponses]
+
+export type SubscriptionControllerFindOneCountData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/subscription/count/{id}'
+}
+
+export type SubscriptionControllerFindOneCountResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseSubscriptionCountDto
+  }
+}
+
+export type SubscriptionControllerFindOneCountResponse =
+  SubscriptionControllerFindOneCountResponses[keyof SubscriptionControllerFindOneCountResponses]
+
+export type SubscriptionControllerFollowData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/subscription/follow/{id}'
+}
+
+export type SubscriptionControllerFollowResponses = {
+  200: BaseResponseDto & {
+    data?: EmptyResponseDto
+  }
+}
+
+export type SubscriptionControllerFollowResponse =
+  SubscriptionControllerFollowResponses[keyof SubscriptionControllerFollowResponses]
+
+export type SubscriptionControllerUnfollowData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/subscription/unfollow/{id}'
+}
+
+export type SubscriptionControllerUnfollowResponses = {
+  200: BaseResponseDto & {
+    data?: EmptyResponseDto
+  }
+}
+
+export type SubscriptionControllerUnfollowResponse =
+  SubscriptionControllerUnfollowResponses[keyof SubscriptionControllerUnfollowResponses]

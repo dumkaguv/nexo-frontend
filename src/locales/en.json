@@ -87,5 +87,14 @@
   "attach": "Attach",
   "publish": "Publish",
   "post": "Post",
-  "today_at": "Today at"
+  "today_at": "Today at",
+  "noFollowersYet": "No followers yet",
+  "noFollowersYetDescription": "Once people start following you, they will appear here.",
+  "noFollowingYet": "You're not following anyone yet",
+  "noFollowingYetDescription": "When you follow someone, they will appear here.",
+  "usersSearch": "Search users",
+  "clear": "Clear",
+  "loading": "Loading...",
+  "noResultsFound": "No results found",
+  "tryToTypeAnythingElse": "Try to type something else"
 }

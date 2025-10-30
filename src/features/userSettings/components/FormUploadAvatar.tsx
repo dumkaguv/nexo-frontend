@@ -34,8 +34,7 @@ export const FormUploadAvatar = () => {
       <Section title="uploadAvatar" isPending={isPending}>
         {previewUrl ? (
           <ImagePreview
-            src={previewUrl}
-            alt=""
+            srcs={[previewUrl]}
             className="my-4 h-48 w-48 rounded-full border border-dashed object-cover"
           />
         ) : (

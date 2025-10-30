@@ -87,5 +87,14 @@
   "attach": "Прикрепить",
   "publish": "Опубликовать",
   "post": "Пост",
-  "today_at": "Сегодня в"
+  "today_at": "Сегодня в",
+  "noFollowersYet": "Пока нет подписчиков",
+  "noFollowersYetDescription": "Когда люди начнут подписываться на вас, они появятся здесь.",
+  "noFollowingYet": "Вы ни на кого не подписаны",
+  "noFollowingYetDescription": "Когда вы подпишетесь на кого-то, он появится здесь.",
+  "usersSearch": "Поиск пользователей",
+  "clear": "Очистить",
+  "loading": "Загрузка...",
+  "noResultsFound": "Ничего не найдено",
+  "tryToTypeAnythingElse": "Попробуйте ввести что-то другое"
 }

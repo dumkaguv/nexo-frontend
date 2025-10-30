@@ -1,43 +1,70 @@
 import { Search, X } from 'lucide-react'
 
+import { type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button, Input } from '@/components/ui'
+import {
+  Button,
+  Input,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui'
 import { cn } from '@/utils'
 
-import type { ComponentProps } from 'react'
+import type { ChangeEvent } from 'react'
 
-type Props = ComponentProps<'input'> & {
+type Props = {
   onButtonClearClick?: () => void
-}
+  inputClassName?: string
+} & ComponentProps<'input'>
 
 export const InputSearch = ({
+  value,
   placeholder,
+  onChange,
   onButtonClearClick,
   className,
-  ...rest
+  inputClassName,
+  ...props
 }: Props) => {
   const { t } = useTranslation()
+
+  const onClear = () => {
+    onChange?.({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
+    onButtonClearClick?.()
+  }
 
   return (
     <div className={cn('relative h-fit', className)}>
       <Input
-        className="bg-custom-gray px-8"
+        value={value ?? ''}
+        onChange={onChange}
+        className={cn('bg-custom-gray px-8', inputClassName)}
         placeholder={placeholder ?? t('inputs.inputSearch')}
-        {...rest}
+        {...props}
       />
+
       <Search
         size={16}
         className="pointer-events-none absolute inset-y-0 left-2 my-auto opacity-50"
       />
-      {onButtonClearClick && (
-        <Button
-          className="absolute top-1/2 right-0 -translate-y-1/2 opacity-50"
-          onClick={onButtonClearClick}
-          variant="link"
-        >
-          <X size={16} className="text-gray-600" />
-        </Button>
+
+      {value && (
+        <Tooltip>
+          <TooltipContent>{t('clear')}</TooltipContent>
+
+          <TooltipTrigger asChild>
+            <Button
+              type="button"
+              className="absolute top-1/2 right-0 mr-2 -translate-y-1/2 opacity-50 hover:bg-gray-300 dark:hover:bg-gray-600"
+              onClick={onClear}
+              variant="link"
+            >
+              <X size={16} className="text-gray-600 dark:text-gray-400" />
+            </Button>
+          </TooltipTrigger>
+        </Tooltip>
       )}
     </div>
   )

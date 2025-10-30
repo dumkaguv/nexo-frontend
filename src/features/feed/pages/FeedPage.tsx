@@ -1,7 +1,7 @@
-import { Sidebar, SidebarRight } from '@/components/shared'
+import { Sidebar, SidebarRight } from '@/features/feed/components'
 import { FormCreatePost, PostsList } from '@/features/posts/components'
 
-export const HomePage = () => {
+export const FeedPage = () => {
   return (
     <div className="flex gap-5">
       <Sidebar />

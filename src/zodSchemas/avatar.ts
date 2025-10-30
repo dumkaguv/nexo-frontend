@@ -3,7 +3,7 @@ import { z } from 'zod'
 import type { TFunction } from 'i18next'
 
 const MAX_MB_SIZE = 4
-const MAX_MB_SIZE_FILE = MAX_MB_SIZE * 1024 * 124
+const MAX_MB_SIZE_FILE = MAX_MB_SIZE * 1024 * 1024
 
 export const createAvatarSchema = (t: TFunction) =>
   z.object({

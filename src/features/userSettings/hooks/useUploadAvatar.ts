@@ -40,9 +40,9 @@ export const useUploadAvatar = () => {
 
   const { mutateAsync: uploadAvatar, isPending } = useMutation({
     ...uploadControllerUploadAvatarMutation(),
-    onSuccess: async ({ data }) => {
+    onSuccess: async ({ data: { user } }) => {
       await invalidateQueries(profileControllerMeQueryKey())
-      setUser(data)
+      setUser(user)
       toast.success(t('uploadSuccess'))
     },
     onError: (e) => showApiErrors(e)
@@ -53,9 +53,18 @@ export const useUploadAvatar = () => {
     setPreviewUrl(user.profile.avatarUrl)
   }, [user])
 
+  useEffect(() => {
+    return () => {
+      if (previewUrl?.startsWith('blob:')) {
+        URL.revokeObjectURL(previewUrl)
+      }
+    }
+  }, [previewUrl])
+
   const onFileChange = (files: FileList | null) => {
     if (files && files.length > 0) {
       const file = files[0]
+      console.log(file.size, MAX_FILE_SIZE)
 
       if (file.size > MAX_FILE_SIZE) {
         setFileSizeError(

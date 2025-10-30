@@ -2,15 +2,18 @@ import { Link } from 'react-router-dom'
 
 import { Button, Skeleton } from '@/components/ui'
 import { paths } from '@/config'
+import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
 
-type Props = ComponentProps<'button'> & {
+type Props = {
   nickname?: string
-}
+} & ComponentProps<'button'>
 
-export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
+export const PersonNickname = ({ nickname, className, ...rest }: Props) => {
+  const { user } = useAuthStore()
+
   return (
     <Button
       asChild
@@ -18,8 +21,10 @@ export const PersonNickname = ({ className, nickname, ...rest }: Props) => {
       variant="link"
       {...rest}
     >
-      {nickname ? (
-        <Link to={paths.settings.account}>{`@${nickname}`}</Link>
+      {(nickname ?? user?.username) ? (
+        <Link
+          to={paths.settings.account}
+        >{`@${nickname ?? user?.username}`}</Link>
       ) : (
         <Skeleton className="mt-1.5 h-4 w-14" />
       )}
