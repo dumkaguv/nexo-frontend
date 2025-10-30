@@ -96,5 +96,6 @@
   "clear": "Clear",
   "loading": "Loading...",
   "noResultsFound": "No results found",
-  "tryToTypeAnythingElse": "Try to type something else"
+  "tryToTypeAnythingElse": "Try to type something else",
+  "menu": "Menu"
 }

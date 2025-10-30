@@ -19,7 +19,7 @@ type Props = {
 export const AvatarWithColorInitials = ({
   id,
   name,
-  size = 40,
+  size = 36,
   src,
   className
 }: Props) => {

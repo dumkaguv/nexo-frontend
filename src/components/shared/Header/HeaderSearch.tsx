@@ -12,6 +12,7 @@ import {
   InputSearch,
   Typography
 } from '@/components/shared'
+import * as Person from '@/components/shared/Person'
 import {
   Command,
   CommandEmpty,
@@ -140,12 +141,23 @@ export const HeaderSearch = () => {
                         onClick={() => setIsOpenPopover(false)}
                       >
                         <CommandItem className="cursor-pointer">
-                          <AvatarWithColorInitials
-                            name={user.profile?.fullName}
-                            id={user.id}
-                            src={user.profile?.avatarUrl}
-                          />
-                          <span className="ml-2">{user.username}</span>
+                          <div className="flex items-center gap-2.5">
+                            <AvatarWithColorInitials
+                              size={36}
+                              name={user.profile?.fullName}
+                              id={user.id}
+                              src={user.profile?.avatarUrl}
+                            />
+                            <div className="flex flex-col items-start">
+                              <Person.Name
+                                name={user.profile.fullName}
+                                className="text-sm"
+                              />
+                              <Typography.Text className="text-muted-foreground text-xs">
+                                {user.username}
+                              </Typography.Text>
+                            </div>
+                          </div>
                         </CommandItem>
                       </Link>
                     ))}

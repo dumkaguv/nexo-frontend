@@ -12,7 +12,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
 } from '@/components/ui'
 import { LocalStorage, paths } from '@/config'
 import { useAuthStore } from '@/stores'
@@ -62,11 +65,21 @@ export const HeaderAvatar = () => {
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger>
-        <PersonInfo.Avatar className="size-10 cursor-pointer" />
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipContent>{t('menu')}</TooltipContent>
+        <TooltipTrigger>
+          <DropdownMenuTrigger>
+            <PersonInfo.Avatar className="size-10 cursor-pointer" />
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+      </Tooltip>
 
-      <DropdownMenuContent align="end" side="bottom" alignOffset={-8}>
+      <DropdownMenuContent
+        align="end"
+        side="bottom"
+        alignOffset={-8}
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         {menuItems.map((item, index) => (
           <DropdownMenuItem key={index} className="p-0" asChild>
             {'to' in item ? (

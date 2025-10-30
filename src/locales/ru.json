@@ -96,5 +96,6 @@
   "clear": "Очистить",
   "loading": "Загрузка...",
   "noResultsFound": "Ничего не найдено",
-  "tryToTypeAnythingElse": "Попробуйте ввести что-то другое"
+  "tryToTypeAnythingElse": "Попробуйте ввести что-то другое",
+  "menu": "Меню"
 }

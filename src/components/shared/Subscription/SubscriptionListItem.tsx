@@ -62,7 +62,6 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
           id={data.user.id}
           name={profile.fullName}
           src={profile.avatarUrl}
-          size={36}
         />
 
         <div className="flex flex-col items-start">
