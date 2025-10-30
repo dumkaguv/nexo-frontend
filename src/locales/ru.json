@@ -99,5 +99,7 @@
   "tryToTypeAnythingElse": "Попробуйте ввести что-то другое",
   "menu": "Меню",
   "whoToFollow": "На кого подписаться",
-  "viewMore": "Показать еще"
+  "viewMore": "Показать еще",
+  "follow": "Подписаться",
+  "unfollow": "Отписаться"
 }

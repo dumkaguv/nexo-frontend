@@ -8,9 +8,11 @@ import { toast } from 'sonner'
 
 import {
   type ResponseSubscriptionDto,
+  profileControllerMeDetailedQueryKey,
   subscriptionControllerFindAllFollowersQueryKey,
   subscriptionControllerFindOneCountQueryKey,
-  subscriptionControllerFollowMutation
+  subscriptionControllerFollowMutation,
+  subscriptionControllerUnfollowMutation
 } from '@/api'
 import { AvatarWithColorInitials } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
@@ -48,8 +50,25 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
     onError: (e) => showApiErrors(e)
   })
 
-  const onFollow = async () =>
-    await followAsync({ path: { id: String(data.user.id) } })
+  const { mutateAsync: unfollowAsync, isPending: isPendingUnfollow } =
+    useMutation({
+      ...subscriptionControllerUnfollowMutation(),
+      onSuccess: async () => {
+        await invalidateQueries([
+          subscriptionControllerFindOneCountQueryKey({
+            path: { id: '1' }
+          }),
+          subscriptionControllerFindAllFollowersQueryKey({ path: { id: '1' } }),
+          profileControllerMeDetailedQueryKey()
+        ])
+        toast.success(t('success'))
+      },
+      onError: (e) => showApiErrors(e)
+    })
+
+  const path = { id: String(data.user.id) }
+  const onFollow = async () => await followAsync({ path })
+  const onUnfollow = async () => await unfollowAsync({ path })
 
   const {
     user: { profile }
@@ -79,8 +98,12 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
             {t('sendMessage')}
           </Button>
         ) : (
-          <Button onClick={onFollow} loading={isPendingFollow}>
-            {t('follow')}
+          <Button
+            variant="secondary"
+            onClick={onUnfollow}
+            loading={isPendingUnfollow}
+          >
+            {t('unfollow')}
           </Button>
         )}
 

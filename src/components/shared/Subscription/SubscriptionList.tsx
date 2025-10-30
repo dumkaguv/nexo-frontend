@@ -51,16 +51,20 @@ export const SubscriptionList = ({ isFollowersTab = true }: Props) => {
   }
 
   const data = isFollowersTab ? followers : following
+  console.log(data)
 
   return (
     <Card className="bg-card">
-      <ul className="flex flex-col gap-5">
-        {data?.data.map((data) => (
+      <ul className="flex flex-col gap-4">
+        {data?.data.map((record) => (
           <Link
-            to={paths.user.byId(data.user.id)}
+            to={paths.user.byId(record.user.id)}
             className="hover:cursor-pointer"
           >
-            <SubscriptionListItem data={data} isFollowersTab={isFollowersTab} />
+            <SubscriptionListItem
+              data={record}
+              isFollowersTab={isFollowersTab}
+            />
           </Link>
         ))}
       </ul>

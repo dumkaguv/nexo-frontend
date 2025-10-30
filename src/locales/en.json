@@ -99,5 +99,7 @@
   "tryToTypeAnythingElse": "Try to type something else",
   "menu": "Menu",
   "whoToFollow": "Who to follow",
-  "viewMore": "View more"
+  "viewMore": "View more",
+  "follow": "Follow",
+  "unfollow": "Unfollow"
 }

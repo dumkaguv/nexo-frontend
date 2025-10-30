@@ -34,7 +34,10 @@ export const SubscriptionModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange} {...props}>
-      <DialogContent aria-describedby={undefined}>
+      <DialogContent
+        className="max-h-11/12 overflow-y-hidden"
+        aria-describedby={undefined}
+      >
         <Tabs defaultValue={isFollowersTab ? 'followers' : 'following'}>
           <DialogHeader className="space-y-4">
             <DialogTitle hidden={true} />
@@ -52,11 +55,17 @@ export const SubscriptionModal = ({
             </div>
           </DialogHeader>
 
-          <TabsContent value="followers" className="mt-4">
+          <TabsContent
+            value="followers"
+            className="mt-4 max-h-[370px] overflow-y-auto"
+          >
             <SubscriptionList isFollowersTab />
           </TabsContent>
 
-          <TabsContent value="following" className="mt-4">
+          <TabsContent
+            value="following"
+            className="mt-4 max-h-[370px] overflow-y-auto"
+          >
             <SubscriptionList isFollowersTab={false} />
           </TabsContent>
         </Tabs>
