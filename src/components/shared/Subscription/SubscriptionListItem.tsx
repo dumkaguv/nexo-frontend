@@ -11,7 +11,6 @@ import {
   profileControllerMeDetailedQueryKey,
   subscriptionControllerFindAllFollowersQueryKey,
   subscriptionControllerFindOneCountQueryKey,
-  subscriptionControllerFollowMutation,
   subscriptionControllerUnfollowMutation
 } from '@/api'
 import { AvatarWithColorInitials } from '@/components/shared'
@@ -36,20 +35,6 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
   const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
-  const { mutateAsync: followAsync, isPending: isPendingFollow } = useMutation({
-    ...subscriptionControllerFollowMutation(),
-    onSuccess: async () => {
-      await invalidateQueries([
-        subscriptionControllerFindOneCountQueryKey({
-          path: { id: '1' }
-        }),
-        subscriptionControllerFindAllFollowersQueryKey({ path: { id: '1' } })
-      ])
-      toast.success(t('success'))
-    },
-    onError: (e) => showApiErrors(e)
-  })
-
   const { mutateAsync: unfollowAsync, isPending: isPendingUnfollow } =
     useMutation({
       ...subscriptionControllerUnfollowMutation(),
@@ -66,9 +51,8 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
       onError: (e) => showApiErrors(e)
     })
 
-  const path = { id: String(data.user.id) }
-  const onFollow = async () => await followAsync({ path })
-  const onUnfollow = async () => await unfollowAsync({ path })
+  const onUnfollow = async () =>
+    await unfollowAsync({ path: { id: String(data.user.id) } })
 
   const {
     user: { profile }
@@ -94,9 +78,7 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
         onClick={(e) => e.preventDefault()}
       >
         {isFollowersTab ? (
-          <Button onClick={onFollow} variant="secondary">
-            {t('sendMessage')}
-          </Button>
+          <Button variant="secondary">{t('sendMessage')}</Button>
         ) : (
           <Button
             variant="secondary"

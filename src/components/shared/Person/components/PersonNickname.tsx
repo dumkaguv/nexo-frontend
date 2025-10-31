@@ -35,7 +35,7 @@ export const PersonNickname = ({
           >{`@${nickname ?? user?.username}`}</Link>
         ) : (
           <Typography.Text className="text-muted-foreground">
-            {user?.username}
+            {nickname ?? user?.username}
           </Typography.Text>
         )
       ) : (

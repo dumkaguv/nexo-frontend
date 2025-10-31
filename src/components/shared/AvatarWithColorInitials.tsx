@@ -25,7 +25,7 @@ export const AvatarWithColorInitials = ({
 }: Props) => {
   const initials = getInitials(name)
 
-  const colorSeed = `${name}-${id ?? ''}-${Math.random()}`
+  const colorSeed = `${name}-${id}`
   const bgColor = stringToColor(colorSeed)
   const textColor = getTextColorForBackground(bgColor)
 

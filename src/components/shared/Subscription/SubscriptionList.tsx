@@ -1,73 +1,114 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { Link, useParams } from 'react-router-dom'
 
 import {
-  subscriptionControllerFindAllFollowersOptions,
-  subscriptionControllerFindAllFollowingOptions
+  subscriptionControllerFindAllFollowersInfiniteOptions,
+  subscriptionControllerFindAllFollowingInfiniteOptions
 } from '@/api'
 
 import { Card } from '@/components/shared'
 import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
 
+import { SubscriptionListEmptySearch } from './SubscriptionListEmptrySearch'
 import { SubscriptionListEmpty } from './SubscriptionListEmpty'
 import { SubscriptionListItem } from './SubscriptionListItem'
 import { SubscriptionListSkeleton } from './SubscriptionListSkeleton'
 
 type Props = {
   isFollowersTab?: boolean
+  searchValue?: string
 }
 
-export const SubscriptionList = ({ isFollowersTab = true }: Props) => {
+export const SubscriptionList = ({
+  searchValue,
+  isFollowersTab = true
+}: Props) => {
   const { user } = useAuthStore()
 
   const { id: userIdParam } = useParams()
 
   const userId = userIdParam ? String(userIdParam) : String(user?.id)
-  const { data: followers, isLoading: isLoadingFollowers } = useQuery({
-    ...subscriptionControllerFindAllFollowersOptions({ path: { id: userId } }),
+  const queryConfig = { path: { id: userId }, query: { search: searchValue } }
+
+  const {
+    data: followers,
+    isLoading: isLoadingFollowers,
+    fetchNextPage: fetchNextPageFollowers,
+    hasNextPage: hasNextPageFollowers
+  } = useInfiniteQuery({
+    ...subscriptionControllerFindAllFollowersInfiniteOptions(queryConfig),
+    getNextPageParam: (response) => response.nextPage,
     enabled: isFollowersTab
   })
 
-  const { data: following, isLoading: isLoadingFollowing } = useQuery({
-    ...subscriptionControllerFindAllFollowingOptions({ path: { id: userId } }),
+  const {
+    data: following,
+    isLoading: isLoadingFollowing,
+    fetchNextPage: fetchNextPageFollowing,
+    hasNextPage: hasNextPageFollowing
+  } = useInfiniteQuery({
+    ...subscriptionControllerFindAllFollowingInfiniteOptions(queryConfig),
+    getNextPageParam: (response) => response.nextPage,
     enabled: !isFollowersTab
   })
 
-  if (isLoadingFollowers || isLoadingFollowing) {
+  const data = isFollowersTab
+    ? followers?.pages.flatMap(({ data }) => data)
+    : following?.pages.flatMap(({ data }) => data)
+  const fetchNextPage = isFollowersTab
+    ? fetchNextPageFollowers
+    : fetchNextPageFollowing
+  const hasNextPage = isFollowersTab
+    ? hasNextPageFollowers
+    : hasNextPageFollowing
+  const isLoading = isLoadingFollowers || isLoadingFollowing
+
+  if (isLoading) {
     return (
-      <Card className="bg-card">
+      <Card>
         <SubscriptionListSkeleton />
       </Card>
     )
   }
 
-  if (
-    (isFollowersTab && followers?.total === 0) ||
-    (!isFollowersTab && following?.total === 0)
-  ) {
+  if (searchValue && data.length === 0 && !isLoading) {
+    return <SubscriptionListEmptySearch />
+  }
+
+  if (data.length === 0 && !isLoading) {
     return <SubscriptionListEmpty isFollowersTab={isFollowersTab} />
   }
 
-  const data = isFollowersTab ? followers : following
-  console.log(data)
-
   return (
-    <Card className="bg-card">
-      <ul className="flex flex-col gap-4">
-        {data?.data.map((record) => (
-          <Link
-            to={paths.user.byId(record.user.id)}
-            className="hover:cursor-pointer"
-          >
-            <SubscriptionListItem
-              data={record}
-              isFollowersTab={isFollowersTab}
-            />
-          </Link>
-        ))}
-      </ul>
-    </Card>
+    <div id="users-scrollable-list" className="h-72 overflow-y-auto">
+      <Card>
+        <InfiniteScroll
+          dataLength={data.length}
+          next={fetchNextPage}
+          hasMore={!!hasNextPage}
+          scrollableTarget="users-scrollable-list"
+          scrollThreshold={0.9}
+          loader={<SubscriptionListSkeleton className="mt-5" />}
+        >
+          <ul className="flex flex-col gap-4">
+            {data?.map((record) => (
+              <Link
+                key={record.user.id}
+                to={paths.user.byId(record.user.id)}
+                className="hover:cursor-pointer"
+              >
+                <SubscriptionListItem
+                  data={record}
+                  isFollowersTab={isFollowersTab}
+                />
+              </Link>
+            ))}
+          </ul>
+        </InfiniteScroll>
+      </Card>
+    </div>
   )
 }

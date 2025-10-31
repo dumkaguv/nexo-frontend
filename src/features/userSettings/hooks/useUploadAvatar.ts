@@ -64,7 +64,6 @@ export const useUploadAvatar = () => {
   const onFileChange = (files: FileList | null) => {
     if (files && files.length > 0) {
       const file = files[0]
-      console.log(file.size, MAX_FILE_SIZE)
 
       if (file.size > MAX_FILE_SIZE) {
         setFileSizeError(

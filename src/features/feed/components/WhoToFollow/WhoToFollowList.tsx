@@ -31,7 +31,7 @@ export const WhoToFollowList = () => {
 
   return (
     <div className="flex w-full flex-col gap-5">
-      <ul className="flex max-h-[270px] w-full flex-col gap-4 overflow-y-auto">
+      <ul className="flex max-h-[270px] w-full flex-col gap-4 overflow-y-auto pr-1.5">
         {users.map((user) => (
           <li key={user.id}>
             <WhoToFollowListItem user={user} />

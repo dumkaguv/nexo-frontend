@@ -163,12 +163,6 @@ export type ResponseSubscriptionDto = {
   readonly createdAt: string
 }
 
-export type ResponseSubscriptionFollowingDto = {
-  readonly id: number
-  user: ResponseUserProfileDto
-  readonly createdAt: string
-}
-
 export type ResponseSubscriptionCountDto = {
   followers: number
   following: number
@@ -221,10 +215,6 @@ export type ResponsePostDtoWritable = {
 }
 
 export type ResponseSubscriptionDtoWritable = {
-  user: ResponseUserProfileDtoWritable
-}
-
-export type ResponseSubscriptionFollowingDtoWritable = {
   user: ResponseUserProfileDtoWritable
 }
 
@@ -623,7 +613,7 @@ export type SubscriptionControllerFindAllFollowingData = {
 
 export type SubscriptionControllerFindAllFollowingResponses = {
   200: PaginatedResponseDto & {
-    data?: Array<ResponseSubscriptionFollowingDto>
+    data?: Array<ResponseSubscriptionDto>
   }
 }
 

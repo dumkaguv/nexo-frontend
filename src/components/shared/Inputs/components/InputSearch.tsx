@@ -3,9 +3,11 @@ import { Search, X } from 'lucide-react'
 import { type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Typography } from '@/components/shared'
 import {
   Button,
   Input,
+  Spinner,
   Tooltip,
   TooltipContent,
   TooltipTrigger
@@ -17,6 +19,7 @@ import type { ChangeEvent } from 'react'
 type Props = {
   onButtonClearClick?: () => void
   inputClassName?: string
+  loading?: boolean
 } & ComponentProps<'input'>
 
 export const InputSearch = ({
@@ -26,6 +29,7 @@ export const InputSearch = ({
   onButtonClearClick,
   className,
   inputClassName,
+  loading,
   ...props
 }: Props) => {
   const { t } = useTranslation()
@@ -38,7 +42,7 @@ export const InputSearch = ({
   return (
     <div className={cn('relative h-fit', className)}>
       <Input
-        value={value ?? ''}
+        value={value}
         onChange={onChange}
         className={cn('bg-custom-gray px-8', inputClassName)}
         placeholder={placeholder ?? t('inputs.inputSearch')}
@@ -65,6 +69,17 @@ export const InputSearch = ({
             </Button>
           </TooltipTrigger>
         </Tooltip>
+      )}
+
+      {loading && (
+        <div className="absolute top-1/2 right-11 -translate-y-1/2">
+          <div className="flex items-center gap-2 px-2">
+            <Spinner className="size-3" />{' '}
+            <Typography.Text className="text-muted-foreground text-sm">
+              {t('loading')}
+            </Typography.Text>
+          </div>
+        </div>
       )}
     </div>
   )
