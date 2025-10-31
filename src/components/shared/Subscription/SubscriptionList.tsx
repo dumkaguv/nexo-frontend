@@ -12,8 +12,8 @@ import { Card } from '@/components/shared'
 import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
 
-import { SubscriptionListEmptySearch } from './SubscriptionListEmptrySearch'
 import { SubscriptionListEmpty } from './SubscriptionListEmpty'
+import { SubscriptionListEmptySearch } from './SubscriptionListEmptySearch'
 import { SubscriptionListItem } from './SubscriptionListItem'
 import { SubscriptionListSkeleton } from './SubscriptionListSkeleton'
 
@@ -83,15 +83,15 @@ export const SubscriptionList = ({
   }
 
   return (
-    <div id="users-scrollable-list" className="h-72 overflow-y-auto">
+    <div id="users-scrollable-list" className="max-h-[60dvh] overflow-y-auto">
       <Card>
         <InfiniteScroll
           dataLength={data.length}
           next={fetchNextPage}
           hasMore={!!hasNextPage}
           scrollableTarget="users-scrollable-list"
-          scrollThreshold={0.9}
-          loader={<SubscriptionListSkeleton className="mt-5" />}
+          scrollThreshold={0.65}
+          loader={<SubscriptionListSkeleton count={3} className="mt-5" />}
         >
           <ul className="flex flex-col gap-4">
             {data?.map((record) => (

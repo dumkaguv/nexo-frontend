@@ -9,8 +9,8 @@ import { toast } from 'sonner'
 import {
   type ResponseSubscriptionDto,
   profileControllerMeDetailedQueryKey,
-  subscriptionControllerFindAllFollowersQueryKey,
-  subscriptionControllerFindOneCountQueryKey,
+  subscriptionControllerFindAllFollowersInfiniteQueryKey,
+  subscriptionControllerFindAllFollowingInfiniteQueryKey,
   subscriptionControllerUnfollowMutation
 } from '@/api'
 import { AvatarWithColorInitials } from '@/components/shared'
@@ -24,6 +24,7 @@ import {
 } from '@/components/ui'
 
 import { useInvalidatePredicateQueries } from '@/hooks'
+import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
 
 type Props = {
@@ -32,18 +33,20 @@ type Props = {
 }
 
 export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
+  const { user } = useAuthStore()
+
   const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
+  const path = { path: { id: String(user?.id) } }
   const { mutateAsync: unfollowAsync, isPending: isPendingUnfollow } =
     useMutation({
       ...subscriptionControllerUnfollowMutation(),
       onSuccess: async () => {
         await invalidateQueries([
-          subscriptionControllerFindOneCountQueryKey({
-            path: { id: '1' }
-          }),
-          subscriptionControllerFindAllFollowersQueryKey({ path: { id: '1' } }),
+          isFollowersTab
+            ? subscriptionControllerFindAllFollowersInfiniteQueryKey(path)
+            : subscriptionControllerFindAllFollowingInfiniteQueryKey(path),
           profileControllerMeDetailedQueryKey()
         ])
         toast.success(t('success'))

@@ -16,8 +16,7 @@ export const WhoToFollowList = () => {
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery({
       ...userControllerFindAllInfiniteOptions({ query: { pageSize: 5 } }),
-      getNextPageParam: (response) => response.nextPage,
-      initialPageParam: 1
+      getNextPageParam: (response) => response.nextPage
     })
 
   if (isLoading) {

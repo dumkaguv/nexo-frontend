@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 
 import {
   profileControllerMeDetailedQueryKey,
+  subscriptionControllerFindAllFollowingInfiniteOptions,
   subscriptionControllerFollowMutation,
   userControllerFindAllInfiniteQueryKey
 } from '@/api'
@@ -17,6 +18,7 @@ import { Button } from '@/components/ui'
 import { paths } from '@/config'
 
 import { useInvalidatePredicateQueries } from '@/hooks'
+import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
 
 import type { ResponseUserDto } from '@/api'
@@ -26,6 +28,8 @@ type Props = {
 }
 
 export const WhoToFollowListItem = ({ user }: Props) => {
+  const { user: userStore } = useAuthStore()
+
   const { invalidateQueries } = useInvalidatePredicateQueries()
   const { t } = useTranslation()
 
@@ -34,7 +38,10 @@ export const WhoToFollowListItem = ({ user }: Props) => {
     onSuccess: async () => {
       await invalidateQueries([
         profileControllerMeDetailedQueryKey(),
-        userControllerFindAllInfiniteQueryKey()
+        userControllerFindAllInfiniteQueryKey(),
+        subscriptionControllerFindAllFollowingInfiniteOptions({
+          path: { id: String(userStore?.id) }
+        })
       ])
       toast.success(t('success'))
     },
@@ -50,7 +57,7 @@ export const WhoToFollowListItem = ({ user }: Props) => {
         <div className="flex items-center gap-1.5">
           <AvatarWithColorInitials
             id={user.id}
-            name={user.username}
+            name={user.profile.fullName}
             src={user.profile.avatarUrl}
             size={40}
           />
