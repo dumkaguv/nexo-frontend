@@ -1,4 +1,5 @@
 import { Image, Video } from 'lucide-react'
+import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -18,7 +19,7 @@ import { useFormCreatePost } from '@/features/posts/hooks'
 const { Text } = Typography
 
 export const FormCreatePost = () => {
-  const { register, onSubmit, errors, isPending } = useFormCreatePost()
+  const { control, onSubmit, errors, isPending } = useFormCreatePost()
 
   const { t } = useTranslation()
 
@@ -43,7 +44,11 @@ export const FormCreatePost = () => {
             </Link>
 
             <Field className="flex w-full flex-col gap-2">
-              <TextAreaAutoHeight {...register('content')} />
+              <Controller
+                name="content"
+                control={control}
+                render={({ field }) => <TextAreaAutoHeight {...field} />}
+              />
               <FieldError>{errors.content?.message}</FieldError>
             </Field>
           </div>
@@ -55,10 +60,10 @@ export const FormCreatePost = () => {
                   <TooltipTrigger asChild>
                     <Button
                       variant="text"
-                      className="bg-muted-foreground/15 hover:bg-muted-foreground/25 gap-1 rounded-lg p-3"
+                      className="bg-muted-foreground/15 hover:bg-muted-foreground/25 gap-1 rounded-lg"
                     >
                       {icon}
-                      <Text className="opacity-70">{label}</Text>
+                      <Text className="text-sm opacity-70">{label}</Text>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>

@@ -26,7 +26,7 @@ export const PostCard = ({ post }: Props) => {
 
   return (
     <Card className="flex flex-col gap-6">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Link to={paths.profile.root}>
           <User.Avatar className="size-12" />
         </Link>

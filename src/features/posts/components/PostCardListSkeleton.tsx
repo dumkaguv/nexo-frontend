@@ -1,3 +1,3 @@
 export const PostCardListSkeleton = () => {
-  return null
+  return 'Loading...'
 }

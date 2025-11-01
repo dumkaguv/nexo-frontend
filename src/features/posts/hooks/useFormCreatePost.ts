@@ -21,22 +21,20 @@ export const useFormCreatePost = () => {
   const schema = createPostSchema(t)
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors }
   } = useForm<CreatePostSchema>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      content: ''
-    }
+    defaultValues: { content: '' }
   })
 
   const { mutateAsync: createPost, isPending } = useMutation({
     ...postControllerCreateMutation(),
-    onSuccess: async ({ message }) => {
+    onSuccess: async () => {
       await invalidateQueries([postControllerFindAllQueryKey()])
-      toast.success(message ?? t('success'))
+      toast.success(t('success'))
       reset()
     },
     onError: (e) => showApiErrors(e)
@@ -45,7 +43,7 @@ export const useFormCreatePost = () => {
   const onSubmit = async (body: CreatePostSchema) => await createPost({ body })
 
   return {
-    register,
+    control,
     onSubmit: handleSubmit(onSubmit),
     errors,
     isPending
