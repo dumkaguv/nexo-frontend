@@ -101,5 +101,10 @@
   "whoToFollow": "Who to follow",
   "viewMore": "View more",
   "follow": "Follow",
-  "unfollow": "Unfollow"
+  "unfollow": "Unfollow",
+  "areYouAbsolutelySure": "Are you absolutely sure?",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "delete": "Delete",
+  "edit": "Edit"
 }

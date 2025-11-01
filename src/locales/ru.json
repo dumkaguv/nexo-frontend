@@ -101,5 +101,10 @@
   "whoToFollow": "На кого подписаться",
   "viewMore": "Показать еще",
   "follow": "Подписаться",
-  "unfollow": "Отписаться"
+  "unfollow": "Отписаться",
+  "areYouAbsolutelySure": "Вы уверены?",
+  "cancel": "Отмена",
+  "confirm": "Подтвердить",
+  "delete": "Удалить",
+  "edit": "Редактировать"
 }

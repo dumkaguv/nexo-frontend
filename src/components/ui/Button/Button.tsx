@@ -7,7 +7,7 @@ import { cn } from '@/utils'
 
 import { buttonVariants } from './buttonVariants'
 
-type ButtonProps = React.ComponentProps<'button'> &
+export type ButtonProps = React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean

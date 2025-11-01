@@ -1,4 +1,4 @@
-import { Image, Video } from 'lucide-react'
+import { BookPlus, Image, Video } from 'lucide-react'
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -74,7 +74,7 @@ export const FormCreatePost = () => {
             </div>
 
             <Button type="submit" loading={isPending}>
-              {t('publish')} {t('post').toLowerCase()}
+              {t('publish')} {t('post').toLowerCase()} <BookPlus />
             </Button>
           </div>
         </div>
