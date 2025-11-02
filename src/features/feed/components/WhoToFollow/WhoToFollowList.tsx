@@ -16,17 +16,17 @@ export const WhoToFollowList = () => {
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery({
       ...userControllerFindAllInfiniteOptions({ query: { pageSize: 5 } }),
-      getNextPageParam: (response) => response.nextPage
+      getNextPageParam: ({ nextPage }) => nextPage
     })
+
+  const onLoadMore = () => fetchNextPage()
+
+  const users = data?.pages.flatMap(({ data }) => data)
+  const isLoadingButtonState = isFetchingNextPage || isLoading
 
   if (isLoading) {
     return <WhoToFollowListSkeleton />
   }
-
-  const onLoadMore = () => fetchNextPage()
-
-  const users = data.pages.flatMap((page) => page.data)
-  const isLoadingButtonState = isFetchingNextPage || isLoading
 
   return (
     <div className="flex w-full flex-col gap-5">
@@ -42,13 +42,11 @@ export const WhoToFollowList = () => {
         )}
       </ul>
 
-      <Button
-        onClick={onLoadMore}
-        hidden={!hasNextPage}
-        loading={isLoadingButtonState}
-      >
-        {t('viewMore')} <ArrowDown />
-      </Button>
+      {hasNextPage && (
+        <Button onClick={onLoadMore} loading={isLoadingButtonState}>
+          {t('viewMore')} <ArrowDown />
+        </Button>
+      )}
     </div>
   )
 }

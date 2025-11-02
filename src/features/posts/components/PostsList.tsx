@@ -9,14 +9,14 @@ import { PostCard, PostCardListSkeleton } from './'
 export const PostsList = () => {
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     ...postControllerFindAllInfiniteOptions(),
-    getNextPageParam: (response) => response.nextPage
+    getNextPageParam: ({ nextPage }) => nextPage
   })
+
+  const posts = data?.pages.flatMap(({ data }) => data)
 
   if (isLoading) {
     return <PostCardListSkeleton />
   }
-
-  const posts = data.pages.flatMap(({ data }) => data)
 
   return (
     <InfiniteScroll

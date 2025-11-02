@@ -59,7 +59,7 @@ export const DayLabel = ({
     <>
       {showIcon ? (
         <div className="ml-1 flex items-center justify-center gap-1.5">
-          <div className="bg-primary -mt-0.5 size-2 rounded-full" />
+          <div className="-mt-0.5 size-[5px] rounded-full bg-neutral-300 dark:bg-neutral-500" />
           <Text className={cn('text-sm', className)} {...props}>
             {label}
           </Text>

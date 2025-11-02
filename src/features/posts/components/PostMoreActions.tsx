@@ -30,6 +30,7 @@ type Props = {
 export const PostMoreActions = ({ post }: Props) => {
   const { user } = useAuthStore()
 
+  const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
   const { mutateAsync: deleteAsync, isPending } = useMutation({
@@ -44,12 +45,13 @@ export const PostMoreActions = ({ post }: Props) => {
   const onDelete = async () =>
     await deleteAsync({ path: { id: String(post.id) } })
 
-  const { t } = useTranslation()
+  const isOwner = post.user.id === user?.id
+  if (!isOwner) return null
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <ButtonMoreActions hidden={!(post.user.id === user?.id)} />
+        <ButtonMoreActions />
       </PopoverTrigger>
 
       <PopoverContent className="w-fit px-1 py-2 text-sm">

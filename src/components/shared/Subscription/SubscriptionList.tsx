@@ -40,7 +40,7 @@ export const SubscriptionList = ({
     hasNextPage: hasNextPageFollowers
   } = useInfiniteQuery({
     ...subscriptionControllerFindAllFollowersInfiniteOptions(queryConfig),
-    getNextPageParam: (response) => response.nextPage,
+    getNextPageParam: ({ nextPage }) => nextPage,
     enabled: isFollowersTab
   })
 
@@ -83,32 +83,30 @@ export const SubscriptionList = ({
   }
 
   return (
-    <div id="users-scrollable-list" className="max-h-[60dvh] overflow-y-auto">
-      <Card>
-        <InfiniteScroll
-          dataLength={data.length}
-          next={fetchNextPage}
-          hasMore={!!hasNextPage}
-          scrollableTarget="users-scrollable-list"
-          scrollThreshold={0.65}
-          loader={<SubscriptionListSkeleton count={3} className="mt-5" />}
-        >
-          <ul className="flex flex-col gap-4">
-            {data?.map((record) => (
-              <Link
-                key={record.user.id}
-                to={paths.user.byId(record.user.id)}
-                className="hover:cursor-pointer"
-              >
-                <SubscriptionListItem
-                  data={record}
-                  isFollowersTab={isFollowersTab}
-                />
-              </Link>
-            ))}
-          </ul>
-        </InfiniteScroll>
-      </Card>
-    </div>
+    <Card id="users-scrollable-list" className="max-h-[60dvh] overflow-y-auto">
+      <InfiniteScroll
+        dataLength={data.length}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        scrollableTarget="users-scrollable-list"
+        scrollThreshold={0.65}
+        loader={<SubscriptionListSkeleton count={3} className="mt-5" />}
+      >
+        <ul className="flex flex-col gap-4">
+          {data?.map((record) => (
+            <Link
+              key={record.user.id}
+              to={paths.user.byId(record.user.id)}
+              className="hover:cursor-pointer"
+            >
+              <SubscriptionListItem
+                data={record}
+                isFollowersTab={isFollowersTab}
+              />
+            </Link>
+          ))}
+        </ul>
+      </InfiniteScroll>
+    </Card>
   )
 }

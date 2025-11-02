@@ -46,9 +46,8 @@ export const HeaderSearch = () => {
     ...userControllerFindAllInfiniteOptions({
       query: { search: debouncedSearch }
     }),
-    getNextPageParam: (response) => response.nextPage,
-    enabled: !!debouncedSearch,
-    initialPageParam: 1
+    getNextPageParam: ({ nextPage }) => nextPage,
+    enabled: !!debouncedSearch
   })
 
   const allUsers = data?.pages.flatMap((page) => page.data) ?? []
