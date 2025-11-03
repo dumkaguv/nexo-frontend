@@ -18,12 +18,20 @@ import type {
   AuthControllerRegisterData,
   AuthControllerRegisterResponses,
   PostControllerCreateData,
+  PostControllerCreateLikeData,
+  PostControllerCreateLikeResponses,
   PostControllerCreateResponses,
+  PostControllerFindAllCommentsData,
+  PostControllerFindAllCommentsResponses,
   PostControllerFindAllData,
+  PostControllerFindAllLikesData,
+  PostControllerFindAllLikesResponses,
   PostControllerFindAllResponses,
   PostControllerFindOneData,
   PostControllerFindOneResponses,
   PostControllerRemoveData,
+  PostControllerRemoveLikeData,
+  PostControllerRemoveLikeResponses,
   PostControllerRemoveResponses,
   PostControllerUpdateData,
   PostControllerUpdateResponses,
@@ -358,6 +366,89 @@ export const postControllerCreate = <ThrowOnError extends boolean = false>(
       'Content-Type': 'application/json',
       ...options.headers
     }
+  })
+}
+
+export const postControllerFindAllComments = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostControllerFindAllCommentsData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    PostControllerFindAllCommentsResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/comments',
+    ...options
+  })
+}
+
+export const postControllerRemoveLike = <ThrowOnError extends boolean = false>(
+  options: Options<PostControllerRemoveLikeData, ThrowOnError>
+) => {
+  return (options.client ?? client).delete<
+    PostControllerRemoveLikeResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/likes',
+    ...options
+  })
+}
+
+export const postControllerFindAllLikes = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostControllerFindAllLikesData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    PostControllerFindAllLikesResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/likes',
+    ...options
+  })
+}
+
+export const postControllerCreateLike = <ThrowOnError extends boolean = false>(
+  options: Options<PostControllerCreateLikeData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    PostControllerCreateLikeResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/likes',
+    ...options
   })
 }
 

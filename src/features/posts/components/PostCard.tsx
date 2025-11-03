@@ -5,7 +5,7 @@ import * as User from '@/components/shared/Person'
 
 import { paths } from '@/config'
 
-import { PostLike } from './PostLike'
+import { PostLikes } from './PostLikes'
 import { PostMoreActions } from './PostMoreActions'
 
 import type { ResponsePostDto } from '@/api'
@@ -41,7 +41,7 @@ export const PostCard = ({ post }: Props) => {
       <div className="grid gap-4">
         <div>{post.content}</div>
 
-        <PostLike likes={post.likes} />
+        <PostLikes postId={post.id} isLiked={post.isLiked} />
       </div>
     </Card>
   )

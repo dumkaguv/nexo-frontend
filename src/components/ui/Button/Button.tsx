@@ -12,6 +12,7 @@ export type ButtonProps = React.ComponentProps<'button'> &
     asChild?: boolean
     loading?: boolean
     showChildrenWhenLoading?: boolean
+    showLoadingIcon?: boolean
   }
 
 function Button({
@@ -22,6 +23,7 @@ function Button({
   loading = false,
   children,
   showChildrenWhenLoading = true,
+  showLoadingIcon = true,
   disabled,
   ...props
 }: ButtonProps) {
@@ -38,7 +40,7 @@ function Button({
       {loading ? (
         <>
           {showChildrenWhenLoading && children}
-          <Loader2 className="h-4 w-4 animate-spin" />
+          {showLoadingIcon && <Loader2 className="size-4 animate-spin" />}
         </>
       ) : (
         children

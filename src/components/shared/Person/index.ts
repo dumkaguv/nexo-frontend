@@ -1,1 +1,4 @@
-export * from './components'
+export { PersonAvatar as Avatar } from './PersonAvatar'
+export { PersonFollowInfo as FollowInfo } from './PersonFollowInfo'
+export { PersonName as Name } from './PersonName'
+export { PersonNickname as Nickname } from './PersonNickname'

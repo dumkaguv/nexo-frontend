@@ -16,9 +16,13 @@ import {
   authControllerRefresh,
   authControllerRegister,
   postControllerCreate,
+  postControllerCreateLike,
   postControllerFindAll,
+  postControllerFindAllComments,
+  postControllerFindAllLikes,
   postControllerFindOne,
   postControllerRemove,
+  postControllerRemoveLike,
   postControllerUpdate,
   profileControllerMe,
   profileControllerMeDetailed,
@@ -46,11 +50,19 @@ import type {
   AuthControllerRegisterData,
   AuthControllerRegisterResponse,
   PostControllerCreateData,
+  PostControllerCreateLikeData,
+  PostControllerCreateLikeResponse,
   PostControllerCreateResponse,
+  PostControllerFindAllCommentsData,
+  PostControllerFindAllCommentsResponse,
   PostControllerFindAllData,
+  PostControllerFindAllLikesData,
+  PostControllerFindAllLikesResponse,
   PostControllerFindAllResponse,
   PostControllerFindOneData,
   PostControllerRemoveData,
+  PostControllerRemoveLikeData,
+  PostControllerRemoveLikeResponse,
   PostControllerRemoveResponse,
   PostControllerUpdateData,
   PostControllerUpdateResponse,
@@ -590,6 +602,200 @@ export const postControllerCreateMutation = (
   > = {
     mutationFn: async (fnOptions) => {
       const { data } = await postControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerFindAllCommentsQueryKey = (
+  options: Options<PostControllerFindAllCommentsData>
+) => createQueryKey('postControllerFindAllComments', options)
+
+export const postControllerFindAllCommentsOptions = (
+  options: Options<PostControllerFindAllCommentsData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postControllerFindAllComments({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: postControllerFindAllCommentsQueryKey(options)
+  })
+}
+
+export const postControllerFindAllCommentsInfiniteQueryKey = (
+  options: Options<PostControllerFindAllCommentsData>
+): QueryKey<Options<PostControllerFindAllCommentsData>> =>
+  createQueryKey('postControllerFindAllComments', options, true)
+
+export const postControllerFindAllCommentsInfiniteOptions = (
+  options: Options<PostControllerFindAllCommentsData>
+) => {
+  return infiniteQueryOptions<
+    PostControllerFindAllCommentsResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<PostControllerFindAllCommentsResponse>,
+    QueryKey<Options<PostControllerFindAllCommentsData>>,
+    | number
+    | Pick<
+        QueryKey<Options<PostControllerFindAllCommentsData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<PostControllerFindAllCommentsData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await postControllerFindAllComments({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+
+        return data
+      },
+      queryKey: postControllerFindAllCommentsInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const postControllerRemoveLikeMutation = (
+  options?: Partial<Options<PostControllerRemoveLikeData>>
+): UseMutationOptions<
+  PostControllerRemoveLikeResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerRemoveLikeData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerRemoveLikeResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerRemoveLikeData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerRemoveLike({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerFindAllLikesQueryKey = (
+  options: Options<PostControllerFindAllLikesData>
+) => createQueryKey('postControllerFindAllLikes', options)
+
+export const postControllerFindAllLikesOptions = (
+  options: Options<PostControllerFindAllLikesData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postControllerFindAllLikes({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: postControllerFindAllLikesQueryKey(options)
+  })
+}
+
+export const postControllerFindAllLikesInfiniteQueryKey = (
+  options: Options<PostControllerFindAllLikesData>
+): QueryKey<Options<PostControllerFindAllLikesData>> =>
+  createQueryKey('postControllerFindAllLikes', options, true)
+
+export const postControllerFindAllLikesInfiniteOptions = (
+  options: Options<PostControllerFindAllLikesData>
+) => {
+  return infiniteQueryOptions<
+    PostControllerFindAllLikesResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<PostControllerFindAllLikesResponse>,
+    QueryKey<Options<PostControllerFindAllLikesData>>,
+    | number
+    | Pick<
+        QueryKey<Options<PostControllerFindAllLikesData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<PostControllerFindAllLikesData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await postControllerFindAllLikes({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+
+        return data
+      },
+      queryKey: postControllerFindAllLikesInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const postControllerCreateLikeMutation = (
+  options?: Partial<Options<PostControllerCreateLikeData>>
+): UseMutationOptions<
+  PostControllerCreateLikeResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerCreateLikeData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerCreateLikeResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerCreateLikeData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerCreateLike({
         ...options,
         ...fnOptions,
         throwOnError: true

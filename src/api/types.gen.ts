@@ -99,13 +99,6 @@ export type UpdateProfileDto = {
   birthDay?: string | null
 }
 
-export type ResponsePostFileDto = {
-  readonly id: number
-  url: string
-  type?: string | null
-  readonly uploadedAt: string
-}
-
 export type ResponseUserProfileDto = {
   readonly id: number
   username: string
@@ -116,29 +109,47 @@ export type ResponseUserProfileDto = {
   readonly createdAt: string
 }
 
-export type ResponsePostLikeDto = {
+export type ResponsePostFileDto = {
   readonly id: number
-  user: ResponseUserProfileDto
-  readonly createdAt: string
-}
-
-export type ResponsePostCommentDto = {
-  readonly id: number
-  readonly postId: number
-  user: ResponseUserProfileDto
-  content: string
-  readonly createdAt: string
+  url: string
+  type?: string | null
+  readonly uploadedAt: string
 }
 
 export type ResponsePostDto = {
   readonly id: number
   content: string
-  user: ResponseUserDto
+  isLiked: boolean
+  user: ResponseUserProfileDto
   files?: Array<ResponsePostFileDto> | null
-  likes?: Array<ResponsePostLikeDto> | null
-  comments?: Array<ResponsePostCommentDto> | null
+  likesCount: number
+  commentsCount: number
   readonly createdAt: string
   readonly updatedAt: string
+}
+
+export type ResponsePostCommentDto = {
+  readonly id: number
+  user: ResponseUserProfileDto
+  content: string
+  readonly createdAt: string
+}
+
+export type ResponseUserProfileIsFollowingDto = {
+  readonly id: number
+  username: string
+  email: string
+  readonly activationLink?: string | null
+  readonly isActivated: boolean
+  profile: ResponseProfileDto
+  readonly createdAt: string
+  readonly isFollowing: boolean
+}
+
+export type ResponsePostLikeDto = {
+  readonly id: number
+  user: ResponseUserProfileIsFollowingDto
+  readonly createdAt: string
 }
 
 export type CreatePostDto = {
@@ -186,19 +197,24 @@ export type EmptyResponseDtoWritable = {
   [key: string]: unknown
 }
 
-export type ResponsePostFileDtoWritable = {
-  url: string
-  type?: string | null
-}
-
 export type ResponseUserProfileDtoWritable = {
   username: string
   email: string
   profile: ResponseProfileDtoWritable
 }
 
-export type ResponsePostLikeDtoWritable = {
+export type ResponsePostFileDtoWritable = {
+  url: string
+  type?: string | null
+}
+
+export type ResponsePostDtoWritable = {
+  content: string
+  isLiked: boolean
   user: ResponseUserProfileDtoWritable
+  files?: Array<ResponsePostFileDtoWritable> | null
+  likesCount: number
+  commentsCount: number
 }
 
 export type ResponsePostCommentDtoWritable = {
@@ -206,12 +222,14 @@ export type ResponsePostCommentDtoWritable = {
   content: string
 }
 
-export type ResponsePostDtoWritable = {
-  content: string
-  user: ResponseUserDtoWritable
-  files?: Array<ResponsePostFileDtoWritable> | null
-  likes?: Array<ResponsePostLikeDtoWritable> | null
-  comments?: Array<ResponsePostCommentDtoWritable> | null
+export type ResponseUserProfileIsFollowingDtoWritable = {
+  username: string
+  email: string
+  profile: ResponseProfileDtoWritable
+}
+
+export type ResponsePostLikeDtoWritable = {
+  user: ResponseUserProfileIsFollowingDtoWritable
 }
 
 export type ResponseSubscriptionDtoWritable = {
@@ -481,6 +499,110 @@ export type PostControllerCreateResponses = {
 
 export type PostControllerCreateResponse =
   PostControllerCreateResponses[keyof PostControllerCreateResponses]
+
+export type PostControllerFindAllCommentsData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/posts/{id}/comments'
+}
+
+export type PostControllerFindAllCommentsResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponsePostCommentDto>
+  }
+}
+
+export type PostControllerFindAllCommentsResponse =
+  PostControllerFindAllCommentsResponses[keyof PostControllerFindAllCommentsResponses]
+
+export type PostControllerRemoveLikeData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/posts/{id}/likes'
+}
+
+export type PostControllerRemoveLikeResponses = {
+  204: void
+}
+
+export type PostControllerRemoveLikeResponse =
+  PostControllerRemoveLikeResponses[keyof PostControllerRemoveLikeResponses]
+
+export type PostControllerFindAllLikesData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/posts/{id}/likes'
+}
+
+export type PostControllerFindAllLikesResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponsePostLikeDto>
+  }
+}
+
+export type PostControllerFindAllLikesResponse =
+  PostControllerFindAllLikesResponses[keyof PostControllerFindAllLikesResponses]
+
+export type PostControllerCreateLikeData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/posts/{id}/likes'
+}
+
+export type PostControllerCreateLikeResponses = {
+  200: BaseResponseDto & {
+    data?: EmptyResponseDto
+  }
+}
+
+export type PostControllerCreateLikeResponse =
+  PostControllerCreateLikeResponses[keyof PostControllerCreateLikeResponses]
 
 export type PostControllerRemoveData = {
   body?: never

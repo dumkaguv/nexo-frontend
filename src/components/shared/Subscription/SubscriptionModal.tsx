@@ -32,7 +32,7 @@ export const SubscriptionModal = ({
 }: Props) => {
   const { user } = useAuthStore()
 
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState<string | undefined>()
   const debouncedSearchValue = useDebouncedValue(searchValue)
 
   const { t } = useTranslation()
