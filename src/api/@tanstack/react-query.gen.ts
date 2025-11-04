@@ -16,14 +16,17 @@ import {
   authControllerRefresh,
   authControllerRegister,
   postControllerCreate,
+  postControllerCreateComment,
   postControllerCreateLike,
   postControllerFindAll,
   postControllerFindAllComments,
   postControllerFindAllLikes,
   postControllerFindOne,
   postControllerRemove,
+  postControllerRemoveComment,
   postControllerRemoveLike,
   postControllerUpdate,
+  postControllerUpdateComment,
   profileControllerMe,
   profileControllerMeDetailed,
   profileControllerUpdate,
@@ -49,6 +52,8 @@ import type {
   AuthControllerRefreshResponse,
   AuthControllerRegisterData,
   AuthControllerRegisterResponse,
+  PostControllerCreateCommentData,
+  PostControllerCreateCommentResponse,
   PostControllerCreateData,
   PostControllerCreateLikeData,
   PostControllerCreateLikeResponse,
@@ -60,10 +65,14 @@ import type {
   PostControllerFindAllLikesResponse,
   PostControllerFindAllResponse,
   PostControllerFindOneData,
+  PostControllerRemoveCommentData,
+  PostControllerRemoveCommentResponse,
   PostControllerRemoveData,
   PostControllerRemoveLikeData,
   PostControllerRemoveLikeResponse,
   PostControllerRemoveResponse,
+  PostControllerUpdateCommentData,
+  PostControllerUpdateCommentResponse,
   PostControllerUpdateData,
   PostControllerUpdateResponse,
   ProfileControllerMeData,
@@ -685,6 +694,32 @@ export const postControllerFindAllCommentsInfiniteOptions = (
   )
 }
 
+export const postControllerCreateCommentMutation = (
+  options?: Partial<Options<PostControllerCreateCommentData>>
+): UseMutationOptions<
+  PostControllerCreateCommentResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerCreateCommentData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerCreateCommentResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerCreateCommentData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerCreateComment({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
 export const postControllerRemoveLikeMutation = (
   options?: Partial<Options<PostControllerRemoveLikeData>>
 ): UseMutationOptions<
@@ -870,6 +905,58 @@ export const postControllerUpdateMutation = (
   > = {
     mutationFn: async (fnOptions) => {
       const { data } = await postControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerRemoveCommentMutation = (
+  options?: Partial<Options<PostControllerRemoveCommentData>>
+): UseMutationOptions<
+  PostControllerRemoveCommentResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerRemoveCommentData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerRemoveCommentResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerRemoveCommentData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerRemoveComment({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const postControllerUpdateCommentMutation = (
+  options?: Partial<Options<PostControllerUpdateCommentData>>
+): UseMutationOptions<
+  PostControllerUpdateCommentResponse,
+  AxiosError<DefaultError>,
+  Options<PostControllerUpdateCommentData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostControllerUpdateCommentResponse,
+    AxiosError<DefaultError>,
+    Options<PostControllerUpdateCommentData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postControllerUpdateComment({
         ...options,
         ...fnOptions,
         throwOnError: true

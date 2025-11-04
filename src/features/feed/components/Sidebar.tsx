@@ -3,6 +3,7 @@ import { MessageSquareText, Newspaper } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
+import { Typography } from '@/components/shared'
 import * as PersonInfo from '@/components/shared/Person'
 import { Button, Separator, Sidebar as SidebarUi } from '@/components/ui'
 import { paths } from '@/config'
@@ -10,6 +11,8 @@ import { paths } from '@/config'
 import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
+
+const { Text } = Typography
 
 type Props = ComponentProps<'aside'>
 
@@ -25,9 +28,7 @@ export const Sidebar = ({ className, ...rest }: Props) => {
   return (
     <SidebarUi className={className} {...rest}>
       <PersonInfo.Avatar />
-
       <PersonInfo.Name className="text-center" />
-
       <PersonInfo.Nickname asLink />
 
       <PersonInfo.FollowInfo className="mt-4" />
@@ -43,15 +44,16 @@ export const Sidebar = ({ className, ...rest }: Props) => {
               <nav>
                 <Button
                   className={cn(
-                    'hover:text-primary/85 flex h-fit items-center text-base text-black hover:no-underline',
-                    isActiveLink && 'text-primary font-semibold'
+                    'flex h-fit items-center text-base hover:text-blue-500 hover:no-underline'
                   )}
-                  variant="link"
+                  variant="text"
                   asChild
                 >
                   <Link to={href}>
-                    <Icon className="text-primary" />
-                    {name}
+                    <Icon className={cn(isActiveLink && 'text-primary')} />
+                    <Text className={cn(isActiveLink && 'text-primary')}>
+                      {name}
+                    </Text>
                   </Link>
                 </Button>
               </nav>

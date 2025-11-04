@@ -17,7 +17,7 @@ export const TextAreaAutoHeight = (props: ComponentProps<'textarea'>) => {
   return (
     <Textarea
       className={cn(
-        'field-sizing-fixed h-auto resize-none overflow-hidden pt-3 outline-0',
+        'h-auto resize-none overflow-hidden pt-3 outline-0',
         props.className
       )}
       placeholder={props.placeholder ?? t('shareYourThoughts')}

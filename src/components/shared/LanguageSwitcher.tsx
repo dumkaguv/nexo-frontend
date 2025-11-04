@@ -36,7 +36,7 @@ export const LanguageSwitcher = () => {
   const renderMenuItem = (value: string, label: string, icon: ReactNode) => (
     <DropdownMenuItem key={value} onClick={() => onLanguageChange(value)}>
       {icon}
-      <Text>{label}</Text>
+      <Text className="text-sm">{label}</Text>
       <Text className="ml-auto">
         {currentLang === value && <Check size={16} />}
       </Text>

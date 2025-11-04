@@ -1,4 +1,5 @@
 import { Image, Video } from 'lucide-react'
+
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -15,6 +16,8 @@ import {
 } from '@/components/ui'
 import { paths } from '@/config'
 import { useFormCreatePost } from '@/features/posts/hooks'
+
+import type { KeyboardEvent } from 'react'
 
 const { Text } = Typography
 
@@ -34,6 +37,13 @@ export const FormCreatePost = () => {
     }
   ]
 
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      onSubmit()
+    }
+  }
+
   return (
     <form onSubmit={onSubmit}>
       <Card>
@@ -47,7 +57,9 @@ export const FormCreatePost = () => {
               <Controller
                 name="content"
                 control={control}
-                render={({ field }) => <TextAreaAutoHeight {...field} />}
+                render={({ field }) => (
+                  <TextAreaAutoHeight onKeyDown={onKeyDown} {...field} />
+                )}
               />
               <FieldError>{errors.content?.message}</FieldError>
             </Field>

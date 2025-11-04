@@ -133,6 +133,7 @@ export type ResponsePostCommentDto = {
   user: ResponseUserProfileDto
   content: string
   readonly createdAt: string
+  readonly updatedAt: string
 }
 
 export type ResponseUserProfileIsFollowingDto = {
@@ -153,6 +154,10 @@ export type ResponsePostLikeDto = {
 }
 
 export type CreatePostDto = {
+  content: string
+}
+
+export type CreatePostCommentDto = {
   content: string
 }
 
@@ -535,6 +540,24 @@ export type PostControllerFindAllCommentsResponses = {
 export type PostControllerFindAllCommentsResponse =
   PostControllerFindAllCommentsResponses[keyof PostControllerFindAllCommentsResponses]
 
+export type PostControllerCreateCommentData = {
+  body: CreatePostCommentDto
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/posts/{id}/comments'
+}
+
+export type PostControllerCreateCommentResponses = {
+  200: BaseResponseDto & {
+    data?: EmptyResponseDto
+  }
+}
+
+export type PostControllerCreateCommentResponse =
+  PostControllerCreateCommentResponses[keyof PostControllerCreateCommentResponses]
+
 export type PostControllerRemoveLikeData = {
   body?: never
   path: {
@@ -655,6 +678,42 @@ export type PostControllerUpdateResponses = {
 
 export type PostControllerUpdateResponse =
   PostControllerUpdateResponses[keyof PostControllerUpdateResponses]
+
+export type PostControllerRemoveCommentData = {
+  body?: never
+  path: {
+    id: string
+    commentId: string
+  }
+  query?: never
+  url: '/api/posts/{id}/comments/{commentId}'
+}
+
+export type PostControllerRemoveCommentResponses = {
+  204: void
+}
+
+export type PostControllerRemoveCommentResponse =
+  PostControllerRemoveCommentResponses[keyof PostControllerRemoveCommentResponses]
+
+export type PostControllerUpdateCommentData = {
+  body: CreatePostCommentDto
+  path: {
+    id: string
+    commentId: string
+  }
+  query?: never
+  url: '/api/posts/{id}/comments/{commentId}'
+}
+
+export type PostControllerUpdateCommentResponses = {
+  200: BaseResponseDto & {
+    data?: EmptyResponseDto
+  }
+}
+
+export type PostControllerUpdateCommentResponse =
+  PostControllerUpdateCommentResponses[keyof PostControllerUpdateCommentResponses]
 
 export type UploadControllerUploadAvatarData = {
   body: CreateUploadAvatarDto

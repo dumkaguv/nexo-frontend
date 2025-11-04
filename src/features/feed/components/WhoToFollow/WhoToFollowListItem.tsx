@@ -55,12 +55,7 @@ export const WhoToFollowListItem = ({ user }: Props) => {
     <div className="flex items-center justify-between gap-2">
       <Link to={paths.user.byId(user.id)}>
         <div className="flex items-center gap-1.5">
-          <AvatarWithColorInitials
-            id={user.id}
-            name={user.profile.fullName}
-            src={user.profile.avatarUrl}
-            size={40}
-          />
+          <AvatarWithColorInitials user={user} size={40} />
 
           <div className="flex flex-col items-start">
             <Person.Name name={user.profile.fullName} className="text-sm" />

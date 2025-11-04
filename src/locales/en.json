@@ -106,5 +106,12 @@
   "cancel": "Cancel",
   "confirm": "Confirm",
   "delete": "Delete",
-  "edit": "Edit"
+  "edit": "Edit",
+  "unlikePost": "Unlike post",
+  "likePost": "Like post",
+  "seeFullList": "See full list",
+  "liked": "Liked",
+  "send": "Send",
+  "moreActions": "More actions",
+  "comment": "Comment"
 }

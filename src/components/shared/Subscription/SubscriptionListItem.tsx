@@ -57,21 +57,13 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
   const onUnfollow = async () =>
     await unfollowAsync({ path: { id: String(data.user.id) } })
 
-  const {
-    user: { profile }
-  } = data
-
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2.5">
-        <AvatarWithColorInitials
-          id={data.user.id}
-          name={profile.fullName}
-          src={profile.avatarUrl}
-        />
+        <AvatarWithColorInitials user={data.user} />
 
         <div className="flex flex-col items-start">
-          <Person.Name name={profile.fullName} className="text-sm" />
+          <Person.Name name={data.user.profile.fullName} className="text-sm" />
           <Person.Nickname nickname={data.user.username} />
         </div>
       </div>

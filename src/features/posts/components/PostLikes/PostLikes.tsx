@@ -1,16 +1,25 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Heart } from 'lucide-react'
 
 import { useState } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
+import { toast } from 'sonner'
+
 import {
   postControllerCreateLikeMutation,
-  postControllerFindAllLikesOptions,
+  postControllerFindAllInfiniteQueryKey,
   postControllerFindAllLikesQueryKey,
   postControllerRemoveLikeMutation
 } from '@/api'
 import { Typography } from '@/components/shared'
-import { Button, Skeleton } from '@/components/ui'
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { cn, showApiErrors } from '@/utils'
 
@@ -20,24 +29,24 @@ const { Text } = Typography
 
 type Props = {
   postId: number
+  likesCount: number
   isLiked?: boolean
 }
 
-export const PostLikes = ({ postId, isLiked: isLikedProp = false }: Props) => {
+export const PostLikes = ({ postId, likesCount, isLiked }: Props) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
-  const [isLiked, setIsLiked] = useState(isLikedProp)
 
+  const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
   const path = { id: String(postId) }
-  const { data, isLoading } = useQuery({
-    ...postControllerFindAllLikesOptions({ path, query: { pageSize: 1 } }),
-    enabled: !!postId
-  })
 
   const getMutationConfig = () => ({
-    onSuccess: async () =>
-      await invalidateQueries([postControllerFindAllLikesQueryKey({ path })]),
+    onSuccess: async () => {
+      invalidateQueries([postControllerFindAllLikesQueryKey({ path })])
+      await invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      toast.success(t('success'))
+    },
     onError: (e: unknown) => showApiErrors(e)
   })
   const { mutateAsync: likeAsync, isPending: isPendingLike } = useMutation({
@@ -56,45 +65,52 @@ export const PostLikes = ({ postId, isLiked: isLikedProp = false }: Props) => {
     } else {
       await likeAsync({ path })
     }
-
-    setIsLiked((prev) => !prev)
   }
 
   const onToggleModal = () => setIsOpenModal((prev) => !prev)
 
-  const totalLikes = data?.total ?? 0
   const isLoadingButtonState = isPendingLike || isPendingUnlike
 
   return (
     <>
-      <div className="mt-2">
-        <div className="flex items-center gap-1.5">
-          {isLoading ? (
-            <Skeleton className="h-6 w-10" />
-          ) : (
-            <>
-              <Button
-                variant="text"
-                size="icon"
-                onClick={onLike}
-                loading={isLoadingButtonState}
-                showLoadingIcon={false}
-                className={cn(
-                  'h-5 w-fit justify-start hover:scale-[1.05]',
-                  isLiked && 'text-destructive'
-                )}
-              >
-                <Heart fill={isLiked ? 'current-color' : undefined} />
-              </Button>
-              <Text
-                onClick={totalLikes > 0 ? onToggleModal : undefined}
-                className={cn('text-sm', totalLikes > 0 && 'cursor-pointer')}
-              >
-                {data?.total}
-              </Text>
-            </>
+      <div className="flex items-center gap-1.5">
+        <Tooltip>
+          <TooltipContent>
+            {t(isLiked ? 'unlikePost' : 'likePost')}
+          </TooltipContent>
+          <TooltipTrigger asChild>
+            <Button
+              variant="text"
+              size="icon"
+              onClick={onLike}
+              loading={isLoadingButtonState}
+              showLoadingIcon={false}
+              className={cn(
+                'h-5 w-fit justify-start hover:scale-[1.05]',
+                isLiked && 'text-destructive'
+              )}
+            >
+              <Heart
+                fill={isLiked ? 'red' : 'transparent'}
+                stroke={isLiked ? 'red' : 'currentColor'}
+              />
+            </Button>
+          </TooltipTrigger>
+        </Tooltip>
+
+        <Tooltip>
+          {likesCount > 0 && (
+            <TooltipContent>{t('seeFullList')}</TooltipContent>
           )}
-        </div>
+          <TooltipTrigger asChild>
+            <Text
+              onClick={likesCount > 0 ? onToggleModal : undefined}
+              className={cn('text-sm', likesCount > 0 && 'cursor-pointer')}
+            >
+              {likesCount}
+            </Text>
+          </TooltipTrigger>
+        </Tooltip>
       </div>
 
       <PostLikesModal

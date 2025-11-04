@@ -17,6 +17,8 @@ import type {
   AuthControllerRefreshResponses,
   AuthControllerRegisterData,
   AuthControllerRegisterResponses,
+  PostControllerCreateCommentData,
+  PostControllerCreateCommentResponses,
   PostControllerCreateData,
   PostControllerCreateLikeData,
   PostControllerCreateLikeResponses,
@@ -29,10 +31,14 @@ import type {
   PostControllerFindAllResponses,
   PostControllerFindOneData,
   PostControllerFindOneResponses,
+  PostControllerRemoveCommentData,
+  PostControllerRemoveCommentResponses,
   PostControllerRemoveData,
   PostControllerRemoveLikeData,
   PostControllerRemoveLikeResponses,
   PostControllerRemoveResponses,
+  PostControllerUpdateCommentData,
+  PostControllerUpdateCommentResponses,
   PostControllerUpdateData,
   PostControllerUpdateResponses,
   ProfileControllerMeData,
@@ -391,6 +397,32 @@ export const postControllerFindAllComments = <
   })
 }
 
+export const postControllerCreateComment = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostControllerCreateCommentData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    PostControllerCreateCommentResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/comments',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
 export const postControllerRemoveLike = <ThrowOnError extends boolean = false>(
   options: Options<PostControllerRemoveLikeData, ThrowOnError>
 ) => {
@@ -507,6 +539,53 @@ export const postControllerUpdate = <ThrowOnError extends boolean = false>(
       }
     ],
     url: '/api/posts/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+export const postControllerRemoveComment = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostControllerRemoveCommentData, ThrowOnError>
+) => {
+  return (options.client ?? client).delete<
+    PostControllerRemoveCommentResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/comments/{commentId}',
+    ...options
+  })
+}
+
+export const postControllerUpdateComment = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostControllerUpdateCommentData, ThrowOnError>
+) => {
+  return (options.client ?? client).patch<
+    PostControllerUpdateCommentResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/{id}/comments/{commentId}',
     ...options,
     headers: {
       'Content-Type': 'application/json',

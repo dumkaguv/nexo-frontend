@@ -8,8 +8,11 @@ import {
 
 import { Image } from './'
 
+import type { ResponseUserDto, ResponseUserProfileDto } from '@/api'
+
 type Props = {
-  name: string
+  user?: ResponseUserProfileDto | ResponseUserDto
+  name?: string
   size?: number
   id?: number | string
   src?: string | null
@@ -17,12 +20,31 @@ type Props = {
 }
 
 export const AvatarWithColorInitials = ({
-  id,
-  name,
+  id: idProp,
+  name: nameProp,
   size = 36,
-  src,
+  src: srcProp,
+  user,
   className
 }: Props) => {
+  if (user && (idProp || srcProp || nameProp)) {
+    throw new Error('you can not you user and id or scr or name props')
+  }
+
+  const profile = user?.profile
+
+  if (!profile) {
+    return (
+      <Avatar
+        className={cn('rounded-full object-cover', className)}
+        style={{ width: size, height: size }}
+      />
+    )
+  }
+
+  const { id, fullName: name } = profile
+  const src = profile.avatarUrl
+
   const initials = getInitials(name)
 
   const colorSeed = `${name}-${id}`

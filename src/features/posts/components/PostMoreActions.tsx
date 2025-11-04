@@ -66,7 +66,7 @@ export const PostMoreActions = ({ post }: Props) => {
             <Button
               variant="destructive"
               size="sm"
-              className="bg-destructive/90"
+              className="bg-destructive/90 justify-start"
             >
               <Trash /> {t('delete')}
             </Button>

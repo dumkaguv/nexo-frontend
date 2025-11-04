@@ -65,7 +65,7 @@ export const DayLabel = ({
           </Text>
         </div>
       ) : (
-        <Text className={className} {...props}>
+        <Text className={cn('text-sm', className)} {...props}>
           {label}
         </Text>
       )}

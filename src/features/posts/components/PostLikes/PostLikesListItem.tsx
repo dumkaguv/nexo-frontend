@@ -66,12 +66,7 @@ export const PostLikesListItem = ({ like }: Props) => {
     <div className="flex items-center justify-between gap-5">
       <Link to={paths.user.byId(like.user.id)}>
         <div className="flex items-center gap-2">
-          <AvatarWithColorInitials
-            name={like.user.profile.fullName}
-            id={like.id}
-            size={40}
-            src={like.user.profile.avatarUrl}
-          />
+          <AvatarWithColorInitials user={like.user} size={40} />
           <div className="flex flex-col items-start">
             <Person.Name
               name={like.user.profile.fullName}

@@ -34,7 +34,7 @@ export const ThemeSwitcher = () => {
   ) => (
     <DropdownMenuItem onClick={() => onThemeChange(value)}>
       {icon}
-      <Text>{label}</Text>
+      <Text className="text-sm">{label}</Text>
       <Text className="ml-auto">{theme === value && <Check size={16} />}</Text>
     </DropdownMenuItem>
   )

@@ -3,7 +3,7 @@ import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
 
-type Props = {
+export type CardProps = {
   rows?: number
   loading?: boolean
 } & ComponentProps<'div'>
@@ -14,7 +14,7 @@ export const Card = ({
   rows = 3,
   loading = false,
   ...rest
-}: Props) => {
+}: CardProps) => {
   return (
     <div
       className={cn(

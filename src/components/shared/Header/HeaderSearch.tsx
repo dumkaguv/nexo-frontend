@@ -147,12 +147,7 @@ export const HeaderSearch = () => {
                       >
                         <CommandItem className="cursor-pointer">
                           <div className="flex items-center gap-2.5">
-                            <AvatarWithColorInitials
-                              size={36}
-                              name={user.profile?.fullName}
-                              id={user.id}
-                              src={user.profile?.avatarUrl}
-                            />
+                            <AvatarWithColorInitials user={user} />
                             <div className="flex flex-col items-start">
                               <Person.Name
                                 name={user.profile.fullName}
