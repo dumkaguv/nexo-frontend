@@ -85,7 +85,7 @@ export const SubscriptionList = ({
   return (
     <Card id="users-scrollable-list" className="max-h-[60dvh] overflow-y-auto">
       <InfiniteScroll
-        dataLength={data.length}
+        dataLength={data?.length ?? 0}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
         scrollableTarget="users-scrollable-list"

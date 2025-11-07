@@ -1,5 +1,5 @@
 import { Sidebar, SidebarRight } from '@/features/feed/components'
-import { FormCreatePost, PostsList } from '@/features/posts/components'
+import { FormCreatePost, PostList } from '@/features/posts/components'
 
 export const FeedPage = () => {
   return (
@@ -9,7 +9,7 @@ export const FeedPage = () => {
       <main className="flex w-full flex-1 flex-col gap-8">
         <FormCreatePost />
 
-        <PostsList />
+        <PostList />
       </main>
 
       <SidebarRight />

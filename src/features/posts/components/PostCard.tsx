@@ -1,10 +1,17 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { AvatarWithColorInitials, Card, DayLabel } from '@/components/shared'
+import {
+  AvatarWithColorInitials,
+  Card,
+  DayLabel,
+  ImagePreview
+} from '@/components/shared'
 import * as User from '@/components/shared/Person'
 
 import { paths } from '@/config'
+
+import { cn } from '@/utils'
 
 import { PostComments, PostCommentsSection } from './PostComments'
 import { PostLikes } from './PostLikes'
@@ -21,15 +28,18 @@ export const PostCard = ({ post }: Props) => {
 
   const onToggleCommentSection = () => setIsOpenCommentSection((prev) => !prev)
 
+  const previewUrls = post.files?.map(({ file: { url } }) => url) ?? []
+  const totalFiles = previewUrls.length
+
   return (
     <Card className="flex flex-col gap-6">
       <div className="flex items-center justify-between gap-8">
         <div className="flex items-center gap-3">
-          <Link to={paths.profile.root}>
+          <Link to={paths.user.byId(post.user.id)}>
             <AvatarWithColorInitials user={post.user} />
           </Link>
           <div className="flex items-center gap-2">
-            <Link to={paths.profile.root}>
+            <Link to={paths.user.byId(post.user.id)}>
               <User.Name className="text-base" />
             </Link>
 
@@ -41,7 +51,22 @@ export const PostCard = ({ post }: Props) => {
       </div>
 
       <div className="grid gap-4">
-        <div>{post.content}</div>
+        <div className="flex flex-col gap-3">
+          {post.content}
+          <ImagePreview
+            srcs={previewUrls}
+            maxImages={totalFiles < 3 ? totalFiles + 1 : 3}
+            className="size-full"
+            containerClassName={cn(
+              'grid gap-3',
+              totalFiles === 1 && 'grid-cols-1',
+              totalFiles === 2 && 'grid-cols-2',
+              totalFiles === 3 && 'grid-cols-3',
+              totalFiles === 4 && 'grid-cols-2',
+              totalFiles >= 5 && 'grid-cols-3'
+            )}
+          />
+        </div>
 
         <div className="mt-2 flex items-center gap-5">
           <PostLikes

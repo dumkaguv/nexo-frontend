@@ -12,7 +12,7 @@ export const useInvalidatePredicateQueries = () => {
       normalized.map((key) => {
         const queryKey = Array.isArray(key) ? key : [key]
 
-        return queryClient.invalidateQueries({ queryKey })
+        return queryClient.invalidateQueries({ queryKey, refetchType: 'all' })
       })
     )
   }

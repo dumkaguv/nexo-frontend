@@ -1,16 +1,24 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Lightbox from 'yet-another-react-lightbox'
+import Counter from 'yet-another-react-lightbox/plugins/counter'
+import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen'
+import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
+
+import 'yet-another-react-lightbox/styles.css'
+import 'yet-another-react-lightbox/plugins/thumbnails.css'
+import 'yet-another-react-lightbox/plugins/counter.css'
+import 'yet-another-react-lightbox/styles.css'
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui'
 import { cn } from '@/utils'
 
-import { Image } from './'
+import { Image, Typography } from './'
 
 import type { ComponentProps } from 'react'
 
-type Props =
+type Props = (
   | {
       files: File[]
       srcs?: never
@@ -19,6 +27,10 @@ type Props =
       srcs: string[]
       files?: never
     }
+) & {
+  containerClassName?: string
+  maxImages?: number
+}
 
 type ImagePreviewProps = Props & ComponentProps<'img'>
 
@@ -26,6 +38,8 @@ export const ImagePreview = ({
   files,
   srcs,
   className,
+  containerClassName,
+  maxImages = 10000000,
   ...props
 }: ImagePreviewProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,29 +62,65 @@ export const ImagePreview = ({
     setIsOpen(true)
   }
 
-  if (!slides.length) return null
+  const renderSlide = (index: number, src: string) => (
+    <Tooltip key={index}>
+      <TooltipContent>{t('preview')}</TooltipContent>
+      <TooltipTrigger asChild>
+        <Image
+          src={src}
+          width={120}
+          height={100}
+          onClick={() => onImageClick(index)}
+          className={cn(
+            'h-[100px] w-[120px] cursor-pointer rounded-sm object-cover',
+            className
+          )}
+          {...props}
+        />
+      </TooltipTrigger>
+    </Tooltip>
+  )
+
+  if (!slides.length) {
+    return null
+  }
 
   return (
     <>
-      <div className="flex flex-wrap gap-2">
-        {slides.map((slide, index) => (
-          <Tooltip key={index}>
-            <TooltipContent>{t('preview')}</TooltipContent>
-            <TooltipTrigger asChild>
-              <Image
-                src={slide.src}
-                width={120}
-                height={100}
-                onClick={() => onImageClick(index)}
-                className={cn(
-                  'h-[100px] w-[120px] cursor-pointer rounded-sm object-cover',
-                  className
-                )}
-                {...props}
-              />
-            </TooltipTrigger>
-          </Tooltip>
-        ))}
+      <div className={cn('flex flex-wrap gap-2', containerClassName)}>
+        {slides.length <= maxImages ? (
+          slides
+            .slice(0, maxImages)
+            .map(({ src }, index) => renderSlide(index, src))
+        ) : (
+          <>
+            {slides
+              .slice(0, maxImages - 1)
+              .map(({ src }, index) => renderSlide(index, src))}
+
+            <Tooltip>
+              <TooltipContent>{t('seeFullList')}</TooltipContent>
+              <TooltipTrigger asChild>
+                <div
+                  onClick={() => onImageClick(maxImages! - 1)}
+                  className="relative size-full cursor-pointer overflow-hidden rounded-sm"
+                >
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                    <Typography.Text className="text-lg font-semibold text-white">
+                      +{slides.length - maxImages + 1}
+                    </Typography.Text>
+                  </div>
+
+                  <Image
+                    src={slides[maxImages - 1]?.src}
+                    alt={`Slide ${maxImages}`}
+                    className="size-full object-cover"
+                  />
+                </div>
+              </TooltipTrigger>
+            </Tooltip>
+          </>
+        )}
       </div>
 
       <Lightbox
@@ -78,7 +128,8 @@ export const ImagePreview = ({
         close={() => setIsOpen(false)}
         slides={slides}
         index={currentIndex}
-        plugins={[Zoom]}
+        plugins={[Zoom, Thumbnails, Counter, Fullscreen]}
+        counter={{ container: { style: { top: 0 } } }}
         portal={{
           root: typeof document !== 'undefined' ? document.body : undefined
         }}

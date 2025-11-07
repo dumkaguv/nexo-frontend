@@ -4,10 +4,17 @@ export type ClientOptions = {
   baseURL: string
 }
 
+export type ResponseFileDto = {
+  readonly id: number
+  url: string
+  type?: string | null
+  readonly uploadedAt: string
+}
+
 export type ResponseProfileDto = {
   readonly id: number
   fullName: string
-  avatarUrl?: string | null
+  avatar?: ResponseFileDto | null
   birthDay?: string | null
   phone?: string | null
   biography?: string | null
@@ -95,7 +102,7 @@ export type UpdateProfileDto = {
   phone?: string | null
   biography?: string | null
   fullName?: string
-  avatarUrl?: string | null
+  avatar?: number | null
   birthDay?: string | null
 }
 
@@ -110,10 +117,7 @@ export type ResponseUserProfileDto = {
 }
 
 export type ResponsePostFileDto = {
-  readonly id: number
-  url: string
-  type?: string | null
-  readonly uploadedAt: string
+  file: ResponseFileDto
 }
 
 export type ResponsePostDto = {
@@ -155,6 +159,7 @@ export type ResponsePostLikeDto = {
 
 export type CreatePostDto = {
   content: string
+  files: Array<number>
 }
 
 export type CreatePostCommentDto = {
@@ -165,12 +170,15 @@ export type UpdatePostDto = {
   content?: string
 }
 
-export type ResponseUploadAvatarDto = {
-  user: ResponseUserDto
+export type ResponseUploadDto = {
+  readonly id: number
+  secure_url: string
+  type: string
 }
 
-export type CreateUploadAvatarDto = {
+export type CreateUploadDto = {
   file: Blob | File
+  folder?: string | null
 }
 
 export type ResponseSubscriptionDto = {
@@ -184,9 +192,14 @@ export type ResponseSubscriptionCountDto = {
   following: number
 }
 
+export type ResponseFileDtoWritable = {
+  url: string
+  type?: string | null
+}
+
 export type ResponseProfileDtoWritable = {
   fullName: string
-  avatarUrl?: string | null
+  avatar?: ResponseFileDtoWritable | null
   birthDay?: string | null
   phone?: string | null
   biography?: string | null
@@ -208,16 +221,11 @@ export type ResponseUserProfileDtoWritable = {
   profile: ResponseProfileDtoWritable
 }
 
-export type ResponsePostFileDtoWritable = {
-  url: string
-  type?: string | null
-}
-
 export type ResponsePostDtoWritable = {
   content: string
   isLiked: boolean
   user: ResponseUserProfileDtoWritable
-  files?: Array<ResponsePostFileDtoWritable> | null
+  files?: Array<ResponsePostFileDto> | null
   likesCount: number
   commentsCount: number
 }
@@ -235,6 +243,11 @@ export type ResponseUserProfileIsFollowingDtoWritable = {
 
 export type ResponsePostLikeDtoWritable = {
   user: ResponseUserProfileIsFollowingDtoWritable
+}
+
+export type ResponseUploadDtoWritable = {
+  secure_url: string
+  type: string
 }
 
 export type ResponseSubscriptionDtoWritable = {
@@ -715,21 +728,37 @@ export type PostControllerUpdateCommentResponses = {
 export type PostControllerUpdateCommentResponse =
   PostControllerUpdateCommentResponses[keyof PostControllerUpdateCommentResponses]
 
-export type UploadControllerUploadAvatarData = {
-  body: CreateUploadAvatarDto
+export type UploadControllerUploadData = {
+  body: CreateUploadDto
   path?: never
   query?: never
-  url: '/api/upload/avatar'
+  url: '/api/upload'
 }
 
-export type UploadControllerUploadAvatarResponses = {
+export type UploadControllerUploadResponses = {
   200: BaseResponseDto & {
-    data?: ResponseUploadAvatarDto
+    data?: ResponseUploadDto
   }
 }
 
-export type UploadControllerUploadAvatarResponse =
-  UploadControllerUploadAvatarResponses[keyof UploadControllerUploadAvatarResponses]
+export type UploadControllerUploadResponse =
+  UploadControllerUploadResponses[keyof UploadControllerUploadResponses]
+
+export type UploadControllerDeleteData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/upload/{id}'
+}
+
+export type UploadControllerDeleteResponses = {
+  204: void
+}
+
+export type UploadControllerDeleteResponse =
+  UploadControllerDeleteResponses[keyof UploadControllerDeleteResponses]
 
 export type SubscriptionControllerFindAllFollowersData = {
   body?: never

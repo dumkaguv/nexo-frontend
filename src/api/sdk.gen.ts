@@ -57,8 +57,10 @@ import type {
   SubscriptionControllerFollowResponses,
   SubscriptionControllerUnfollowData,
   SubscriptionControllerUnfollowResponses,
-  UploadControllerUploadAvatarData,
-  UploadControllerUploadAvatarResponses,
+  UploadControllerDeleteData,
+  UploadControllerDeleteResponses,
+  UploadControllerUploadData,
+  UploadControllerUploadResponses,
   UserControllerChangePasswordData,
   UserControllerChangePasswordResponses,
   UserControllerFindAllData,
@@ -594,13 +596,11 @@ export const postControllerUpdateComment = <
   })
 }
 
-export const uploadControllerUploadAvatar = <
-  ThrowOnError extends boolean = false
->(
-  options: Options<UploadControllerUploadAvatarData, ThrowOnError>
+export const uploadControllerUpload = <ThrowOnError extends boolean = false>(
+  options: Options<UploadControllerUploadData, ThrowOnError>
 ) => {
   return (options.client ?? client).post<
-    UploadControllerUploadAvatarResponses,
+    UploadControllerUploadResponses,
     unknown,
     ThrowOnError
   >({
@@ -612,12 +612,31 @@ export const uploadControllerUploadAvatar = <
         type: 'http'
       }
     ],
-    url: '/api/upload/avatar',
+    url: '/api/upload',
     ...options,
     headers: {
       'Content-Type': null,
       ...options.headers
     }
+  })
+}
+
+export const uploadControllerDelete = <ThrowOnError extends boolean = false>(
+  options: Options<UploadControllerDeleteData, ThrowOnError>
+) => {
+  return (options.client ?? client).delete<
+    UploadControllerDeleteResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/upload/{id}',
+    ...options
   })
 }
 

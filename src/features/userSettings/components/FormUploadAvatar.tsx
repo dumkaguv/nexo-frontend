@@ -35,10 +35,10 @@ export const FormUploadAvatar = () => {
         {previewUrl ? (
           <ImagePreview
             srcs={[previewUrl]}
-            className="my-4 h-48 w-48 rounded-full border border-dashed object-cover"
+            className="my-4 size-40 rounded-full border border-dashed object-cover"
           />
         ) : (
-          <div className="text-muted-foreground my-4 flex h-48 w-48 items-center justify-center rounded-full border border-dashed" />
+          <div className="text-muted-foreground my-4 flex size-40 items-center justify-center rounded-full border border-dashed" />
         )}
 
         <Controller
@@ -48,8 +48,6 @@ export const FormUploadAvatar = () => {
             <Field className="mb-5">
               <InputUpload
                 accept="image/*"
-                multiple={false}
-                value={field.value}
                 onChange={(files) => onChange(files, field)}
               />
               <FieldError>{errors.avatar?.message || fileSizeError}</FieldError>

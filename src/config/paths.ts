@@ -13,11 +13,6 @@ export const paths = {
     byId: (id: string | number) => `/user/${id}`
   },
 
-  // todo: replace all profile paths to user paths
-  profile: {
-    root: '/profile'
-  },
-
   settings: {
     root: '/settings',
     account: '/settings/account',

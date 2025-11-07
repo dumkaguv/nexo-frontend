@@ -40,17 +40,17 @@ export const PostLikesList = ({ postId, search }: Props) => {
   return (
     <Card id="liked-users-scrollable-list">
       <InfiniteScroll
-        dataLength={data?.pages?.[0].total}
+        dataLength={data?.pages?.[0]?.total ?? 0}
         next={fetchNextPage}
         hasMore={!!hasNextPage}
         scrollThreshold={0.9}
         scrollableTarget="liked-users-scrollable-list"
         loader={<PostLikesListSkeleton />}
       >
-        <ul className="grid gap-2">
+        <ul className="grid gap-4">
           {likes.map((like) => (
             <li key={like.id}>
-              <PostLikesListItem like={like} />
+              <PostLikesListItem like={like} postId={postId} />
             </li>
           ))}
         </ul>

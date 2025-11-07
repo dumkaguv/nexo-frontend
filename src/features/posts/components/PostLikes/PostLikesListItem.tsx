@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import {
+  postControllerFindAllLikesInfiniteQueryKey,
   profileControllerMeDetailedQueryKey,
   subscriptionControllerFollowMutation,
   subscriptionControllerUnfollowMutation
@@ -23,9 +24,10 @@ import type { ResponsePostLikeDto } from '@/api'
 
 type Props = {
   like: ResponsePostLikeDto
+  postId: number
 }
 
-export const PostLikesListItem = ({ like }: Props) => {
+export const PostLikesListItem = ({ like, postId }: Props) => {
   const { user } = useAuthStore()
 
   const { t } = useTranslation()
@@ -33,7 +35,12 @@ export const PostLikesListItem = ({ like }: Props) => {
 
   const mutationConfig = {
     onSuccess: async () => {
-      await invalidateQueries([profileControllerMeDetailedQueryKey()])
+      await invalidateQueries([
+        profileControllerMeDetailedQueryKey(),
+        postControllerFindAllLikesInfiniteQueryKey({
+          path: { id: String(postId) }
+        })
+      ])
       toast.success(t('success'))
     },
     onError: (e: unknown) => showApiErrors(e)
@@ -62,6 +69,8 @@ export const PostLikesListItem = ({ like }: Props) => {
   const isMe = like.user.id === user?.id
   const isLoadingButtonState = isPendingFollow || isPendingUnfollow
 
+  console.log(like)
+
   return (
     <div className="flex items-center justify-between gap-5">
       <Link to={paths.user.byId(like.user.id)}>
@@ -81,7 +90,11 @@ export const PostLikesListItem = ({ like }: Props) => {
       </Link>
 
       {!isMe && (
-        <Button onClick={onToggleFollow} loading={isLoadingButtonState}>
+        <Button
+          variant={like.user.isFollowing ? 'secondary' : 'default'}
+          onClick={onToggleFollow}
+          loading={isLoadingButtonState}
+        >
           {t(like.user.isFollowing ? 'unfollow' : 'follow')}
         </Button>
       )}

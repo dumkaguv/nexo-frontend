@@ -113,5 +113,7 @@
   "liked": "Liked",
   "send": "Send",
   "moreActions": "More actions",
-  "comment": "Comment"
+  "comment": "Comment",
+  "preview": "Preview",
+  "addComment": "Add comment"
 }

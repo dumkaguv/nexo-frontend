@@ -110,7 +110,7 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
                       variant="ghost"
                       size="sm"
                       onClick={onEdit}
-                      className="w-full"
+                      className="w-full justify-start"
                     >
                       <Edit /> {t('edit')}
                     </Button>

@@ -1,3 +1,4 @@
+import * as Person from '@/components/shared/Person'
 import { Avatar } from '@/components/ui'
 import {
   cn,
@@ -5,8 +6,6 @@ import {
   getTextColorForBackground,
   stringToColor
 } from '@/utils'
-
-import { Image } from './'
 
 import type { ResponseUserDto, ResponseUserProfileDto } from '@/api'
 
@@ -43,7 +42,7 @@ export const AvatarWithColorInitials = ({
   }
 
   const { id, fullName: name } = profile
-  const src = profile.avatarUrl
+  const src = profile.avatar?.url
 
   const initials = getInitials(name)
 
@@ -52,20 +51,13 @@ export const AvatarWithColorInitials = ({
   const textColor = getTextColorForBackground(bgColor)
 
   if (src) {
-    return (
-      <Avatar
-        className={cn('rounded-full object-cover', className)}
-        style={{ width: size, height: size }}
-      >
-        <Image src={src} alt={name} className="h-full w-full rounded-full" />
-      </Avatar>
-    )
+    return <Person.Avatar src={src} className="size-10" />
   }
 
   return (
     <Avatar
       className={cn(
-        'flex items-center justify-center rounded-full font-medium text-white select-none',
+        'flex items-center justify-center rounded-full font-medium select-none',
         className
       )}
       style={{

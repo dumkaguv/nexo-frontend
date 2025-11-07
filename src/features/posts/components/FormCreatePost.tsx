@@ -1,10 +1,17 @@
-import { Image, Video } from 'lucide-react'
+import { Image } from 'lucide-react'
 
+import { type KeyboardEvent, useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { Card, TextAreaAutoHeight, Typography } from '@/components/shared'
+import {
+  Card,
+  ImagePreview,
+  InputUpload,
+  TextAreaAutoHeight,
+  Typography
+} from '@/components/shared'
 import * as Person from '@/components/shared/Person'
 import {
   Button,
@@ -17,25 +24,44 @@ import {
 import { paths } from '@/config'
 import { useFormCreatePost } from '@/features/posts/hooks'
 
-import type { KeyboardEvent } from 'react'
+import { useAuthStore } from '@/stores'
+import { cn } from '@/utils'
 
 const { Text } = Typography
 
 export const FormCreatePost = () => {
-  const { control, onSubmit, errors, isPending } = useFormCreatePost()
+  const [files, setFiles] = useState<FileList | null>(null)
+  const [previews, setPreviews] = useState<string[]>([])
+
+  const { user } = useAuthStore()
+  const { control, onSubmit, errors, isPending } = useFormCreatePost({
+    files: Array.from(files ?? []),
+    onSuccessCallback: () => {
+      setFiles(null)
+      setPreviews([])
+    }
+  })
 
   const { t } = useTranslation()
 
-  const actionButtons = [
-    {
-      icon: <Image className="text-green-500" />,
-      label: t('photo')
-    },
-    {
-      icon: <Video className="text-primary" />,
-      label: t('video')
+  useEffect(() => {
+    if (!files) {
+      return
     }
-  ]
+
+    const urls = Object.values(files).map((file) => URL.createObjectURL(file))
+    setPreviews(urls)
+
+    return () => urls.forEach((url) => URL.revokeObjectURL(url))
+  }, [files])
+
+  const onChange = (files: FileList | null) => {
+    if (files?.length === 0) {
+      return
+    }
+
+    setFiles(files)
+  }
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -49,8 +75,8 @@ export const FormCreatePost = () => {
       <Card>
         <div className="flex flex-col">
           <div className="flex gap-4">
-            <Link to={paths.profile.root}>
-              <Person.Avatar className="size-12" />
+            <Link to={paths.user.byId(String(user?.id))}>
+              <Person.Avatar size={48} className="size-12" />
             </Link>
 
             <Field className="flex w-full flex-col gap-2">
@@ -65,24 +91,34 @@ export const FormCreatePost = () => {
             </Field>
           </div>
 
+          <ImagePreview
+            srcs={previews}
+            className="size-full"
+            maxImages={3}
+            containerClassName={cn(
+              'grid grid-cols-2 gap-4 mt-5 w-[calc(100%-48px-16px)] self-end',
+              previews.length >= 3 && 'grid-cols-3'
+            )}
+          />
+
           <div className="flex items-center justify-between gap-3 pt-5">
             <div className="flex items-center gap-3">
-              {actionButtons.map(({ icon, label }, i) => (
-                <Tooltip key={i}>
+              <Tooltip>
+                <InputUpload accept="image/*" onChange={onChange} multiple>
                   <TooltipTrigger asChild>
                     <Button
-                      variant="text"
-                      className="bg-muted-foreground/15 hover:bg-muted-foreground/25 gap-1 rounded-lg"
+                      variant="ghost"
+                      className="bg-muted-foreground/7 gap-1 rounded-lg"
                     >
-                      {icon}
-                      <Text className="text-sm opacity-70">{label}</Text>
+                      <Image className="text-green-500" />
+                      <Text className="text-sm opacity-70">{t('photo')}</Text>
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
-                    {t('attach')} {label.toLowerCase()}
-                  </TooltipContent>
-                </Tooltip>
-              ))}
+                </InputUpload>
+                <TooltipContent>
+                  {t('attach')} {t('photo').toLowerCase()}
+                </TooltipContent>
+              </Tooltip>
             </div>
 
             <Button type="submit" loading={isPending}>

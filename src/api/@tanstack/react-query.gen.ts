@@ -35,7 +35,8 @@ import {
   subscriptionControllerFindOneCount,
   subscriptionControllerFollow,
   subscriptionControllerUnfollow,
-  uploadControllerUploadAvatar,
+  uploadControllerDelete,
+  uploadControllerUpload,
   userControllerChangePassword,
   userControllerFindAll,
   userControllerFindOne,
@@ -88,8 +89,10 @@ import type {
   SubscriptionControllerFollowResponse,
   SubscriptionControllerUnfollowData,
   SubscriptionControllerUnfollowResponse,
-  UploadControllerUploadAvatarData,
-  UploadControllerUploadAvatarResponse,
+  UploadControllerDeleteData,
+  UploadControllerDeleteResponse,
+  UploadControllerUploadData,
+  UploadControllerUploadResponse,
   UserControllerChangePasswordData,
   UserControllerChangePasswordResponse,
   UserControllerFindAllData,
@@ -969,20 +972,46 @@ export const postControllerUpdateCommentMutation = (
   return mutationOptions
 }
 
-export const uploadControllerUploadAvatarMutation = (
-  options?: Partial<Options<UploadControllerUploadAvatarData>>
+export const uploadControllerUploadMutation = (
+  options?: Partial<Options<UploadControllerUploadData>>
 ): UseMutationOptions<
-  UploadControllerUploadAvatarResponse,
+  UploadControllerUploadResponse,
   AxiosError<DefaultError>,
-  Options<UploadControllerUploadAvatarData>
+  Options<UploadControllerUploadData>
 > => {
   const mutationOptions: UseMutationOptions<
-    UploadControllerUploadAvatarResponse,
+    UploadControllerUploadResponse,
     AxiosError<DefaultError>,
-    Options<UploadControllerUploadAvatarData>
+    Options<UploadControllerUploadData>
   > = {
     mutationFn: async (fnOptions) => {
-      const { data } = await uploadControllerUploadAvatar({
+      const { data } = await uploadControllerUpload({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const uploadControllerDeleteMutation = (
+  options?: Partial<Options<UploadControllerDeleteData>>
+): UseMutationOptions<
+  UploadControllerDeleteResponse,
+  AxiosError<DefaultError>,
+  Options<UploadControllerDeleteData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    UploadControllerDeleteResponse,
+    AxiosError<DefaultError>,
+    Options<UploadControllerDeleteData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await uploadControllerDelete({
         ...options,
         ...fnOptions,
         throwOnError: true

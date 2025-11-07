@@ -69,7 +69,7 @@ export const HeaderAvatar = () => {
         <TooltipContent>{t('menu')}</TooltipContent>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger>
-            <PersonInfo.Avatar className="size-10 cursor-pointer" />
+            <PersonInfo.Avatar size={40} className="size-10 cursor-pointer" />
           </DropdownMenuTrigger>
         </TooltipTrigger>
       </Tooltip>

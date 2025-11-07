@@ -6,7 +6,7 @@ import { postControllerFindAllInfiniteOptions } from '@/api'
 
 import { PostCard, PostCardListSkeleton } from './'
 
-export const PostsList = () => {
+export const PostList = () => {
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     ...postControllerFindAllInfiniteOptions(),
     getNextPageParam: ({ nextPage }) => nextPage
@@ -20,14 +20,14 @@ export const PostsList = () => {
 
   return (
     <InfiniteScroll
-      dataLength={posts.length}
+      dataLength={posts?.length ?? 0}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
       loader={<PostCardListSkeleton />}
       scrollThreshold={0.9}
     >
       <ul className="flex flex-col gap-8">
-        {posts.map((post) => (
+        {posts?.map((post) => (
           <li key={post.id}>
             <PostCard post={post} />
           </li>

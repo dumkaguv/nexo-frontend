@@ -1,12 +1,12 @@
+import { Slot } from '@radix-ui/react-slot'
 import { Upload } from 'lucide-react'
-
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, FieldLabel, Input } from '@/components/ui'
 import { cn } from '@/utils'
 
-import type { ChangeEvent, ComponentProps } from 'react'
+import type { ChangeEvent, ComponentProps, PropsWithChildren } from 'react'
 
 type Props = {
   label?: string
@@ -14,28 +14,25 @@ type Props = {
   multiple?: boolean
   className?: string
   onChange?: (files: FileList | null) => void
-  value?: FileList | null
-} & Omit<ComponentProps<'input'>, 'value' | 'onChange'>
+} & Omit<ComponentProps<'input'>, 'onChange'> &
+  PropsWithChildren
 
 export const InputUpload = ({
   label,
   accept,
-  multiple,
+  multiple = false,
   className,
   onChange,
-  value,
+  children,
   ...props
 }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
-  const [_F, setSelectedFiles] = useState<FileList | null>(value ?? null)
-
   const { t } = useTranslation()
 
   const onButtonClick = () => inputRef.current?.click()
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
-    setSelectedFiles(files)
     onChange?.(files)
   }
 
@@ -53,15 +50,19 @@ export const InputUpload = ({
         {...props}
       />
 
-      <Button
-        type="button"
-        variant="outline"
-        onClick={onButtonClick}
-        className="flex items-center gap-2"
-      >
-        <Upload size={16} />
-        {t('uploadFile')}
-      </Button>
+      {children ? (
+        <Slot onClick={onButtonClick}>{children}</Slot>
+      ) : (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onButtonClick}
+          className="flex items-center gap-2"
+        >
+          <Upload size={16} />
+          {t('uploadFile')}
+        </Button>
+      )}
     </div>
   )
 }

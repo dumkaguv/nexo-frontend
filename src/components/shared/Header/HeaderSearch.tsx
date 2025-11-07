@@ -131,7 +131,7 @@ export const HeaderSearch = () => {
                 className="max-h-[300px] overflow-y-auto"
               >
                 <InfiniteScroll
-                  dataLength={allUsers.length}
+                  dataLength={allUsers?.length ?? 0}
                   next={fetchNextPage}
                   hasMore={!!hasNextPage}
                   loader={renderLoadingState()}

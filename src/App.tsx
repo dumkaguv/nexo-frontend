@@ -1,5 +1,4 @@
 import '@/assets/styles/styles.css'
-import 'yet-another-react-lightbox/styles.css'
 
 import { Providers } from '@/config'
 

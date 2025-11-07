@@ -27,7 +27,7 @@ export const Sidebar = ({ className, ...rest }: Props) => {
 
   return (
     <SidebarUi className={className} {...rest}>
-      <PersonInfo.Avatar />
+      <PersonInfo.Avatar size={64} />
       <PersonInfo.Name className="text-center" />
       <PersonInfo.Nickname asLink />
 

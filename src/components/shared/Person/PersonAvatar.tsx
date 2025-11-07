@@ -1,16 +1,19 @@
 import { Avatar, AvatarImage, Skeleton } from '@/components/ui'
-import { ImageFallbacks } from '@/config'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
+import { AvatarWithColorInitials } from '../AvatarWithColorInitials'
+
 type Props = {
   src?: string | null
+  size?: number
   className?: string
   avatarImageClassName?: string
 }
 
 export const PersonAvatar = ({
   src,
+  size,
   className,
   avatarImageClassName
 }: Props) => {
@@ -20,11 +23,13 @@ export const PersonAvatar = ({
     <Avatar className={cn('size-16', className)}>
       {isPendingUser ? (
         <Skeleton className={cn('size-16 rounded-full', className)} />
-      ) : (
+      ) : src ? (
         <AvatarImage
           className={cn('object-cover', avatarImageClassName)}
-          src={src ?? user?.profile.avatarUrl ?? ImageFallbacks.avatar}
+          src={src ?? user?.profile.avatar?.url}
         />
+      ) : (
+        <AvatarWithColorInitials user={user} size={size} />
       )}
     </Avatar>
   )

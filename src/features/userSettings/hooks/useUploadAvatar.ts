@@ -1,13 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 
 import {
-  profileControllerMeQueryKey,
-  uploadControllerUploadAvatarMutation
+  postControllerFindAllInfiniteQueryKey,
+  profileControllerMeDetailedOptions,
+  profileControllerUpdateMutation,
+  uploadControllerDeleteMutation,
+  uploadControllerUploadMutation
 } from '@/api'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
@@ -38,19 +41,44 @@ export const useUploadAvatar = () => {
     resolver: zodResolver(createAvatarSchema(t))
   })
 
+  const { refetch: fetchMe } = useQuery({
+    ...profileControllerMeDetailedOptions(),
+    enabled: false
+  })
+
+  const { mutateAsync: updateProfile, isPending: isUpdatingUser } = useMutation(
+    {
+      ...profileControllerUpdateMutation(),
+      onError: (e) => showApiErrors(e)
+    }
+  )
+
+  const { mutateAsync: deleteFile, isPending: isDeleting } = useMutation({
+    ...uploadControllerDeleteMutation(),
+    onError: (e) => showApiErrors(e)
+  })
+
   const { mutateAsync: uploadAvatar, isPending } = useMutation({
-    ...uploadControllerUploadAvatarMutation(),
-    onSuccess: async ({ data: { user } }) => {
-      await invalidateQueries(profileControllerMeQueryKey())
-      setUser(user)
+    ...uploadControllerUploadMutation(),
+    onSuccess: async ({ data: { id } }) => {
+      await updateProfile({ body: { avatar: id } })
+      const { data } = await fetchMe()
+      await invalidateQueries([
+        postControllerFindAllInfiniteQueryKey(),
+        profileControllerMeDetailedOptions()
+      ])
+      setUser(data?.data.user)
       toast.success(t('uploadSuccess'))
     },
     onError: (e) => showApiErrors(e)
   })
 
   useEffect(() => {
-    if (!user?.profile?.avatarUrl) return
-    setPreviewUrl(user.profile.avatarUrl)
+    if (!user?.profile?.avatar?.url) {
+      return
+    }
+
+    setPreviewUrl(user.profile.avatar?.url)
   }, [user])
 
   useEffect(() => {
@@ -80,7 +108,17 @@ export const useUploadAvatar = () => {
     }
   }
 
-  const onSubmit = async () => await uploadAvatar({ body: { file: file! } })
+  const onSubmit = async () => {
+    if (!file) {
+      return
+    }
+    const hasAvatar = !!user?.profile.avatar
+    if (hasAvatar) {
+      await deleteFile({ path: { id: String(user.profile.avatar?.id) } })
+    }
+
+    await uploadAvatar({ body: { file: file, folder: 'avatars' } })
+  }
 
   return {
     onSubmit: handleSubmit(onSubmit),
@@ -90,7 +128,7 @@ export const useUploadAvatar = () => {
     previewUrl,
     fileSizeError,
     uploadAvatar,
-    isPending,
+    isPending: isUpdatingUser || isPending || isDeleting,
     file
   }
 }

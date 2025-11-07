@@ -11,11 +11,13 @@ import type { ComponentProps } from 'react'
 type Props = {
   nickname?: string
   asLink?: boolean
+  userId?: number
 } & ComponentProps<'button'>
 
 export const PersonNickname = ({
   nickname,
   asLink,
+  userId,
   className,
   ...rest
 }: Props) => {
@@ -31,7 +33,7 @@ export const PersonNickname = ({
       {(nickname ?? user?.username) ? (
         asLink ? (
           <Link
-            to={paths.settings.account}
+            to={paths.user.byId(Number(userId) || Number(user?.id))}
           >{`@${nickname ?? user?.username}`}</Link>
         ) : (
           <Typography.Text className="text-muted-foreground">
