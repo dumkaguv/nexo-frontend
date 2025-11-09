@@ -12,8 +12,6 @@ import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
 
-const { Text } = Typography
-
 type Props = ComponentProps<'aside'>
 
 export const Sidebar = ({ className, ...rest }: Props) => {
@@ -51,9 +49,11 @@ export const Sidebar = ({ className, ...rest }: Props) => {
                 >
                   <Link to={href}>
                     <Icon className={cn(isActiveLink && 'text-primary')} />
-                    <Text className={cn(isActiveLink && 'text-primary')}>
+                    <Typography.Text
+                      className={cn(isActiveLink && 'text-primary')}
+                    >
                       {name}
-                    </Text>
+                    </Typography.Text>
                   </Link>
                 </Button>
               </nav>

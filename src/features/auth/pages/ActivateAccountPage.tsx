@@ -5,8 +5,6 @@ import { userControllerFindOneOptions } from '@/api'
 import { Card, Typography } from '@/components/shared'
 import { paths } from '@/config'
 
-const { Title } = Typography
-
 export const ActivateAccountPage = () => {
   const { userId } = useParams<{ userId?: string }>()
 
@@ -25,10 +23,10 @@ export const ActivateAccountPage = () => {
 
   return (
     <Card className="max-w-96">
-      <Title level={1}>
+      <Typography.Title level={1}>
         Hey, we've just sent you activation link on your email. Please follow up
         link and activate account.
-      </Title>
+      </Typography.Title>
     </Card>
   )
 }

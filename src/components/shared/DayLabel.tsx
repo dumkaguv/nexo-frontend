@@ -16,8 +16,6 @@ import { Typography } from './Typography'
 import type { Dayjs } from 'dayjs'
 import type { ComponentProps } from 'react'
 
-const { Text } = Typography
-
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -60,14 +58,14 @@ export const DayLabel = ({
       {showIcon ? (
         <div className="ml-1 flex items-center justify-center gap-1.5">
           <div className="-mt-0.5 size-[5px] rounded-full bg-neutral-300 dark:bg-neutral-500" />
-          <Text className={cn('text-sm', className)} {...props}>
+          <Typography.Text className={cn('text-sm', className)} {...props}>
             {label}
-          </Text>
+          </Typography.Text>
         </div>
       ) : (
-        <Text className={cn('text-sm', className)} {...props}>
+        <Typography.Text className={cn('text-sm', className)} {...props}>
           {label}
-        </Text>
+        </Typography.Text>
       )}
     </>
   )

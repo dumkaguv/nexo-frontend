@@ -25,8 +25,6 @@ import { cn, showApiErrors } from '@/utils'
 
 import { PostLikesModal } from './PostLikesModal'
 
-const { Text } = Typography
-
 type Props = {
   postId: number
   likesCount: number
@@ -103,12 +101,12 @@ export const PostLikes = ({ postId, likesCount, isLiked }: Props) => {
             <TooltipContent>{t('seeFullList')}</TooltipContent>
           )}
           <TooltipTrigger asChild>
-            <Text
+            <Typography.Text
               onClick={likesCount > 0 ? onToggleModal : undefined}
               className={cn('text-sm', likesCount > 0 && 'cursor-pointer')}
             >
               {likesCount}
-            </Text>
+            </Typography.Text>
           </TooltipTrigger>
         </Tooltip>
       </div>

@@ -1,8 +1,7 @@
+import { AvatarWithColorInitials } from '@/components/shared/AvatarWithColorInitials'
 import { Avatar, AvatarImage, Skeleton } from '@/components/ui'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
-
-import { AvatarWithColorInitials } from '../AvatarWithColorInitials'
 
 type Props = {
   src?: string | null

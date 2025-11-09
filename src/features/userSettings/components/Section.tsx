@@ -6,8 +6,6 @@ import { cn } from '@/utils'
 
 import type { ReactNode } from 'react'
 
-const { Title } = Typography
-
 type Props = {
   title: string
   isPending: boolean
@@ -22,9 +20,9 @@ export const Section = ({ title, isPending, children, className }: Props) => {
     <section
       className={cn('border-foreground/20 rounded-xl border p-4', className)}
     >
-      <Title level={2} className="text-primary text-lg font-bold">
+      <Typography.Title level={2} className="text-primary text-lg font-bold">
         {t(title)}
-      </Title>
+      </Typography.Title>
 
       {children}
 

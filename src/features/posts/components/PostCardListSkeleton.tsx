@@ -1,10 +1,18 @@
+import { cn } from '@/utils'
+
+import type { ComponentProps } from 'react'
+
 type Props = {
   count?: number
-}
+} & ComponentProps<'ul'>
 
-export const PostCardListSkeleton = ({ count = 4 }: Props) => {
+export const PostCardListSkeleton = ({
+  count = 4,
+  className,
+  ...props
+}: Props) => {
   return (
-    <ul className="flex flex-col gap-8">
+    <ul className={cn('flex flex-col gap-8', className)} {...props}>
       {Array.from({ length: count }).map((_, idx) => (
         <li key={idx}>
           <div className="flex animate-pulse flex-col gap-6 rounded-2xl bg-white p-4 shadow-sm dark:bg-neutral-800">

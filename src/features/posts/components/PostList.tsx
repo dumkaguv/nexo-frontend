@@ -23,8 +23,8 @@ export const PostList = () => {
       dataLength={posts?.length ?? 0}
       next={fetchNextPage}
       hasMore={!!hasNextPage}
-      loader={<PostCardListSkeleton />}
-      scrollThreshold={0.9}
+      loader={<PostCardListSkeleton className="mt-5" />}
+      scrollThreshold={0.6}
     >
       <ul className="flex flex-col gap-8">
         {posts?.map((post) => (

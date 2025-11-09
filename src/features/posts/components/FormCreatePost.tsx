@@ -27,8 +27,6 @@ import { useFormCreatePost } from '@/features/posts/hooks'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
-const { Text } = Typography
-
 export const FormCreatePost = () => {
   const [files, setFiles] = useState<FileList | null>(null)
   const [previews, setPreviews] = useState<string[]>([])
@@ -111,7 +109,9 @@ export const FormCreatePost = () => {
                       className="bg-muted-foreground/7 gap-1 rounded-lg"
                     >
                       <Image className="text-green-500" />
-                      <Text className="text-sm opacity-70">{t('photo')}</Text>
+                      <Typography.Text className="text-sm opacity-70">
+                        {t('photo')}
+                      </Typography.Text>
                     </Button>
                   </TooltipTrigger>
                 </InputUpload>

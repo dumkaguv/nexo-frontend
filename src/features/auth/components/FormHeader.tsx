@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { Typography } from '@/components/shared'
 
-const { Title, Paragraph } = Typography
-
 type Props = {
   titleKey: string
   accountTextKey: string
@@ -22,11 +20,14 @@ export const FormHeader = ({
 
   return (
     <>
-      <Title level={1} className="mb-2 text-center text-4xl font-bold">
+      <Typography.Title
+        level={1}
+        className="mb-2 text-center text-4xl font-bold"
+      >
         {t(titleKey)}
-      </Title>
+      </Typography.Title>
 
-      <Paragraph className="mb-5">
+      <Typography.Paragraph className="mb-5">
         {t(accountTextKey)}{' '}
         <Link
           to={url}
@@ -34,7 +35,7 @@ export const FormHeader = ({
         >
           {t(urlTextKey)}
         </Link>
-      </Paragraph>
+      </Typography.Paragraph>
     </>
   )
 }

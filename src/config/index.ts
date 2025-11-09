@@ -1,4 +1,4 @@
-export * from './AppRouter'
+export { AppRouter } from './AppRouter'
 export * from './axios'
 export * from './constants'
 export * from './i18n'

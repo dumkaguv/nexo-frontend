@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { AuthorizedLayout, NotAuthorizedLayout } from '@/layouts'
+import { AuthorizedLayout } from '@/layouts/Authorized'
+
+import { NotAuthorizedLayout } from '@/layouts/NotAuthorized'
 
 import { paths } from './paths'
 import { RouteLoader } from './RouteLoader'

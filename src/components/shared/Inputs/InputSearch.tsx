@@ -42,9 +42,9 @@ export const InputSearch = ({
   return (
     <div className={cn('relative h-fit', className)}>
       <Input
-        value={value}
+        value={value ?? ''}
         onChange={onChange}
-        className={cn('bg-custom-gray px-8', inputClassName)}
+        className={cn('bg-custom-gray h-10 px-8', inputClassName)}
         placeholder={placeholder ?? t('inputs.inputSearch')}
         {...props}
       />

@@ -39,8 +39,6 @@ import { showApiErrors } from '@/utils'
 
 import { PostCommentsEditForm } from './PostCommentsEditForm'
 
-const { Text } = Typography
-
 type Props = {
   comment: ResponsePostCommentDto
   postId: number
@@ -143,7 +141,9 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Text className="text-sm">{comment.content}</Text>
+          <Typography.Text className="text-sm">
+            {comment.content}
+          </Typography.Text>
         )}
       </Card>
     </div>

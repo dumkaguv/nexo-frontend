@@ -1,4 +1,4 @@
-import * as Person from '@/components/shared/Person'
+import { PersonAvatar } from '@/components/shared/Person/PersonAvatar'
 import { Avatar } from '@/components/ui'
 import {
   cn,
@@ -51,7 +51,7 @@ export const AvatarWithColorInitials = ({
   const textColor = getTextColorForBackground(bgColor)
 
   if (src) {
-    return <Person.Avatar src={src} className="size-10" />
+    return <PersonAvatar src={src} className="size-10" />
   }
 
   return (

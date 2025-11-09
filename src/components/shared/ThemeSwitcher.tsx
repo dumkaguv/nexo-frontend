@@ -18,8 +18,6 @@ import { Typography } from './Typography'
 
 import type { ReactNode } from 'react'
 
-const { Text } = Typography
-
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useThemeStore()
 
@@ -34,8 +32,10 @@ export const ThemeSwitcher = () => {
   ) => (
     <DropdownMenuItem onClick={() => onThemeChange(value)}>
       {icon}
-      <Text className="text-sm">{label}</Text>
-      <Text className="ml-auto">{theme === value && <Check size={16} />}</Text>
+      <Typography.Text className="text-sm">{label}</Typography.Text>
+      <Typography.Text className="ml-auto">
+        {theme === value && <Check size={16} />}
+      </Typography.Text>
     </DropdownMenuItem>
   )
 
@@ -47,7 +47,9 @@ export const ThemeSwitcher = () => {
             <Button variant="link" size="icon" className="hover:bg-primary/25">
               <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-              <Text className="sr-only">{t('theme.toggleTheme')}</Text>
+              <Typography.Text className="sr-only">
+                {t('theme.toggleTheme')}
+              </Typography.Text>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>

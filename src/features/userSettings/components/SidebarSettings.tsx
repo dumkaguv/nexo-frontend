@@ -7,26 +7,24 @@ import { Sidebar } from '@/components/ui'
 import { paths } from '@/config'
 import { cn } from '@/utils'
 
-const { Title } = Typography
-
 export const SidebarSettings = () => {
   const { t } = useTranslation()
 
   const settings = [
     {
       label: (
-        <Title level={2} className="text-sm">
+        <Typography.Title level={2} className="text-sm">
           {t('settings')}
-        </Title>
+        </Typography.Title>
       ),
       icon: UserPen,
       href: paths.settings.account
     },
     {
       label: (
-        <Title level={2} className="text-sm">
+        <Typography.Title level={2} className="text-sm">
           {t('closeAccount')}
-        </Title>
+        </Typography.Title>
       ),
       icon: Trash2,
       href: paths.settings.delete

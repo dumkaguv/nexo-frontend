@@ -10,8 +10,6 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 
-const { Text } = Typography
-
 type Props = {
   commentsCount: number
   onClick: () => void
@@ -36,7 +34,9 @@ export const PostComments = ({ commentsCount, onClick }: Props) => {
             >
               <MessageCircle />
             </Button>
-            <Text className="text-sm">{commentsCount}</Text>
+            <Typography.Text className="text-sm">
+              {commentsCount}
+            </Typography.Text>
           </div>
         </TooltipTrigger>
       </Tooltip>

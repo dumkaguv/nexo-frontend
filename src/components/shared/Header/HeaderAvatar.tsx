@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { authControllerLogoutMutation } from '@/api'
-import * as PersonInfo from '@/components/shared/Person'
+import { PersonAvatar } from '@/components/shared/Person/PersonAvatar'
 import {
   Button,
   DropdownMenu,
@@ -69,7 +69,7 @@ export const HeaderAvatar = () => {
         <TooltipContent>{t('menu')}</TooltipContent>
         <TooltipTrigger asChild>
           <DropdownMenuTrigger>
-            <PersonInfo.Avatar size={40} className="size-10 cursor-pointer" />
+            <PersonAvatar size={36} className="size-9 cursor-pointer" />
           </DropdownMenuTrigger>
         </TooltipTrigger>
       </Tooltip>
