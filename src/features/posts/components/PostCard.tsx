@@ -13,6 +13,7 @@ import { paths } from '@/config'
 
 import { cn } from '@/utils'
 
+import { FormCreatePost } from './'
 import { PostComments, PostCommentsSection } from './PostComments'
 import { PostLikes } from './PostLikes'
 import { PostMoreActions } from './PostMoreActions'
@@ -25,11 +26,25 @@ type Props = {
 
 export const PostCard = ({ post }: Props) => {
   const [isOpenCommentSection, setIsOpenCommentSection] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   const onToggleCommentSection = () => setIsOpenCommentSection((prev) => !prev)
+  const onEdit = () => setIsEditing(true)
+  const onCancelEdit = () => setIsEditing(false)
 
-  const previewUrls = post.files?.map(({ file: { url } }) => url) ?? []
+  const previewUrls = post.files?.map(({ file }) => file?.url) ?? []
   const totalFiles = previewUrls.length
+
+  if (isEditing) {
+    return (
+      <FormCreatePost
+        post={post}
+        isEditing={isEditing}
+        onCancelEdit={onCancelEdit}
+        onSuccessCallback={onCancelEdit}
+      />
+    )
+  }
 
   return (
     <Card className="flex flex-col gap-6">
@@ -47,7 +62,7 @@ export const PostCard = ({ post }: Props) => {
           </div>
         </div>
 
-        <PostMoreActions post={post} />
+        <PostMoreActions post={post} onButtonEdit={onEdit} />
       </div>
 
       <div className="grid gap-4">
@@ -56,14 +71,12 @@ export const PostCard = ({ post }: Props) => {
           <ImagePreview
             srcs={previewUrls}
             maxImages={totalFiles < 3 ? totalFiles + 1 : 3}
-            className="size-full"
+            className="size-full max-h-[320px]"
             containerClassName={cn(
               'grid gap-3',
               totalFiles === 1 && 'grid-cols-1',
               totalFiles === 2 && 'grid-cols-2',
-              totalFiles === 3 && 'grid-cols-3',
-              totalFiles === 4 && 'grid-cols-2',
-              totalFiles >= 5 && 'grid-cols-3'
+              totalFiles >= 3 && 'grid-cols-3'
             )}
           />
         </div>

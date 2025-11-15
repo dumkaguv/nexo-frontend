@@ -38,6 +38,7 @@ type Props = (
   containerClassName?: string
   maxImages?: number
   showDeleteIcon?: boolean
+  isPending?: boolean
   onDeleteImage?: (index: number) => void
 }
 
@@ -51,6 +52,7 @@ export const ImagePreview = ({
   maxImages = 10000000,
   showDeleteIcon,
   onDeleteImage: onDeleteImageCb,
+  isPending,
   ...props
 }: ImagePreviewProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -102,6 +104,7 @@ export const ImagePreview = ({
             size="icon"
             variant="secondary"
             onClick={() => onDeleteImage(index)}
+            disabled={isPending}
             className="absolute -top-2 -right-2 size-6 rounded-full"
           >
             <X className="size-3" />

@@ -1,4 +1,4 @@
-import { Image } from 'lucide-react'
+import { Eye, Image, X } from 'lucide-react'
 
 import { type KeyboardEvent, useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
@@ -27,16 +27,39 @@ import { useFormCreatePost } from '@/features/posts/hooks'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
-export const FormCreatePost = () => {
+import { PostPreview } from './PostPreview'
+
+import type { ResponsePostDto } from '@/api'
+
+type Props = {
+  post?: ResponsePostDto
+  isEditing?: boolean
+  onCancelEdit?: () => void
+  onSuccessCallback?: () => void
+}
+
+export const FormCreatePost = ({
+  post,
+  isEditing,
+  onCancelEdit,
+  onSuccessCallback
+}: Props) => {
   const [files, setFiles] = useState<File[]>()
-  const [previews, setPreviews] = useState<string[]>([])
+  const [previews, setPreviews] = useState<string[]>(
+    post?.files?.map(({ file }) => file?.url) ?? []
+  )
+  const [isPreview, setIsPreview] = useState(false)
 
   const { user } = useAuthStore()
   const { control, onSubmit, errors, isPending } = useFormCreatePost({
-    files: Array.from(files ?? []),
+    post,
+    files,
+    previews,
+    content: post?.content,
     onSuccessCallback: () => {
       setFiles(undefined)
       setPreviews([])
+      onSuccessCallback?.()
     }
   })
 
@@ -48,12 +71,12 @@ export const FormCreatePost = () => {
     }
 
     const urls = Object.values(files).map((file) => URL.createObjectURL(file))
-    setPreviews(urls)
+    setPreviews([...(post?.files?.map(({ file }) => file?.url) ?? []), ...urls])
 
     return () => {
       urls.forEach((url) => URL.revokeObjectURL(url))
     }
-  }, [files])
+  }, [files, post?.files])
 
   const onChange = (files: File[]) => setFiles(files)
 
@@ -67,6 +90,18 @@ export const FormCreatePost = () => {
   const onDeleteImage = (index: number) => {
     setPreviews((prev) => prev.filter((_, i) => i !== index))
     setFiles((prev) => prev?.filter((_, i) => i !== index))
+  }
+
+  const onTogglePreview = () => setIsPreview((prev) => !prev)
+
+  if (isPreview) {
+    return (
+      <PostPreview
+        content={control._formValues.content}
+        previews={previews}
+        onBack={onTogglePreview}
+      />
+    )
   }
 
   return (
@@ -95,6 +130,7 @@ export const FormCreatePost = () => {
             className="size-full"
             maxImages={3}
             showDeleteIcon
+            isPending={isPending}
             onDeleteImage={onDeleteImage}
             containerClassName={cn(
               'grid grid-cols-2 gap-4 mt-5 w-[calc(100%-48px-16px)] self-end',
@@ -109,6 +145,7 @@ export const FormCreatePost = () => {
                   <TooltipTrigger asChild>
                     <Button
                       variant="ghost"
+                      disabled={isPending}
                       className="bg-muted-foreground/7 gap-1 rounded-lg"
                     >
                       <Image className="text-green-500" />
@@ -122,11 +159,36 @@ export const FormCreatePost = () => {
                   {t('attach')} {t('photo').toLowerCase()}
                 </TooltipContent>
               </Tooltip>
+              <Button
+                variant="ghost"
+                disabled={isPending}
+                onClick={onTogglePreview}
+                className="bg-muted-foreground/7 gap-1 rounded-lg"
+              >
+                <Eye className="text-blue-400" />
+                <Typography.Text className="text-sm opacity-70">
+                  {t('preview')}
+                </Typography.Text>
+              </Button>
             </div>
 
-            <Button type="submit" loading={isPending}>
-              {t('publish')} {t('post').toLowerCase()}
-            </Button>
+            <div className="flex items-center gap-4">
+              {isEditing && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  disabled={isPending}
+                  onClick={onCancelEdit}
+                  className="bg-destructive/90 justify-start"
+                >
+                  <X /> {t('cancel')}
+                </Button>
+              )}
+              <Button type="submit" loading={isPending}>
+                {t(isEditing ? 'saveChanges' : 'publish')}{' '}
+                {!isEditing && t('post').toLowerCase()}
+              </Button>
+            </div>
           </div>
         </div>
       </Card>

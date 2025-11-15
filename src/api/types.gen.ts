@@ -168,6 +168,7 @@ export type CreatePostCommentDto = {
 
 export type UpdatePostDto = {
   content?: string
+  files?: Array<number>
 }
 
 export type ResponseUploadDto = {

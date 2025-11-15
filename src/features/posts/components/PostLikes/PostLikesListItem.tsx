@@ -69,8 +69,6 @@ export const PostLikesListItem = ({ like, postId }: Props) => {
   const isMe = like.user.id === user?.id
   const isLoadingButtonState = isPendingFollow || isPendingUnfollow
 
-  console.log(like)
-
   return (
     <div className="flex items-center justify-between gap-5">
       <Link to={paths.user.byId(like.user.id)}>

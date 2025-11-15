@@ -25,9 +25,10 @@ import { showApiErrors } from '@/utils'
 
 type Props = {
   post: ResponsePostDto
+  onButtonEdit?: () => void
 }
 
-export const PostMoreActions = ({ post }: Props) => {
+export const PostMoreActions = ({ post, onButtonEdit }: Props) => {
   const { user } = useAuthStore()
 
   const { t } = useTranslation()
@@ -56,7 +57,12 @@ export const PostMoreActions = ({ post }: Props) => {
 
       <PopoverContent className="w-fit px-1 py-2 text-sm">
         <div className="flex flex-col gap-2">
-          <Button variant="ghost" size="sm" className="w-full justify-start">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onButtonEdit}
+            className="w-full justify-start"
+          >
             <Edit /> {t('edit')}
           </Button>
 

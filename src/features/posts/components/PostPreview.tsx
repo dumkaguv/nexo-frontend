@@ -1,0 +1,61 @@
+import { useTranslation } from 'react-i18next'
+
+import {
+  AvatarWithColorInitials,
+  Card,
+  DayLabel,
+  ImagePreview
+} from '@/components/shared'
+import * as Person from '@/components/shared/Person'
+import { Button } from '@/components/ui'
+import { useAuthStore } from '@/stores'
+import { cn } from '@/utils'
+
+type Props = {
+  content: string
+  previews: string[]
+  onBack: () => void
+}
+
+export const PostPreview = ({ content, previews, onBack }: Props) => {
+  const { user } = useAuthStore()
+  const { t } = useTranslation()
+
+  const totalFiles = previews.length
+
+  return (
+    <Card className="flex flex-col gap-6">
+      <div className="flex items-center justify-between gap-8">
+        <div className="flex items-center gap-3">
+          <AvatarWithColorInitials user={user} />
+          <div className="flex items-center gap-2">
+            <Person.Name className="text-base" />
+
+            <DayLabel date={new Date(Date.now())} />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-4">
+        <div className="flex flex-col gap-3">
+          {content}
+          <ImagePreview
+            srcs={previews}
+            maxImages={totalFiles < 3 ? totalFiles + 1 : 3}
+            className="size-full max-h-[320px]"
+            containerClassName={cn(
+              'grid gap-3',
+              totalFiles === 1 && 'grid-cols-1',
+              totalFiles === 2 && 'grid-cols-2',
+              totalFiles >= 3 && 'grid-cols-3'
+            )}
+          />
+        </div>
+      </div>
+
+      <Button onClick={onBack} className="w-fit">
+        {t('back')}
+      </Button>
+    </Card>
+  )
+}
