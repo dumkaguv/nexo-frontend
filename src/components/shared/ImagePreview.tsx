@@ -1,5 +1,7 @@
+import { X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
 import Lightbox from 'yet-another-react-lightbox'
 import Counter from 'yet-another-react-lightbox/plugins/counter'
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen'
@@ -11,7 +13,12 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css'
 import 'yet-another-react-lightbox/plugins/counter.css'
 import 'yet-another-react-lightbox/styles.css'
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui'
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui'
 import { cn } from '@/utils'
 
 import { Image, Typography } from './'
@@ -30,6 +37,8 @@ type Props = (
 ) & {
   containerClassName?: string
   maxImages?: number
+  showDeleteIcon?: boolean
+  onDeleteImage?: (index: number) => void
 }
 
 type ImagePreviewProps = Props & ComponentProps<'img'>
@@ -40,6 +49,8 @@ export const ImagePreview = ({
   className,
   containerClassName,
   maxImages = 10000000,
+  showDeleteIcon,
+  onDeleteImage: onDeleteImageCb,
   ...props
 }: ImagePreviewProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -62,22 +73,41 @@ export const ImagePreview = ({
     setIsOpen(true)
   }
 
+  const onDeleteImage = (index: number) => {
+    if (onDeleteImageCb) {
+      onDeleteImageCb(index)
+    }
+  }
+
   const renderSlide = (index: number, src: string) => (
     <Tooltip key={index}>
       <TooltipContent>{t('preview')}</TooltipContent>
-      <TooltipTrigger asChild>
-        <Image
-          src={src}
-          width={120}
-          height={100}
-          onClick={() => onImageClick(index)}
-          className={cn(
-            'h-[100px] w-[120px] cursor-pointer rounded-sm object-cover',
-            className
-          )}
-          {...props}
-        />
-      </TooltipTrigger>
+      <div className="relative">
+        <TooltipTrigger asChild>
+          <Image
+            src={src}
+            width={120}
+            height={100}
+            onClick={() => onImageClick(index)}
+            className={cn(
+              'h-[100px] w-[120px] cursor-pointer rounded-sm object-cover',
+              className
+            )}
+            {...props}
+          />
+        </TooltipTrigger>
+
+        {showDeleteIcon && (
+          <Button
+            size="icon"
+            variant="secondary"
+            onClick={() => onDeleteImage(index)}
+            className="absolute -top-2 -right-2 size-6 rounded-full"
+          >
+            <X className="size-3" />
+          </Button>
+        )}
+      </div>
     </Tooltip>
   )
 

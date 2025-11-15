@@ -22,7 +22,7 @@ export const FormUploadAvatar = () => {
   } = useUploadAvatar()
 
   const onChange = (
-    files: FileList | null,
+    files: File[] | null,
     field: ControllerRenderProps<CreateAvatarSchema>
   ) => {
     field.onChange(files)

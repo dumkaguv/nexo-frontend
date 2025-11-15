@@ -13,7 +13,7 @@ type Props = {
   accept?: string
   multiple?: boolean
   className?: string
-  onChange?: (files: FileList | null) => void
+  onChange?: (files: File[]) => void
 } & Omit<ComponentProps<'input'>, 'onChange'> &
   PropsWithChildren
 
@@ -32,7 +32,11 @@ export const InputUpload = ({
   const onButtonClick = () => inputRef.current?.click()
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
+    if (!e.target.files) {
+      return
+    }
+
+    const files = Array.from(e.target.files)
     onChange?.(files)
   }
 

@@ -89,7 +89,7 @@ export const useUploadAvatar = () => {
     }
   }, [previewUrl])
 
-  const onFileChange = (files: FileList | null) => {
+  const onFileChange = (files: File[] | null) => {
     if (files && files.length > 0) {
       const file = files[0]
 

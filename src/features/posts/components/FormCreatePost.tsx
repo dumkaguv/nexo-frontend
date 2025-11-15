@@ -28,14 +28,14 @@ import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
 export const FormCreatePost = () => {
-  const [files, setFiles] = useState<FileList | null>(null)
+  const [files, setFiles] = useState<File[]>()
   const [previews, setPreviews] = useState<string[]>([])
 
   const { user } = useAuthStore()
   const { control, onSubmit, errors, isPending } = useFormCreatePost({
     files: Array.from(files ?? []),
     onSuccessCallback: () => {
-      setFiles(null)
+      setFiles(undefined)
       setPreviews([])
     }
   })
@@ -50,22 +50,23 @@ export const FormCreatePost = () => {
     const urls = Object.values(files).map((file) => URL.createObjectURL(file))
     setPreviews(urls)
 
-    return () => urls.forEach((url) => URL.revokeObjectURL(url))
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url))
+    }
   }, [files])
 
-  const onChange = (files: FileList | null) => {
-    if (files?.length === 0) {
-      return
-    }
-
-    setFiles(files)
-  }
+  const onChange = (files: File[]) => setFiles(files)
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       onSubmit()
     }
+  }
+
+  const onDeleteImage = (index: number) => {
+    setPreviews((prev) => prev.filter((_, i) => i !== index))
+    setFiles((prev) => prev?.filter((_, i) => i !== index))
   }
 
   return (
@@ -93,6 +94,8 @@ export const FormCreatePost = () => {
             srcs={previews}
             className="size-full"
             maxImages={3}
+            showDeleteIcon
+            onDeleteImage={onDeleteImage}
             containerClassName={cn(
               'grid grid-cols-2 gap-4 mt-5 w-[calc(100%-48px-16px)] self-end',
               previews.length >= 3 && 'grid-cols-3'
