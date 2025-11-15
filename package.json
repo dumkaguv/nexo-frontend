@@ -93,8 +93,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\"",
-      "prettier --write 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore"
+      "prettier --write",
+      "eslint --fix"
     ]
   }
 }
