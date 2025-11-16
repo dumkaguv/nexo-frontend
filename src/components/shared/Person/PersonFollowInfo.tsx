@@ -6,10 +6,11 @@ import { Separator, Skeleton } from '@/components/ui'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
-export const PersonFollowInfo = ({
-  className,
-  ...rest
-}: ComponentProps<'div'>) => {
+type Props = {
+  isVertical?: boolean
+} & ComponentProps<'div'>
+
+export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
   const { user, isPendingUser } = useAuthStore()
 
   const [isClickOnFollowers, setIsClickOnFollowers] = useState(false)
@@ -22,10 +23,12 @@ export const PersonFollowInfo = ({
   const onClickOnFollowing = () => setIsClickOnFollowers(false)
 
   const renderFollowInfo = (translationKey: string, count?: number) => (
-    <div className="flex flex-col items-center">
+    <div className={cn('flex items-center', isVertical && 'flex-col')}>
       {isPendingUser ? (
         <>
-          <Skeleton className="h-5 w-8 rounded" />
+          <Skeleton
+            className={cn('h-5 w-8 rounded', !isVertical && 'mr-1.5')}
+          />
 
           <Typography.Paragraph className="text-muted-foreground">
             {t(translationKey)}
@@ -34,7 +37,10 @@ export const PersonFollowInfo = ({
       ) : (
         <div
           onClick={onToggleModal}
-          className="hover:text-primary/90 text-center duration-200 hover:cursor-pointer"
+          className={cn(
+            'hover:text-primary/90 text-center duration-200 hover:cursor-pointer',
+            !isVertical && 'flex gap-1.5'
+          )}
         >
           <Typography.Text className="font-bold">{count ?? 0}</Typography.Text>
 
@@ -48,17 +54,29 @@ export const PersonFollowInfo = ({
 
   return (
     <>
-      <div className={cn('flex h-12 gap-4', className)} {...rest}>
-        <div onClick={onClickOnFollowers}>
-          {renderFollowInfo('followers', user?.followersCount)}
-        </div>
+      {isVertical ? (
+        <div className={cn('flex h-12 gap-4', className)} {...rest}>
+          <div onClick={onClickOnFollowers}>
+            {renderFollowInfo('followers', user?.followersCount)}
+          </div>
 
-        <Separator className="size-10" orientation="vertical" />
+          <Separator className="size-10" orientation="vertical" />
 
-        <div onClick={onClickOnFollowing}>
-          {renderFollowInfo('following', user?.followingCount)}
+          <div onClick={onClickOnFollowing}>
+            {renderFollowInfo('following', user?.followingCount)}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={cn('flex gap-3', className)} {...rest}>
+          <div onClick={onClickOnFollowers}>
+            {renderFollowInfo('followers', user?.followersCount)}
+          </div>
+
+          <div onClick={onClickOnFollowing}>
+            {renderFollowInfo('following', user?.followingCount)}
+          </div>
+        </div>
+      )}
 
       <SubscriptionModal
         onOpenChange={onToggleModal}

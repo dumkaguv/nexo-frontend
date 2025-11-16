@@ -31,7 +31,6 @@ export const AvatarWithColorInitials = ({
   }
 
   const profile = user?.profile
-
   if (!profile) {
     return (
       <Avatar
@@ -51,7 +50,7 @@ export const AvatarWithColorInitials = ({
   const textColor = getTextColorForBackground(bgColor)
 
   if (src) {
-    return <PersonAvatar src={src} className="size-10" />
+    return <PersonAvatar src={src} className={cn('size-10', className)} />
   }
 
   return (

@@ -2,14 +2,22 @@ import { cn } from '@/utils'
 
 import type { ComponentProps } from 'react'
 
-const baseClass = 'leading-7 text-base text-muted-foreground tracking-tight'
+const baseClass = 'leading-7 text-base  tracking-tight'
+
+type Props = {
+  isMuted?: boolean
+} & ComponentProps<'p'>
 
 export const Paragraph = ({
   children,
   className,
+  isMuted = true,
   ...props
-}: ComponentProps<'p'>) => (
-  <p className={cn(baseClass, className)} {...props}>
+}: Props) => (
+  <p
+    className={cn(baseClass, isMuted && 'text-muted-foreground', className)}
+    {...props}
+  >
     {children}
   </p>
 )

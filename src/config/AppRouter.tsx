@@ -32,6 +32,14 @@ const router = createBrowserRouter([
 
           return { Component: SettingsPage }
         }
+      },
+      {
+        path: paths.user.byId(':id'),
+        lazy: async () => {
+          const { UserPage } = await import('@/features/user/pages')
+
+          return { Component: UserPage }
+        }
       }
     ]
   },
