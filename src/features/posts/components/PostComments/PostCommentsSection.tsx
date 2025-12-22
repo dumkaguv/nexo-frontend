@@ -13,10 +13,7 @@ import {
   postControllerFindAllCommentsInfiniteQueryKey,
   postControllerFindAllInfiniteQueryKey
 } from '@/api'
-import {
-  AvatarWithColorInitials,
-  TextAreaAutoHeight
-} from '@/components/shared'
+import { AvatarWithColorInitials, TipTapEditor } from '@/components/shared'
 import {
   Button,
   Field,
@@ -34,8 +31,6 @@ import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
 
 import { PostCommentsList } from './PostCommentsList'
-
-import type { KeyboardEvent } from 'react'
 
 type Props = {
   postId: number
@@ -84,13 +79,6 @@ export const PostCommentsSection = ({ postId }: Props) => {
     reset()
   })
 
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      onSubmit()
-    }
-  }
-
   return (
     <>
       <div className="flex gap-2">
@@ -103,10 +91,10 @@ export const PostCommentsSection = ({ postId }: Props) => {
               control={control}
               render={({ field }) => (
                 <div className="relative">
-                  <TextAreaAutoHeight
+                  <TipTapEditor
                     placeholder={t('addComment')}
-                    onKeyDown={onKeyDown}
-                    className="h-12 resize-none overflow-y-hidden pr-15"
+                    toolbarClassName="border-b-0"
+                    className="h-12 resize-none overflow-y-hidden border-t-0 pr-15"
                     {...field}
                   />
 

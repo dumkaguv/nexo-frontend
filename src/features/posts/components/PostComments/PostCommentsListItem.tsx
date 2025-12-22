@@ -19,7 +19,7 @@ import {
   Card,
   DayLabel,
   ModalConfirm,
-  Typography
+  TipTapEditorPreview
 } from '@/components/shared'
 
 import * as Person from '@/components/shared/Person'
@@ -141,9 +141,7 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
             setIsEditing={setIsEditing}
           />
         ) : (
-          <Typography.Text className="text-sm">
-            {comment.content}
-          </Typography.Text>
+          <TipTapEditorPreview content={comment.content} className="text-sm" />
         )}
       </Card>
     </div>

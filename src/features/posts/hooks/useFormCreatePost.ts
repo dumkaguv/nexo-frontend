@@ -46,14 +46,26 @@ export const useFormCreatePost = ({
     formState: { errors }
   } = useForm<CreatePostSchema>({
     resolver: zodResolver(schema),
-    defaultValues: { content: content ?? '' }
+    defaultValues: { content },
+    mode: 'onSubmit'
   })
 
   const mutationConfig = {
     onSuccess: async () => {
       await invalidateQueries([postControllerFindAllInfiniteQueryKey()])
       toast.success(t('success'))
-      reset()
+      requestAnimationFrame(() =>
+        reset(
+          { content: '<p></p>' },
+          {
+            keepErrors: false,
+            keepDirty: false,
+            keepTouched: false,
+            keepIsSubmitted: false,
+            keepDefaultValues: false
+          }
+        )
+      )
       onSuccessCallback?.()
     },
     onError: (e: unknown) => showApiErrors(e)

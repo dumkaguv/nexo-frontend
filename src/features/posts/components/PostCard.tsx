@@ -5,7 +5,8 @@ import {
   AvatarWithColorInitials,
   Card,
   DayLabel,
-  ImagePreview
+  ImagePreview,
+  TipTapEditorPreview
 } from '@/components/shared'
 import * as User from '@/components/shared/Person'
 
@@ -67,7 +68,8 @@ export const PostCard = ({ post }: Props) => {
 
       <div className="grid gap-4">
         <div className="flex flex-col gap-3">
-          {post.content}
+          <TipTapEditorPreview content={post.content} />
+
           <ImagePreview
             srcs={previewUrls}
             maxImages={totalFiles < 3 ? totalFiles + 1 : 3}

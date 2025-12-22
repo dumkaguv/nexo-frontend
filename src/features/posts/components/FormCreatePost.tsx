@@ -1,6 +1,6 @@
 import { Eye, Image, X } from 'lucide-react'
 
-import { type KeyboardEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ import {
   Card,
   ImagePreview,
   InputUpload,
-  TextAreaAutoHeight,
+  TipTapEditor,
   Typography
 } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
@@ -80,13 +80,6 @@ export const FormCreatePost = ({
 
   const onChange = (files: File[]) => setFiles(files)
 
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      onSubmit()
-    }
-  }
-
   const onDeleteImage = (index: number) => {
     setPreviews((prev) => prev.filter((_, i) => i !== index))
     setFiles((prev) => prev?.filter((_, i) => i !== index))
@@ -118,7 +111,10 @@ export const FormCreatePost = ({
                 name="content"
                 control={control}
                 render={({ field }) => (
-                  <TextAreaAutoHeight onKeyDown={onKeyDown} {...field} />
+                  <TipTapEditor
+                    placeholder={t('shareYourThoughts')}
+                    {...field}
+                  />
                 )}
               />
               <FieldError>{errors.content?.message}</FieldError>

@@ -4,7 +4,8 @@ import {
   AvatarWithColorInitials,
   Card,
   DayLabel,
-  ImagePreview
+  ImagePreview,
+  TipTapEditorPreview
 } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
 import { Button } from '@/components/ui'
@@ -38,7 +39,8 @@ export const PostPreview = ({ content, previews, onBack }: Props) => {
 
       <div className="grid gap-4">
         <div className="flex flex-col gap-3">
-          {content}
+          <TipTapEditorPreview content={content} />
+
           <ImagePreview
             srcs={previews}
             maxImages={totalFiles < 3 ? totalFiles + 1 : 3}

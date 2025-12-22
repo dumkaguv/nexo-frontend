@@ -1,3 +1,5 @@
+import { emptyHtmlRegex } from '@/config'
+
 export const getInitials = (name?: string) => {
   const parts = name?.trim().split(' ').filter(Boolean)
 
@@ -11,3 +13,5 @@ export const getInitials = (name?: string) => {
 
   return (parts[0][0] + parts[1][0]).toUpperCase()
 }
+
+export const isEmptyHTMLEditor = (html: string) => emptyHtmlRegex.test(html)
