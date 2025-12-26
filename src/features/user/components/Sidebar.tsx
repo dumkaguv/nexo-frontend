@@ -1,7 +1,7 @@
 import { Calendar, CalendarCheck, Mail } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import { DayLabel, Typography } from '@/components/shared'
+import { DayLabel, TipTapEditorPreview, Typography } from '@/components/shared'
 
 import type { ResponseUserDto } from '@/api'
 
@@ -17,9 +17,7 @@ export const Sidebar = ({ userData }: Props) => {
       <Typography.Title level={3}>{t('about')}</Typography.Title>
 
       {userData?.profile.biography && (
-        <Typography.Paragraph isMuted={false}>
-          {userData?.profile.biography}
-        </Typography.Paragraph>
+        <TipTapEditorPreview content={userData.profile.biography} />
       )}
 
       {userData?.email && (

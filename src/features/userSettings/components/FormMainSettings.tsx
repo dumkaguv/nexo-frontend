@@ -1,8 +1,8 @@
 import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { DatePicker } from '@/components/shared'
-import { Field, FieldError, FieldLabel, Input, Textarea } from '@/components/ui'
+import { DatePicker, TipTapEditor } from '@/components/shared'
+import { Field, FieldError, FieldLabel, Input } from '@/components/ui'
 import { useMainAccountSettingsForm } from '@/features/userSettings/hooks'
 
 import { Section } from './Section'
@@ -50,10 +50,10 @@ export const FormMainSettings = () => {
 
         <Field className="flex w-full flex-col gap-1">
           <FieldLabel htmlFor="biography">{t('bio')}</FieldLabel>
-          <Textarea
-            id="biography"
-            {...register('biography')}
-            placeholder={t('inputs.bioPlaceholder')}
+          <Controller
+            name="biography"
+            control={control}
+            render={({ field }) => <TipTapEditor {...field} />}
           />
           <FieldError>{errors.biography?.message}</FieldError>
         </Field>

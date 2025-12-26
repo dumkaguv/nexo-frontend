@@ -13,7 +13,7 @@ import {
   postControllerFindAllInfiniteQueryKey,
   postControllerUpdateCommentMutation
 } from '@/api'
-import { TextAreaAutoHeight } from '@/components/shared'
+import { TipTapEditor } from '@/components/shared'
 import { Button, Field, FieldError } from '@/components/ui'
 
 import { createCommentSchema } from '@/features/posts/zodSchemas'
@@ -76,7 +76,7 @@ export const PostCommentsEditForm = ({
           <Controller
             control={control}
             name="content"
-            render={({ field }) => <TextAreaAutoHeight {...field} />}
+            render={({ field }) => <TipTapEditor {...field} />}
           />
 
           <FieldError>{errors.content?.message}</FieldError>
@@ -86,7 +86,7 @@ export const PostCommentsEditForm = ({
           <Button
             variant="destructive"
             onClick={onCancelEdit}
-            loading={isPending}
+            disabled={isPending}
           >
             <X />
             {t('cancel')}

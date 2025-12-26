@@ -179,8 +179,6 @@ svg * {
     margin-top: 0;
   }
 
-  padding: 8px;
-
   ul,
   ol {
     padding: 0 1rem;
@@ -273,5 +271,6 @@ svg * {
 }
 
 .ProseMirror {
+  padding: 8px;
   min-height: 60px;
 }
