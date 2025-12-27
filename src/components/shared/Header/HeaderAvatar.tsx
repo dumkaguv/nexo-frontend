@@ -17,9 +17,10 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui'
-import { LocalStorage, paths } from '@/config'
+import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
+import { clearAccessToken } from '@/utils/clearAccessToken'
 
 export const HeaderAvatar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,7 +33,7 @@ export const HeaderAvatar = () => {
   const { mutateAsync: logout, isPending } = useMutation({
     ...authControllerLogoutMutation(),
     onSuccess: () => {
-      localStorage.removeItem(LocalStorage.token)
+      clearAccessToken()
       setUser(undefined)
       setIsOpen(false)
       queryClient.cancelQueries()

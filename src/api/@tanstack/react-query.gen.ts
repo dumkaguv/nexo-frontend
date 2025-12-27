@@ -8,6 +8,7 @@ import {
   queryOptions
 } from '@tanstack/react-query'
 
+
 import { client } from '../client.gen'
 import {
   type Options,
@@ -15,6 +16,10 @@ import {
   authControllerLogout,
   authControllerRefresh,
   authControllerRegister,
+  messageControllerCreate,
+  messageControllerFindAll,
+  messageControllerFindOne,
+  messageControllerUpdate,
   postControllerCreate,
   postControllerCreateComment,
   postControllerCreateLike,
@@ -53,6 +58,13 @@ import type {
   AuthControllerRefreshResponse,
   AuthControllerRegisterData,
   AuthControllerRegisterResponse,
+  MessageControllerCreateData,
+  MessageControllerCreateResponse,
+  MessageControllerFindAllData,
+  MessageControllerFindAllResponse,
+  MessageControllerFindOneData,
+  MessageControllerUpdateData,
+  MessageControllerUpdateResponse,
   PostControllerCreateCommentData,
   PostControllerCreateCommentResponse,
   PostControllerCreateData,
@@ -1012,6 +1024,151 @@ export const uploadControllerDeleteMutation = (
   > = {
     mutationFn: async (fnOptions) => {
       const { data } = await uploadControllerDelete({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const messageControllerFindAllQueryKey = (
+  options?: Options<MessageControllerFindAllData>
+) => createQueryKey('messageControllerFindAll', options)
+
+export const messageControllerFindAllOptions = (
+  options?: Options<MessageControllerFindAllData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await messageControllerFindAll({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: messageControllerFindAllQueryKey(options)
+  })
+}
+
+export const messageControllerFindAllInfiniteQueryKey = (
+  options?: Options<MessageControllerFindAllData>
+): QueryKey<Options<MessageControllerFindAllData>> =>
+  createQueryKey('messageControllerFindAll', options, true)
+
+export const messageControllerFindAllInfiniteOptions = (
+  options?: Options<MessageControllerFindAllData>
+) => {
+  return infiniteQueryOptions<
+    MessageControllerFindAllResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<MessageControllerFindAllResponse>,
+    QueryKey<Options<MessageControllerFindAllData>>,
+    | number
+    | Pick<
+        QueryKey<Options<MessageControllerFindAllData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<MessageControllerFindAllData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await messageControllerFindAll({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+
+        return data
+      },
+      queryKey: messageControllerFindAllInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const messageControllerCreateMutation = (
+  options?: Partial<Options<MessageControllerCreateData>>
+): UseMutationOptions<
+  MessageControllerCreateResponse,
+  AxiosError<DefaultError>,
+  Options<MessageControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MessageControllerCreateResponse,
+    AxiosError<DefaultError>,
+    Options<MessageControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await messageControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+
+      return data
+    }
+  }
+
+  return mutationOptions
+}
+
+export const messageControllerFindOneQueryKey = (
+  options: Options<MessageControllerFindOneData>
+) => createQueryKey('messageControllerFindOne', options)
+
+export const messageControllerFindOneOptions = (
+  options: Options<MessageControllerFindOneData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await messageControllerFindOne({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+
+      return data
+    },
+    queryKey: messageControllerFindOneQueryKey(options)
+  })
+}
+
+export const messageControllerUpdateMutation = (
+  options?: Partial<Options<MessageControllerUpdateData>>
+): UseMutationOptions<
+  MessageControllerUpdateResponse,
+  AxiosError<DefaultError>,
+  Options<MessageControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MessageControllerUpdateResponse,
+    AxiosError<DefaultError>,
+    Options<MessageControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await messageControllerUpdate({
         ...options,
         ...fnOptions,
         throwOnError: true

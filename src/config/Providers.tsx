@@ -5,7 +5,7 @@ import { I18nextProvider } from 'react-i18next'
 import { Toaster } from '@/components/ui'
 import { useThemeStore } from '@/stores'
 
-import { AppRouter, i18n, queryClient } from './'
+import { AppRouter, i18n, queryClient, WebSocketProvider } from './'
 
 export const Providers = () => {
   const { applyTheme } = useThemeStore()
@@ -15,8 +15,10 @@ export const Providers = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <I18nextProvider i18n={i18n}>
-        <AppRouter />
-        <Toaster />
+        <WebSocketProvider>
+          <AppRouter />
+          <Toaster />
+        </WebSocketProvider>
       </I18nextProvider>
     </QueryClientProvider>
   )

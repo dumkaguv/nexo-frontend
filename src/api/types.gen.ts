@@ -182,6 +182,25 @@ export type CreateUploadDto = {
   folder?: string | null
 }
 
+export type ResponseMessageDto = {
+  readonly id: number
+  readonly senderId: number
+  receiverId: number
+  content?: string | null
+  files?: Array<ResponseFileDto> | null
+}
+
+export type CreateMessageDto = {
+  receiverId: number
+  content?: string | null
+  fileIds?: Array<number> | null
+}
+
+export type UpdateMessageDto = {
+  content?: string | null
+  fileIds?: Array<number> | null
+}
+
 export type ResponseSubscriptionDto = {
   readonly id: number
   user: ResponseUserProfileDto
@@ -249,6 +268,12 @@ export type ResponsePostLikeDtoWritable = {
 export type ResponseUploadDtoWritable = {
   secure_url: string
   type: string
+}
+
+export type ResponseMessageDtoWritable = {
+  receiverId: number
+  content?: string | null
+  files?: Array<ResponseFileDtoWritable> | null
 }
 
 export type ResponseSubscriptionDtoWritable = {
@@ -760,6 +785,91 @@ export type UploadControllerDeleteResponses = {
 
 export type UploadControllerDeleteResponse =
   UploadControllerDeleteResponses[keyof UploadControllerDeleteResponses]
+
+export type MessageControllerFindAllData = {
+  body?: never
+  path?: never
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/messages'
+}
+
+export type MessageControllerFindAllResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseMessageDto>
+  }
+}
+
+export type MessageControllerFindAllResponse =
+  MessageControllerFindAllResponses[keyof MessageControllerFindAllResponses]
+
+export type MessageControllerCreateData = {
+  body: CreateMessageDto
+  path?: never
+  query?: never
+  url: '/api/messages'
+}
+
+export type MessageControllerCreateResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseMessageDto
+  }
+}
+
+export type MessageControllerCreateResponse =
+  MessageControllerCreateResponses[keyof MessageControllerCreateResponses]
+
+export type MessageControllerFindOneData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/messages/{id}'
+}
+
+export type MessageControllerFindOneResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseMessageDto
+  }
+}
+
+export type MessageControllerFindOneResponse =
+  MessageControllerFindOneResponses[keyof MessageControllerFindOneResponses]
+
+export type MessageControllerUpdateData = {
+  body: UpdateMessageDto
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/messages/{id}'
+}
+
+export type MessageControllerUpdateResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseMessageDto
+  }
+}
+
+export type MessageControllerUpdateResponse =
+  MessageControllerUpdateResponses[keyof MessageControllerUpdateResponses]
 
 export type SubscriptionControllerFindAllFollowersData = {
   body?: never

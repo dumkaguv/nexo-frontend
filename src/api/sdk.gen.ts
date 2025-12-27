@@ -17,6 +17,14 @@ import type {
   AuthControllerRefreshResponses,
   AuthControllerRegisterData,
   AuthControllerRegisterResponses,
+  MessageControllerCreateData,
+  MessageControllerCreateResponses,
+  MessageControllerFindAllData,
+  MessageControllerFindAllResponses,
+  MessageControllerFindOneData,
+  MessageControllerFindOneResponses,
+  MessageControllerUpdateData,
+  MessageControllerUpdateResponses,
   PostControllerCreateCommentData,
   PostControllerCreateCommentResponses,
   PostControllerCreateData,
@@ -637,6 +645,94 @@ export const uploadControllerDelete = <ThrowOnError extends boolean = false>(
     ],
     url: '/api/upload/{id}',
     ...options
+  })
+}
+
+export const messageControllerFindAll = <ThrowOnError extends boolean = false>(
+  options?: Options<MessageControllerFindAllData, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    MessageControllerFindAllResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/messages',
+    ...options
+  })
+}
+
+export const messageControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<MessageControllerCreateData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    MessageControllerCreateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/messages',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+export const messageControllerFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<MessageControllerFindOneData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    MessageControllerFindOneResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/messages/{id}',
+    ...options
+  })
+}
+
+export const messageControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<MessageControllerUpdateData, ThrowOnError>
+) => {
+  return (options.client ?? client).patch<
+    MessageControllerUpdateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/messages/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
   })
 }
 

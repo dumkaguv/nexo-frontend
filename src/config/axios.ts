@@ -1,12 +1,17 @@
 import axios, { type AxiosInstance } from 'axios'
 
-import { LocalStorage, paths } from '@/config'
+import { paths } from '@/config'
 import { getAccessToken, saveAccessToken } from '@/utils'
+import { clearAccessToken } from '@/utils/clearAccessToken'
 
 import type { ResponseRefreshDto } from '@/api'
 import type { AxiosResponse } from 'axios'
 
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL
+if (!baseURL) {
+  throw new Error('Missing VITE_PUBLIC_API_URL')
+}
+const refreshUrl = `${baseURL}/api/auth/refresh`
 
 type Client = {
   instance: AxiosInstance
@@ -30,14 +35,14 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
 
         try {
           const response = await axios.post(
-            baseURL + '/api/auth/refresh',
+            refreshUrl,
             {},
             { withCredentials: true }
           )
 
           const newAccessToken = response.data?.data.accessToken
           if (!newAccessToken) {
-            localStorage.removeItem(LocalStorage.token)
+            clearAccessToken()
             return (window.location.href = paths.auth.login)
           }
           saveAccessToken(newAccessToken)
