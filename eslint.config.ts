@@ -26,8 +26,31 @@ export default tseslint.config(
       'unused-imports': unusedImports
     },
     rules: {
+      ...reactPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
 
+      'react/display-name': 'off',
+      'react/no-unescaped-entities': 'off',
+      'react/jsx-props-no-spreading': 'off',
+      'react/jsx-filename-extension': [
+        'error',
+        { extensions: ['.jsx', '.tsx'] }
+      ],
+      'react/prop-types': 'off',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-key': 'error',
+      'react/jsx-no-leaked-render': 'error',
+      'react/jsx-no-constructed-context-values': 'error',
+      'react/self-closing-comp': 'error',
+      'react/jsx-boolean-value': ['error', 'never'],
+
+      'no-else-return': 'warn',
+      eqeqeq: 'error',
+      'no-debugger': 'error',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+
+      '@typescript-eslint/array-type': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/no-import-type-side-effects': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
