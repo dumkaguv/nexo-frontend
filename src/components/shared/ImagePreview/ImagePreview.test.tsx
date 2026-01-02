@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { ImagePreview } from '@/components/shared/ImagePreview'
 
 vi.mock('yet-another-react-lightbox', () => ({
-  default: ({ slides }: { slides: Array<{ src: string }> }) => (
+  default: ({ slides }: { slides: { src: string }[] }) => (
     <div data-testid="lightbox" data-count={slides.length} />
   )
 }))

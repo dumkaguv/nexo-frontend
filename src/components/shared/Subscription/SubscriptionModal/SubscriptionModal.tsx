@@ -46,7 +46,7 @@ export const SubscriptionModal = ({
           onValueChange={onChangeTab}
         >
           <DialogHeader className="space-y-4">
-            <DialogTitle hidden={true} />
+            <DialogTitle hidden />
             <div className="flex flex-col gap-3">
               <TabsList className="mt-4 grid w-full grid-cols-2">
                 <TabsTrigger value="followers">

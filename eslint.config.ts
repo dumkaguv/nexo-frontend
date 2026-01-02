@@ -39,12 +39,12 @@ export default tseslint.config(
       'react/prop-types': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/jsx-key': 'error',
-      'react/jsx-no-leaked-render': 'error',
       'react/jsx-no-constructed-context-values': 'error',
       'react/self-closing-comp': 'error',
       'react/jsx-boolean-value': ['error', 'never'],
 
       'no-else-return': 'warn',
+      'no-extra-boolean-cast': 'error',
       eqeqeq: 'error',
       'no-debugger': 'error',
       'no-console': ['warn', { allow: ['warn', 'error'] }],

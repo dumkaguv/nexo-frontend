@@ -36,9 +36,7 @@ type Props = (
   showDeleteIcon?: boolean
   isPending?: boolean
   onDeleteImage?: (index: number) => void
-}
-
-type ImagePreviewProps = Props & ComponentProps<'img'>
+} & ComponentProps<'img'>
 
 export const ImagePreview = ({
   files,
@@ -50,10 +48,9 @@ export const ImagePreview = ({
   onDeleteImage: onDeleteImageCb,
   isPending,
   ...props
-}: ImagePreviewProps) => {
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
-
   const { t } = useTranslation()
 
   const slides = useMemo(() => {
