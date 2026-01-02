@@ -2,7 +2,7 @@ import { default as queryString, type ParsedQuery } from 'query-string'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { useQueryParams } from './useQueryParams'
+import { useQueryParams } from '@/hooks/useQueryParams'
 
 import type { AnyObject } from '@/types'
 
