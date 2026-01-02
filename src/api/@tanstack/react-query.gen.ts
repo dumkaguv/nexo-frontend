@@ -3,23 +3,27 @@
 import {
   type DefaultError,
   type InfiniteData,
-  type UseMutationOptions,
   infiniteQueryOptions,
-  queryOptions
+  queryOptions,
+  type UseMutationOptions
 } from '@tanstack/react-query'
-
+import type { AxiosError } from 'axios'
 
 import { client } from '../client.gen'
 import {
-  type Options,
   authControllerLogin,
   authControllerLogout,
   authControllerRefresh,
   authControllerRegister,
+  conversationControllerCreate,
+  conversationControllerFindAll,
+  conversationControllerFindAllConversationMessages,
+  conversationControllerFindOne,
+  conversationControllerRemove,
   messageControllerCreate,
-  messageControllerFindAll,
   messageControllerFindOne,
   messageControllerUpdate,
+  type Options,
   postControllerCreate,
   postControllerCreateComment,
   postControllerCreateLike,
@@ -48,7 +52,6 @@ import {
   userControllerRemove,
   userControllerUpdate
 } from '../sdk.gen'
-
 import type {
   AuthControllerLoginData,
   AuthControllerLoginResponse,
@@ -58,10 +61,17 @@ import type {
   AuthControllerRefreshResponse,
   AuthControllerRegisterData,
   AuthControllerRegisterResponse,
+  ConversationControllerCreateData,
+  ConversationControllerCreateResponse,
+  ConversationControllerFindAllConversationMessagesData,
+  ConversationControllerFindAllConversationMessagesResponse,
+  ConversationControllerFindAllData,
+  ConversationControllerFindAllResponse,
+  ConversationControllerFindOneData,
+  ConversationControllerRemoveData,
+  ConversationControllerRemoveResponse,
   MessageControllerCreateData,
   MessageControllerCreateResponse,
-  MessageControllerFindAllData,
-  MessageControllerFindAllResponse,
   MessageControllerFindOneData,
   MessageControllerUpdateData,
   MessageControllerUpdateResponse,
@@ -115,7 +125,6 @@ import type {
   UserControllerUpdateData,
   UserControllerUpdateResponse
 } from '../types.gen'
-import type { AxiosError } from 'axios'
 
 /**
  * Validation pattern for password:
@@ -139,11 +148,9 @@ export const authControllerRegisterMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -165,11 +172,9 @@ export const authControllerLoginMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -191,11 +196,9 @@ export const authControllerLogoutMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -217,11 +220,9 @@ export const authControllerRefreshMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -279,7 +280,6 @@ export const userControllerFindAllOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: userControllerFindAllQueryKey(options)
@@ -363,7 +363,6 @@ export const userControllerFindAllInfiniteOptions = (
           signal,
           throwOnError: true
         })
-
         return data
       },
       queryKey: userControllerFindAllInfiniteQueryKey(options)
@@ -389,11 +388,9 @@ export const userControllerRemoveMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -412,7 +409,6 @@ export const userControllerFindOneOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: userControllerFindOneQueryKey(options)
@@ -437,11 +433,9 @@ export const userControllerUpdateMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -463,11 +457,9 @@ export const userControllerChangePasswordMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -486,7 +478,6 @@ export const profileControllerMeOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: profileControllerMeQueryKey(options)
@@ -508,7 +499,6 @@ export const profileControllerMeDetailedOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: profileControllerMeDetailedQueryKey(options)
@@ -533,11 +523,9 @@ export const profileControllerUpdateMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -556,7 +544,6 @@ export const postControllerFindAllOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: postControllerFindAllQueryKey(options)
@@ -604,7 +591,6 @@ export const postControllerFindAllInfiniteOptions = (
           signal,
           throwOnError: true
         })
-
         return data
       },
       queryKey: postControllerFindAllInfiniteQueryKey(options)
@@ -630,11 +616,9 @@ export const postControllerCreateMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -653,7 +637,6 @@ export const postControllerFindAllCommentsOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: postControllerFindAllCommentsQueryKey(options)
@@ -701,7 +684,6 @@ export const postControllerFindAllCommentsInfiniteOptions = (
           signal,
           throwOnError: true
         })
-
         return data
       },
       queryKey: postControllerFindAllCommentsInfiniteQueryKey(options)
@@ -727,11 +709,9 @@ export const postControllerCreateCommentMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -753,11 +733,9 @@ export const postControllerRemoveLikeMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -776,7 +754,6 @@ export const postControllerFindAllLikesOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: postControllerFindAllLikesQueryKey(options)
@@ -824,7 +801,6 @@ export const postControllerFindAllLikesInfiniteOptions = (
           signal,
           throwOnError: true
         })
-
         return data
       },
       queryKey: postControllerFindAllLikesInfiniteQueryKey(options)
@@ -850,11 +826,9 @@ export const postControllerCreateLikeMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -876,11 +850,9 @@ export const postControllerRemoveMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -899,7 +871,6 @@ export const postControllerFindOneOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: postControllerFindOneQueryKey(options)
@@ -924,11 +895,9 @@ export const postControllerUpdateMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -950,11 +919,9 @@ export const postControllerRemoveCommentMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -976,11 +943,9 @@ export const postControllerUpdateCommentMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -1002,11 +967,9 @@ export const uploadControllerUploadMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -1028,108 +991,9 @@ export const uploadControllerDeleteMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
-  return mutationOptions
-}
-
-export const messageControllerFindAllQueryKey = (
-  options?: Options<MessageControllerFindAllData>
-) => createQueryKey('messageControllerFindAll', options)
-
-export const messageControllerFindAllOptions = (
-  options?: Options<MessageControllerFindAllData>
-) => {
-  return queryOptions({
-    queryFn: async ({ queryKey, signal }) => {
-      const { data } = await messageControllerFindAll({
-        ...options,
-        ...queryKey[0],
-        signal,
-        throwOnError: true
-      })
-
-      return data
-    },
-    queryKey: messageControllerFindAllQueryKey(options)
-  })
-}
-
-export const messageControllerFindAllInfiniteQueryKey = (
-  options?: Options<MessageControllerFindAllData>
-): QueryKey<Options<MessageControllerFindAllData>> =>
-  createQueryKey('messageControllerFindAll', options, true)
-
-export const messageControllerFindAllInfiniteOptions = (
-  options?: Options<MessageControllerFindAllData>
-) => {
-  return infiniteQueryOptions<
-    MessageControllerFindAllResponse,
-    AxiosError<DefaultError>,
-    InfiniteData<MessageControllerFindAllResponse>,
-    QueryKey<Options<MessageControllerFindAllData>>,
-    | number
-    | Pick<
-        QueryKey<Options<MessageControllerFindAllData>>[0],
-        'body' | 'headers' | 'path' | 'query'
-      >
-  >(
-    // @ts-ignore
-    {
-      queryFn: async ({ pageParam, queryKey, signal }) => {
-        // @ts-ignore
-        const page: Pick<
-          QueryKey<Options<MessageControllerFindAllData>>[0],
-          'body' | 'headers' | 'path' | 'query'
-        > =
-          typeof pageParam === 'object'
-            ? pageParam
-            : {
-                query: {
-                  page: pageParam
-                }
-              }
-        const params = createInfiniteParams(queryKey, page)
-        const { data } = await messageControllerFindAll({
-          ...options,
-          ...params,
-          signal,
-          throwOnError: true
-        })
-
-        return data
-      },
-      queryKey: messageControllerFindAllInfiniteQueryKey(options)
-    }
-  )
-}
-
-export const messageControllerCreateMutation = (
-  options?: Partial<Options<MessageControllerCreateData>>
-): UseMutationOptions<
-  MessageControllerCreateResponse,
-  AxiosError<DefaultError>,
-  Options<MessageControllerCreateData>
-> => {
-  const mutationOptions: UseMutationOptions<
-    MessageControllerCreateResponse,
-    AxiosError<DefaultError>,
-    Options<MessageControllerCreateData>
-  > = {
-    mutationFn: async (fnOptions) => {
-      const { data } = await messageControllerCreate({
-        ...options,
-        ...fnOptions,
-        throwOnError: true
-      })
-
-      return data
-    }
-  }
-
   return mutationOptions
 }
 
@@ -1148,7 +1012,6 @@ export const messageControllerFindOneOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: messageControllerFindOneQueryKey(options)
@@ -1173,11 +1036,33 @@ export const messageControllerUpdateMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
+  return mutationOptions
+}
 
+export const messageControllerCreateMutation = (
+  options?: Partial<Options<MessageControllerCreateData>>
+): UseMutationOptions<
+  MessageControllerCreateResponse,
+  AxiosError<DefaultError>,
+  Options<MessageControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MessageControllerCreateResponse,
+    AxiosError<DefaultError>,
+    Options<MessageControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await messageControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
   return mutationOptions
 }
 
@@ -1196,7 +1081,6 @@ export const subscriptionControllerFindAllFollowersOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: subscriptionControllerFindAllFollowersQueryKey(options)
@@ -1244,7 +1128,6 @@ export const subscriptionControllerFindAllFollowersInfiniteOptions = (
           signal,
           throwOnError: true
         })
-
         return data
       },
       queryKey: subscriptionControllerFindAllFollowersInfiniteQueryKey(options)
@@ -1267,7 +1150,6 @@ export const subscriptionControllerFindAllFollowingOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: subscriptionControllerFindAllFollowingQueryKey(options)
@@ -1315,7 +1197,6 @@ export const subscriptionControllerFindAllFollowingInfiniteOptions = (
           signal,
           throwOnError: true
         })
-
         return data
       },
       queryKey: subscriptionControllerFindAllFollowingInfiniteQueryKey(options)
@@ -1338,7 +1219,6 @@ export const subscriptionControllerFindOneCountOptions = (
         signal,
         throwOnError: true
       })
-
       return data
     },
     queryKey: subscriptionControllerFindOneCountQueryKey(options)
@@ -1363,11 +1243,9 @@ export const subscriptionControllerFollowMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
 }
 
@@ -1389,10 +1267,228 @@ export const subscriptionControllerUnfollowMutation = (
         ...fnOptions,
         throwOnError: true
       })
-
       return data
     }
   }
-
   return mutationOptions
+}
+
+export const conversationControllerFindAllQueryKey = (
+  options?: Options<ConversationControllerFindAllData>
+) => createQueryKey('conversationControllerFindAll', options)
+
+export const conversationControllerFindAllOptions = (
+  options?: Options<ConversationControllerFindAllData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await conversationControllerFindAll({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: conversationControllerFindAllQueryKey(options)
+  })
+}
+
+export const conversationControllerFindAllInfiniteQueryKey = (
+  options?: Options<ConversationControllerFindAllData>
+): QueryKey<Options<ConversationControllerFindAllData>> =>
+  createQueryKey('conversationControllerFindAll', options, true)
+
+export const conversationControllerFindAllInfiniteOptions = (
+  options?: Options<ConversationControllerFindAllData>
+) => {
+  return infiniteQueryOptions<
+    ConversationControllerFindAllResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<ConversationControllerFindAllResponse>,
+    QueryKey<Options<ConversationControllerFindAllData>>,
+    | number
+    | Pick<
+        QueryKey<Options<ConversationControllerFindAllData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<ConversationControllerFindAllData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await conversationControllerFindAll({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+        return data
+      },
+      queryKey: conversationControllerFindAllInfiniteQueryKey(options)
+    }
+  )
+}
+
+export const conversationControllerCreateMutation = (
+  options?: Partial<Options<ConversationControllerCreateData>>
+): UseMutationOptions<
+  ConversationControllerCreateResponse,
+  AxiosError<DefaultError>,
+  Options<ConversationControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ConversationControllerCreateResponse,
+    AxiosError<DefaultError>,
+    Options<ConversationControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await conversationControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+export const conversationControllerFindAllConversationMessagesQueryKey = (
+  options: Options<ConversationControllerFindAllConversationMessagesData>
+) =>
+  createQueryKey('conversationControllerFindAllConversationMessages', options)
+
+export const conversationControllerFindAllConversationMessagesOptions = (
+  options: Options<ConversationControllerFindAllConversationMessagesData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await conversationControllerFindAllConversationMessages({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: conversationControllerFindAllConversationMessagesQueryKey(options)
+  })
+}
+
+export const conversationControllerFindAllConversationMessagesInfiniteQueryKey =
+  (
+    options: Options<ConversationControllerFindAllConversationMessagesData>
+  ): QueryKey<Options<ConversationControllerFindAllConversationMessagesData>> =>
+    createQueryKey(
+      'conversationControllerFindAllConversationMessages',
+      options,
+      true
+    )
+
+export const conversationControllerFindAllConversationMessagesInfiniteOptions =
+  (options: Options<ConversationControllerFindAllConversationMessagesData>) => {
+    return infiniteQueryOptions<
+      ConversationControllerFindAllConversationMessagesResponse,
+      AxiosError<DefaultError>,
+      InfiniteData<ConversationControllerFindAllConversationMessagesResponse>,
+      QueryKey<Options<ConversationControllerFindAllConversationMessagesData>>,
+      | number
+      | Pick<
+          QueryKey<
+            Options<ConversationControllerFindAllConversationMessagesData>
+          >[0],
+          'body' | 'headers' | 'path' | 'query'
+        >
+    >(
+      // @ts-ignore
+      {
+        queryFn: async ({ pageParam, queryKey, signal }) => {
+          // @ts-ignore
+          const page: Pick<
+            QueryKey<
+              Options<ConversationControllerFindAllConversationMessagesData>
+            >[0],
+            'body' | 'headers' | 'path' | 'query'
+          > =
+            typeof pageParam === 'object'
+              ? pageParam
+              : {
+                  query: {
+                    page: pageParam
+                  }
+                }
+          const params = createInfiniteParams(queryKey, page)
+          const { data } =
+            await conversationControllerFindAllConversationMessages({
+              ...options,
+              ...params,
+              signal,
+              throwOnError: true
+            })
+          return data
+        },
+        queryKey:
+          conversationControllerFindAllConversationMessagesInfiniteQueryKey(
+            options
+          )
+      }
+    )
+  }
+
+export const conversationControllerRemoveMutation = (
+  options?: Partial<Options<ConversationControllerRemoveData>>
+): UseMutationOptions<
+  ConversationControllerRemoveResponse,
+  AxiosError<DefaultError>,
+  Options<ConversationControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    ConversationControllerRemoveResponse,
+    AxiosError<DefaultError>,
+    Options<ConversationControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await conversationControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+export const conversationControllerFindOneQueryKey = (
+  options: Options<ConversationControllerFindOneData>
+) => createQueryKey('conversationControllerFindOne', options)
+
+export const conversationControllerFindOneOptions = (
+  options: Options<ConversationControllerFindOneData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await conversationControllerFindOne({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: conversationControllerFindOneQueryKey(options)
+  })
 }

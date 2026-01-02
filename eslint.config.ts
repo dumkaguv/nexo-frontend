@@ -1,14 +1,14 @@
 import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import tseslint from 'typescript-eslint'
 import stylisticTs from '@stylistic/eslint-plugin'
-import unusedImports from 'eslint-plugin-unused-imports'
-import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import importPlugin from 'eslint-plugin-import'
+import reactHooks from 'eslint-plugin-react-hooks'
+import eslintPluginUnicorn from 'eslint-plugin-unicorn'
+import unusedImports from 'eslint-plugin-unused-imports'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'src/api/**'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -73,7 +73,6 @@ export default tseslint.config(
       'import/resolver': {
         typescript: {}
       }
-    },
-    ignores: ['src/api/**']
+    }
   }
 )

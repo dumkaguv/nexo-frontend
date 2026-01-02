@@ -105,7 +105,6 @@ export const serializeArrayParam = ({
       })
     })
     .join(separator)
-
   return style === 'label' || style === 'matrix'
     ? separator + joinedValues
     : joinedValues
@@ -176,7 +175,6 @@ export const serializeObjectParam = ({
       })
     )
     .join(separator)
-
   return style === 'label' || style === 'matrix'
     ? separator + joinedValues
     : joinedValues

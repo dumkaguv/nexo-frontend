@@ -6,7 +6,6 @@ import {
   createClient,
   createConfig
 } from './client'
-
 import type { ClientOptions as ClientOptions2 } from './types.gen'
 
 /**

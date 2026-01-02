@@ -2,13 +2,18 @@ import path from 'path'
 
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   root: './',
   publicDir: 'public',
   cacheDir: './node_modules/.vite/apps/nexo-frontend',
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test-setup.ts'
+  },
   server: {
     port: 4200,
     host: 'localhost'

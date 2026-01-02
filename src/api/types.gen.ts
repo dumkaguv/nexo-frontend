@@ -186,17 +186,21 @@ export type ResponseMessageDto = {
   readonly id: number
   readonly senderId: number
   receiverId: number
+  conversationId: number
   content?: string | null
   files?: Array<ResponseFileDto> | null
+  readonly createdAt: string
 }
 
 export type CreateMessageDto = {
   receiverId: number
+  conversationId: number
   content?: string | null
   fileIds?: Array<number> | null
 }
 
 export type UpdateMessageDto = {
+  conversationId?: number
   content?: string | null
   fileIds?: Array<number> | null
 }
@@ -210,6 +214,17 @@ export type ResponseSubscriptionDto = {
 export type ResponseSubscriptionCountDto = {
   followers: number
   following: number
+}
+
+export type ResponseConversationDto = {
+  readonly id: number
+  receiver: ResponseUserProfileDto
+  readonly createdAt: string
+  readonly updatedAt: string
+}
+
+export type CreateConversationDto = {
+  receiverId: number
 }
 
 export type ResponseFileDtoWritable = {
@@ -272,12 +287,17 @@ export type ResponseUploadDtoWritable = {
 
 export type ResponseMessageDtoWritable = {
   receiverId: number
+  conversationId: number
   content?: string | null
   files?: Array<ResponseFileDtoWritable> | null
 }
 
 export type ResponseSubscriptionDtoWritable = {
   user: ResponseUserProfileDtoWritable
+}
+
+export type ResponseConversationDtoWritable = {
+  receiver: ResponseUserProfileDtoWritable
 }
 
 export type AuthControllerRegisterData = {
@@ -786,55 +806,6 @@ export type UploadControllerDeleteResponses = {
 export type UploadControllerDeleteResponse =
   UploadControllerDeleteResponses[keyof UploadControllerDeleteResponses]
 
-export type MessageControllerFindAllData = {
-  body?: never
-  path?: never
-  query?: {
-    /**
-     * A page number within the paginated result set.
-     */
-    page?: number
-    /**
-     * Number of results to return per page.
-     */
-    pageSize?: number
-    /**
-     * Which field to use when ordering the results.
-     */
-    ordering?: string
-    /**
-     * A search term.
-     */
-    search?: string
-  }
-  url: '/api/messages'
-}
-
-export type MessageControllerFindAllResponses = {
-  200: PaginatedResponseDto & {
-    data?: Array<ResponseMessageDto>
-  }
-}
-
-export type MessageControllerFindAllResponse =
-  MessageControllerFindAllResponses[keyof MessageControllerFindAllResponses]
-
-export type MessageControllerCreateData = {
-  body: CreateMessageDto
-  path?: never
-  query?: never
-  url: '/api/messages'
-}
-
-export type MessageControllerCreateResponses = {
-  200: BaseResponseDto & {
-    data?: ResponseMessageDto
-  }
-}
-
-export type MessageControllerCreateResponse =
-  MessageControllerCreateResponses[keyof MessageControllerCreateResponses]
-
 export type MessageControllerFindOneData = {
   body?: never
   path: {
@@ -870,6 +841,22 @@ export type MessageControllerUpdateResponses = {
 
 export type MessageControllerUpdateResponse =
   MessageControllerUpdateResponses[keyof MessageControllerUpdateResponses]
+
+export type MessageControllerCreateData = {
+  body: CreateMessageDto
+  path?: never
+  query?: never
+  url: '/api/messages'
+}
+
+export type MessageControllerCreateResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseMessageDto
+  }
+}
+
+export type MessageControllerCreateResponse =
+  MessageControllerCreateResponses[keyof MessageControllerCreateResponses]
 
 export type SubscriptionControllerFindAllFollowersData = {
   body?: never
@@ -994,3 +981,121 @@ export type SubscriptionControllerUnfollowResponses = {
 
 export type SubscriptionControllerUnfollowResponse =
   SubscriptionControllerUnfollowResponses[keyof SubscriptionControllerUnfollowResponses]
+
+export type ConversationControllerFindAllData = {
+  body?: never
+  path?: never
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/conversations'
+}
+
+export type ConversationControllerFindAllResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseConversationDto>
+  }
+}
+
+export type ConversationControllerFindAllResponse =
+  ConversationControllerFindAllResponses[keyof ConversationControllerFindAllResponses]
+
+export type ConversationControllerCreateData = {
+  body: CreateConversationDto
+  path?: never
+  query?: never
+  url: '/api/conversations'
+}
+
+export type ConversationControllerCreateResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseConversationDto
+  }
+}
+
+export type ConversationControllerCreateResponse =
+  ConversationControllerCreateResponses[keyof ConversationControllerCreateResponses]
+
+export type ConversationControllerFindAllConversationMessagesData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/conversations/{id}/messages'
+}
+
+export type ConversationControllerFindAllConversationMessagesResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseMessageDto>
+  }
+}
+
+export type ConversationControllerFindAllConversationMessagesResponse =
+  ConversationControllerFindAllConversationMessagesResponses[keyof ConversationControllerFindAllConversationMessagesResponses]
+
+export type ConversationControllerRemoveData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/conversations/{id}'
+}
+
+export type ConversationControllerRemoveResponses = {
+  204: void
+}
+
+export type ConversationControllerRemoveResponse =
+  ConversationControllerRemoveResponses[keyof ConversationControllerRemoveResponses]
+
+export type ConversationControllerFindOneData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/conversations/{id}'
+}
+
+export type ConversationControllerFindOneResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseConversationDto
+  }
+}
+
+export type ConversationControllerFindOneResponse =
+  ConversationControllerFindOneResponses[keyof ConversationControllerFindOneResponses]

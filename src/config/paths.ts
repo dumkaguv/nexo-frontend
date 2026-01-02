@@ -20,6 +20,7 @@ export const paths = {
   },
 
   messages: {
-    root: '/messages'
+    root: '/messages',
+    byId: (id: string | number) => `/messages/${id}`
   }
 } as const

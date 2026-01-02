@@ -2,12 +2,11 @@
 
 import {
   type Client,
+  formDataBodySerializer,
   type Options as Options2,
-  type TDataShape,
-  formDataBodySerializer
+  type TDataShape
 } from './client'
 import { client } from './client.gen'
-
 import type {
   AuthControllerLoginData,
   AuthControllerLoginResponses,
@@ -17,10 +16,18 @@ import type {
   AuthControllerRefreshResponses,
   AuthControllerRegisterData,
   AuthControllerRegisterResponses,
+  ConversationControllerCreateData,
+  ConversationControllerCreateResponses,
+  ConversationControllerFindAllConversationMessagesData,
+  ConversationControllerFindAllConversationMessagesResponses,
+  ConversationControllerFindAllData,
+  ConversationControllerFindAllResponses,
+  ConversationControllerFindOneData,
+  ConversationControllerFindOneResponses,
+  ConversationControllerRemoveData,
+  ConversationControllerRemoveResponses,
   MessageControllerCreateData,
   MessageControllerCreateResponses,
-  MessageControllerFindAllData,
-  MessageControllerFindAllResponses,
   MessageControllerFindOneData,
   MessageControllerFindOneResponses,
   MessageControllerUpdateData,
@@ -648,50 +655,6 @@ export const uploadControllerDelete = <ThrowOnError extends boolean = false>(
   })
 }
 
-export const messageControllerFindAll = <ThrowOnError extends boolean = false>(
-  options?: Options<MessageControllerFindAllData, ThrowOnError>
-) => {
-  return (options?.client ?? client).get<
-    MessageControllerFindAllResponses,
-    unknown,
-    ThrowOnError
-  >({
-    responseType: 'json',
-    security: [
-      {
-        scheme: 'bearer',
-        type: 'http'
-      }
-    ],
-    url: '/api/messages',
-    ...options
-  })
-}
-
-export const messageControllerCreate = <ThrowOnError extends boolean = false>(
-  options: Options<MessageControllerCreateData, ThrowOnError>
-) => {
-  return (options.client ?? client).post<
-    MessageControllerCreateResponses,
-    unknown,
-    ThrowOnError
-  >({
-    responseType: 'json',
-    security: [
-      {
-        scheme: 'bearer',
-        type: 'http'
-      }
-    ],
-    url: '/api/messages',
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers
-    }
-  })
-}
-
 export const messageControllerFindOne = <ThrowOnError extends boolean = false>(
   options: Options<MessageControllerFindOneData, ThrowOnError>
 ) => {
@@ -728,6 +691,30 @@ export const messageControllerUpdate = <ThrowOnError extends boolean = false>(
       }
     ],
     url: '/api/messages/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+export const messageControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<MessageControllerCreateData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    MessageControllerCreateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/messages',
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -842,6 +829,122 @@ export const subscriptionControllerUnfollow = <
       }
     ],
     url: '/api/subscription/unfollow/{id}',
+    ...options
+  })
+}
+
+export const conversationControllerFindAll = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<ConversationControllerFindAllData, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    ConversationControllerFindAllResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations',
+    ...options
+  })
+}
+
+export const conversationControllerCreate = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<ConversationControllerCreateData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    ConversationControllerCreateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+export const conversationControllerFindAllConversationMessages = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<
+    ConversationControllerFindAllConversationMessagesData,
+    ThrowOnError
+  >
+) => {
+  return (options.client ?? client).get<
+    ConversationControllerFindAllConversationMessagesResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations/{id}/messages',
+    ...options
+  })
+}
+
+export const conversationControllerRemove = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<ConversationControllerRemoveData, ThrowOnError>
+) => {
+  return (options.client ?? client).delete<
+    ConversationControllerRemoveResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations/{id}',
+    ...options
+  })
+}
+
+export const conversationControllerFindOne = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<ConversationControllerFindOneData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    ConversationControllerFindOneResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations/{id}',
     ...options
   })
 }

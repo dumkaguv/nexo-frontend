@@ -1,6 +1,5 @@
 import { Search, X } from 'lucide-react'
-
-import { type ComponentProps } from 'react'
+import { type ComponentProps, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Typography } from '@/components/shared'
@@ -24,6 +23,7 @@ type Props = {
 
 export const InputSearch = ({
   value,
+  defaultValue,
   placeholder,
   onChange,
   onButtonClearClick,
@@ -34,19 +34,37 @@ export const InputSearch = ({
 }: Props) => {
   const { t } = useTranslation()
 
+  const [innerValue, setInnerValue] = useState<string>(
+    String(defaultValue ?? '')
+  )
+
+  const isControlled = value !== undefined
+  const currentValue = isControlled ? String(value ?? '') : innerValue
+
+  const onChangeInner = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!isControlled) {
+      setInnerValue(e.target.value)
+    }
+
+    onChange?.(e)
+  }
+
   const onClear = () => {
+    if (!isControlled) setInnerValue('')
     onChange?.({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
     onButtonClearClick?.()
   }
 
+  const showClear = currentValue.length > 0
+
   return (
     <div className={cn('relative h-fit', className)}>
       <Input
-        value={value ?? ''}
-        onChange={onChange}
+        {...props}
+        value={currentValue}
+        onChange={onChangeInner}
         className={cn('bg-custom-gray h-10 px-8', inputClassName)}
         placeholder={placeholder ?? t('inputs.inputSearch')}
-        {...props}
       />
 
       <Search
@@ -54,10 +72,9 @@ export const InputSearch = ({
         className="pointer-events-none absolute inset-y-0 left-2 my-auto opacity-50"
       />
 
-      {value && (
+      {showClear && (
         <Tooltip>
           <TooltipContent>{t('clear')}</TooltipContent>
-
           <TooltipTrigger asChild>
             <Button
               type="button"
@@ -74,7 +91,7 @@ export const InputSearch = ({
       {loading && (
         <div className="absolute top-1/2 right-11 -translate-y-1/2">
           <div className="flex items-center gap-2 px-2">
-            <Spinner className="size-3" />{' '}
+            <Spinner className="size-3" />
             <Typography.Text className="text-muted-foreground text-sm">
               {t('loading')}
             </Typography.Text>

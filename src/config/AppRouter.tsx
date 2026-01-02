@@ -34,6 +34,24 @@ const router = createBrowserRouter([
         }
       },
       {
+        path: paths.messages.root,
+        lazy: async () => {
+          const { MessagesPage } = await import('@/features/messages')
+
+          return { Component: MessagesPage }
+        },
+        children: [
+          {
+            path: ':id',
+            lazy: async () => {
+              const { Chat } = await import('@/features/messages/components')
+
+              return { Component: Chat }
+            }
+          }
+        ]
+      },
+      {
         path: paths.user.byId(':id'),
         lazy: async () => {
           const { UserPage } = await import('@/features/user/pages')
