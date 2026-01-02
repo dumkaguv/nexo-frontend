@@ -4,14 +4,21 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher'
 
-const changeLanguage = vi.fn()
-
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-    i18n: { language: 'en' }
-  })
+const { changeLanguage } = vi.hoisted(() => ({
+  changeLanguage: vi.fn()
 }))
+
+vi.mock('react-i18next', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react-i18next')>()
+
+  return {
+    ...actual,
+    useTranslation: () => ({
+      t: (key: string) => key,
+      i18n: { language: 'en' }
+    })
+  }
+})
 
 vi.mock('@/config', () => ({
   i18n: { changeLanguage }
@@ -23,7 +30,7 @@ describe('LanguageSwitcher', () => {
 
     render(<LanguageSwitcher />)
 
-    await user.click(screen.getByRole('button'))
+    await user.click(screen.getByRole('button', { name: 'changeLanguage' }))
     await user.click(screen.getByText('languages.ru'))
 
     expect(changeLanguage).toHaveBeenCalledWith('ru')

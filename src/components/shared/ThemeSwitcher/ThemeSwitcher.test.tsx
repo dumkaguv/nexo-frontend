@@ -4,7 +4,9 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { ThemeSwitcher } from '@/components/shared/ThemeSwitcher'
 
-const setTheme = vi.fn()
+const { setTheme } = vi.hoisted(() => ({
+  setTheme: vi.fn()
+}))
 
 vi.mock('@/stores', () => ({
   useThemeStore: () => ({
@@ -19,7 +21,7 @@ describe('ThemeSwitcher', () => {
 
     render(<ThemeSwitcher />)
 
-    await user.click(screen.getByRole('button'))
+    await user.click(screen.getByRole('button', { name: 'theme.toggleTheme' }))
     await user.click(screen.getByText('theme.dark'))
 
     expect(setTheme).toHaveBeenCalledWith('dark')

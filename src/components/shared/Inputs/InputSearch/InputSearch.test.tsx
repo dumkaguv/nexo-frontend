@@ -35,7 +35,7 @@ describe('InputSearch', () => {
 
     await user.type(input, 'abc')
 
-    const clearButton = screen.getByRole('button')
+    const clearButton = screen.getByRole('button', { name: /clear/i })
 
     await user.click(clearButton)
 

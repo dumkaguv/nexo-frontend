@@ -8,15 +8,20 @@ import type { ReactNode } from 'react'
 
 const mockUseInfiniteQuery = vi.fn()
 
-vi.mock('@tanstack/react-query', () => ({
-  useInfiniteQuery: (options: unknown) => mockUseInfiniteQuery(options)
-}))
+vi.mock('@tanstack/react-query', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-query')>()
+
+  return {
+    ...actual,
+    useInfiniteQuery: (options: unknown) => mockUseInfiniteQuery(options)
+  }
+})
 
 vi.mock('@/api', () => ({
   postControllerFindAllInfiniteOptions: () => ({})
 }))
 
-vi.mock('./', () => ({
+vi.mock('@/features/posts/components', () => ({
   PostCard: ({ post }: { post: { id: string } }) => (
     <div data-testid="post-card">{post.id}</div>
   ),

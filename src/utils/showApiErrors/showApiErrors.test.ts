@@ -2,7 +2,9 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { showApiErrors } from '@/utils/showApiErrors'
 
-const toastError = vi.fn()
+const { toastError } = vi.hoisted(() => ({
+  toastError: vi.fn()
+}))
 
 vi.mock('sonner', () => ({
   toast: { error: toastError }

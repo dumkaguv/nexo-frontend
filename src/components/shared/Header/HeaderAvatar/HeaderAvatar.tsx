@@ -19,8 +19,7 @@ import {
 } from '@/components/ui'
 import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
-import { showApiErrors } from '@/utils'
-import { clearAccessToken } from '@/utils/clearAccessToken'
+import { showApiErrors, clearAccessToken } from '@/utils'
 
 export const HeaderAvatar = () => {
   const [isOpen, setIsOpen] = useState(false)

@@ -3,9 +3,14 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { SubscriptionListItem } from '@/components/shared/Subscription/SubscriptionListItem'
 
-vi.mock('@tanstack/react-query', () => ({
-  useMutation: () => ({ mutateAsync: vi.fn(), isPending: false })
-}))
+vi.mock('@tanstack/react-query', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-query')>()
+
+  return {
+    ...actual,
+    useMutation: () => ({ mutateAsync: vi.fn(), isPending: false })
+  }
+})
 
 vi.mock('@/hooks', () => ({
   useInvalidatePredicateQueries: () => ({ invalidateQueries: vi.fn() })
@@ -42,9 +47,14 @@ vi.mock('sonner', () => ({
   toast: { success: vi.fn() }
 }))
 
-vi.mock('@/utils', () => ({
-  showApiErrors: vi.fn()
-}))
+vi.mock('@/utils', async () => {
+  const actual = await vi.importActual<typeof import('@/utils')>('@/utils')
+
+  return {
+    ...actual,
+    showApiErrors: vi.fn()
+  }
+})
 
 describe('SubscriptionListItem', () => {
   it('renders user info', () => {

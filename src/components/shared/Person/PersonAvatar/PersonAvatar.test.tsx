@@ -3,10 +3,22 @@ import { describe, expect, it, vi, beforeEach } from 'vitest'
 
 import { PersonAvatar } from '@/components/shared/Person/PersonAvatar'
 
+import type { ComponentProps, ReactNode } from 'react'
+
 const useAuthStore = vi.fn()
 
 vi.mock('@/stores', () => ({
   useAuthStore: () => useAuthStore()
+}))
+
+vi.mock('@/components/ui', () => ({
+  Avatar: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  AvatarImage: (props: ComponentProps<'img'>) => (
+    <img data-slot="avatar-image" alt="" {...props} />
+  ),
+  Skeleton: (props: ComponentProps<'div'>) => (
+    <div data-slot="skeleton" {...props} />
+  )
 }))
 
 describe('PersonAvatar', () => {

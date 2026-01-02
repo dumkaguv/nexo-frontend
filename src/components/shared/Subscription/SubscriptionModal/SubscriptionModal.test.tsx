@@ -32,8 +32,8 @@ describe('SubscriptionModal', () => {
   it('renders tabs and search input', () => {
     render(<SubscriptionModal open />)
 
-    expect(screen.getByText('followers')).toBeInTheDocument()
-    expect(screen.getByText('following')).toBeInTheDocument()
+    expect(screen.getByText(/followers/)).toBeInTheDocument()
+    expect(screen.getByText(/following/)).toBeInTheDocument()
     expect(screen.getByTestId('input-search')).toBeInTheDocument()
   })
 })

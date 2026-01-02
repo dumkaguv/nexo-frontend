@@ -5,15 +5,22 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { HeaderAvatar } from '@/components/shared/Header/HeaderAvatar'
 
-const mutateAsync = vi.fn()
-
-vi.mock('@tanstack/react-query', () => ({
-  useMutation: () => ({ mutateAsync, isPending: false }),
-  useQueryClient: () => ({
-    cancelQueries: vi.fn(),
-    clear: vi.fn()
-  })
+const { mutateAsync } = vi.hoisted(() => ({
+  mutateAsync: vi.fn()
 }))
+
+vi.mock('@tanstack/react-query', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-query')>()
+
+  return {
+    ...actual,
+    useMutation: () => ({ mutateAsync, isPending: false }),
+    useQueryClient: () => ({
+      cancelQueries: vi.fn(),
+      clear: vi.fn()
+    })
+  }
+})
 
 vi.mock('@/api', () => ({
   authControllerLogoutMutation: () => ({})
@@ -23,12 +30,8 @@ vi.mock('@/stores', () => ({
   useAuthStore: () => ({ setUser: vi.fn() })
 }))
 
-vi.mock('@/utils', () => ({
-  showApiErrors: vi.fn()
-}))
-
-vi.mock('@/utils/clearAccessToken', () => ({
-  clearAccessToken: vi.fn()
+vi.mock('@/components/shared/Person/PersonAvatar', () => ({
+  PersonAvatar: () => <div data-testid="person-avatar" />
 }))
 
 vi.mock('sonner', () => ({

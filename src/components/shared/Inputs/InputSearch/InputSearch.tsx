@@ -81,6 +81,7 @@ export const InputSearch = ({
               className="absolute top-1/2 right-0 mr-2 -translate-y-1/2 opacity-50 hover:bg-gray-300 dark:hover:bg-gray-600"
               onClick={onClear}
               variant="link"
+              aria-label="clear"
             >
               <X size={16} className="text-gray-600 dark:text-gray-400" />
             </Button>

@@ -8,8 +8,7 @@ import {
   type ReactNode
 } from 'react'
 
-import { getAccessToken } from '@/utils'
-import { AUTH_TOKEN_CHANGED_EVENT } from '@/utils/authTokenEvents'
+import { getAccessToken, AUTH_TOKEN_CHANGED_EVENT } from '@/utils'
 
 import { type SocketAuth, initSocket, setSocketAuth } from './socket'
 

@@ -7,9 +7,14 @@ import type { ReactNode } from 'react'
 
 const useInfiniteQuery = vi.fn()
 
-vi.mock('@tanstack/react-query', () => ({
-  useInfiniteQuery: (...args: unknown[]) => useInfiniteQuery(...args)
-}))
+vi.mock('@tanstack/react-query', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-query')>()
+
+  return {
+    ...actual,
+    useInfiniteQuery: (...args: unknown[]) => useInfiniteQuery(...args)
+  }
+})
 
 vi.mock('react-infinite-scroll-component', () => ({
   default: ({ children }: { children: ReactNode }) => <div>{children}</div>

@@ -1,8 +1,7 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 import { paths } from '@/config'
-import { getAccessToken, saveAccessToken } from '@/utils'
-import { clearAccessToken } from '@/utils/clearAccessToken'
+import { getAccessToken, saveAccessToken, clearAccessToken } from '@/utils'
 
 import type { ResponseRefreshDto } from '@/api'
 
