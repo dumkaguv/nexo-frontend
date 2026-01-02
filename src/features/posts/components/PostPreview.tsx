@@ -44,7 +44,7 @@ export const PostPreview = ({ content, previews, onBack }: Props) => {
           <ImagePreview
             srcs={previews}
             maxImages={totalFiles < 3 ? totalFiles + 1 : 3}
-            className="size-full max-h-[320px]"
+            className="size-full max-h-80"
             containerClassName={cn(
               'grid gap-3',
               totalFiles === 1 && 'grid-cols-1',
