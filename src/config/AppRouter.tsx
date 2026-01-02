@@ -11,6 +11,7 @@ import { RouteLoader } from './RouteLoader'
 
 const router = createBrowserRouter([
   {
+    hydrateFallbackElement: <div />,
     element: (
       <>
         <RouteLoader />
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
     ]
   },
   {
+    hydrateFallbackElement: <div />,
     element: (
       <>
         <RouteLoader />
