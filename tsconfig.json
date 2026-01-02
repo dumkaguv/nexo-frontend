@@ -20,5 +20,14 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "*.ts",
+    "*.mts",
+    "*.cts",
+    "openapi.config.ts",
+    "vite.config.ts",
+    "eslint.config.*",
+    "scripts/**/*.ts"
+  ]
 }
