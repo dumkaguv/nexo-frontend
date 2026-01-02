@@ -26,7 +26,10 @@
     "toggleTheme": "Toggle theme"
   },
   "error": {
-    "generic": "Error occurred! Please try again."
+    "generic": "Error occurred! Please try again.",
+    "somethingWentWrong": "Something went wrong",
+    "errorOccurred": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try again"
   },
   "validation": {
     "email_invalid": "Invalid email",
@@ -117,6 +120,10 @@
   "preview": "Preview",
   "addComment": "Add comment",
   "back": "Back",
+  "pageNotFound": "Page not found",
+  "pageNotFoundDescription": "The page you are looking for does not exist or has been moved.",
+  "goBack": "Go back",
+  "goToHome": "Go to Home",
   "bold": "Bold",
   "italic": "Italic",
   "strike": "Strike",
