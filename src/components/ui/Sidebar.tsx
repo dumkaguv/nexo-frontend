@@ -12,17 +12,15 @@ export const Sidebar = ({
   bodyClassName,
   children,
   ...rest
-}: Props) => {
-  return (
-    <aside className={cn('w-[280px] max-w-[280px]', className)} {...rest}>
-      <Card
-        className={cn(
-          'sticky top-[calc(var(--header-height)+20px)] flex flex-col items-center justify-start',
-          bodyClassName
-        )}
-      >
-        {children}
-      </Card>
-    </aside>
-  )
-}
+}: Props) => (
+  <aside className={cn('w-[280px] max-w-[280px]', className)} {...rest}>
+    <Card
+      className={cn(
+        'sticky top-[calc(var(--header-height)+20px)] flex flex-col items-center justify-start',
+        bodyClassName
+      )}
+    >
+      {children}
+    </Card>
+  </aside>
+)

@@ -9,6 +9,7 @@ describe('InputSearch', () => {
     render(<InputSearch />)
 
     const input = screen.getByPlaceholderText('inputs.inputSearch')
+
     expect(input).toBeInTheDocument()
   })
 
@@ -35,6 +36,7 @@ describe('InputSearch', () => {
     await user.type(input, 'abc')
 
     const clearButton = screen.getByRole('button')
+
     await user.click(clearButton)
 
     expect(onChange).toHaveBeenCalled()

@@ -11,17 +11,19 @@ import { toast } from 'sonner'
 import {
   postControllerFindAllCommentsInfiniteQueryKey,
   postControllerFindAllInfiniteQueryKey,
-  postControllerUpdateCommentMutation
+  postControllerUpdateCommentMutation,
+  type ResponsePostCommentDto
 } from '@/api'
 import { TipTapEditor } from '@/components/shared'
 import { Button, Field, FieldError } from '@/components/ui'
 
-import { createCommentSchema } from '@/features/posts/zodSchemas'
+import {
+  createCommentSchema,
+  type CreateCommentSchema
+} from '@/features/posts/zodSchemas'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { showApiErrors } from '@/utils'
 
-import type { ResponsePostCommentDto } from '@/api'
-import type { CreateCommentSchema } from '@/features/posts/zodSchemas'
 import type { Dispatch, SetStateAction } from 'react'
 
 type Props = {

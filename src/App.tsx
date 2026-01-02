@@ -1,9 +1,8 @@
 import '@/assets/styles/styles.css'
 
-import { Providers } from '@/config'
+import { Providers, getConfigInterceptors } from '@/config'
 
 import { client } from './api/client.gen'
-import { getConfigInterceptors } from './config'
 
 client.setConfig({
   baseURL: import.meta.env.VITE_PUBLIC_API_URL,
@@ -12,6 +11,4 @@ client.setConfig({
 
 getConfigInterceptors(client.instance)
 
-export const App = () => {
-  return <Providers />
-}
+export const App = () => <Providers />

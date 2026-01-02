@@ -10,6 +10,7 @@ export const TextAreaAutoHeight = (props: ComponentProps<'textarea'>) => {
 
   const onInput = (e: FormEvent<HTMLTextAreaElement>) => {
     const target = e.currentTarget
+
     target.style.height = 'auto'
     target.style.height = `${target.scrollHeight}px`
   }

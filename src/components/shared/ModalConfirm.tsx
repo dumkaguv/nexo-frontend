@@ -1,5 +1,5 @@
 import { Check, X } from 'lucide-react'
-import { type PropsWithChildren, useState } from 'react'
+import { type PropsWithChildren, useState, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -12,11 +12,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Spinner
+  Spinner,
+  type ButtonProps
 } from '@/components/ui'
-
-import type { ButtonProps } from '@/components/ui'
-import type { MouseEvent } from 'react'
 
 type Props = {
   onOk: () => void | Promise<void>

@@ -8,7 +8,8 @@ import {
   postControllerFindAllLikesInfiniteQueryKey,
   profileControllerMeDetailedQueryKey,
   subscriptionControllerFollowMutation,
-  subscriptionControllerUnfollowMutation
+  subscriptionControllerUnfollowMutation,
+  type ResponsePostLikeDto
 } from '@/api'
 import { AvatarWithColorInitials } from '@/components/shared'
 
@@ -19,8 +20,6 @@ import { paths } from '@/config'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
-
-import type { ResponsePostLikeDto } from '@/api'
 
 type Props = {
   like: ResponsePostLikeDto

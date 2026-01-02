@@ -1,12 +1,10 @@
-import { default as queryString } from 'query-string'
+import { default as queryString, type ParsedQuery } from 'query-string'
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useQueryParams } from './useQueryParams'
 
 import type { AnyObject } from '@/types'
-
-import type { ParsedQuery } from 'query-string'
 
 export const useQueryUpdate = () => {
   const push = useNavigate()

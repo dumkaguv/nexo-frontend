@@ -1,7 +1,8 @@
-import 'dayjs/locale/ru'
-import 'dayjs/locale/en'
+import dayjs, { type Dayjs } from 'dayjs'
 
-import dayjs from 'dayjs'
+import 'dayjs/locale/en'
+import 'dayjs/locale/ru'
+
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
@@ -13,7 +14,6 @@ import { cn } from '@/utils'
 
 import { Typography } from './Typography'
 
-import type { Dayjs } from 'dayjs'
 import type { ComponentProps } from 'react'
 
 dayjs.extend(relativeTime)
@@ -53,20 +53,20 @@ export const DayLabel = ({
     label = d.format('D MMMM YYYY')
   }
 
-  return (
-    <>
-      {showIcon ? (
-        <div className="ml-1 flex items-center justify-center gap-1.5">
-          <div className="-mt-0.5 size-[5px] rounded-full bg-neutral-300 dark:bg-neutral-500" />
-          <Typography.Text className={cn('text-sm', className)} {...props}>
-            {label}
-          </Typography.Text>
-        </div>
-      ) : (
+  if (showIcon) {
+    return (
+      <div className="ml-1 flex items-center justify-center gap-1.5">
+        <div className="-mt-0.5 size-[5px] rounded-full bg-neutral-300 dark:bg-neutral-500" />
         <Typography.Text className={cn('text-sm', className)} {...props}>
           {label}
         </Typography.Text>
-      )}
-    </>
+      </div>
+    )
+  }
+
+  return (
+    <Typography.Text className={cn('text-sm', className)} {...props}>
+      {label}
+    </Typography.Text>
   )
 }

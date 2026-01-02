@@ -29,6 +29,7 @@ export const PostLikesList = ({ postId, search }: Props) => {
 
   const isEmptySearchResult =
     data?.pages?.[0].total === 0 && !isLoading && search
+
   if (isEmptySearchResult) {
     return <PostLikesListEmptySearch />
   }

@@ -1,4 +1,4 @@
-import { Controller } from 'react-hook-form'
+import { Controller, type ControllerRenderProps } from 'react-hook-form'
 
 import { ImagePreview, InputUpload } from '@/components/shared'
 import { Field, FieldError } from '@/components/ui'
@@ -7,8 +7,6 @@ import { useUploadAvatar } from '@/features/userSettings/hooks'
 import { Section } from './Section'
 
 import type { CreateAvatarSchema } from '@/zodSchemas'
-
-import type { ControllerRenderProps } from 'react-hook-form'
 
 export const FormUploadAvatar = () => {
   const {

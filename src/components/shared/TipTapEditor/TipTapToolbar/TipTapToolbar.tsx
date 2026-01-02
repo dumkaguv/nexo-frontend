@@ -1,4 +1,4 @@
-import { useEditorState } from '@tiptap/react'
+import { useEditorState, type Editor } from '@tiptap/react'
 
 import {
   Bold,
@@ -33,7 +33,6 @@ import {
 
 import { cn } from '@/utils'
 
-import type { Editor } from '@tiptap/react'
 import type { ComponentProps } from 'react'
 
 type Props = {
@@ -128,15 +127,19 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
                   case 'bold':
                     editor.chain().focus().toggleBold().run()
                     break
+
                   case 'italic':
                     editor.chain().focus().toggleItalic().run()
                     break
+
                   case 'strike':
                     editor.chain().focus().toggleStrike().run()
                     break
+
                   case 'inlineCode':
                     editor.chain().focus().toggleCode().run()
                     break
+
                   case 'clearMarks':
                     editor.chain().focus().unsetAllMarks().run()
                     break
@@ -180,7 +183,9 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
                 editor
                   .chain()
                   .focus()
-                  .toggleHeading({ level: btn.level as 1 | 2 | 3 | 4 | 5 | 6 })
+                  .toggleHeading({
+                    level: btn.level as 1 | 2 | 3 | 4 | 5 | 6
+                  })
                   .run()
               }
             >

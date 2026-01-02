@@ -6,14 +6,12 @@ type Props = {
   conversations?: ResponseConversationDto[]
 }
 
-export const ConversationList = ({ conversations }: Props) => {
-  return (
-    <ul className="flex flex-col gap-2">
-      {conversations?.map((record) => (
-        <li key={record.id}>
-          <ConversationListItem record={record} />
-        </li>
-      ))}
-    </ul>
-  )
-}
+export const ConversationList = ({ conversations }: Props) => (
+  <ul className="flex flex-col gap-2">
+    {conversations?.map((record) => (
+      <li key={record.id}>
+        <ConversationListItem record={record} />
+      </li>
+    ))}
+  </ul>
+)

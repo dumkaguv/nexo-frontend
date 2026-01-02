@@ -31,6 +31,7 @@ export const AvatarWithColorInitials = ({
   }
 
   const profile = user?.profile
+
   if (!profile) {
     return (
       <Avatar

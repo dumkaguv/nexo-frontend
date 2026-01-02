@@ -14,24 +14,22 @@ export const Card = ({
   rows = 3,
   loading = false,
   ...rest
-}: CardProps) => {
-  return (
-    <div
-      className={cn(
-        'border-accent bg-card rounded-md border-1 p-5 shadow-sm',
-        className
-      )}
-      {...rest}
-    >
-      {loading ? (
-        <div className="flex flex-col gap-3">
-          {Array.from({ length: rows }).map((_, i) => (
-            <Skeleton key={i} className="h-4 w-full" />
-          ))}
-        </div>
-      ) : (
-        children
-      )}
-    </div>
-  )
-}
+}: CardProps) => (
+  <div
+    className={cn(
+      'border-accent bg-card rounded-md border-1 p-5 shadow-sm',
+      className
+    )}
+    {...rest}
+  >
+    {loading ? (
+      <div className="flex flex-col gap-3">
+        {Array.from({ length: rows }).map((_, i) => (
+          <Skeleton key={i} className="h-4 w-full" />
+        ))}
+      </div>
+    ) : (
+      children
+    )}
+  </div>
+)

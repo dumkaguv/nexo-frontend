@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { vi } from 'vitest'
-
-import { beforeAll } from 'vitest'
+import { vi, beforeAll } from 'vitest'
 
 beforeAll(() => {
   process.env.VITE_PUBLIC_API_URL ??= 'http://localhost:3000'
@@ -16,6 +14,7 @@ vi.mock('react-i18next', async () => {
     ...actual,
     initReactI18next: {
       type: '3rdParty',
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       init: () => {}
     },
     useTranslation: () => ({

@@ -1,5 +1,5 @@
 import { Search, X } from 'lucide-react'
-import { type ComponentProps, useState } from 'react'
+import { type ComponentProps, useState, type ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Typography } from '@/components/shared'
@@ -12,8 +12,6 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 import { cn } from '@/utils'
-
-import type { ChangeEvent } from 'react'
 
 type Props = {
   onButtonClearClick?: () => void
@@ -50,7 +48,9 @@ export const InputSearch = ({
   }
 
   const onClear = () => {
-    if (!isControlled) setInnerValue('')
+    if (!isControlled) {
+      setInnerValue('')
+    }
     onChange?.({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
     onButtonClearClick?.()
   }

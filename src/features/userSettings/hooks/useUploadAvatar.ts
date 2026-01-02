@@ -16,9 +16,7 @@ import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
 
-import { createAvatarSchema } from '@/zodSchemas'
-
-import type { CreateAvatarSchema } from '@/zodSchemas'
+import { createAvatarSchema, type CreateAvatarSchema } from '@/zodSchemas'
 
 const MAX_FILE_SIZE_MB = 4
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
@@ -63,6 +61,7 @@ export const useUploadAvatar = () => {
     onSuccess: async ({ data: { id } }) => {
       await updateProfile({ body: { avatar: id } })
       const { data } = await fetchMe()
+
       await invalidateQueries([
         postControllerFindAllInfiniteQueryKey(),
         profileControllerMeDetailedOptions()
@@ -81,13 +80,14 @@ export const useUploadAvatar = () => {
     setPreviewUrl(user.profile.avatar?.url)
   }, [user])
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       if (previewUrl?.startsWith('blob:')) {
         URL.revokeObjectURL(previewUrl)
       }
-    }
-  }, [previewUrl])
+    },
+    [previewUrl]
+  )
 
   const onFileChange = (files: File[] | null) => {
     if (files && files.length > 0) {
@@ -97,6 +97,7 @@ export const useUploadAvatar = () => {
         setFileSizeError(
           t('validation.fileTooLarge', { max: MAX_FILE_SIZE_MB })
         )
+
         return
       }
 
@@ -113,6 +114,7 @@ export const useUploadAvatar = () => {
       return
     }
     const hasAvatar = !!user?.profile.avatar
+
     if (hasAvatar) {
       await deleteFile({ path: { id: String(user.profile.avatar?.id) } })
     }

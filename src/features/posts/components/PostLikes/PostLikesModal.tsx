@@ -5,9 +5,13 @@ import { useTranslation } from 'react-i18next'
 
 import { postControllerFindAllLikesInfiniteOptions } from '@/api'
 import { InputSearch } from '@/components/shared'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogHeader
+} from '@/components/ui'
 
-import { DialogHeader } from '@/components/ui'
 import { useDebouncedValue } from '@/hooks'
 
 import { PostLikesList } from './PostLikesList'

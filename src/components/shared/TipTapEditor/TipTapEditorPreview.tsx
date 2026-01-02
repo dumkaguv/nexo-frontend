@@ -12,14 +12,12 @@ export const TipTapEditorPreview = ({
   content,
   className,
   ...props
-}: Props) => {
-  return (
-    <div
-      dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(content)
-      }}
-      className={cn('tiptap', className)}
-      {...props}
-    />
-  )
-}
+}: Props) => (
+  <div
+    dangerouslySetInnerHTML={{
+      __html: DOMPurify.sanitize(content)
+    }}
+    className={cn('tiptap', className)}
+    {...props}
+  />
+)

@@ -1,13 +1,13 @@
-import axios, { type AxiosInstance } from 'axios'
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 import { paths } from '@/config'
 import { getAccessToken, saveAccessToken } from '@/utils'
 import { clearAccessToken } from '@/utils/clearAccessToken'
 
 import type { ResponseRefreshDto } from '@/api'
-import type { AxiosResponse } from 'axios'
 
 const baseURL = import.meta.env.VITE_PUBLIC_API_URL
+
 if (!baseURL) {
   throw new Error('Missing VITE_PUBLIC_API_URL')
 }
@@ -20,6 +20,7 @@ type Client = {
 export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
   axiosInstance.interceptors.request.use((config) => {
     const accessToken = getAccessToken()
+
     config.headers.Authorization = `Bearer ${accessToken}`
 
     return config
@@ -41,13 +42,16 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
           )
 
           const newAccessToken = response.data?.data.accessToken
+
           if (!newAccessToken) {
             clearAccessToken()
+
             return (window.location.href = paths.auth.login)
           }
           saveAccessToken(newAccessToken)
 
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+
           return axiosInstance(originalRequest)
         } catch (err) {
           return Promise.reject(err)

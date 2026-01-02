@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
-import { authControllerLoginMutation } from '@/api'
+import { authControllerLoginMutation, type CreateLoginDto } from '@/api'
 import { paths } from '@/config'
 
 import {
@@ -14,7 +14,6 @@ import {
 } from '@/features/auth/zodSchemas'
 import { saveAccessToken, showApiErrors } from '@/utils'
 
-import type { CreateLoginDto } from '@/api'
 import type { InputField } from '@/features/auth/types'
 
 export const useLoginForm = () => {

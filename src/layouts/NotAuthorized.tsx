@@ -2,14 +2,12 @@ import { Outlet } from 'react-router-dom'
 
 import { Container, HeaderUnAuthorized } from '@/components/shared'
 
-export const NotAuthorizedLayout = () => {
-  return (
-    <>
-      <HeaderUnAuthorized />
+export const NotAuthorizedLayout = () => (
+  <>
+    <HeaderUnAuthorized />
 
-      <Container className="flex min-h-[calc(100dvh-var(--header-height))] flex-col items-center justify-center py-5">
-        <Outlet />
-      </Container>
-    </>
-  )
-}
+    <Container className="flex min-h-[calc(100dvh-var(--header-height))] flex-col items-center justify-center py-5">
+      <Outlet />
+    </Container>
+  </>
+)

@@ -8,7 +8,10 @@ export const createPhoneSchema = (t: TFunction) =>
     .optional()
     .refine(
       (val) => {
-        if (val === undefined || val === '' || val === null) return true
+        if (val === undefined || val === '' || val === null) {
+          return true
+        }
+
         return /^\+?\d+$/.test(val)
       },
       {

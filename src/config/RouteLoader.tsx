@@ -1,9 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useNavigation } from 'react-router-dom'
 
-import LoadingBar from 'react-top-loading-bar'
-
-import type { LoadingBarRef } from 'react-top-loading-bar'
+import LoadingBar, { type LoadingBarRef } from 'react-top-loading-bar'
 
 export const RouteLoader = () => {
   const ref = useRef<LoadingBarRef>(null)

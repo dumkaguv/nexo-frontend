@@ -9,15 +9,15 @@ import {
   postControllerFindAllInfiniteQueryKey,
   postControllerUpdateMutation,
   uploadControllerDeleteMutation,
-  uploadControllerUploadMutation
+  uploadControllerUploadMutation,
+  type ResponsePostDto
 } from '@/api'
-import { createPostSchema } from '@/features/posts/zodSchemas'
+import {
+  createPostSchema,
+  type CreatePostSchema
+} from '@/features/posts/zodSchemas'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { showApiErrors } from '@/utils'
-
-import type { ResponsePostDto } from '@/api'
-
-import type { CreatePostSchema } from '@/features/posts/zodSchemas'
 
 type Props = {
   files?: File[]

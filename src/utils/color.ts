@@ -1,5 +1,6 @@
 export const getTextColorForBackground = (hslColor: string) => {
   const match = hslColor.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/)
+
   if (!match) {
     return '#fff'
   }

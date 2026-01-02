@@ -71,6 +71,7 @@ export const FormCreatePost = ({
     }
 
     const urls = Object.values(files).map((file) => URL.createObjectURL(file))
+
     setPreviews([...(post?.files?.map(({ file }) => file?.url) ?? []), ...urls])
 
     return () => {

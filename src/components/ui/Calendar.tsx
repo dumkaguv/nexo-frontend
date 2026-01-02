@@ -5,12 +5,14 @@ import {
 } from 'lucide-react'
 import * as React from 'react'
 
-import { DayPicker, getDefaultClassNames } from 'react-day-picker'
+import {
+  DayPicker,
+  getDefaultClassNames,
+  type DayButton
+} from 'react-day-picker'
 
 import { Button, buttonVariants } from '@/components/ui'
 import { cn } from '@/utils/index'
-
-import type { DayButton } from 'react-day-picker'
 
 function Calendar({
   className,
@@ -126,16 +128,14 @@ function Calendar({
         ...classNames
       }}
       components={{
-        Root: ({ className, rootRef, ...props }) => {
-          return (
-            <div
-              data-slot="calendar"
-              ref={rootRef}
-              className={cn(className)}
-              {...props}
-            />
-          )
-        },
+        Root: ({ className, rootRef, ...props }) => (
+          <div
+            data-slot="calendar"
+            ref={rootRef}
+            className={cn(className)}
+            {...props}
+          />
+        ),
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
             return (
@@ -157,15 +157,13 @@ function Calendar({
           )
         },
         DayButton: CalendarDayButton,
-        WeekNumber: ({ children, ...props }) => {
-          return (
-            <td {...props}>
-              <div className="flex size-(--cell-size) items-center justify-center text-center">
-                {children}
-              </div>
-            </td>
-          )
-        },
+        WeekNumber: ({ children, ...props }) => (
+          <td {...props}>
+            <div className="flex size-(--cell-size) items-center justify-center text-center">
+              {children}
+            </div>
+          </td>
+        ),
         ...components
       }}
       {...props}
@@ -182,8 +180,11 @@ function CalendarDayButton({
   const defaultClassNames = getDefaultClassNames()
 
   const ref = React.useRef<HTMLButtonElement>(null)
+
   React.useEffect(() => {
-    if (modifiers.focused) ref.current?.focus()
+    if (modifiers.focused) {
+      ref.current?.focus()
+    }
   }, [modifiers.focused])
 
   return (

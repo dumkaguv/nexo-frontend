@@ -1,16 +1,15 @@
 import { X } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Lightbox from 'yet-another-react-lightbox'
 import Counter from 'yet-another-react-lightbox/plugins/counter'
+import 'yet-another-react-lightbox/plugins/counter.css'
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen'
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails'
+import 'yet-another-react-lightbox/plugins/thumbnails.css'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 
-import 'yet-another-react-lightbox/styles.css'
-import 'yet-another-react-lightbox/plugins/thumbnails.css'
-import 'yet-another-react-lightbox/plugins/counter.css'
 import 'yet-another-react-lightbox/styles.css'
 
 import {
@@ -22,8 +21,6 @@ import {
 import { cn } from '@/utils'
 
 import { Image, Typography } from './'
-
-import type { ComponentProps } from 'react'
 
 type Props = (
   | {
@@ -67,6 +64,7 @@ export const ImagePreview = ({
     if (srcs?.length) {
       return srcs.map((src) => ({ src }))
     }
+
     return []
   }, [files, srcs])
 
@@ -135,7 +133,7 @@ export const ImagePreview = ({
               <TooltipContent>{t('seeFullList')}</TooltipContent>
               <TooltipTrigger asChild>
                 <div
-                  onClick={() => onImageClick(maxImages! - 1)}
+                  onClick={() => onImageClick(maxImages - 1)}
                   className="relative size-full cursor-pointer overflow-hidden rounded-sm"
                 >
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">

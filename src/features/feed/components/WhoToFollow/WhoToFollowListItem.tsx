@@ -10,7 +10,8 @@ import {
   profileControllerMeDetailedQueryKey,
   subscriptionControllerFindAllFollowingInfiniteOptions,
   subscriptionControllerFollowMutation,
-  userControllerFindAllInfiniteQueryKey
+  userControllerFindAllInfiniteQueryKey,
+  type ResponseUserDto
 } from '@/api'
 import { AvatarWithColorInitials } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
@@ -20,8 +21,6 @@ import { paths } from '@/config'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
-
-import type { ResponseUserDto } from '@/api'
 
 type Props = {
   user: ResponseUserDto

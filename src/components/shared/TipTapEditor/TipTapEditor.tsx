@@ -1,14 +1,16 @@
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { TextStyleKit } from '@tiptap/extension-text-style'
-import { EditorContent, useEditor } from '@tiptap/react'
+import {
+  EditorContent,
+  useEditor,
+  type EditorContentProps
+} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
 import { TipTapToolbar } from './TipTapToolbar'
-
-import type { EditorContentProps } from '@tiptap/react'
 
 const extensions = [StarterKit, TextStyleKit]
 

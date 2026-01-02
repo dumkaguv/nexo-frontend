@@ -1,12 +1,15 @@
 import { Slot } from '@radix-ui/react-slot'
 import { Upload } from 'lucide-react'
-import { useRef } from 'react'
+import {
+  useRef,
+  type ChangeEvent,
+  type ComponentProps,
+  type PropsWithChildren
+} from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button, FieldLabel, Input } from '@/components/ui'
 import { cn } from '@/utils'
-
-import type { ChangeEvent, ComponentProps, PropsWithChildren } from 'react'
 
 type Props = {
   label?: string
@@ -37,6 +40,7 @@ export const InputUpload = ({
     }
 
     const files = Array.from(e.target.files)
+
     onChange?.(files)
   }
 

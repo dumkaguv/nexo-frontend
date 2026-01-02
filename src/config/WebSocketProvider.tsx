@@ -4,15 +4,14 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState
+  useState,
+  type ReactNode
 } from 'react'
 
 import { getAccessToken } from '@/utils'
 import { AUTH_TOKEN_CHANGED_EVENT } from '@/utils/authTokenEvents'
 
 import { type SocketAuth, initSocket, setSocketAuth } from './socket'
-
-import type { ReactNode } from 'react'
 
 import type { Socket } from 'socket.io-client'
 
@@ -57,8 +56,13 @@ export const WebSocketProvider = ({
   const previousTokenRef = useRef<string | null>(null)
 
   const resolvedAuth = useMemo(() => {
-    if (auth) return auth
-    if (!accessToken) return undefined
+    if (auth) {
+      return auth
+    }
+    if (!accessToken) {
+      return undefined
+    }
+
     return { token: accessToken } satisfies SocketAuth
   }, [accessToken, auth])
 
@@ -91,6 +95,7 @@ export const WebSocketProvider = ({
   useEffect(() => {
     const handleTokenChanged = (event: Event) => {
       const token = (event as CustomEvent<string | null>).detail
+
       setAccessToken(token ?? getAccessToken())
     }
 
@@ -109,16 +114,19 @@ export const WebSocketProvider = ({
         typeof resolvedAuth?.token === 'string' ? resolvedAuth.token : null
 
       disconnect()
+
       return
     }
 
     const nextToken =
       typeof resolvedAuth?.token === 'string' ? resolvedAuth.token : null
     const previousToken = previousTokenRef.current
+
     previousTokenRef.current = nextToken
 
     if (!nextToken) {
       disconnect()
+
       return
     }
 
@@ -130,9 +138,7 @@ export const WebSocketProvider = ({
     }
   }, [connect, disconnect, enabled, namespace, resolvedAuth, socket])
 
-  useEffect(() => {
-    return () => disconnect()
-  }, [disconnect])
+  useEffect(() => () => disconnect(), [disconnect])
 
   useEffect(() => {
     const handleConnect = () => {
@@ -164,9 +170,7 @@ export const WebSocketProvider = ({
   }, [socket])
 
   const emit: Socket['emit'] = useCallback(
-    (...args) => {
-      return socket.emit(...args)
-    },
+    (...args) => socket.emit(...args),
     [socket]
   )
 

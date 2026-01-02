@@ -18,9 +18,11 @@ const initializedUrlByNamespace = new Map<string, string>()
 
 const resolveSocketUrl = (url?: string) => {
   const resolved = url ?? import.meta.env.VITE_SOCKET_URL
+
   if (!resolved || typeof resolved !== 'string') {
     throw new Error('Missing VITE_SOCKET_URL for Socket.IO client')
   }
+
   return resolved
 }
 
@@ -46,13 +48,16 @@ export const initSocket = (init?: SocketInitOptions) => {
   const namespace = resolveNamespace(init?.namespace)
 
   const existingSocket = socketsByNamespace.get(namespace)
+
   if (existingSocket) {
     const initializedUrl = initializedUrlByNamespace.get(namespace)
+
     if (initializedUrl && initializedUrl !== url) {
       throw new Error(
         `Socket.IO namespace ${namespace} already initialized with a different url: ${initializedUrl}`
       )
     }
+
     return existingSocket
   }
 
@@ -67,6 +72,7 @@ export const initSocket = (init?: SocketInitOptions) => {
   })
 
   socketsByNamespace.set(namespace, socket)
+
   return socket
 }
 
@@ -74,6 +80,7 @@ export const getSocket = (namespace?: string) => initSocket({ namespace })
 
 export const setSocketAuth = (auth?: SocketAuth, namespace?: string) => {
   const socket = getSocket(namespace)
+
   socket.auth = auth ?? {}
 }
 

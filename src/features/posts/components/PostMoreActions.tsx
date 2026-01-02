@@ -47,7 +47,10 @@ export const PostMoreActions = ({ post, onButtonEdit }: Props) => {
     await deleteAsync({ path: { id: String(post.id) } })
 
   const isOwner = post.user.id === user?.id
-  if (!isOwner) return null
+
+  if (!isOwner) {
+    return null
+  }
 
   return (
     <Popover>
