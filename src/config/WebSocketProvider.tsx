@@ -1,5 +1,4 @@
 import {
-  createContext,
   useCallback,
   useEffect,
   useMemo,
@@ -8,6 +7,7 @@ import {
   type ReactNode
 } from 'react'
 
+import { WebSocketContext } from '@/stores'
 import { getAccessToken, AUTH_TOKEN_CHANGED_EVENT } from '@/utils'
 
 import { type SocketAuth, initSocket, setSocketAuth } from './socket'
@@ -32,10 +32,6 @@ type WebSocketProviderProps = {
   url?: string
   namespace?: string
 }
-
-export const WebSocketContext = createContext<WebSocketContextValue | null>(
-  null
-)
 
 export const WebSocketProvider = ({
   children,

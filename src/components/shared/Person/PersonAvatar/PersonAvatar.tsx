@@ -3,7 +3,7 @@ import { Avatar, AvatarImage, Skeleton } from '@/components/ui'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
-import type { CSSProperties } from 'react'
+import type { CSSProperties, JSX } from 'react'
 
 type Props = {
   src?: string | null
@@ -22,22 +22,26 @@ export const PersonAvatar = ({
 }: Props) => {
   const { user, isPendingUser } = useAuthStore()
 
-  return (
-    <Avatar className={cn('size-16', className)}>
-      {isPendingUser ? (
-        <Skeleton
-          className={cn('size-16 rounded-full', className)}
-          style={style}
-        />
-      ) : src ? (
-        <AvatarImage
-          className={cn('object-cover', avatarImageClassName)}
-          src={src ?? user?.profile.avatar?.url}
-          style={style}
-        />
-      ) : (
-        <AvatarWithColorInitials user={user} size={size} />
-      )}
-    </Avatar>
-  )
+  let content: JSX.Element
+
+  if (isPendingUser) {
+    content = (
+      <Skeleton
+        className={cn('size-16 rounded-full', className)}
+        style={style}
+      />
+    )
+  } else if (src || user?.profile.avatar?.url) {
+    content = (
+      <AvatarImage
+        className={cn('object-cover', avatarImageClassName)}
+        src={src ?? user?.profile.avatar?.url}
+        style={style}
+      />
+    )
+  } else {
+    content = <AvatarWithColorInitials user={user} size={size} />
+  }
+
+  return <Avatar className={cn('size-16', className)}>{content}</Avatar>
 }

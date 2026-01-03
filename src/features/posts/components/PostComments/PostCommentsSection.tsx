@@ -65,7 +65,7 @@ export const PostCommentsSection = ({ postId }: Props) => {
           path: { id: String(postId) }
         })
       ])
-      invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      void invalidateQueries([postControllerFindAllInfiniteQueryKey()])
       toast.success(t('success'))
     },
     onError: (e) => showApiErrors(e)

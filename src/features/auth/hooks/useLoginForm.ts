@@ -36,7 +36,7 @@ export const useLoginForm = () => {
     onSuccess: ({ data: { accessToken } }) => {
       toast.success(t('auth.loginSuccess'))
       saveAccessToken(accessToken)
-      navigate(paths.home.root)
+      void navigate(paths.home.root)
     },
     onError: (error) => showApiErrors(error, t('auth.loginError'))
   })

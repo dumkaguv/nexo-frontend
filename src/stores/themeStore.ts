@@ -10,23 +10,21 @@ type ThemeStore = {
 
 const storageKey = 'vite-ui-theme'
 
+const getSystemTheme = (): Theme =>
+  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+
+const resolveTheme = (theme: Theme): Theme =>
+  theme === 'system' ? getSystemTheme() : theme
+
 export const useThemeStore = create<ThemeStore>((set) => ({
-  theme:
-    (localStorage.getItem(storageKey) as Theme) ??
-    (window.matchMedia?.('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'),
+  theme: (localStorage.getItem(storageKey) as Theme | null) ?? getSystemTheme(),
 
   setTheme: (theme) => {
     localStorage.setItem(storageKey, theme)
-    document.documentElement.classList.remove('light', 'dark')
-    const appliedTheme =
-      theme === 'system'
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light'
-        : theme
 
+    const appliedTheme = resolveTheme(theme)
+
+    document.documentElement.classList.remove('light', 'dark')
     document.documentElement.classList.add(appliedTheme)
 
     set({ theme })
@@ -34,14 +32,9 @@ export const useThemeStore = create<ThemeStore>((set) => ({
 
   applyTheme: (theme) => {
     const current =
-      theme ?? (localStorage.getItem(storageKey) as Theme) ?? 'system'
+      theme ?? (localStorage.getItem(storageKey) as Theme | null) ?? 'system'
 
-    const appliedTheme =
-      current === 'system'
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light'
-        : current
+    const appliedTheme = resolveTheme(current)
 
     document.documentElement.classList.remove('light', 'dark')
     document.documentElement.classList.add(appliedTheme)

@@ -27,6 +27,8 @@ import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
 
+import type { MouseEvent } from 'react'
+
 type Props = {
   data: ResponseSubscriptionDto
   isFollowersTab?: boolean
@@ -54,8 +56,10 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
       onError: (e) => showApiErrors(e)
     })
 
-  const onUnfollow = async () =>
+  const onUnfollow = async (event: MouseEvent) => {
+    event.preventDefault()
     await unfollowAsync({ path: { id: String(data.user.id) } })
+  }
 
   return (
     <div className="flex items-center justify-between">
@@ -68,10 +72,7 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
         </div>
       </div>
 
-      <div
-        className="flex items-center gap-2"
-        onClick={(e) => e.preventDefault()}
-      >
+      <div className="flex items-center gap-2">
         {isFollowersTab ? (
           <Button variant="secondary">{t('sendMessage')}</Button>
         ) : (

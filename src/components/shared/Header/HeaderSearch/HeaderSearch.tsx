@@ -37,7 +37,9 @@ export const HeaderSearch = () => {
   const { updateQuery, params } = useQueryUpdate()
 
   const [isOpenPopover, setIsOpenPopover] = useState(false)
-  const [searchValue, setSearchValue] = useState(params.search ?? '')
+  const [searchValue, setSearchValue] = useState<string>(
+    typeof params.search === 'string' ? params.search : ''
+  )
   const debouncedSearch = useDebouncedValue(searchValue)
 
   const { t } = useTranslation()

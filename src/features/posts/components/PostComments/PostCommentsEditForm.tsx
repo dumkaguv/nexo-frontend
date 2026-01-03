@@ -53,7 +53,7 @@ export const PostCommentsEditForm = ({
   const { mutateAsync: updateCommentAsync, isPending } = useMutation({
     ...postControllerUpdateCommentMutation(),
     onSuccess: async () => {
-      invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      void invalidateQueries([postControllerFindAllInfiniteQueryKey()])
       await invalidateQueries([
         postControllerFindAllCommentsInfiniteQueryKey({
           path: { id: String(postId) }

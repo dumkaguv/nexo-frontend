@@ -31,14 +31,14 @@ export const HeaderAvatar = () => {
 
   const { mutateAsync: logout, isPending } = useMutation({
     ...authControllerLogoutMutation(),
-    onSuccess: () => {
+    onSuccess: async () => {
       clearAccessToken()
       setUser(undefined)
       setIsOpen(false)
-      queryClient.cancelQueries()
+      await queryClient.cancelQueries()
       queryClient.clear()
       toast.success(t('auth.logoutSuccess'))
-      navigate(paths.auth.login)
+      void navigate(paths.auth.login)
     },
     onError: (error) => showApiErrors(error)
   })

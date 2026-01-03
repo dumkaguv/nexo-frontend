@@ -1,7 +1,7 @@
 import { Eye, Image, X } from 'lucide-react'
 
 import { useEffect, useState } from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -63,6 +63,7 @@ export const FormCreatePost = ({
     }
   })
 
+  const content = useWatch({ control, name: 'content' })
   const { t } = useTranslation()
 
   useEffect(() => {
@@ -91,7 +92,7 @@ export const FormCreatePost = ({
   if (isPreview) {
     return (
       <PostPreview
-        content={control._formValues.content}
+        content={content ?? ''}
         previews={previews}
         onBack={onTogglePreview}
       />

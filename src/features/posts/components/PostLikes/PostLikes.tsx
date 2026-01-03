@@ -41,7 +41,7 @@ export const PostLikes = ({ postId, likesCount, isLiked }: Props) => {
 
   const getMutationConfig = () => ({
     onSuccess: async () => {
-      invalidateQueries([postControllerFindAllLikesQueryKey({ path })])
+      void invalidateQueries([postControllerFindAllLikesQueryKey({ path })])
       await invalidateQueries([postControllerFindAllInfiniteQueryKey()])
       toast.success(t('success'))
     },

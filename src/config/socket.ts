@@ -17,7 +17,8 @@ const socketsByNamespace = new Map<string, Socket>()
 const initializedUrlByNamespace = new Map<string, string>()
 
 const resolveSocketUrl = (url?: string) => {
-  const resolved = url ?? import.meta.env.VITE_SOCKET_URL
+  const resolved =
+    url ?? (import.meta.env.VITE_SOCKET_URL as string | undefined)
 
   if (!resolved || typeof resolved !== 'string') {
     throw new Error('Missing VITE_SOCKET_URL for Socket.IO client')

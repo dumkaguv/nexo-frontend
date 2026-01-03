@@ -128,9 +128,10 @@ export const ImagePreview = ({
             <Tooltip>
               <TooltipContent>{t('seeFullList')}</TooltipContent>
               <TooltipTrigger asChild>
-                <div
+                <button
+                  type="button"
                   onClick={() => onImageClick(maxImages - 1)}
-                  className="relative size-full cursor-pointer overflow-hidden rounded-sm"
+                  className="relative m-0 size-full cursor-pointer overflow-hidden rounded-sm border-0 bg-transparent p-0"
                 >
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                     <Typography.Text className="text-lg font-semibold text-white">
@@ -143,7 +144,7 @@ export const ImagePreview = ({
                     alt={`Slide ${maxImages}`}
                     className="size-full object-cover"
                   />
-                </div>
+                </button>
               </TooltipTrigger>
             </Tooltip>
           </>

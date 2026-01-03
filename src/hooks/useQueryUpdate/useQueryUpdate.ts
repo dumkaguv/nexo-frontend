@@ -31,7 +31,7 @@ export const useQueryUpdate = () => {
       )
 
       if (pathname + search + hash !== pushURL.replace(/\?+$/g, '')) {
-        push(pushURL)
+        void push(pushURL)
       }
     },
     [push, location]

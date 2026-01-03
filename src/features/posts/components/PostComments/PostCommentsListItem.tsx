@@ -55,7 +55,7 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
   const { mutateAsync: deleteCommentAsync, isPending } = useMutation({
     ...postControllerRemoveCommentMutation(),
     onSuccess: async () => {
-      invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      void invalidateQueries([postControllerFindAllInfiniteQueryKey()])
       await invalidateQueries([
         postControllerFindAllCommentsInfiniteQueryKey({
           path: { id: String(postId) }
@@ -113,7 +113,7 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
                       <Edit /> {t('edit')}
                     </Button>
 
-                    <Separator className="relative right-1 !w-[calc(100%+8px)]" />
+                    <Separator className="relative right-1 w-[calc(100%+8px)]!" />
 
                     <ModalConfirm
                       onOk={onDelete}

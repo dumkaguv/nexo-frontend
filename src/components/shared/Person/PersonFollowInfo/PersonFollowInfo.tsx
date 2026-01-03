@@ -18,9 +18,15 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
 
   const { t } = useTranslation()
 
-  const onToggleModal = () => setIsOpenModal((prev) => !prev)
-  const onClickOnFollowers = () => setIsClickOnFollowers(true)
-  const onClickOnFollowing = () => setIsClickOnFollowers(false)
+  const openModalFollowers = () => {
+    setIsClickOnFollowers(true)
+    setIsOpenModal(true)
+  }
+
+  const openModalFollowing = () => {
+    setIsClickOnFollowers(false)
+    setIsOpenModal(true)
+  }
 
   const renderFollowInfo = (translationKey: string, count?: number) => (
     <div className={cn('flex items-center', isVertical && 'flex-col')}>
@@ -29,21 +35,18 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
           <Skeleton
             className={cn('h-5 w-8 rounded', !isVertical && 'mr-1.5')}
           />
-
           <Typography.Paragraph className="text-muted-foreground">
             {t(translationKey)}
           </Typography.Paragraph>
         </>
       ) : (
         <div
-          onClick={onToggleModal}
           className={cn(
-            'hover:text-primary/90 text-center duration-200 hover:cursor-pointer',
+            'text-center duration-200',
             !isVertical && 'flex gap-1.5'
           )}
         >
           <Typography.Text className="font-bold">{count ?? 0}</Typography.Text>
-
           <Typography.Paragraph className="text-muted-foreground">
             {t(translationKey)}
           </Typography.Paragraph>
@@ -52,35 +55,57 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
     </div>
   )
 
+  const commonBtnClass = 'hover:text-primary/90 cursor-pointer duration-200'
+
   return (
     <>
       {isVertical ? (
         <div className={cn('flex h-12 gap-4', className)} {...rest}>
-          <div onClick={onClickOnFollowers}>
+          <button
+            type="button"
+            className={commonBtnClass}
+            onClick={openModalFollowers}
+            disabled={isPendingUser}
+          >
             {renderFollowInfo('followers', user?.followersCount)}
-          </div>
+          </button>
 
           <Separator className="size-10" orientation="vertical" />
 
-          <div onClick={onClickOnFollowing}>
+          <button
+            type="button"
+            className={commonBtnClass}
+            onClick={openModalFollowing}
+            disabled={isPendingUser}
+          >
             {renderFollowInfo('following', user?.followingCount)}
-          </div>
+          </button>
         </div>
       ) : (
         <div className={cn('flex gap-3', className)} {...rest}>
-          <div onClick={onClickOnFollowers}>
+          <button
+            type="button"
+            className={commonBtnClass}
+            onClick={openModalFollowers}
+            disabled={isPendingUser}
+          >
             {renderFollowInfo('followers', user?.followersCount)}
-          </div>
+          </button>
 
-          <div onClick={onClickOnFollowing}>
+          <button
+            type="button"
+            className={commonBtnClass}
+            onClick={openModalFollowing}
+            disabled={isPendingUser}
+          >
             {renderFollowInfo('following', user?.followingCount)}
-          </div>
+          </button>
         </div>
       )}
 
       <SubscriptionModal
-        onOpenChange={onToggleModal}
         open={isOpenModal}
+        onOpenChange={(open) => setIsOpenModal(open)}
         isFollowersTab={isClickOnFollowers}
       />
     </>

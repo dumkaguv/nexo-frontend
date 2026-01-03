@@ -1,11 +1,15 @@
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, {
+  type AxiosInstance,
+  type AxiosResponse,
+  type AxiosError
+} from 'axios'
 
 import { paths } from '@/config'
 import { getAccessToken, saveAccessToken, clearAccessToken } from '@/utils'
 
-import type { ResponseRefreshDto } from '@/api'
+import type { BaseResponseDto, ResponseRefreshDto } from '@/api'
 
-const baseURL = import.meta.env.VITE_PUBLIC_API_URL
+const baseURL = import.meta.env.VITE_PUBLIC_API_URL as string | undefined
 
 if (!baseURL) {
   throw new Error('Missing VITE_PUBLIC_API_URL')
@@ -15,6 +19,8 @@ const refreshUrl = `${baseURL}/api/auth/refresh`
 type Client = {
   instance: AxiosInstance
 }
+
+type RetryConfig = { _retry?: boolean }
 
 export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
   axiosInstance.interceptors.request.use((config) => {
@@ -27,20 +33,26 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
 
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse<ResponseRefreshDto>) => response,
-    async (error) => {
-      const originalRequest = error.config
+    async (error: AxiosError) => {
+      const originalRequest = error.config as
+        | (typeof error.config & RetryConfig)
+        | undefined
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (
+        originalRequest &&
+        error.response?.status === 401 &&
+        !originalRequest?._retry
+      ) {
         originalRequest._retry = true
 
         try {
-          const response = await axios.post(
-            refreshUrl,
-            {},
-            { withCredentials: true }
-          )
+          const response = await axios.post<
+            BaseResponseDto & ResponseRefreshDto
+          >(refreshUrl, {}, { withCredentials: true })
 
-          const newAccessToken = response.data?.data.accessToken
+          const newAccessToken = response.data?.data.accessToken as
+            | string
+            | undefined
 
           if (!newAccessToken) {
             clearAccessToken()
@@ -53,7 +65,11 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
 
           return axiosInstance(originalRequest)
         } catch (err) {
-          return Promise.reject(err)
+          if (err instanceof Error) {
+            return Promise.reject(err)
+          }
+
+          return Promise.reject(new Error(String(err)))
         }
       }
 

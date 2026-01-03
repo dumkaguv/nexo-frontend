@@ -1,8 +1,9 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { WebSocketContext } from '@/config/WebSocketProvider'
 import { useWebSocket } from '@/hooks/useWebSocket'
+
+import { WebSocketContext } from '@/stores'
 
 import type { ReactNode } from 'react'
 

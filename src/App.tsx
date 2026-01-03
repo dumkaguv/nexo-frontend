@@ -5,7 +5,7 @@ import { Providers, getConfigInterceptors } from '@/config'
 import { client } from './api/client.gen'
 
 client.setConfig({
-  baseURL: import.meta.env.VITE_PUBLIC_API_URL,
+  baseURL: import.meta.env.VITE_PUBLIC_API_URL as string | undefined,
   withCredentials: true
 })
 

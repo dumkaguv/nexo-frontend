@@ -23,21 +23,16 @@ export const PostComments = ({ commentsCount, onClick }: Props) => {
       <Tooltip>
         <TooltipContent>{t('comment')}</TooltipContent>
         <TooltipTrigger asChild>
-          <div
+          <Button
+            variant="text"
             onClick={onClick}
-            className="flex cursor-pointer items-center gap-1.5"
+            className="flex h-5 w-fit items-center justify-start gap-1.5 p-0"
           >
-            <Button
-              variant="text"
-              size="icon"
-              className="h-5 w-fit justify-start"
-            >
-              <MessageCircle />
-            </Button>
+            <MessageCircle />
             <Typography.Text className="text-sm">
               {commentsCount}
             </Typography.Text>
-          </div>
+          </Button>
         </TooltipTrigger>
       </Tooltip>
     </div>
