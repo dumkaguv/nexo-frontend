@@ -15,7 +15,19 @@ describe('PersonNickname', () => {
     useAuthStore.mockReset()
   })
 
-  it('renders nickname as link', () => {
+  it('renders nickname without @ when asLink is false', () => {
+    useAuthStore.mockReturnValue({ user: { id: 1, username: 'john' } })
+
+    render(
+      <MemoryRouter>
+        <PersonNickname nickname="jane" userId={2} />
+      </MemoryRouter>
+    )
+
+    expect(screen.getByText('jane')).toBeInTheDocument()
+  })
+
+  it('renders nickname with @ when asLink is true', () => {
     useAuthStore.mockReturnValue({ user: { id: 1, username: 'john' } })
 
     render(

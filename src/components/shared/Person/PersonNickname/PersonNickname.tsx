@@ -38,7 +38,7 @@ export const PersonNickname = ({
   } else {
     content = (
       <Typography.Text className="text-muted-foreground">
-        @{username}
+        {username}
       </Typography.Text>
     )
   }

@@ -15,6 +15,8 @@
     "fix": "npm run lint:fix && npm run format:check",
     "lint:css": "stylelint \"src/**/*.{css}\"",
     "lint:css:fix": "stylelint \"src/**/*.{css}\" --fix",
+    "stylelint": "stylelint \"**/*.{css,scss,postcss}\"",
+    "stylelint:fix": "stylelint \"**/*.{css,scss,postcss}\" --fix",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
