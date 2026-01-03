@@ -4,6 +4,8 @@ import '@testing-library/jest-dom'
 
 import { vi, beforeAll } from 'vitest'
 
+import type { ClassValue } from 'clsx'
+
 beforeAll(() => {
   process.env.VITE_PUBLIC_API_URL ??= 'http://localhost:3000'
 })
@@ -38,7 +40,11 @@ vi.mock('@/utils/cn', async () => {
 
   return {
     ...actual,
-    cn: actual.cn
+    cn: (...args: ClassValue[]) =>
+      args
+        .flat()
+        .filter((v): v is string => Boolean(v))
+        .join(' ')
   }
 })
 
@@ -47,7 +53,11 @@ vi.mock('@/utils', async () => {
 
   return {
     ...actual,
-    cn: actual.cn
+    cn: (...args: ClassValue[]) =>
+      args
+        .flat()
+        .filter((v): v is string => Boolean(v))
+        .join(' ')
   }
 })
 

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 
 import { PersonNickname } from '@/components/shared/Person/PersonNickname'
@@ -14,11 +15,15 @@ describe('PersonNickname', () => {
     useAuthStore.mockReset()
   })
 
-  it('renders nickname text', () => {
-    useAuthStore.mockReturnValue({ user: { username: 'john' } })
+  it('renders nickname as link', () => {
+    useAuthStore.mockReturnValue({ user: { id: 1, username: 'john' } })
 
-    render(<PersonNickname nickname="jane" />)
+    render(
+      <MemoryRouter>
+        <PersonNickname nickname="jane" asLink userId={2} />
+      </MemoryRouter>
+    )
 
-    expect(screen.getByText('jane')).toBeInTheDocument()
+    expect(screen.getByText('@jane')).toBeInTheDocument()
   })
 })

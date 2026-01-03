@@ -10,8 +10,18 @@ type ThemeStore = {
 
 const storageKey = 'vite-ui-theme'
 
-const getSystemTheme = (): Theme =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+const getSystemTheme = (): Theme => {
+  if (
+    typeof window === 'undefined' ||
+    typeof window.matchMedia !== 'function'
+  ) {
+    return 'light'
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+}
 
 const resolveTheme = (theme: Theme): Theme =>
   theme === 'system' ? getSystemTheme() : theme
