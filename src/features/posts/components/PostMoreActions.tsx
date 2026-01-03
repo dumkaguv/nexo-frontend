@@ -69,7 +69,7 @@ export const PostMoreActions = ({ post, onButtonEdit }: Props) => {
             <Edit /> {t('edit')}
           </Button>
 
-          <Separator className="relative right-1 !w-[calc(100%+8px)]" />
+          <Separator className="relative right-1 w-[calc(100%+8px)]!" />
 
           <ModalConfirm onOk={onDelete} okButtonProps={{ loading: isPending }}>
             <Button

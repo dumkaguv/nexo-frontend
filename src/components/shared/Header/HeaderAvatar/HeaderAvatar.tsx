@@ -18,10 +18,13 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 import { paths } from '@/config'
+import { useWebSocket } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors, clearAccessToken } from '@/utils'
 
 export const HeaderAvatar = () => {
+  const { disconnect } = useWebSocket()
+
   const [isOpen, setIsOpen] = useState(false)
 
   const { setUser } = useAuthStore()
@@ -36,6 +39,7 @@ export const HeaderAvatar = () => {
       setUser(undefined)
       setIsOpen(false)
       await queryClient.cancelQueries()
+      disconnect()
       queryClient.clear()
       toast.success(t('auth.logoutSuccess'))
       void navigate(paths.auth.login)

@@ -21,7 +21,7 @@ export const Sidebar = () => {
   const conversations = data?.pages.flatMap(({ data }) => data)
 
   return (
-    <SidebarUi className="w-full max-w-[370px]" bodyClassName="items-start">
+    <SidebarUi className="w-full max-w-92.5" bodyClassName="items-start">
       <div className="flex w-full flex-col gap-5">
         <div className="flex items-center gap-2">
           <Typography.Title level={3} className="text-base">
@@ -35,7 +35,7 @@ export const Sidebar = () => {
           </Badge>
         </div>
 
-        <Separator className="-ml-5 !w-[calc(100%+40px)]" />
+        <Separator className="-ml-5 w-[calc(100%+40px)]!" />
 
         <InputSearch disabled={isLoading} />
 

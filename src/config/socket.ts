@@ -33,11 +33,7 @@ const resolveNamespace = (namespace?: string) => {
     | undefined
   const resolved = namespace ?? envNamespace ?? '/messages'
 
-  if (!resolved || typeof resolved !== 'string') {
-    return '/'
-  }
-
-  if (resolved === '/') {
+  if (!resolved || typeof resolved !== 'string' || resolved === '/') {
     return '/'
   }
 
@@ -95,6 +91,5 @@ export const connectSocket = (init?: SocketInitOptions) => {
   return socket
 }
 
-export const disconnectSocket = () => {
+export const disconnectSocket = () =>
   socketsByNamespace.forEach((socket) => socket.disconnect())
-}

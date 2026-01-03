@@ -6,12 +6,23 @@ import {
   Button,
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
+  type ButtonProps
 } from '@/components/ui'
 
-import type { ComponentProps } from 'react'
+import { cn } from '@/utils'
 
-export const ButtonMoreActions = (props: ComponentProps<'button'>) => {
+import type { JSX } from 'react'
+
+type Props = {
+  icon?: JSX.Element
+} & ButtonProps
+
+export const ButtonMoreActions = ({
+  icon: Icon,
+  className,
+  ...props
+}: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -20,10 +31,14 @@ export const ButtonMoreActions = (props: ComponentProps<'button'>) => {
       <TooltipTrigger asChild>
         <Button
           variant="text"
-          className="hover:bg-secondary/80 size-7 p-0!"
+          className={cn(
+            'hover:bg-secondary/80',
+            !Icon && 'size-7 p-0!',
+            className
+          )}
           {...props}
         >
-          <Ellipsis />
+          {Icon ? Icon : <Ellipsis />}
         </Button>
       </TooltipTrigger>
     </Tooltip>

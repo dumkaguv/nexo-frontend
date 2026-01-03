@@ -1,7 +1,11 @@
 import { ErrorBoundary } from 'react-error-boundary'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { ErrorFallback, NotFound } from '@/components/shared'
+import {
+  ErrorFallback,
+  NotFound,
+  RouterErrorFallback
+} from '@/components/shared'
 import { AuthorizedLayout } from '@/layouts/Authorized'
 
 import { NotAuthorizedLayout } from '@/layouts/NotAuthorized'
@@ -12,6 +16,7 @@ import { RouteLoader } from './RouteLoader'
 const router = createBrowserRouter([
   {
     hydrateFallbackElement: <div />,
+    ErrorBoundary: RouterErrorFallback,
     element: (
       <>
         <RouteLoader />
@@ -69,6 +74,7 @@ const router = createBrowserRouter([
   },
   {
     hydrateFallbackElement: <div />,
+    ErrorBoundary: RouterErrorFallback,
     element: (
       <>
         <RouteLoader />

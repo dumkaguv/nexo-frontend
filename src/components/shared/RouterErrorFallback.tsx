@@ -1,5 +1,6 @@
 import { AlertTriangle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
 
 import { Container } from '@/components/shared/Container'
 import { Button } from '@/components/ui/Button'
@@ -11,16 +12,19 @@ import {
   EmptyTitle
 } from '@/components/ui/Empty'
 
-export type ErrorFallbackProps = {
-  error?: Error
-  resetErrorBoundary?: () => void
-}
-
-export const ErrorFallback = ({
-  error,
-  resetErrorBoundary
-}: ErrorFallbackProps) => {
+export const RouterErrorFallback = () => {
   const { t } = useTranslation()
+  const err = useRouteError()
+
+  let message = t('error.errorOccurred')
+
+  if (isRouteErrorResponse(err)) {
+    message = `${err.status} ${err.statusText}`
+  } else if (err instanceof Error) {
+    message = err.message
+  } else if (typeof err === 'string') {
+    message = err
+  }
 
   return (
     <Container className="flex flex-col items-center justify-center p-6">
@@ -30,11 +34,10 @@ export const ErrorFallback = ({
             <AlertTriangle className="text-destructive" />
           </EmptyMedia>
           <EmptyTitle>{t('error.somethingWentWrong')}</EmptyTitle>
-          <EmptyDescription>
-            {error?.message || t('error.errorOccurred')}
-          </EmptyDescription>
+          <EmptyDescription>{message}</EmptyDescription>
         </EmptyHeader>
-        <Button onClick={resetErrorBoundary} variant="default" className="mt-4">
+
+        <Button onClick={() => window.location.reload()} className="mt-4">
           {t('error.tryAgain')}
         </Button>
       </Empty>

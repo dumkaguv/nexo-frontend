@@ -143,5 +143,10 @@
   "horizontalRule": "Horizontal rule",
   "hardBreak": "Line break",
   "undo": "Undo",
-  "redo": "Redo"
+  "redo": "Redo",
+  "message": "Message",
+  "select": "Select",
+  "emoji": "Emoji",
+  "sendMessage": "Send message",
+  "typeMessage": "Type a message"
 }

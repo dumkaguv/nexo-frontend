@@ -3,31 +3,38 @@ import { TextStyleKit } from '@tiptap/extension-text-style'
 import {
   EditorContent,
   useEditor,
+  type Editor,
   type EditorContentProps
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { useEffect } from 'react'
+import { useEffect, type MutableRefObject } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
 import { TipTapToolbar } from '@/components/shared/TipTapEditor/TipTapToolbar'
+import { cn } from '@/utils'
 
 const extensions = [StarterKit, TextStyleKit]
 
 type TipTapEditorProps = {
   value?: string
+  showToolbar?: boolean
   onChange?: (value: string) => void
   onBlur?: () => void
   placeholder?: string
   toolbarClassName?: string
+  editorRef?: MutableRefObject<Editor | null>
 } & Partial<EditorContentProps>
 
 export const TipTapEditor = ({
   value,
+  showToolbar = true,
   onChange,
   onBlur,
   placeholder,
   toolbarClassName,
+  editorRef,
+  className,
   ...props
 }: TipTapEditorProps) => {
   const { t } = useTranslation()
@@ -56,17 +63,26 @@ export const TipTapEditor = ({
     }
   }, [value, editor])
 
+  useEffect(() => {
+    if (editorRef) {
+      editorRef.current = editor
+    }
+  }, [editorRef, editor])
+
   if (!editor) {
     return null
   }
 
   return (
     <>
-      <TipTapToolbar editor={editor} className={toolbarClassName} />
+      {showToolbar && (
+        <TipTapToolbar editor={editor} className={toolbarClassName} />
+      )}
+
       <EditorContent
         {...props}
         editor={editor}
-        className="min-h-15 rounded-lg border"
+        className={cn('min-h-15 rounded-lg border', className)}
       />
     </>
   )

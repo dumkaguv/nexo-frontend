@@ -54,6 +54,7 @@ export const WebSocketProvider = ({
     if (auth) {
       return auth
     }
+
     if (!accessToken) {
       return undefined
     }
@@ -62,13 +63,7 @@ export const WebSocketProvider = ({
   }, [accessToken, auth])
 
   const connect = useCallback(() => {
-    if (!enabled) {
-      return
-    }
-    if (!resolvedAuth) {
-      return
-    }
-    if (socket.connected) {
+    if (!enabled || !resolvedAuth || socket.connected) {
       return
     }
 
@@ -88,16 +83,16 @@ export const WebSocketProvider = ({
   }, [socket])
 
   useEffect(() => {
-    const handleTokenChanged = (event: Event) => {
+    const onTokenChanged = (event: Event) => {
       const token = (event as CustomEvent<string | null>).detail
 
       setAccessToken(token ?? getAccessToken())
     }
 
-    window.addEventListener(AUTH_TOKEN_CHANGED_EVENT, handleTokenChanged)
+    window.addEventListener(AUTH_TOKEN_CHANGED_EVENT, onTokenChanged)
 
     return () => {
-      window.removeEventListener(AUTH_TOKEN_CHANGED_EVENT, handleTokenChanged)
+      window.removeEventListener(AUTH_TOKEN_CHANGED_EVENT, onTokenChanged)
     }
   }, [])
 
@@ -133,34 +128,38 @@ export const WebSocketProvider = ({
     }
   }, [connect, disconnect, enabled, namespace, resolvedAuth, socket])
 
-  useEffect(() => () => disconnect(), [disconnect])
+  useEffect(() => {
+    return () => {
+      disconnect()
+    }
+  }, [disconnect])
 
   useEffect(() => {
-    const handleConnect = () => {
+    const onConnect = () => {
       setIsConnected(true)
       setIsConnecting(false)
       setLastError(null)
     }
 
-    const handleDisconnect = () => {
+    const onDisconnect = () => {
       setIsConnected(false)
       setIsConnecting(false)
     }
 
-    const handleConnectError = (error: unknown) => {
+    const onConnectError = (error: unknown) => {
       setIsConnected(false)
       setIsConnecting(false)
       setLastError(error instanceof Error ? error.message : String(error))
     }
 
-    socket.on('connect', handleConnect)
-    socket.on('disconnect', handleDisconnect)
-    socket.on('connect_error', handleConnectError)
+    socket.on('connect', onConnect)
+    socket.on('disconnect', onDisconnect)
+    socket.on('connect_error', onConnectError)
 
     return () => {
-      socket.off('connect', handleConnect)
-      socket.off('disconnect', handleDisconnect)
-      socket.off('connect_error', handleConnectError)
+      socket.off('connect', onConnect)
+      socket.off('disconnect', onDisconnect)
+      socket.off('connect_error', onConnectError)
     }
   }, [socket])
 
