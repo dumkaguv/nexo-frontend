@@ -9,6 +9,23 @@ const { mutateAsync } = vi.hoisted(() => ({
   mutateAsync: vi.fn()
 }))
 
+vi.mock('@/hooks', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/hooks')>()
+
+  return {
+    ...actual,
+    useWebSocket: () => ({
+      socket: null,
+      isConnected: true,
+      isConnecting: false,
+      lastError: null,
+      connect: vi.fn(),
+      disconnect: vi.fn(),
+      emit: vi.fn()
+    })
+  }
+})
+
 vi.mock('@tanstack/react-query', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@tanstack/react-query')>()
 
@@ -26,9 +43,14 @@ vi.mock('@/api', () => ({
   authControllerLogoutMutation: () => ({})
 }))
 
-vi.mock('@/stores', () => ({
-  useAuthStore: () => ({ setUser: vi.fn() })
-}))
+vi.mock('@/stores', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/stores')>()
+
+  return {
+    ...actual,
+    useAuthStore: () => ({ setUser: vi.fn() })
+  }
+})
 
 vi.mock('@/components/shared/Person/PersonAvatar', () => ({
   PersonAvatar: () => <div data-testid="person-avatar" />
@@ -36,10 +58,6 @@ vi.mock('@/components/shared/Person/PersonAvatar', () => ({
 
 vi.mock('sonner', () => ({
   toast: { success: vi.fn() }
-}))
-
-vi.mock('@/components/shared/Person/PersonAvatar', () => ({
-  PersonAvatar: () => <div data-testid="person-avatar" />
 }))
 
 describe('HeaderAvatar', () => {

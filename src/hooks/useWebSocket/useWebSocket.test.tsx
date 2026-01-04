@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useWebSocket } from '@/hooks/useWebSocket'
+import { useWebSocket } from '@/hooks'
 
 import { WebSocketContext } from '@/stores'
 
