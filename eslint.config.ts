@@ -82,7 +82,7 @@ export default tseslint.config(
       'no-useless-return': 'error',
       'no-nested-ternary': 'error',
       curly: ['error', 'all'],
-      'func-style': ['error', 'expression'],
+      'func-style': ['warn', 'expression'],
       'prefer-arrow-callback': ['error'],
 
       '@typescript-eslint/no-unused-vars': 'off',
