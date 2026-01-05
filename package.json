@@ -127,7 +127,7 @@
     "src/**/*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix",
-      "tsc -p tsconfig.json --noEmit"
+      "bash -c \"tsc -p tsconfig.json --noEmit\""
     ],
     "**/*.{css,scss,postcss}": [
       "stylelint --fix"
