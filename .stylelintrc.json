@@ -1,12 +1,11 @@
 {
   "extends": [
     "stylelint-config-standard",
-    "stylelint-config-tailwindcss"
+    "stylelint-config-tailwindcss",
+    "stylelint-config-clean-order"
   ],
-  "plugins": ["stylelint-order"],
   "rules": {
     "at-rule-no-unknown": null,
-    "order/properties-alphabetical-order": true,
 
     "color-hex-length": "short",
     "block-no-empty": true
