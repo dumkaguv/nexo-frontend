@@ -32,8 +32,8 @@
     "toggleTheme": "Изменить тему"
   },
   "validation": {
-    "email_invalid": "Неверный email",
-    "min_length": "Минимум {{count}} символов",
+    "emailInvalid": "Неверный email",
+    "minLength": "Минимум {{count}} символов",
     "required": "Это поле обязательно",
     "phone": "Номер должен содержать только цифры и опциональный + в начале",
     "fileTooLarge": "Файл должен быть меньше {{max}} МБ",
@@ -90,7 +90,8 @@
   "attach": "Прикрепить",
   "publish": "Опубликовать",
   "post": "Пост",
-  "today_at": "Сегодня в",
+  "todayAt": "Сегодня в",
+  "editedAt": "Отредактировано в",
   "noFollowersYet": "Пока нет подписчиков",
   "noFollowersYetDescription": "Когда люди начнут подписываться на вас, они появятся здесь.",
   "noFollowingYet": "Вы ни на кого не подписаны",
@@ -100,6 +101,8 @@
   "loading": "Загрузка...",
   "noResultsFound": "Ничего не найдено",
   "tryToTypeAnythingElse": "Попробуйте ввести что-то другое",
+  "noMessagesYet": "Сообщений пока нет",
+  "noMessagesYetDescription": "Начните диалог и отправьте первое сообщение.",
   "menu": "Меню",
   "whoToFollow": "На кого подписаться",
   "viewMore": "Показать еще",
@@ -148,5 +151,10 @@
   "select": "Выбрать",
   "emoji": "Эмодзи",
   "sendMessage": "Отправить сообщение",
-  "typeMessage": "Введите сообщение"
+  "typeMessage": "Введите сообщение",
+  "activeChats": "Активные чаты",
+  "noActiveChats": "Активных чатов пока нет",
+  "noActiveChatsDescription": "Начните новый диалог из списка рекомендаций ниже.",
+  "suggestions": "Рекомендации",
+  "joinedOn": "Дата регистрации"
 }

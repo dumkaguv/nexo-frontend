@@ -1,7 +1,7 @@
 import EmojiPicker, { Theme, type EmojiClickData } from 'emoji-picker-react'
 import { Paperclip, Send, Smile } from 'lucide-react'
 import { useRef } from 'react'
-import { Controller, type Control, type FieldErrors } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { TipTapEditor } from '@/components/shared'
@@ -18,17 +18,16 @@ import {
 } from '@/components/ui'
 import { useThemeStore } from '@/stores'
 
-import type { CreateSendMessageSchema } from '@/features/messages/zodSchemas'
+import type { CreateSendMessageSchema } from '@/features/conversations/zodSchemas'
 import type { Editor } from '@tiptap/react'
 
-type Props = {
-  control: Control<CreateSendMessageSchema>
-  errors: FieldErrors<CreateSendMessageSchema>
-}
-
-export const ChatFooter = ({ control, errors }: Props) => {
+export const ChatFooter = () => {
   const editorRef = useRef<Editor | null>(null)
 
+  const {
+    control,
+    formState: { errors }
+  } = useFormContext<CreateSendMessageSchema>()
   const { theme } = useThemeStore()
   const { t } = useTranslation()
 
@@ -42,7 +41,7 @@ export const ChatFooter = ({ control, errors }: Props) => {
   }
 
   return (
-    <footer className="flex items-end gap-3 px-6 py-4">
+    <footer className="flex items-end gap-3 px-4 py-3">
       <Field>
         <Controller
           name="content"
@@ -50,8 +49,8 @@ export const ChatFooter = ({ control, errors }: Props) => {
           render={({ field }) => (
             <TipTapEditor
               editorRef={editorRef}
-              placeholder={t('typeMessage')}
               showToolbar={false}
+              placeholder={t('typeMessage')}
               className="min-h-12 w-full"
               {...field}
             />

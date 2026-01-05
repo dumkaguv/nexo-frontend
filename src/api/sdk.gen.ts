@@ -22,6 +22,8 @@ import type {
   ConversationControllerFindAllConversationMessagesResponses,
   ConversationControllerFindAllData,
   ConversationControllerFindAllResponses,
+  ConversationControllerFindAllSuggestionsData,
+  ConversationControllerFindAllSuggestionsResponses,
   ConversationControllerFindOneData,
   ConversationControllerFindOneResponses,
   ConversationControllerRemoveData,
@@ -30,6 +32,8 @@ import type {
   MessageControllerCreateResponses,
   MessageControllerFindOneData,
   MessageControllerFindOneResponses,
+  MessageControllerRemoveData,
+  MessageControllerRemoveResponses,
   MessageControllerUpdateData,
   MessageControllerUpdateResponses,
   PostControllerCreateCommentData,
@@ -655,6 +659,25 @@ export const uploadControllerDelete = <ThrowOnError extends boolean = false>(
   })
 }
 
+export const messageControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<MessageControllerRemoveData, ThrowOnError>
+) => {
+  return (options.client ?? client).delete<
+    MessageControllerRemoveResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/messages/{id}',
+    ...options
+  })
+}
+
 export const messageControllerFindOne = <ThrowOnError extends boolean = false>(
   options: Options<MessageControllerFindOneData, ThrowOnError>
 ) => {
@@ -878,6 +901,28 @@ export const conversationControllerCreate = <
       'Content-Type': 'application/json',
       ...options.headers
     }
+  })
+}
+
+export const conversationControllerFindAllSuggestions = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<ConversationControllerFindAllSuggestionsData, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    ConversationControllerFindAllSuggestionsResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations/suggestions',
+    ...options
   })
 }
 

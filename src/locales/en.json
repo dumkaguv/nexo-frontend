@@ -32,8 +32,8 @@
     "tryAgain": "Try again"
   },
   "validation": {
-    "email_invalid": "Invalid email",
-    "min_length": "At least {{count}} symbols",
+    "emailInvalid": "Invalid email",
+    "minLength": "At least {{count}} symbols",
     "required": "This field is required",
     "phone": "The number must contain only numbers and an optional + at the beginning",
     "fileTooLarge": "File must be less than {{max}} MB",
@@ -90,7 +90,8 @@
   "attach": "Attach",
   "publish": "Publish",
   "post": "Post",
-  "today_at": "Today at",
+  "todayAt": "Today at",
+  "editedAt": "Edited at",
   "noFollowersYet": "No followers yet",
   "noFollowersYetDescription": "Once people start following you, they will appear here.",
   "noFollowingYet": "You're not following anyone yet",
@@ -100,6 +101,8 @@
   "loading": "Loading...",
   "noResultsFound": "No results found",
   "tryToTypeAnythingElse": "Try to type something else",
+  "noMessagesYet": "No messages yet",
+  "noMessagesYetDescription": "Start the conversation by sending the first message.",
   "menu": "Menu",
   "whoToFollow": "Who to follow",
   "viewMore": "View more",
@@ -148,5 +151,10 @@
   "select": "Select",
   "emoji": "Emoji",
   "sendMessage": "Send message",
-  "typeMessage": "Type a message"
+  "typeMessage": "Type a message",
+  "activeChats": "Active chats",
+  "noActiveChats": "No active chats",
+  "noActiveChatsDescription": "Start a new conversation from the suggestions below.",
+  "suggestions": "Suggestions",
+  "joinedOn": "Joined on"
 }

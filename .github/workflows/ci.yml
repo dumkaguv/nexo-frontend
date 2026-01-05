@@ -8,7 +8,7 @@ on:
 
 jobs:
   checks:
-    name: Checks (format, lint, typecheck)
+    name: Checks (format, lint, stylelint, typecheck)
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,7 @@ jobs:
       - run: npm run format:check
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm run stylelint
 
   test:
     name: Tests

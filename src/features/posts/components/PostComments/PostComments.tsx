@@ -26,7 +26,7 @@ export const PostComments = ({ commentsCount, onClick }: Props) => {
           <Button
             variant="text"
             onClick={onClick}
-            className="flex h-5 w-fit items-center justify-start gap-1.5 p-0"
+            className="flex h-5 w-fit items-center justify-start gap-1.5 p-0!"
           >
             <MessageCircle />
             <Typography.Text className="text-sm">

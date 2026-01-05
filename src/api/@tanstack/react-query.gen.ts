@@ -18,10 +18,12 @@ import {
   conversationControllerCreate,
   conversationControllerFindAll,
   conversationControllerFindAllConversationMessages,
+  conversationControllerFindAllSuggestions,
   conversationControllerFindOne,
   conversationControllerRemove,
   messageControllerCreate,
   messageControllerFindOne,
+  messageControllerRemove,
   messageControllerUpdate,
   type Options,
   postControllerCreate,
@@ -67,12 +69,16 @@ import type {
   ConversationControllerFindAllConversationMessagesResponse,
   ConversationControllerFindAllData,
   ConversationControllerFindAllResponse,
+  ConversationControllerFindAllSuggestionsData,
+  ConversationControllerFindAllSuggestionsResponse,
   ConversationControllerFindOneData,
   ConversationControllerRemoveData,
   ConversationControllerRemoveResponse,
   MessageControllerCreateData,
   MessageControllerCreateResponse,
   MessageControllerFindOneData,
+  MessageControllerRemoveData,
+  MessageControllerRemoveResponse,
   MessageControllerUpdateData,
   MessageControllerUpdateResponse,
   PostControllerCreateCommentData,
@@ -997,6 +1003,30 @@ export const uploadControllerDeleteMutation = (
   return mutationOptions
 }
 
+export const messageControllerRemoveMutation = (
+  options?: Partial<Options<MessageControllerRemoveData>>
+): UseMutationOptions<
+  MessageControllerRemoveResponse,
+  AxiosError<DefaultError>,
+  Options<MessageControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    MessageControllerRemoveResponse,
+    AxiosError<DefaultError>,
+    Options<MessageControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await messageControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
 export const messageControllerFindOneQueryKey = (
   options: Options<MessageControllerFindOneData>
 ) => createQueryKey('messageControllerFindOne', options)
@@ -1364,6 +1394,76 @@ export const conversationControllerCreateMutation = (
     }
   }
   return mutationOptions
+}
+
+export const conversationControllerFindAllSuggestionsQueryKey = (
+  options?: Options<ConversationControllerFindAllSuggestionsData>
+) => createQueryKey('conversationControllerFindAllSuggestions', options)
+
+export const conversationControllerFindAllSuggestionsOptions = (
+  options?: Options<ConversationControllerFindAllSuggestionsData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await conversationControllerFindAllSuggestions({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: conversationControllerFindAllSuggestionsQueryKey(options)
+  })
+}
+
+export const conversationControllerFindAllSuggestionsInfiniteQueryKey = (
+  options?: Options<ConversationControllerFindAllSuggestionsData>
+): QueryKey<Options<ConversationControllerFindAllSuggestionsData>> =>
+  createQueryKey('conversationControllerFindAllSuggestions', options, true)
+
+export const conversationControllerFindAllSuggestionsInfiniteOptions = (
+  options?: Options<ConversationControllerFindAllSuggestionsData>
+) => {
+  return infiniteQueryOptions<
+    ConversationControllerFindAllSuggestionsResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<ConversationControllerFindAllSuggestionsResponse>,
+    QueryKey<Options<ConversationControllerFindAllSuggestionsData>>,
+    | number
+    | Pick<
+        QueryKey<Options<ConversationControllerFindAllSuggestionsData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<ConversationControllerFindAllSuggestionsData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await conversationControllerFindAllSuggestions({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+        return data
+      },
+      queryKey:
+        conversationControllerFindAllSuggestionsInfiniteQueryKey(options)
+    }
+  )
 }
 
 export const conversationControllerFindAllConversationMessagesQueryKey = (

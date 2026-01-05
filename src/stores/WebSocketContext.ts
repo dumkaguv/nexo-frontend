@@ -1,16 +1,25 @@
 import { createContext } from 'react'
 
-import type { CreateMessageDto, ResponseMessageDto } from '@/api'
+import type {
+  CreateMessageDto,
+  ResponseMessageDto,
+  UpdateMessageDto
+} from '@/api'
+import type { WsError } from '@/types'
 
 import type { Socket } from 'socket.io-client'
 
 type ServerToClient = {
-  'message:new': (msg: ResponseMessageDto) => void
-  'message:sent': (msg: ResponseMessageDto) => void
+  'message:new': (dto?: ResponseMessageDto | WsError) => void
+  'message:sent': (dto?: ResponseMessageDto | WsError) => void
+  'message:updated': (dto?: ResponseMessageDto | WsError) => void
+  'message:deleted': (dto?: { deletedMessageId: number } | WsError) => void
 }
 
 type ClientToServer = {
   'message:send': (dto: CreateMessageDto) => void
+  'message:update': (dto: UpdateMessageDto) => void
+  'message:delete': (dto: { id: number }) => void
 }
 
 export type WebSocketContextValue = {

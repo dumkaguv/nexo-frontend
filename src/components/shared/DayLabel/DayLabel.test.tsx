@@ -16,6 +16,6 @@ describe('DayLabel', () => {
 
     render(<DayLabel date={now} showIcon={false} />)
 
-    expect(screen.getByText(/today_at/i)).toBeInTheDocument()
+    expect(screen.getByText(/todayAt/i)).toBeInTheDocument()
   })
 })

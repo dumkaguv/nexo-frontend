@@ -17,7 +17,7 @@ export const TipTapEditorPreview = ({
     dangerouslySetInnerHTML={{
       __html: DOMPurify.sanitize(content)
     }}
-    className={cn('tiptap', className)}
+    className={cn('tiptap min-w-0 wrap-break-word break-all', className)}
     {...props}
   />
 )

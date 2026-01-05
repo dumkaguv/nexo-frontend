@@ -7,7 +7,7 @@ import type { TFunction } from 'i18next'
 export const createSendMessageSchema = (t: TFunction) =>
   z.object({
     content: z.string().refine((val) => !emptyHtmlRegex.test(val), {
-      error: t('validation.min_length', { count: 1 })
+      error: t('validation.minLength', { count: 1 })
     })
   })
 

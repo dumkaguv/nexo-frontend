@@ -41,23 +41,36 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: paths.messages.root,
+        path: paths.conversations.root,
         lazy: async () => {
-          const { MessagesPage } = await import('@/features/messages')
+          const { ConversationsPage } = await import('@/features/conversations')
 
-          return { Component: MessagesPage }
+          return { Component: ConversationsPage }
         },
         children: [
           {
-            path: ':id',
+            path: paths.conversations.chatWithoutExistingConversation,
             lazy: async () => {
-              const { Chat } = await import('@/features/messages/components')
+              const { Chat } = await import(
+                '@/features/conversations/components'
+              )
+
+              return { Component: Chat }
+            }
+          },
+          {
+            path: paths.conversations.byId(':id'),
+            lazy: async () => {
+              const { Chat } = await import(
+                '@/features/conversations/components'
+              )
 
               return { Component: Chat }
             }
           }
         ]
       },
+
       {
         path: paths.user.byId(':id'),
         lazy: async () => {
@@ -96,14 +109,6 @@ const router = createBrowserRouter([
           const { RegisterPage } = await import('@/features/auth')
 
           return { Component: RegisterPage }
-        }
-      },
-      {
-        path: `:userId`,
-        lazy: async () => {
-          const { ActivateAccountPage } = await import('@/features/auth')
-
-          return { Component: ActivateAccountPage }
         }
       },
       {

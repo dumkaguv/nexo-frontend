@@ -1,3 +1,6 @@
+/* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import '../fonts/fonts.css';
@@ -272,5 +275,9 @@ svg * {
 
 .ProseMirror {
   min-height: 60px;
+  min-width: 0;
+  overflow-wrap: break-word;
   padding: 8px;
+  width: 100%;
+  word-break: break-all;
 }

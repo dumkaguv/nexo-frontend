@@ -20,7 +20,11 @@ export const Sidebar = ({ className, ...rest }: Props) => {
 
   const navItems = [
     { name: t('feed'), href: paths.home.root, icon: Newspaper },
-    { name: t('messages'), href: paths.messages.root, icon: MessageSquareText }
+    {
+      name: t('messages'),
+      href: paths.conversations.root,
+      icon: MessageSquareText
+    }
   ]
 
   return (

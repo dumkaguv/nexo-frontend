@@ -27,12 +27,14 @@ i18n.on('languageChanged', (lng) => {
 
 type Props = {
   date: string | Date | Dayjs
+  text?: string
   showIcon?: boolean
   className?: string
 } & ComponentProps<'span'>
 
 export const DayLabel = ({
   date,
+  text,
   showIcon = true,
   className,
   ...props
@@ -45,7 +47,7 @@ export const DayLabel = ({
   let label: string
 
   if (d.isSame(now, 'day')) {
-    label = `${t('today_at')} ${d.format('HH:mm')}`
+    label = `${text ? text : t('todayAt')} ${d.format('HH:mm')}`
   } else if (d.isAfter(now.subtract(7, 'day'))) {
     label = d.fromNow()
   } else {

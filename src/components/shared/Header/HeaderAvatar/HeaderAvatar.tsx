@@ -53,7 +53,7 @@ export const HeaderAvatar = () => {
     {
       icon: <MessageSquareText className="text-primary" />,
       label: t('messages'),
-      to: paths.messages.root
+      to: paths.conversations.root
     },
     {
       icon: <Settings className="text-primary" />,

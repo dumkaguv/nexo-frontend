@@ -1,22 +1,27 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+
+import { useMemo, type Dispatch, type SetStateAction } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import {
   conversationControllerFindAllConversationMessagesInfiniteOptions,
-  type ResponseConversationDto
+  type ResponseConversationDto,
+  type ResponseMessageDto
 } from '@/api'
 
+import { ChatMessagesEmpty } from './ChatMessagesEmpty'
 import { ChatMessagesListItem } from './ChatMessagesListItem'
+import { ChatMessagesListSkeleton } from './ChatMessagesListSkeleton'
 
 type Props = {
   conversation: ResponseConversationDto | undefined
+  setEditingMessage: Dispatch<SetStateAction<ResponseMessageDto | undefined>>
 }
 
-export const ChatMessagesList = ({ conversation }: Props) => {
-  const { t } = useTranslation()
-
+export const ChatMessagesList = ({
+  conversation,
+  setEditingMessage
+}: Props) => {
   const {
     data: messagesResponse,
     fetchNextPage,
@@ -46,8 +51,17 @@ export const ChatMessagesList = ({ conversation }: Props) => {
     })
   }, [messagesResponse])
 
+  const isEmpty =
+    !!conversation?.id &&
+    !isLoadingMessages &&
+    (messagesResponse?.pages?.[0]?.total ?? 0) === 0
+
+  if (isEmpty) {
+    return <ChatMessagesEmpty />
+  }
+
   if (isLoadingMessages) {
-    return <div>Loading...</div>
+    return <ChatMessagesListSkeleton />
   }
 
   return (
@@ -60,13 +74,8 @@ export const ChatMessagesList = ({ conversation }: Props) => {
         next={fetchNextPage}
         hasMore={!!hasNextPage}
         scrollableTarget="messages-scrollable-list"
-        scrollThreshold="180px"
         inverse
-        loader={
-          <div className="text-muted-foreground py-2 text-center text-sm">
-            {t('loading')}...
-          </div>
-        }
+        loader={<ChatMessagesListSkeleton count={3} />}
         className="flex flex-col-reverse gap-4 pr-2"
       >
         {messages?.map((message) => (
@@ -74,6 +83,7 @@ export const ChatMessagesList = ({ conversation }: Props) => {
             key={`${message.id}-${message.senderId}-${message.createdAt}`}
             message={message}
             conversation={conversation}
+            setEditingMessage={setEditingMessage}
           />
         ))}
       </InfiniteScroll>

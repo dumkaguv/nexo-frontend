@@ -80,8 +80,8 @@ export type PaginatedResponseDto = {
   page: number
   pageSize: number
   totalPages: number
-  nextPage: number
-  prevPage: number
+  nextPage?: number | null
+  prevPage?: number | null
 }
 
 export type UpdateUserDto = {
@@ -188,8 +188,10 @@ export type ResponseMessageDto = {
   receiverId: number
   conversationId: number
   content?: string | null
+  readonly isEdited: boolean
   files?: Array<ResponseFileDto> | null
   readonly createdAt: string
+  readonly updatedAt: string
 }
 
 export type CreateMessageDto = {
@@ -200,9 +202,9 @@ export type CreateMessageDto = {
 }
 
 export type UpdateMessageDto = {
-  conversationId?: number
   content?: string | null
   fileIds?: Array<number> | null
+  id: number
 }
 
 export type ResponseSubscriptionDto = {
@@ -806,6 +808,22 @@ export type UploadControllerDeleteResponses = {
 export type UploadControllerDeleteResponse =
   UploadControllerDeleteResponses[keyof UploadControllerDeleteResponses]
 
+export type MessageControllerRemoveData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/messages/{id}'
+}
+
+export type MessageControllerRemoveResponses = {
+  204: void
+}
+
+export type MessageControllerRemoveResponse =
+  MessageControllerRemoveResponses[keyof MessageControllerRemoveResponses]
+
 export type MessageControllerFindOneData = {
   body?: never
   path: {
@@ -1030,6 +1048,39 @@ export type ConversationControllerCreateResponses = {
 
 export type ConversationControllerCreateResponse =
   ConversationControllerCreateResponses[keyof ConversationControllerCreateResponses]
+
+export type ConversationControllerFindAllSuggestionsData = {
+  body?: never
+  path?: never
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/conversations/suggestions'
+}
+
+export type ConversationControllerFindAllSuggestionsResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseUserProfileDto>
+  }
+}
+
+export type ConversationControllerFindAllSuggestionsResponse =
+  ConversationControllerFindAllSuggestionsResponses[keyof ConversationControllerFindAllSuggestionsResponses]
 
 export type ConversationControllerFindAllConversationMessagesData = {
   body?: never

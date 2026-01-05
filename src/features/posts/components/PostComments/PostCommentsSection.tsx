@@ -94,7 +94,7 @@ export const PostCommentsSection = ({ postId }: Props) => {
                   <TipTapEditor
                     placeholder={t('addComment')}
                     toolbarClassName="border-b-0"
-                    className="h-12 resize-none overflow-y-hidden border-t-0 pr-15"
+                    className="border-t-0 pr-15"
                     {...field}
                   />
 

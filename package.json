@@ -126,7 +126,11 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --fix",
+      "tsc -p tsconfig.json --noEmit"
+    ],
+    "**/*.{css,scss,postcss}": [
+      "stylelint --fix"
     ]
   }
 }

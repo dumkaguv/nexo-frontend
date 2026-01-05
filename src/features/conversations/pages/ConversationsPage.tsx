@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom'
 
-import { Sidebar } from '@/features/messages/components'
+import { Sidebar } from '@/features/conversations/components'
 
-export const MessagesPage = () => (
+export const ConversationsPage = () => (
   <div className="flex gap-5">
     <Sidebar />
 

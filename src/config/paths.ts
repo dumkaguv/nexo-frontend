@@ -19,8 +19,9 @@ export const paths = {
     delete: '/settings/delete'
   },
 
-  messages: {
-    root: '/messages',
-    byId: (id: string | number) => `/messages/${id}`
+  conversations: {
+    root: '/conversations',
+    chatWithoutExistingConversation: '/conversations/new',
+    byId: (id: string | number) => `/conversations/${id}`
   }
 } as const

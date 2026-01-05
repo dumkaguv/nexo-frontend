@@ -7,7 +7,7 @@ import {
   type EditorContentProps
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { useEffect, type MutableRefObject } from 'react'
+import { useEffect, type RefObject } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -23,7 +23,7 @@ type TipTapEditorProps = {
   onBlur?: () => void
   placeholder?: string
   toolbarClassName?: string
-  editorRef?: MutableRefObject<Editor | null>
+  editorRef?: RefObject<Editor | null>
 } & Partial<EditorContentProps>
 
 export const TipTapEditor = ({
@@ -82,7 +82,7 @@ export const TipTapEditor = ({
       <EditorContent
         {...props}
         editor={editor}
-        className={cn('min-h-15 rounded-lg border', className)}
+        className={cn('min-h-15 overflow-hidden rounded-lg border', className)}
       />
     </>
   )

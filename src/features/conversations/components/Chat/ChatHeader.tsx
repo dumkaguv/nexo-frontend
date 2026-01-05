@@ -16,22 +16,19 @@ type Props = {
 export const ChatHeader = ({ conversation }: Props) => {
   return (
     <header className="flex items-center justify-between px-6 py-4">
-      <div className="flex items-center gap-3">
-        <Link to={paths.user.byId(Number(conversation?.receiver.id))}>
+      <Link to={paths.user.byId(Number(conversation?.receiver.id))}>
+        <div className="flex items-center gap-3">
           <AvatarWithColorInitials user={conversation?.receiver} size={48} />
-        </Link>
 
-        <div className="flex flex-col items-start">
-          <User.Name
-            name={conversation?.receiver.profile.fullName}
-            className="text-base"
-          />
-          <User.Nickname
-            nickname={conversation?.receiver.username}
-            className="cursor-auto"
-          />
+          <div className="flex flex-col items-start">
+            <User.Name
+              name={conversation?.receiver.profile.fullName}
+              className="text-base"
+            />
+            <User.Nickname nickname={conversation?.receiver.username} />
+          </div>
         </div>
-      </div>
+      </Link>
 
       <div className="flex items-center gap-2">
         <ChatHeaderMoreActions />
