@@ -53,18 +53,24 @@ export const useChatWebsocket = ({ conversation }: Props) => {
         path: { id: String(conversation.id) }
       })
 
-    const onSent = (newMessage?: ResponseMessageDto | WsError) => {
+    const addMessageToCache = (
+      incomingMessage?: ResponseMessageDto | WsError
+    ) =>
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
-        if (!newMessage || isWsError(newMessage)) {
+        if (!incomingMessage || isWsError(incomingMessage)) {
           onException()
 
+          return old
+        }
+
+        if (incomingMessage.conversationId !== conversation.id) {
           return old
         }
 
         if (!old || old.pages.length === 0) {
           const firstPage: MessagesPage = {
             message: '',
-            data: [newMessage],
+            data: [incomingMessage],
             total: 1,
             page: 1,
             pageSize: 1,
@@ -77,7 +83,7 @@ export const useChatWebsocket = ({ conversation }: Props) => {
         }
 
         const alreadyExists = old.pages.some(({ data }) =>
-          (data ?? []).some(({ id }) => id === newMessage.id)
+          (data ?? []).some(({ id }) => id === incomingMessage.id)
         )
 
         if (alreadyExists) {
@@ -95,7 +101,7 @@ export const useChatWebsocket = ({ conversation }: Props) => {
           : []
 
         const isMessageInCache = firstPageData.some(
-          ({ id }) => id === newMessage.id
+          ({ id }) => id === incomingMessage.id
         )
 
         if (isMessageInCache) {
@@ -104,7 +110,7 @@ export const useChatWebsocket = ({ conversation }: Props) => {
 
         const nextFirstPage: MessagesPage = {
           ...firstPage,
-          data: [newMessage, ...firstPageData],
+          data: [incomingMessage, ...firstPageData],
           total: (firstPage.total ?? 0) + 1
         }
 
@@ -113,6 +119,13 @@ export const useChatWebsocket = ({ conversation }: Props) => {
           pages: [nextFirstPage, ...old.pages.slice(1)]
         }
       })
+
+    const onNew = (newMessage?: ResponseMessageDto | WsError) => {
+      addMessageToCache(newMessage)
+    }
+
+    const onSent = (newMessage?: ResponseMessageDto | WsError) => {
+      addMessageToCache(newMessage)
     }
 
     const onDelete = (dto?: { deletedMessageId?: number } | WsError) => {
@@ -198,11 +211,13 @@ export const useChatWebsocket = ({ conversation }: Props) => {
       })
     }
 
+    socket.on('message:new', onNew)
     socket.on('message:sent', onSent)
     socket.on('message:updated', onUpdate)
     socket.on('message:deleted', onDelete)
 
     return () => {
+      socket.off('message:new', onNew)
       socket.off('message:sent', onSent)
       socket.off('message:updated', onUpdate)
       socket.off('message:deleted', onDelete)
