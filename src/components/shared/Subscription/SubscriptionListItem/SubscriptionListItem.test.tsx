@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 
 import { SubscriptionListItem } from '@/components/shared/Subscription/SubscriptionListItem'
@@ -59,18 +60,20 @@ vi.mock('@/utils', async () => {
 describe('SubscriptionListItem', () => {
   it('renders user info', () => {
     render(
-      <SubscriptionListItem
-        data={
-          {
-            user: {
-              id: 2,
-              username: 'john',
-              profile: { fullName: 'John Doe' }
-            }
-          } as never
-        }
-        isFollowersTab
-      />
+      <MemoryRouter>
+        <SubscriptionListItem
+          data={
+            {
+              user: {
+                id: 2,
+                username: 'john',
+                profile: { fullName: 'John Doe' }
+              }
+            } as never
+          }
+          isFollowersTab
+        />
+      </MemoryRouter>
     )
 
     expect(screen.getByText('John Doe')).toBeInTheDocument()
