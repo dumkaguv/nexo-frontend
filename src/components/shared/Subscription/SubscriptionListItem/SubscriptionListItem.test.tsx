@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
@@ -38,6 +39,7 @@ vi.mock('@/components/shared', async () => {
 })
 
 vi.mock('@/api', () => ({
+  conversationControllerFindOneByUserIdOptions: () => ({}),
   profileControllerMeDetailedQueryKey: () => [],
   subscriptionControllerFindAllFollowersInfiniteQueryKey: () => [],
   subscriptionControllerFindAllFollowingInfiniteQueryKey: () => [],
@@ -59,21 +61,25 @@ vi.mock('@/utils', async () => {
 
 describe('SubscriptionListItem', () => {
   it('renders user info', () => {
+    const queryClient = new QueryClient()
+
     render(
-      <MemoryRouter>
-        <SubscriptionListItem
-          data={
-            {
-              user: {
-                id: 2,
-                username: 'john',
-                profile: { fullName: 'John Doe' }
-              }
-            } as never
-          }
-          isFollowersTab
-        />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <SubscriptionListItem
+            data={
+              {
+                user: {
+                  id: 2,
+                  username: 'john',
+                  profile: { fullName: 'John Doe' }
+                }
+              } as never
+            }
+            isFollowersTab
+          />
+        </MemoryRouter>
+      </QueryClientProvider>
     )
 
     expect(screen.getByText('John Doe')).toBeInTheDocument()
