@@ -26,6 +26,7 @@ export const PostComments = ({ commentsCount, onClick }: Props) => {
           <Button
             variant="text"
             onClick={onClick}
+            aria-label={t('comment')}
             className="flex h-5 w-fit items-center justify-start gap-1.5 p-0!"
           >
             <MessageCircle />

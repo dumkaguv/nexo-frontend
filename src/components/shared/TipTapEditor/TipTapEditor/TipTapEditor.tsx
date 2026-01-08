@@ -38,6 +38,9 @@ export const TipTapEditor = ({
   ...props
 }: TipTapEditorProps) => {
   const { t } = useTranslation()
+  const { 'aria-label': ariaLabelProp, ...restProps } = props
+  const ariaLabel =
+    ariaLabelProp ?? placeholder ?? t('inputs.defaultPlaceholder')
 
   const editor = useEditor({
     extensions: [
@@ -80,8 +83,9 @@ export const TipTapEditor = ({
       )}
 
       <EditorContent
-        {...props}
+        {...restProps}
         editor={editor}
+        aria-label={ariaLabel}
         className={cn('min-h-15 overflow-hidden rounded-lg border', className)}
       />
     </>

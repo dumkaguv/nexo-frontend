@@ -29,6 +29,9 @@ export const InputPassword = ({ className, ...rest }: Props) => {
         onClick={onShow}
         variant="outline"
         size="icon"
+        aria-label={
+          isShowed ? t('inputs.hidePassword') : t('inputs.showPassword')
+        }
         className="h-full rounded-l-none border-l-0"
       >
         {isShowed ? <Eye /> : <EyeOff />}

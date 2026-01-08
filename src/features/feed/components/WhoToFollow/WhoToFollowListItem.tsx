@@ -67,6 +67,7 @@ export const WhoToFollowListItem = ({ user }: Props) => {
         loading={isPending}
         disabled={user.isFollowing}
         showChildrenWhenLoading={false}
+        aria-label={t(user.isFollowing ? 'unfollow' : 'follow')}
         className="size-8 rounded-full"
       >
         {user.isFollowing ? <UserCheck /> : <Plus />}

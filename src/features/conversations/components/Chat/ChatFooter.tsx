@@ -95,7 +95,11 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
             </TooltipContent>
             <TooltipTrigger asChild>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" size="icon">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  aria-label={`${t('select')} ${t('emoji').toLowerCase()}`}
+                >
                   <Smile className="size-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -119,7 +123,11 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
           </TooltipContent>
           <InputUpload accept="image/*" onChange={onChange} multiple>
             <TooltipTrigger asChild>
-              <Button variant="secondary" size="icon">
+              <Button
+                variant="secondary"
+                size="icon"
+                aria-label={`${t('attach')} ${t('photo').toLowerCase()}`}
+              >
                 <Paperclip />
               </Button>
             </TooltipTrigger>
@@ -136,6 +144,7 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
               size="icon"
               loading={isPendingUpload}
               showChildrenWhenLoading={false}
+              aria-label={`${t('send')} ${t('message').toLowerCase()}`}
             >
               <Send className="size-4" />
             </Button>

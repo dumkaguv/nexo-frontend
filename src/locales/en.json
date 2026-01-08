@@ -60,7 +60,9 @@
     "selectPlaceholder": "Select here...",
     "bioPlaceholder": "Input some bio here...",
     "inputSearch": "Search...",
-    "inputPassword": "Enter password..."
+    "inputPassword": "Enter password...",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "messages": "Messages",
   "settings": "Settings",

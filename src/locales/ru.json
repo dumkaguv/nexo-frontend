@@ -60,7 +60,9 @@
     "selectPlaceholder": "Выберите здесь...",
     "bioPlaceholder": "Введите информацию о себе здесь...",
     "inputSearch": "Поиск...",
-    "inputPassword": "Введите пароль..."
+    "inputPassword": "Введите пароль...",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль"
   },
   "messages": "Сообщения",
   "settings": "Настройки",

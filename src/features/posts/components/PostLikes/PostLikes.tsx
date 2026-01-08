@@ -82,6 +82,7 @@ export const PostLikes = ({ postId, likesCount, isLiked }: Props) => {
               onClick={onLike}
               loading={isLoadingButtonState}
               showLoadingIcon={false}
+              aria-label={t(isLiked ? 'unlikePost' : 'likePost')}
               className={cn(
                 'h-5 w-fit justify-start hover:scale-[1.05]',
                 isLiked && 'text-destructive'
