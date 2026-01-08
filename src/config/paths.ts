@@ -21,7 +21,7 @@ export const paths = {
 
   conversations: {
     root: '/conversations',
-    chatWithoutExistingConversation: '/conversations/new',
+    new: '/conversations/new',
     byId: (id: string | number) => `/conversations/${id}`
   }
 } as const

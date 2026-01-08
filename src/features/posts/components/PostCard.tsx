@@ -56,7 +56,10 @@ export const PostCard = ({ post }: Props) => {
           </Link>
           <div className="flex items-center gap-2">
             <Link to={paths.user.byId(post.user.id)}>
-              <User.Name className="text-base" />
+              <User.Name
+                name={post.user.profile.fullName}
+                className="text-base"
+              />
             </Link>
 
             <DayLabel date={post.createdAt} />

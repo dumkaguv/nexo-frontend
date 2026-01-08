@@ -92,6 +92,8 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
             {renderFollowInfo('followers', user?.followersCount)}
           </button>
 
+          <Separator orientation="vertical" className="min-h-6" />
+
           <button
             type="button"
             className={commonBtnClass}

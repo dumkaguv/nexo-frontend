@@ -1003,6 +1003,24 @@ export type SubscriptionControllerUnfollowResponses = {
 export type SubscriptionControllerUnfollowResponse =
   SubscriptionControllerUnfollowResponses[keyof SubscriptionControllerUnfollowResponses]
 
+export type SubscriptionControllerRemoveFollowerData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/subscription/unfollow/follower/{id}'
+}
+
+export type SubscriptionControllerRemoveFollowerResponses = {
+  200: BaseResponseDto & {
+    data?: EmptyResponseDto
+  }
+}
+
+export type SubscriptionControllerRemoveFollowerResponse =
+  SubscriptionControllerRemoveFollowerResponses[keyof SubscriptionControllerRemoveFollowerResponses]
+
 export type ConversationControllerFindAllData = {
   body?: never
   path?: never
@@ -1084,6 +1102,24 @@ export type ConversationControllerFindAllSuggestionsResponses = {
 
 export type ConversationControllerFindAllSuggestionsResponse =
   ConversationControllerFindAllSuggestionsResponses[keyof ConversationControllerFindAllSuggestionsResponses]
+
+export type ConversationControllerFindOneByUserIdData = {
+  body?: never
+  path: {
+    userId: string
+  }
+  query?: never
+  url: '/api/conversations/user/{userId}'
+}
+
+export type ConversationControllerFindOneByUserIdResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseConversationDto
+  }
+}
+
+export type ConversationControllerFindOneByUserIdResponse =
+  ConversationControllerFindOneByUserIdResponses[keyof ConversationControllerFindOneByUserIdResponses]
 
 export type ConversationControllerFindAllConversationMessagesData = {
   body?: never

@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 
 import {
   profileControllerMeDetailedQueryKey,
-  subscriptionControllerFindAllFollowingInfiniteOptions,
+  subscriptionControllerFindAllFollowingInfiniteQueryKey,
   subscriptionControllerFollowMutation,
   userControllerFindAllInfiniteQueryKey,
   type ResponseUserDto
@@ -38,7 +38,7 @@ export const WhoToFollowListItem = ({ user }: Props) => {
       await invalidateQueries([
         profileControllerMeDetailedQueryKey(),
         userControllerFindAllInfiniteQueryKey(),
-        subscriptionControllerFindAllFollowingInfiniteOptions({
+        subscriptionControllerFindAllFollowingInfiniteQueryKey({
           path: { id: String(userStore?.id) }
         })
       ])

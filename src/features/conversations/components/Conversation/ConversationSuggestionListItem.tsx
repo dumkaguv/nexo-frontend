@@ -15,9 +15,7 @@ type Props = {
 
 export const ConversationSuggestionListItem = ({ suggestion }: Props) => {
   return (
-    <Link
-      to={`${paths.conversations.chatWithoutExistingConversation}?receiverId=${suggestion.id}`}
-    >
+    <Link to={`${paths.conversations.new}?receiverId=${suggestion.id}`}>
       <div
         className={cn(
           'hover:bg-card-foreground/10 active:bg-card-foreground/15 flex cursor-pointer gap-1.5 rounded-md p-2 duration-200'

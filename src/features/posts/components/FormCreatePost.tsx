@@ -6,17 +6,18 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import {
+  AvatarWithColorInitials,
   Card,
   ImagePreview,
   InputUpload,
   TipTapEditor,
   Typography
 } from '@/components/shared'
-import * as Person from '@/components/shared/Person'
 import {
   Button,
   Field,
   FieldError,
+  Skeleton,
   Tooltip,
   TooltipContent,
   TooltipTrigger
@@ -50,7 +51,7 @@ export const FormCreatePost = ({
   )
   const [isPreview, setIsPreview] = useState(false)
 
-  const { user } = useAuthStore()
+  const { user, isPendingUser } = useAuthStore()
   const { control, onSubmit, errors, isPending } = useFormCreatePost({
     post,
     files,
@@ -104,9 +105,17 @@ export const FormCreatePost = ({
       <Card>
         <div className="flex flex-col">
           <div className="flex gap-4">
-            <Link to={paths.user.byId(String(user?.id))}>
-              <Person.Avatar size={48} className="size-12" />
-            </Link>
+            {isPendingUser ? (
+              <Skeleton className="size-12 shrink-0 rounded-full" />
+            ) : (
+              <Link to={paths.user.byId(String(user?.id))} className="h-fit">
+                <AvatarWithColorInitials
+                  user={user}
+                  size={48}
+                  className="size-12"
+                />
+              </Link>
+            )}
 
             <Field className="flex w-full flex-col gap-2">
               <Controller

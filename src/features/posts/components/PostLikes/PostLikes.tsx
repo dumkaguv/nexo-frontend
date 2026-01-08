@@ -13,7 +13,6 @@ import {
   postControllerFindAllLikesQueryKey,
   postControllerRemoveLikeMutation
 } from '@/api'
-import { Typography } from '@/components/shared'
 import {
   Button,
   Tooltip,
@@ -101,12 +100,13 @@ export const PostLikes = ({ postId, likesCount, isLiked }: Props) => {
             <TooltipContent>{t('seeFullList')}</TooltipContent>
           )}
           <TooltipTrigger asChild>
-            <Typography.Text
+            <button
               onClick={likesCount > 0 ? onToggleModal : undefined}
+              tabIndex={likesCount > 0 ? 0 : -1}
               className={cn('text-sm', likesCount > 0 && 'cursor-pointer')}
             >
               {likesCount}
-            </Typography.Text>
+            </button>
           </TooltipTrigger>
         </Tooltip>
       </div>

@@ -20,6 +20,7 @@ import {
   conversationControllerFindAllConversationMessages,
   conversationControllerFindAllSuggestions,
   conversationControllerFindOne,
+  conversationControllerFindOneByUserId,
   conversationControllerRemove,
   messageControllerCreate,
   messageControllerFindOne,
@@ -45,6 +46,7 @@ import {
   subscriptionControllerFindAllFollowing,
   subscriptionControllerFindOneCount,
   subscriptionControllerFollow,
+  subscriptionControllerRemoveFollower,
   subscriptionControllerUnfollow,
   uploadControllerDelete,
   uploadControllerUpload,
@@ -71,6 +73,7 @@ import type {
   ConversationControllerFindAllResponse,
   ConversationControllerFindAllSuggestionsData,
   ConversationControllerFindAllSuggestionsResponse,
+  ConversationControllerFindOneByUserIdData,
   ConversationControllerFindOneData,
   ConversationControllerRemoveData,
   ConversationControllerRemoveResponse,
@@ -115,6 +118,8 @@ import type {
   SubscriptionControllerFindOneCountData,
   SubscriptionControllerFollowData,
   SubscriptionControllerFollowResponse,
+  SubscriptionControllerRemoveFollowerData,
+  SubscriptionControllerRemoveFollowerResponse,
   SubscriptionControllerUnfollowData,
   SubscriptionControllerUnfollowResponse,
   UploadControllerDeleteData,
@@ -1303,6 +1308,30 @@ export const subscriptionControllerUnfollowMutation = (
   return mutationOptions
 }
 
+export const subscriptionControllerRemoveFollowerMutation = (
+  options?: Partial<Options<SubscriptionControllerRemoveFollowerData>>
+): UseMutationOptions<
+  SubscriptionControllerRemoveFollowerResponse,
+  AxiosError<DefaultError>,
+  Options<SubscriptionControllerRemoveFollowerData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    SubscriptionControllerRemoveFollowerResponse,
+    AxiosError<DefaultError>,
+    Options<SubscriptionControllerRemoveFollowerData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await subscriptionControllerRemoveFollower({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
 export const conversationControllerFindAllQueryKey = (
   options?: Options<ConversationControllerFindAllData>
 ) => createQueryKey('conversationControllerFindAll', options)
@@ -1464,6 +1493,27 @@ export const conversationControllerFindAllSuggestionsInfiniteOptions = (
         conversationControllerFindAllSuggestionsInfiniteQueryKey(options)
     }
   )
+}
+
+export const conversationControllerFindOneByUserIdQueryKey = (
+  options: Options<ConversationControllerFindOneByUserIdData>
+) => createQueryKey('conversationControllerFindOneByUserId', options)
+
+export const conversationControllerFindOneByUserIdOptions = (
+  options: Options<ConversationControllerFindOneByUserIdData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await conversationControllerFindOneByUserId({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: conversationControllerFindOneByUserIdQueryKey(options)
+  })
 }
 
 export const conversationControllerFindAllConversationMessagesQueryKey = (

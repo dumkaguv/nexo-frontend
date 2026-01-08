@@ -24,6 +24,8 @@ import type {
   ConversationControllerFindAllResponses,
   ConversationControllerFindAllSuggestionsData,
   ConversationControllerFindAllSuggestionsResponses,
+  ConversationControllerFindOneByUserIdData,
+  ConversationControllerFindOneByUserIdResponses,
   ConversationControllerFindOneData,
   ConversationControllerFindOneResponses,
   ConversationControllerRemoveData,
@@ -74,6 +76,8 @@ import type {
   SubscriptionControllerFindOneCountResponses,
   SubscriptionControllerFollowData,
   SubscriptionControllerFollowResponses,
+  SubscriptionControllerRemoveFollowerData,
+  SubscriptionControllerRemoveFollowerResponses,
   SubscriptionControllerUnfollowData,
   SubscriptionControllerUnfollowResponses,
   UploadControllerDeleteData,
@@ -856,6 +860,28 @@ export const subscriptionControllerUnfollow = <
   })
 }
 
+export const subscriptionControllerRemoveFollower = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<SubscriptionControllerRemoveFollowerData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    SubscriptionControllerRemoveFollowerResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/subscription/unfollow/follower/{id}',
+    ...options
+  })
+}
+
 export const conversationControllerFindAll = <
   ThrowOnError extends boolean = false
 >(
@@ -922,6 +948,28 @@ export const conversationControllerFindAllSuggestions = <
       }
     ],
     url: '/api/conversations/suggestions',
+    ...options
+  })
+}
+
+export const conversationControllerFindOneByUserId = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<ConversationControllerFindOneByUserIdData, ThrowOnError>
+) => {
+  return (options.client ?? client).get<
+    ConversationControllerFindOneByUserIdResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/conversations/user/{userId}',
     ...options
   })
 }

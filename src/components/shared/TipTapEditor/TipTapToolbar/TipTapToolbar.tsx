@@ -82,10 +82,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
 
   return (
     <div
-      className={cn(
-        'flex flex-wrap items-center gap-1 border-b pb-2',
-        className
-      )}
+      className={cn('flex flex-wrap items-center gap-1', className)}
       {...props}
     >
       {[

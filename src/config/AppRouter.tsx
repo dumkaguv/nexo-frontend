@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         },
         children: [
           {
-            path: paths.conversations.chatWithoutExistingConversation,
+            path: paths.conversations.new,
             lazy: async () => {
               const { Chat } = await import(
                 '@/features/conversations/components'

@@ -1,13 +1,15 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { X } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
 
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import {
   type ResponseSubscriptionDto,
+  conversationControllerFindOneByUserIdOptions,
   profileControllerMeDetailedQueryKey,
   subscriptionControllerFindAllFollowersInfiniteQueryKey,
   subscriptionControllerFindAllFollowingInfiniteQueryKey,
@@ -23,6 +25,7 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 
+import { paths } from '@/config'
 import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
@@ -38,27 +41,46 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
   const { user } = useAuthStore()
 
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
-  const path = { path: { id: String(user?.id) } }
-  const { mutateAsync: unfollowAsync, isPending: isPendingUnfollow } =
-    useMutation({
-      ...subscriptionControllerUnfollowMutation(),
-      onSuccess: async () => {
-        await invalidateQueries([
-          isFollowersTab
-            ? subscriptionControllerFindAllFollowersInfiniteQueryKey(path)
-            : subscriptionControllerFindAllFollowingInfiniteQueryKey(path),
-          profileControllerMeDetailedQueryKey()
-        ])
-        toast.success(t('success'))
-      },
-      onError: (e) => showApiErrors(e)
-    })
+  const { refetch: fetchConversation, isFetching } = useQuery({
+    ...conversationControllerFindOneByUserIdOptions({
+      path: { userId: String(data.user.id) }
+    }),
+    enabled: false
+  })
 
-  const onUnfollow = async (event: MouseEvent) => {
+  const path = { path: { id: String(user?.id) } }
+  const { mutate: unfollow, isPending: isPendingUnfollow } = useMutation({
+    ...subscriptionControllerUnfollowMutation(),
+    onSuccess: async () => {
+      await invalidateQueries([
+        isFollowersTab
+          ? subscriptionControllerFindAllFollowersInfiniteQueryKey(path)
+          : subscriptionControllerFindAllFollowingInfiniteQueryKey(path),
+        profileControllerMeDetailedQueryKey()
+      ])
+      toast.success(t('success'))
+    },
+    onError: (e) => showApiErrors(e)
+  })
+
+  const onUnfollow = (event: MouseEvent) => {
     event.preventDefault()
-    await unfollowAsync({ path: { id: String(data.user.id) } })
+    unfollow({ path: { id: String(data.user.id) } })
+  }
+
+  const onSendMessage = async (event: MouseEvent) => {
+    event.preventDefault()
+
+    const { data: conversation } = await fetchConversation()
+
+    if (!conversation?.data.id) {
+      void navigate(`${paths.conversations.new}?receiverId=${data.user.id}`)
+    } else {
+      void navigate(paths.conversations.byId(conversation.data.id))
+    }
   }
 
   return (
@@ -74,7 +96,13 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
 
       <div className="flex items-center gap-2">
         {isFollowersTab ? (
-          <Button variant="secondary">{t('sendMessage')}</Button>
+          <Button
+            variant="secondary"
+            onClick={onSendMessage}
+            loading={isFetching}
+          >
+            {t('sendMessage')}
+          </Button>
         ) : (
           <Button
             variant="secondary"
@@ -89,7 +117,7 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
           <Tooltip>
             <TooltipContent>{t('unfollow')}</TooltipContent>
             <TooltipTrigger asChild>
-              <Button variant="link" className="p-1!">
+              <Button variant="link" onClick={onUnfollow} className="p-1!">
                 <X />
               </Button>
             </TooltipTrigger>

@@ -53,7 +53,7 @@ export const ChatMessagesListItemMoreActions = ({
   return (
     <Popover open={isOpenPopover} onOpenChange={setIsOpenPopover}>
       <PopoverTrigger asChild>
-        <ButtonMoreActions className="hover:bg-secondary/50 self-center opacity-0 transition-opacity group-hover:opacity-50" />
+        <ButtonMoreActions className="hover:bg-secondary/50 focus-within:bg-secondary/50 self-center opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-50" />
       </PopoverTrigger>
 
       <PopoverContent
