@@ -74,11 +74,11 @@ export const SubscriptionList = ({
     )
   }
 
-  if (searchValue && data.length === 0 && !isLoading) {
+  if (searchValue && data?.length === 0 && !isLoading) {
     return <SubscriptionListEmptySearch />
   }
 
-  if (data.length === 0 && !isLoading) {
+  if (data?.length === 0 && !isLoading) {
     return <SubscriptionListEmpty isFollowersTab={isFollowersTab} />
   }
 
