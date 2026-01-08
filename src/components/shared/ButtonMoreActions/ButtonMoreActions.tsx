@@ -24,6 +24,7 @@ export const ButtonMoreActions = ({
   ...props
 }: Props) => {
   const { t } = useTranslation()
+  const ariaLabel = props['aria-label'] ?? t('moreActions')
 
   return (
     <Tooltip>
@@ -31,6 +32,7 @@ export const ButtonMoreActions = ({
       <TooltipTrigger asChild>
         <Button
           variant="text"
+          aria-label={ariaLabel}
           className={cn(
             'hover:bg-secondary/80',
             !Icon && 'size-7 p-0!',

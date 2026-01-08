@@ -119,6 +119,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
               className="size-6"
               variant={btn.active ? 'default' : 'outline'}
               disabled={btn.can === false}
+              aria-label={t(btn.key)}
               onClick={() => {
                 switch (btn.key) {
                   case 'bold':
@@ -155,6 +156,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant={state.isParagraph ? 'default' : 'outline'}
+            aria-label={t('paragraph')}
             onClick={() => editor.chain().focus().setParagraph().run()}
           >
             <Pilcrow {...iconProps} />
@@ -176,6 +178,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
             <Button
               className="size-6"
               variant={btn.active ? 'default' : 'outline'}
+              aria-label={t(btn.key)}
               onClick={() =>
                 editor
                   .chain()
@@ -198,6 +201,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant={state.isBulletList ? 'default' : 'outline'}
+            aria-label={t('bulletList')}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           >
             <List {...iconProps} />
@@ -211,6 +215,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant={state.isOrderedList ? 'default' : 'outline'}
+            aria-label={t('orderedList')}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
             <ListOrdered {...iconProps} />
@@ -224,6 +229,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant={state.isCodeBlock ? 'default' : 'outline'}
+            aria-label={t('codeBlock')}
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           >
             <CodeSquare {...iconProps} />
@@ -237,6 +243,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant={state.isBlockquote ? 'default' : 'outline'}
+            aria-label={t('blockquote')}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
           >
             <Quote {...iconProps} />
@@ -250,6 +257,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant="outline"
+            aria-label={t('horizontalRule')}
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
           >
             <Minus {...iconProps} />
@@ -263,6 +271,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
           <Button
             className="size-6"
             variant="outline"
+            aria-label={t('hardBreak')}
             onClick={() => editor.chain().focus().setHardBreak().run()}
           >
             <CornerDownLeft {...iconProps} />
@@ -277,6 +286,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
             className="size-6"
             variant="outline"
             disabled={!state.canUndo}
+            aria-label={t('undo')}
             onClick={() => editor.chain().focus().undo().run()}
           >
             <Undo {...iconProps} />
@@ -291,6 +301,7 @@ export const TipTapToolbar = ({ editor, className, ...props }: Props) => {
             className="size-6"
             variant="outline"
             disabled={!state.canRedo}
+            aria-label={t('redo')}
             onClick={() => editor.chain().focus().redo().run()}
           >
             <Redo {...iconProps} />

@@ -55,6 +55,10 @@ export default tseslint.config(
           assert: 'either'
         }
       ],
+      'jsx-a11y/aria-props': 'error',
+      'jsx-a11y/aria-unsupported-elements': 'error',
+      'jsx-a11y/role-has-required-aria-props': 'error',
+      'jsx-a11y/role-supports-aria-props': 'error',
 
       'react-refresh/only-export-components': 'warn',
       'react/display-name': 'off',

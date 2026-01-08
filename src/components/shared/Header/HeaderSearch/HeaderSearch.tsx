@@ -25,8 +25,8 @@ import {
   EmptyMedia,
   EmptyTitle,
   Popover,
+  PopoverAnchor,
   PopoverContent,
-  PopoverTrigger,
   Spinner
 } from '@/components/ui'
 import { paths } from '@/config'
@@ -87,7 +87,7 @@ export const HeaderSearch = () => {
 
   return (
     <Popover open={isOpenPopover} onOpenChange={onOpenChange} modal={false}>
-      <PopoverTrigger asChild>
+      <PopoverAnchor asChild>
         <div className="relative">
           <InputSearch
             value={searchValue}
@@ -102,7 +102,7 @@ export const HeaderSearch = () => {
             </div>
           )}
         </div>
-      </PopoverTrigger>
+      </PopoverAnchor>
 
       <PopoverContent
         className="w-75 overflow-y-hidden p-0"
