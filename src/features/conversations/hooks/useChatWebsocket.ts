@@ -11,11 +11,10 @@ import {
   type ResponseMessageDto
 } from '@/api'
 
-import { useWebSocket } from '@/hooks'
+import { SERVER_TO_CLIENT_EVENTS, SOCKET_NAMESPACES } from '@/config'
+import { useInvalidatePredicateQueries, useWebSocket } from '@/hooks'
 
 import { isWsError } from '@/utils'
-
-import type { WsError } from '@/types'
 
 export type MessagesPage = Omit<PaginatedResponseDto, 'data'> & {
   data?: ResponseMessageDto[]
@@ -26,8 +25,9 @@ type Props = {
 }
 
 export const useChatWebsocket = ({ conversation }: Props) => {
-  const { socket } = useWebSocket()
+  const { socket } = useWebSocket(SOCKET_NAMESPACES.messages)
   const { t } = useTranslation()
+  const { invalidateQueries } = useInvalidatePredicateQueries()
   const queryClient = useQueryClient()
 
   const onException = useCallback(
@@ -44,26 +44,20 @@ export const useChatWebsocket = ({ conversation }: Props) => {
   )
 
   useEffect(() => {
-    if (!conversation?.id) {
-      return
-    }
-
     const queryKey =
       conversationControllerFindAllConversationMessagesInfiniteQueryKey({
-        path: { id: String(conversation.id) }
+        path: { id: String(conversation?.id) }
       })
 
-    const addMessageToCache = (
-      incomingMessage?: ResponseMessageDto | WsError
-    ) =>
+    const addMessageToCache = (incomingMessage?: ResponseMessageDto) =>
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
-        if (!incomingMessage || isWsError(incomingMessage)) {
+        if (!incomingMessage) {
           onException()
 
           return old
         }
 
-        if (incomingMessage.conversationId !== conversation.id) {
+        if (incomingMessage.conversationId !== conversation?.id) {
           return old
         }
 
@@ -120,17 +114,15 @@ export const useChatWebsocket = ({ conversation }: Props) => {
         }
       })
 
-    const onNew = (newMessage?: ResponseMessageDto | WsError) => {
+    const onNew = (newMessage?: ResponseMessageDto) =>
       addMessageToCache(newMessage)
-    }
 
-    const onSent = (newMessage?: ResponseMessageDto | WsError) => {
+    const onSent = (newMessage?: ResponseMessageDto) =>
       addMessageToCache(newMessage)
-    }
 
-    const onDelete = (dto?: { deletedMessageId?: number } | WsError) => {
+    const onDelete = (dto?: { deletedMessageId?: number }) => {
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
-        if (!old || isWsError(dto) || !dto?.deletedMessageId) {
+        if (!old || !dto?.deletedMessageId) {
           onException()
 
           return old
@@ -165,9 +157,9 @@ export const useChatWebsocket = ({ conversation }: Props) => {
       })
     }
 
-    const onUpdate = (updatedMessage?: ResponseMessageDto | WsError) => {
+    const onUpdate = (updatedMessage?: ResponseMessageDto) => {
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
-        if (!old || !updatedMessage || isWsError(updatedMessage)) {
+        if (!old || !updatedMessage) {
           onException()
 
           return old
@@ -211,16 +203,18 @@ export const useChatWebsocket = ({ conversation }: Props) => {
       })
     }
 
-    socket.on('message:new', onNew)
-    socket.on('message:sent', onSent)
-    socket.on('message:updated', onUpdate)
-    socket.on('message:deleted', onDelete)
+    socket.on(SERVER_TO_CLIENT_EVENTS.message.new, onNew)
+    socket.on(SERVER_TO_CLIENT_EVENTS.message.sent, onSent)
+    socket.on(SERVER_TO_CLIENT_EVENTS.message.updated, onUpdate)
+    socket.on(SERVER_TO_CLIENT_EVENTS.message.deleted, onDelete)
+    socket.on(SERVER_TO_CLIENT_EVENTS.exception, onException)
 
     return () => {
-      socket.off('message:new', onNew)
-      socket.off('message:sent', onSent)
-      socket.off('message:updated', onUpdate)
-      socket.off('message:deleted', onDelete)
+      socket.off(SERVER_TO_CLIENT_EVENTS.message.new, onNew)
+      socket.off(SERVER_TO_CLIENT_EVENTS.message.sent, onSent)
+      socket.off(SERVER_TO_CLIENT_EVENTS.message.updated, onUpdate)
+      socket.off(SERVER_TO_CLIENT_EVENTS.message.deleted, onDelete)
+      socket.off(SERVER_TO_CLIENT_EVENTS.exception, onException)
     }
-  }, [socket, queryClient, conversation?.id, t, onException])
+  }, [socket, queryClient, conversation?.id, t, onException, invalidateQueries])
 }

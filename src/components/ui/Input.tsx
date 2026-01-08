@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/utils'

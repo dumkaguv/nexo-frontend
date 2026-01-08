@@ -5,33 +5,52 @@ import * as User from '@/components/shared/Person'
 
 import { paths } from '@/config'
 
+import { useOnlineUsersStore } from '@/stores'
+
 import { ChatHeaderMoreActions } from './ChatHeaderMoreActions'
 
-import type { ResponseConversationDto } from '@/api'
+import type { ResponseConversationDto, ResponseUserDto } from '@/api'
 
 type Props = {
   conversation?: ResponseConversationDto
+  user?: ResponseUserDto
 }
 
-export const ChatHeader = ({ conversation }: Props) => {
+const isConversationDto = (
+  data: ResponseConversationDto | ResponseUserDto
+): data is ResponseConversationDto => 'receiver' in data
+
+export const ChatHeader = ({ conversation, user }: Props) => {
+  const onlineUserIds = useOnlineUsersStore((state) => state.onlineUserIds)
+
+  const data = conversation ?? user
+
+  if (!data) {
+    return null
+  }
+
+  const receiver = isConversationDto(data) ? data.receiver : data
+
+  const isOnline = onlineUserIds.has(receiver.id)
+
   return (
     <header className="flex items-center justify-between px-6 py-4">
-      <Link to={paths.user.byId(Number(conversation?.receiver.id))}>
+      <Link to={paths.user.byId(Number(receiver.id))}>
         <div className="flex items-center gap-3">
-          <AvatarWithColorInitials user={conversation?.receiver} size={48} />
+          <AvatarWithColorInitials user={receiver} showOnlineBadge size={48} />
 
           <div className="flex flex-col items-start">
-            <User.Name
-              name={conversation?.receiver.profile.fullName}
-              className="text-base"
-            />
-            <User.Nickname nickname={conversation?.receiver.username} />
+            <User.Name name={receiver.profile.fullName} className="text-base" />
+
+            <User.Nickname nickname={receiver.username} />
+
+            {!isOnline && <User.LastActivity user={receiver} />}
           </div>
         </div>
       </Link>
 
       <div className="flex items-center gap-2">
-        <ChatHeaderMoreActions />
+        {isConversationDto(data) && <ChatHeaderMoreActions />}
       </div>
     </header>
   )

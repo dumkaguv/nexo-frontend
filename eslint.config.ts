@@ -5,6 +5,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import regexpPlugin from 'eslint-plugin-regexp'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
@@ -34,6 +35,7 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
       import: importPlugin,
       unicorn: eslintPluginUnicorn,
+      regexp: regexpPlugin,
       '@stylistic/ts': stylisticTs,
       'unused-imports': unusedImports,
       'jsx-a11y': jsxA11y
@@ -81,9 +83,19 @@ export default tseslint.config(
       'no-useless-concat': 'error',
       'no-useless-return': 'error',
       'no-nested-ternary': 'error',
+      'no-unneeded-ternary': 'error',
+      'no-lonely-if': 'error',
       curly: ['error', 'all'],
       'func-style': ['warn', 'expression'],
       'prefer-arrow-callback': ['error'],
+
+      'regexp/no-dupe-characters-character-class': 'error',
+      'regexp/no-empty-character-class': 'error',
+      'regexp/no-obscure-range': 'error',
+      'regexp/no-useless-assertions': 'error',
+      'regexp/no-useless-character-class': 'error',
+      'regexp/prefer-quantifier': 'error',
+      'regexp/no-super-linear-backtracking': 'error',
 
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-empty-function': ['error', { allow: [] }],
@@ -93,6 +105,10 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/no-unsafe-enum-comparison': 'error',
+      '@typescript-eslint/return-await': ['error', 'in-try-catch'],
+      '@typescript-eslint/no-redundant-type-constituents': 'error',
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {
@@ -145,6 +161,17 @@ export default tseslint.config(
         { blankLine: 'always', prev: ['case', 'default'], next: '*' },
         { blankLine: 'always', prev: 'import', next: '*' },
         { blankLine: 'any', prev: 'import', next: 'import' }
+      ],
+
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: {
+            kebabCase: true,
+            camelCase: true,
+            pascalCase: true
+          }
+        }
       ],
 
       'unused-imports/no-unused-imports': 'error',

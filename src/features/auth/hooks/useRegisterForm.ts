@@ -31,7 +31,7 @@ export const useRegisterForm = () => {
 
   const navigate = useNavigate()
 
-  const { mutateAsync: registerMutate, isPending } = useMutation({
+  const { mutate: registerMutate, isPending } = useMutation({
     ...authControllerRegisterMutation(),
     onSuccess: ({ data: { accessToken } }) => {
       toast.success(t('auth.loginSuccess'))
@@ -41,8 +41,7 @@ export const useRegisterForm = () => {
     onError: (error) => showApiErrors(error, t('auth.loginError'))
   })
 
-  const onSubmit = async (body: RegisterFormSchema) =>
-    await registerMutate({ body })
+  const onSubmit = (body: RegisterFormSchema) => registerMutate({ body })
 
   const inputFields: InputField<RegisterFormSchema>[] = [
     {

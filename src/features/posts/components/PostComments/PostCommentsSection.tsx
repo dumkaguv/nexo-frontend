@@ -71,8 +71,8 @@ export const PostCommentsSection = ({ postId }: Props) => {
     onError: (e) => showApiErrors(e)
   })
 
-  const onAddComment = async (body: CreateCommentSchema) =>
-    await addCommentAsync({ path, body })
+  const onAddComment = (body: CreateCommentSchema) =>
+    addCommentAsync({ path, body })
 
   const onSubmit = handleSubmit(async (body) => {
     await onAddComment(body)

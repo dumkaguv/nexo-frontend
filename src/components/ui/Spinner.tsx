@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import { Loader2Icon } from 'lucide-react'
 
 import { cn } from '@/utils/index'

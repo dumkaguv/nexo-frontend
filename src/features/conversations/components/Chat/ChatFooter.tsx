@@ -1,10 +1,11 @@
 import EmojiPicker, { Theme, type EmojiClickData } from 'emoji-picker-react'
 import { Paperclip, Send, Smile } from 'lucide-react'
+
 import { useRef } from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { TipTapEditor } from '@/components/shared'
+import { ImagePreview, InputUpload, TipTapEditor } from '@/components/shared'
 import {
   Button,
   DropdownMenu,
@@ -21,13 +22,19 @@ import { useThemeStore } from '@/stores'
 import type { CreateSendMessageSchema } from '@/features/conversations/zodSchemas'
 import type { Editor } from '@tiptap/react'
 
-export const ChatFooter = () => {
+type Props = {
+  isPendingUpload: boolean
+}
+
+export const ChatFooter = ({ isPendingUpload }: Props) => {
   const editorRef = useRef<Editor | null>(null)
 
   const {
     control,
+    setValue,
     formState: { errors }
   } = useFormContext<CreateSendMessageSchema>()
+  const files = useWatch({ control, name: 'files', defaultValue: [] })
   const { theme } = useThemeStore()
   const { t } = useTranslation()
 
@@ -40,24 +47,45 @@ export const ChatFooter = () => {
     editor.chain().focus().insertContent(emoji).run()
   }
 
+  const onChange = (files: File[]) => {
+    setValue('files', files, { shouldDirty: true, shouldValidate: true })
+  }
+
+  const onDeleteImage = (index: number) => {
+    const nextFiles = files?.filter((_, i) => i !== index) ?? []
+
+    setValue('files', nextFiles, { shouldDirty: true, shouldValidate: true })
+  }
+
   return (
     <footer className="flex items-end gap-3 px-4 py-3">
-      <Field>
-        <Controller
-          name="content"
-          control={control}
-          render={({ field }) => (
-            <TipTapEditor
-              editorRef={editorRef}
-              showToolbar={false}
-              placeholder={t('typeMessage')}
-              className="min-h-12 w-full"
-              {...field}
-            />
-          )}
+      <div className="flex w-full flex-col gap-4">
+        <ImagePreview
+          files={files ?? []}
+          onDeleteImage={onDeleteImage}
+          className="size-full"
+          maxImages={4}
+          showDeleteIcon
+          containerClassName="grid grid-cols-4 gap-4"
         />
-        <FieldError>{errors.content?.message}</FieldError>
-      </Field>
+
+        <Field>
+          <Controller
+            name="content"
+            control={control}
+            render={({ field }) => (
+              <TipTapEditor
+                editorRef={editorRef}
+                showToolbar={false}
+                placeholder={t('typeMessage')}
+                className="min-h-12 w-full"
+                {...field}
+              />
+            )}
+          />
+          <FieldError>{errors.content?.message}</FieldError>
+        </Field>
+      </div>
 
       <div className="flex items-center gap-2">
         <DropdownMenu>
@@ -89,11 +117,13 @@ export const ChatFooter = () => {
           <TooltipContent>
             {t('attach')} {t('photo').toLowerCase()}
           </TooltipContent>
-          <TooltipTrigger asChild>
-            <Button variant="secondary" size="icon">
-              <Paperclip />
-            </Button>
-          </TooltipTrigger>
+          <InputUpload accept="image/*" onChange={onChange} multiple>
+            <TooltipTrigger asChild>
+              <Button variant="secondary" size="icon">
+                <Paperclip />
+              </Button>
+            </TooltipTrigger>
+          </InputUpload>
         </Tooltip>
 
         <Tooltip>
@@ -101,7 +131,12 @@ export const ChatFooter = () => {
             {t('send')} {t('message').toLowerCase()}
           </TooltipContent>
           <TooltipTrigger asChild>
-            <Button type="submit" size="icon">
+            <Button
+              type="submit"
+              size="icon"
+              loading={isPendingUpload}
+              showChildrenWhenLoading={false}
+            >
               <Send className="size-4" />
             </Button>
           </TooltipTrigger>

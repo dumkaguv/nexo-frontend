@@ -2,13 +2,18 @@ import { Outlet } from 'react-router-dom'
 
 import { Container, Header } from '@/components/shared'
 import { ProtectedRoute } from '@/features/auth'
+import { useUsersPresenceSocket } from '@/hooks'
 
-export const AuthorizedLayout = () => (
-  <ProtectedRoute>
-    <Container>
-      <Header className="mb-6" />
+export const AuthorizedLayout = () => {
+  useUsersPresenceSocket()
 
-      <Outlet />
-    </Container>
-  </ProtectedRoute>
-)
+  return (
+    <ProtectedRoute>
+      <Container>
+        <Header className="mb-6" />
+
+        <Outlet />
+      </Container>
+    </ProtectedRoute>
+  )
+}

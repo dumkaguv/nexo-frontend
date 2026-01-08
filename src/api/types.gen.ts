@@ -32,6 +32,7 @@ export type ResponseUserDto = {
   readonly isFollowing: boolean
   profile: ResponseProfileDto
   readonly createdAt: string
+  readonly lastActivity: string
 }
 
 export type ResponseRegisterDto = {
@@ -114,6 +115,7 @@ export type ResponseUserProfileDto = {
   readonly isActivated: boolean
   profile: ResponseProfileDto
   readonly createdAt: string
+  readonly lastActivity: string
 }
 
 export type ResponsePostFileDto = {
@@ -148,6 +150,7 @@ export type ResponseUserProfileIsFollowingDto = {
   readonly isActivated: boolean
   profile: ResponseProfileDto
   readonly createdAt: string
+  readonly lastActivity: string
   readonly isFollowing: boolean
 }
 

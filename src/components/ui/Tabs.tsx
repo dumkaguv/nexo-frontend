@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
 

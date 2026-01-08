@@ -32,7 +32,7 @@ export const WhoToFollowListItem = ({ user }: Props) => {
   const { invalidateQueries } = useInvalidatePredicateQueries()
   const { t } = useTranslation()
 
-  const { mutateAsync: followAsync, isPending } = useMutation({
+  const { mutate: followAsync, isPending } = useMutation({
     ...subscriptionControllerFollowMutation(),
     onSuccess: async () => {
       await invalidateQueries([
@@ -47,8 +47,7 @@ export const WhoToFollowListItem = ({ user }: Props) => {
     onError: (e) => showApiErrors(e)
   })
 
-  const onFollow = async () =>
-    await followAsync({ path: { id: String(user.id) } })
+  const onFollow = () => followAsync({ path: { id: String(user.id) } })
 
   return (
     <div className="flex items-center justify-between gap-2">

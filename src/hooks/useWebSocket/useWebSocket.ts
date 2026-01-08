@@ -1,13 +1,39 @@
 import { useContext } from 'react'
 
-import { WebSocketContext } from '@/stores'
+import { WebSocketContext, type WebSocketNamespaceValue } from '@/stores'
 
-export const useWebSocket = () => {
+import type { SocketNamespace } from '@/config'
+
+export type WebSocketDefaultValue = WebSocketNamespaceValue & {
+  connect: () => void
+  disconnect: () => void
+  namespaces: string[]
+}
+
+type WebSocketResult<Namespace extends SocketNamespace | undefined> =
+  Namespace extends SocketNamespace
+    ? WebSocketNamespaceValue
+    : WebSocketDefaultValue
+
+export const useWebSocket = <Namespace extends SocketNamespace | undefined>(
+  namespace?: Namespace
+): WebSocketResult<Namespace> => {
   const context = useContext(WebSocketContext)
 
   if (!context) {
     throw new Error('useWebSocket must be used within WebSocketProvider')
   }
 
-  return context
+  if (namespace) {
+    return context.getSocket(namespace) as WebSocketResult<Namespace>
+  }
+
+  const socketValue = context.getSocket()
+
+  return {
+    ...socketValue,
+    connect: context.connectAll,
+    disconnect: context.disconnectAll,
+    namespaces: context.namespaces
+  } as WebSocketResult<Namespace>
 }

@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import * as React from 'react'
 

@@ -34,7 +34,7 @@ export const PostMoreActions = ({ post, onButtonEdit }: Props) => {
   const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
-  const { mutateAsync: deleteAsync, isPending } = useMutation({
+  const { mutate: deleteAsync, isPending } = useMutation({
     ...postControllerRemoveMutation(),
     onSuccess: async () => {
       await invalidateQueries([postControllerFindAllInfiniteQueryKey()])
@@ -43,8 +43,7 @@ export const PostMoreActions = ({ post, onButtonEdit }: Props) => {
     onError: (e) => showApiErrors(e)
   })
 
-  const onDelete = async () =>
-    await deleteAsync({ path: { id: String(post.id) } })
+  const onDelete = () => deleteAsync({ path: { id: String(post.id) } })
 
   const isOwner = post.user.id === user?.id
 

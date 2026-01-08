@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import {
   ChevronDownIcon,
   ChevronLeftIcon,

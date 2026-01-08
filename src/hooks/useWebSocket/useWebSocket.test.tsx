@@ -1,9 +1,13 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { SOCKET_NAMESPACES } from '@/config'
+
 import { useWebSocket } from '@/hooks'
 
 import { WebSocketContext } from '@/stores'
+
+import type { WebSocketDefaultValue } from '@/hooks/useWebSocket/useWebSocket'
 
 import type { ReactNode } from 'react'
 
@@ -15,7 +19,7 @@ describe('useWebSocket', () => {
   })
 
   it('returns context value', () => {
-    const value = {
+    const socketValue = {
       socket: {} as never,
       isConnected: true,
       isConnecting: false,
@@ -23,6 +27,15 @@ describe('useWebSocket', () => {
       connect: vi.fn(),
       disconnect: vi.fn(),
       emit: vi.fn()
+    }
+    const connectAll = vi.fn()
+    const disconnectAll = vi.fn()
+
+    const value = {
+      getSocket: vi.fn(() => socketValue),
+      namespaces: [SOCKET_NAMESPACES.messages],
+      connectAll,
+      disconnectAll
     }
 
     const wrapper = ({ children }: { children: ReactNode }) => (
@@ -33,6 +46,49 @@ describe('useWebSocket', () => {
 
     const { result } = renderHook(() => useWebSocket(), { wrapper })
 
-    expect(result.current).toBe(value)
+    const current = result.current as WebSocketDefaultValue
+
+    expect(current.socket).toBe(socketValue.socket)
+    expect(current.isConnected).toBe(socketValue.isConnected)
+    expect(current.isConnecting).toBe(socketValue.isConnecting)
+    expect(current.lastError).toBe(socketValue.lastError)
+    expect(current.emit).toBe(socketValue.emit)
+    expect(current.connect).toBe(connectAll)
+    expect(current.disconnect).toBe(disconnectAll)
+    expect(current.namespaces).toBe(value.namespaces)
+  })
+
+  it('returns namespace socket value when provided', () => {
+    const socketValue = {
+      socket: {} as never,
+      isConnected: false,
+      isConnecting: true,
+      lastError: 'oops',
+      connect: vi.fn(),
+      disconnect: vi.fn(),
+      emit: vi.fn()
+    }
+
+    const value = {
+      getSocket: vi.fn(() => socketValue),
+      namespaces: [SOCKET_NAMESPACES.messages, SOCKET_NAMESPACES.conversations],
+      connectAll: vi.fn(),
+      disconnectAll: vi.fn()
+    }
+
+    const wrapper = ({ children }: { children: ReactNode }) => (
+      <WebSocketContext.Provider value={value}>
+        {children}
+      </WebSocketContext.Provider>
+    )
+
+    const { result } = renderHook(
+      () => useWebSocket(SOCKET_NAMESPACES.conversations),
+      {
+        wrapper
+      }
+    )
+
+    expect(result.current).toBe(socketValue)
   })
 })

@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import { type VariantProps, cva } from 'class-variance-authority'
 
 import { cn } from '@/utils'

@@ -29,7 +29,8 @@
     "generic": "Error occurred! Please try again.",
     "somethingWentWrong": "Something went wrong",
     "errorOccurred": "An unexpected error occurred. Please try again.",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "notFound": "Page not found"
   },
   "validation": {
     "emailInvalid": "Invalid email",
@@ -156,5 +157,6 @@
   "noActiveChats": "No active chats",
   "noActiveChatsDescription": "Start a new conversation from the suggestions below.",
   "suggestions": "Suggestions",
-  "joinedOn": "Joined on"
+  "joinedOn": "Joined on",
+  "lastActivity": "Last activity"
 }

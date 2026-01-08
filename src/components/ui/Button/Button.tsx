@@ -1,3 +1,5 @@
+/* eslint-disable func-style */
+
 import { Slot } from '@radix-ui/react-slot'
 
 import { Loader2 } from 'lucide-react'

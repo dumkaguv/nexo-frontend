@@ -67,7 +67,7 @@ export const ChatMessagesList = ({
   return (
     <div
       id="messages-scrollable-list"
-      className="flex max-h-[50dvh] flex-1 flex-col-reverse gap-6 overflow-y-auto px-6 py-5"
+      className="flex max-h-[70dvh] flex-1 flex-col-reverse gap-6 overflow-y-auto px-6 py-5"
     >
       <InfiniteScroll
         dataLength={messages?.length ?? 0}

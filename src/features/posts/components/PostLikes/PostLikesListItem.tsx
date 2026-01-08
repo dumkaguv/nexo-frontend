@@ -75,7 +75,7 @@ export const PostLikesListItem = ({ like, postId }: Props) => {
           <AvatarWithColorInitials user={like.user} size={40} />
           <div className="flex flex-col items-start">
             <Person.Name
-              name={like.user.profile.fullName}
+              name={like.user.profile?.fullName}
               className="text-base"
             />
             <Person.Nickname

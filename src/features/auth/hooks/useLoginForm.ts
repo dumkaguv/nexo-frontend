@@ -31,7 +31,7 @@ export const useLoginForm = () => {
 
   const navigate = useNavigate()
 
-  const { mutateAsync: loginMutate, isPending } = useMutation({
+  const { mutate: loginMutate, isPending } = useMutation({
     ...authControllerLoginMutation(),
     onSuccess: ({ data: { accessToken } }) => {
       toast.success(t('auth.loginSuccess'))
@@ -41,8 +41,7 @@ export const useLoginForm = () => {
     onError: (error) => showApiErrors(error, t('auth.loginError'))
   })
 
-  const onSubmit = async (data: CreateLoginDto) =>
-    await loginMutate({ body: data })
+  const onSubmit = (data: CreateLoginDto) => loginMutate({ body: data })
 
   const inputFields: InputField<LoginFormSchema>[] = [
     {

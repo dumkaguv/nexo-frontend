@@ -63,7 +63,7 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
 
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
 
-          return axiosInstance(originalRequest)
+          return await axiosInstance(originalRequest)
         } catch (err) {
           if (err instanceof Error) {
             return Promise.reject(err)

@@ -27,17 +27,14 @@ export const useFormChangePassword = () => {
     resolver: zodResolver(schema)
   })
 
-  const { mutateAsync, isPending } = useMutation({
+  const { mutate: changePassword, isPending } = useMutation({
     ...userControllerChangePasswordMutation(),
     onSuccess: () => toast.success(t('success')),
     onError: (error) => showApiErrors(error)
   })
 
-  const onSubmit = async ({
-    oldPassword,
-    newPassword
-  }: CreateChangePasswordSchema) =>
-    await mutateAsync({
+  const onSubmit = ({ oldPassword, newPassword }: CreateChangePasswordSchema) =>
+    changePassword({
       body: { oldPassword, newPassword },
       path: { id: String(user?.id) }
     })

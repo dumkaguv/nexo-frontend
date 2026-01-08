@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"src/api/**\"",
-    "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\"",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"src/api/**\" --max-warnings 10",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\" --max-warnings 10",
     "typecheck": "tsc --noEmit -p .",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore",
     "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore",
@@ -103,6 +103,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-regexp": "^2.10.0",
     "eslint-plugin-unicorn": "^60.0.0",
     "eslint-plugin-unused-imports": "^4.2.0",
     "globals": "^16.0.0",
@@ -127,7 +128,7 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "prettier --write",
-      "eslint --fix",
+      "eslint --fix --max-warnings 10",
       "bash -c \"tsc -p tsconfig.json --noEmit\""
     ],
     "**/*.{css,scss,postcss}": [

@@ -1,0 +1,62 @@
+import { useCallback, useEffect, useMemo } from 'react'
+
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+
+import {
+  conversationControllerFindAllInfiniteQueryKey,
+  conversationControllerFindAllSuggestionsInfiniteQueryKey
+} from '@/api'
+
+import { paths, SERVER_TO_CLIENT_EVENTS, SOCKET_NAMESPACES } from '@/config'
+import { useInvalidatePredicateQueries, useWebSocket } from '@/hooks'
+
+import { isWsError } from '@/utils'
+
+export const useConversationsWebsocket = () => {
+  const { socket } = useWebSocket(SOCKET_NAMESPACES.conversations)
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { invalidateQueries } = useInvalidatePredicateQueries()
+
+  const onException = useCallback(
+    (payload?: unknown) => {
+      if (!isWsError(payload)) {
+        toast.error(t('error.somethingWentWrong'))
+
+        return
+      }
+
+      toast.error(payload.message || t('error.somethingWentWrong'))
+    },
+    [t]
+  )
+
+  const queryKeys = useMemo(
+    () => [
+      conversationControllerFindAllInfiniteQueryKey(),
+      conversationControllerFindAllSuggestionsInfiniteQueryKey()
+    ],
+    []
+  )
+
+  useEffect(() => {
+    const onNew = () => void invalidateQueries(queryKeys)
+
+    const onDelete = () => {
+      void invalidateQueries(queryKeys)
+      void navigate(paths.conversations.root)
+    }
+
+    socket.on(SERVER_TO_CLIENT_EVENTS.conversation.new, onNew)
+    socket.on(SERVER_TO_CLIENT_EVENTS.conversation.deleted, onDelete)
+    socket.on(SERVER_TO_CLIENT_EVENTS.exception, onException)
+
+    return () => {
+      socket.off(SERVER_TO_CLIENT_EVENTS.conversation.new, onNew)
+      socket.off(SERVER_TO_CLIENT_EVENTS.conversation.deleted, onDelete)
+      socket.off(SERVER_TO_CLIENT_EVENTS.exception, onException)
+    }
+  }, [socket, t, onException, invalidateQueries, queryKeys, navigate])
+}

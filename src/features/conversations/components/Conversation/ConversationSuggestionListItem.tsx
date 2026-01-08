@@ -26,6 +26,7 @@ export const ConversationSuggestionListItem = ({ suggestion }: Props) => {
         <AvatarWithColorInitials
           user={suggestion}
           size={44}
+          showOnlineBadge
           className="size-11"
         />
 

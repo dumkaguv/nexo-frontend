@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import {
   AvatarWithColorInitials,
   DayLabel,
+  ImagePreview,
   TipTapEditorPreview
 } from '@/components/shared'
 
 import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
-import { cn } from '@/utils'
+import { cn, isEmptyHTMLEditor } from '@/utils'
 
 import { ChatMessagesListItemMoreActions } from './ChatMessagesListItemMoreActions'
 
@@ -33,6 +34,15 @@ export const ChatMessagesListItem = ({
 
   const isMine = message.senderId === user?.id
   const messageDate = message.isEdited ? message.updatedAt : message.createdAt
+  const hasContent = !!message.content && !isEmptyHTMLEditor(message.content)
+  const fileUrls =
+    message.files
+      ?.map((file) =>
+        'url' in file
+          ? file.url
+          : (file as { file?: { url?: string } }).file?.url
+      )
+      .filter((url): url is string => Boolean(url)) ?? []
 
   return (
     <div
@@ -61,13 +71,24 @@ export const ChatMessagesListItem = ({
           isMine ? 'items-end' : 'items-start'
         )}
       >
-        <TipTapEditorPreview
-          content={message.content ?? ''}
-          className={cn(
-            'w-fit rounded-2xl px-4 py-3 text-sm leading-relaxed',
-            isMine ? 'bg-primary/80 text-white!' : 'bg-muted text-foreground'
-          )}
-        />
+        {fileUrls.length > 0 && (
+          <ImagePreview
+            srcs={fileUrls}
+            maxImages={4}
+            containerClassName="grid grid-cols-2 gap-2"
+          />
+        )}
+
+        {hasContent && (
+          <TipTapEditorPreview
+            content={message.content ?? ''}
+            className={cn(
+              'w-fit rounded-2xl px-4 py-3 text-sm leading-relaxed',
+              isMine ? 'bg-primary/80 text-white!' : 'bg-muted text-foreground'
+            )}
+          />
+        )}
+
         <DayLabel
           date={messageDate}
           text={message.isEdited ? t('editedAt') : t('todayAt')}

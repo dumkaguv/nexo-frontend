@@ -52,7 +52,7 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
   const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
-  const { mutateAsync: deleteCommentAsync, isPending } = useMutation({
+  const { mutate: deleteCommentAsync, isPending } = useMutation({
     ...postControllerRemoveCommentMutation(),
     onSuccess: async () => {
       void invalidateQueries([postControllerFindAllInfiniteQueryKey()])
@@ -67,7 +67,9 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
   })
 
   const path = { id: String(postId), commentId: String(comment.id) }
-  const onDelete = async () => await deleteCommentAsync({ path })
+
+  const onDelete = () => deleteCommentAsync({ path })
+
   const onEdit = () => {
     setIsOpenPopover(false)
     setIsEditing(true)

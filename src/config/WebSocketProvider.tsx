@@ -7,30 +7,30 @@ import {
   type ReactNode
 } from 'react'
 
-import { WebSocketContext } from '@/stores'
+import { WebSocketContext, type WebSocketNamespaceValue } from '@/stores'
 import { getAccessToken, AUTH_TOKEN_CHANGED_EVENT } from '@/utils'
 
-import { type SocketAuth, initSocket, setSocketAuth } from './socket'
+import {
+  type SocketAuth,
+  getAllowedNamespaces,
+  initSocket,
+  normalizeNamespace,
+  setSocketAuth
+} from './socket'
 
-import type { Socket } from 'socket.io-client'
-
-type WebSocketContextValue = {
-  socket: Socket
+type NamespaceState = {
   isConnected: boolean
   isConnecting: boolean
   lastError: string | null
-
-  connect: () => void
-  disconnect: () => void
-  emit: Socket['emit']
 }
 
-type WebSocketProviderProps = {
+type Props = {
   children: ReactNode
   enabled?: boolean
   auth?: SocketAuth
   url?: string
   namespace?: string
+  namespaces?: string[]
 }
 
 export const WebSocketProvider = ({
@@ -38,17 +38,94 @@ export const WebSocketProvider = ({
   enabled = true,
   auth,
   url,
-  namespace
-}: WebSocketProviderProps) => {
-  const socket = useMemo(() => initSocket({ url, namespace }), [namespace, url])
-  const [isConnected, setIsConnected] = useState(socket.connected)
-  const [isConnecting, setIsConnecting] = useState(false)
-  const [lastError, setLastError] = useState<string | null>(null)
+  namespace,
+  namespaces
+}: Props) => {
+  const allowedNamespaces = useMemo(() => getAllowedNamespaces(), [])
+  const resolvedNamespaces = useMemo(() => {
+    let requested = allowedNamespaces
+
+    if (namespace) {
+      requested = [namespace]
+    }
+
+    if (namespaces && namespaces.length > 0) {
+      requested = namespaces
+    }
+
+    const normalized = requested.map(normalizeNamespace)
+    const unique = [...new Set(normalized)]
+    const invalid = unique.filter((value) => !allowedNamespaces.includes(value))
+
+    if (invalid.length > 0) {
+      throw new Error(`Unknown namespace(s): ${invalid.join(', ')}`)
+    }
+
+    return unique.length > 0 ? unique : allowedNamespaces
+  }, [allowedNamespaces, namespace, namespaces])
+
+  const socketsByNamespace = useMemo(
+    () =>
+      new Map(
+        resolvedNamespaces.map((value) => [
+          value,
+          initSocket({ url, namespace: value })
+        ])
+      ),
+    [resolvedNamespaces, url]
+  )
+
+  const [stateByNamespace, setStateByNamespace] = useState<
+    Record<string, NamespaceState>
+  >(() => {
+    const initial: Record<string, NamespaceState> = {}
+
+    socketsByNamespace.forEach((socket, value) => {
+      initial[value] = {
+        isConnected: socket.connected,
+        isConnecting: false,
+        lastError: null
+      }
+    })
+
+    return initial
+  })
   const [accessToken, setAccessToken] = useState<string | null>(() =>
     getAccessToken()
   )
 
   const previousTokenRef = useRef<string | null>(null)
+
+  const getDefaultNamespaceState = useCallback(
+    (namespaceValue: string): NamespaceState => {
+      const socket = socketsByNamespace.get(namespaceValue)
+
+      return {
+        isConnected: socket?.connected ?? false,
+        isConnecting: false,
+        lastError: null
+      }
+    },
+    [socketsByNamespace]
+  )
+
+  const updateNamespaceState = useCallback(
+    (namespaceValue: string, patch: Partial<NamespaceState>) => {
+      setStateByNamespace((prev) => {
+        const current =
+          prev[namespaceValue] ?? getDefaultNamespaceState(namespaceValue)
+
+        return {
+          ...prev,
+          [namespaceValue]: {
+            ...current,
+            ...patch
+          }
+        }
+      })
+    },
+    [getDefaultNamespaceState]
+  )
 
   const resolvedAuth = useMemo(() => {
     if (auth) {
@@ -62,25 +139,115 @@ export const WebSocketProvider = ({
     return { token: accessToken } satisfies SocketAuth
   }, [accessToken, auth])
 
-  const connect = useCallback(() => {
-    if (!enabled || !resolvedAuth || socket.connected) {
-      return
-    }
+  const connectNamespace = useCallback(
+    (namespaceValue: string) => {
+      const socket = socketsByNamespace.get(namespaceValue)
 
-    setIsConnecting(true)
-    try {
-      socket.connect()
-    } catch (error) {
-      setIsConnecting(false)
-      setLastError(error instanceof Error ? error.message : String(error))
-    }
-  }, [enabled, resolvedAuth, socket])
+      if (!socket || !enabled || !resolvedAuth || socket.connected) {
+        return
+      }
 
-  const disconnect = useCallback(() => {
-    setIsConnecting(false)
-    socket.disconnect()
-    setIsConnected(false)
-  }, [socket])
+      updateNamespaceState(namespaceValue, { isConnecting: true })
+      try {
+        socket.connect()
+      } catch (error) {
+        updateNamespaceState(namespaceValue, {
+          isConnecting: false,
+          lastError: error instanceof Error ? error.message : String(error)
+        })
+      }
+    },
+    [enabled, resolvedAuth, socketsByNamespace, updateNamespaceState]
+  )
+
+  const disconnectNamespace = useCallback(
+    (namespaceValue: string) => {
+      const socket = socketsByNamespace.get(namespaceValue)
+
+      if (!socket) {
+        return
+      }
+
+      updateNamespaceState(namespaceValue, { isConnecting: false })
+      socket.disconnect()
+      updateNamespaceState(namespaceValue, { isConnected: false })
+    },
+    [socketsByNamespace, updateNamespaceState]
+  )
+
+  const connectAll = useCallback(() => {
+    resolvedNamespaces.forEach((namespaceValue) =>
+      connectNamespace(namespaceValue)
+    )
+  }, [connectNamespace, resolvedNamespaces])
+
+  const disconnectAll = useCallback(() => {
+    resolvedNamespaces.forEach((namespaceValue) =>
+      disconnectNamespace(namespaceValue)
+    )
+  }, [disconnectNamespace, resolvedNamespaces])
+
+  useEffect(() => {
+    setStateByNamespace((prev) => {
+      const next: Record<string, NamespaceState> = {}
+
+      resolvedNamespaces.forEach((value) => {
+        const socket = socketsByNamespace.get(value)
+
+        next[value] = prev[value] ?? {
+          isConnected: socket?.connected ?? false,
+          isConnecting: false,
+          lastError: null
+        }
+      })
+
+      return next
+    })
+  }, [resolvedNamespaces, socketsByNamespace])
+
+  useEffect(() => {
+    const entries = Array.from(socketsByNamespace.entries())
+    const handlers = entries.map(([namespaceValue, socket]) => {
+      const onConnect = () => {
+        updateNamespaceState(namespaceValue, {
+          isConnected: true,
+          isConnecting: false,
+          lastError: null
+        })
+      }
+
+      const onDisconnect = () => {
+        updateNamespaceState(namespaceValue, {
+          isConnected: false,
+          isConnecting: false
+        })
+      }
+
+      const onConnectError = (error: unknown) => {
+        updateNamespaceState(namespaceValue, {
+          isConnected: false,
+          isConnecting: false,
+          lastError: error instanceof Error ? error.message : String(error)
+        })
+      }
+
+      socket.on('connect', onConnect)
+      socket.on('disconnect', onDisconnect)
+      socket.on('connect_error', onConnectError)
+
+      return { socket, onConnect, onDisconnect, onConnectError }
+    })
+
+    return () => {
+      handlers.forEach(
+        ({ socket, onConnect, onDisconnect, onConnectError }) => {
+          socket.off('connect', onConnect)
+          socket.off('disconnect', onDisconnect)
+          socket.off('connect_error', onConnectError)
+        }
+      )
+    }
+  }, [socketsByNamespace, updateNamespaceState])
 
   useEffect(() => {
     const onTokenChanged = (event: Event) => {
@@ -97,13 +264,15 @@ export const WebSocketProvider = ({
   }, [])
 
   useEffect(() => {
-    setSocketAuth(resolvedAuth, namespace)
+    resolvedNamespaces.forEach((namespaceValue) => {
+      setSocketAuth(resolvedAuth, namespaceValue)
+    })
 
     if (!enabled) {
       previousTokenRef.current =
         typeof resolvedAuth?.token === 'string' ? resolvedAuth.token : null
 
-      disconnect()
+      disconnectAll()
 
       return
     }
@@ -115,74 +284,107 @@ export const WebSocketProvider = ({
     previousTokenRef.current = nextToken
 
     if (!nextToken) {
-      disconnect()
+      disconnectAll()
 
       return
     }
 
-    connect()
+    connectAll()
 
-    if (socket.connected && previousToken && previousToken !== nextToken) {
-      socket.disconnect()
-      socket.connect()
+    if (previousToken && previousToken !== nextToken) {
+      resolvedNamespaces.forEach((namespaceValue) => {
+        const socket = socketsByNamespace.get(namespaceValue)
+
+        if (socket?.connected) {
+          socket.disconnect()
+          socket.connect()
+        }
+      })
     }
-  }, [connect, disconnect, enabled, namespace, resolvedAuth, socket])
+  }, [
+    connectAll,
+    disconnectAll,
+    enabled,
+    resolvedAuth,
+    resolvedNamespaces,
+    socketsByNamespace
+  ])
 
   useEffect(() => {
     return () => {
-      disconnect()
+      disconnectAll()
     }
-  }, [disconnect])
+  }, [disconnectAll])
 
-  useEffect(() => {
-    const onConnect = () => {
-      setIsConnected(true)
-      setIsConnecting(false)
-      setLastError(null)
-    }
+  const namespaceValues = useMemo(() => {
+    const values: Record<string, WebSocketNamespaceValue> = {}
 
-    const onDisconnect = () => {
-      setIsConnected(false)
-      setIsConnecting(false)
-    }
+    resolvedNamespaces.forEach((value) => {
+      const socket = socketsByNamespace.get(value)
 
-    const onConnectError = (error: unknown) => {
-      setIsConnected(false)
-      setIsConnecting(false)
-      setLastError(error instanceof Error ? error.message : String(error))
-    }
+      if (!socket) {
+        return
+      }
 
-    socket.on('connect', onConnect)
-    socket.on('disconnect', onDisconnect)
-    socket.on('connect_error', onConnectError)
+      const state = stateByNamespace[value] ?? {
+        isConnected: socket.connected,
+        isConnecting: false,
+        lastError: null
+      }
 
-    return () => {
-      socket.off('connect', onConnect)
-      socket.off('disconnect', onDisconnect)
-      socket.off('connect_error', onConnectError)
-    }
-  }, [socket])
+      values[value] = {
+        socket,
+        isConnected: state.isConnected,
+        isConnecting: state.isConnecting,
+        lastError: state.lastError,
+        connect: () => connectNamespace(value),
+        disconnect: () => disconnectNamespace(value),
+        emit: (...args) => socket.emit(...args)
+      }
+    })
 
-  const emit: Socket['emit'] = useCallback(
-    (...args) => socket.emit(...args),
-    [socket]
+    return values
+  }, [
+    connectNamespace,
+    disconnectNamespace,
+    resolvedNamespaces,
+    socketsByNamespace,
+    stateByNamespace
+  ])
+
+  const getSocket = useCallback(
+    (value?: string) => {
+      const namespaceValue = value
+        ? normalizeNamespace(value)
+        : resolvedNamespaces[0]
+
+      if (!namespaceValue) {
+        throw new Error('No WebSocket namespaces configured')
+      }
+
+      const socketValue = namespaceValues[namespaceValue]
+
+      if (!socketValue) {
+        throw new Error(`Socket namespace ${namespaceValue} is not initialized`)
+      }
+
+      return socketValue
+    },
+    [namespaceValues, resolvedNamespaces]
   )
 
-  const value: WebSocketContextValue = useMemo(
+  const contextValue = useMemo(
     () => ({
-      socket,
-      isConnected,
-      isConnecting,
-      lastError,
-      connect,
-      disconnect,
-      emit
+      getSocket,
+      namespaces: resolvedNamespaces,
+      connectAll,
+      disconnectAll
     }),
-    [connect, disconnect, emit, isConnected, isConnecting, lastError, socket]
+    [connectAll, disconnectAll, getSocket, resolvedNamespaces]
   )
 
   return (
-    <WebSocketContext.Provider value={value}>
+    <WebSocketContext.Provider value={contextValue}>
       {children}
     </WebSocketContext.Provider>
   )

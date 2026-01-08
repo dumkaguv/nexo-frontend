@@ -14,6 +14,7 @@ import {
   Separator
 } from '@/components/ui'
 
+import { CLIENT_TO_SERVER_EVENTS } from '@/config'
 import { useWebSocket } from '@/hooks'
 
 import type { ResponseMessageDto } from '@/api'
@@ -37,7 +38,7 @@ export const ChatMessagesListItemMoreActions = ({
   const onDelete = () => {
     setIsOpenPopover(false)
 
-    emit('message:delete', {
+    emit(CLIENT_TO_SERVER_EVENTS.message.delete, {
       id: message.id
     })
   }
