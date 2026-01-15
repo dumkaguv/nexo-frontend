@@ -49,6 +49,8 @@ import type {
   PostControllerFindAllData,
   PostControllerFindAllLikesData,
   PostControllerFindAllLikesResponses,
+  PostControllerFindAllMyData,
+  PostControllerFindAllMyResponses,
   PostControllerFindAllResponses,
   PostControllerFindOneData,
   PostControllerFindOneResponses,
@@ -397,6 +399,26 @@ export const postControllerCreate = <ThrowOnError extends boolean = false>(
       'Content-Type': 'application/json',
       ...options.headers
     }
+  })
+}
+
+export const postControllerFindAllMy = <ThrowOnError extends boolean = false>(
+  options?: Options<PostControllerFindAllMyData, ThrowOnError>
+) => {
+  return (options?.client ?? client).get<
+    PostControllerFindAllMyResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [
+      {
+        scheme: 'bearer',
+        type: 'http'
+      }
+    ],
+    url: '/api/posts/my',
+    ...options
   })
 }
 

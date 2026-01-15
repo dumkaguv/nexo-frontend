@@ -25,17 +25,21 @@ export const UserPage = () => {
 
   return (
     <div className="flex gap-10">
-      <Card className="flex w-full flex-col gap-8">
-        <MainInfo userData={userData} isMe={isMe} />
+      <Card className="flex w-full flex-col gap-5">
+        <MainInfo userData={userData} isLoading={isLoading} />
 
         <div>Stories...</div>
 
-        <Separator />
+        {isMe && (
+          <>
+            <Separator />
 
-        <MyPosts />
+            <MyPosts />
+          </>
+        )}
       </Card>
 
-      <SidebarUi className="w-full max-w-[310px]" bodyClassName="items-start">
+      <SidebarUi className="w-full max-w-85" bodyClassName="items-start">
         <Sidebar userData={userData} />
       </SidebarUi>
     </div>

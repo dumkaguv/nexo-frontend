@@ -21,12 +21,15 @@ import { useInvalidatePredicateQueries } from '@/hooks'
 import { useAuthStore } from '@/stores'
 import { showApiErrors } from '@/utils'
 
+import type { DialogProps } from '@radix-ui/react-dialog'
+
 type Props = {
   like: ResponsePostLikeDto
   postId: number
+  onOpenChange?: DialogProps['onOpenChange']
 }
 
-export const PostLikesListItem = ({ like, postId }: Props) => {
+export const PostLikesListItem = ({ like, postId, onOpenChange }: Props) => {
   const { user } = useAuthStore()
 
   const { t } = useTranslation()
@@ -70,7 +73,10 @@ export const PostLikesListItem = ({ like, postId }: Props) => {
 
   return (
     <div className="flex items-center justify-between gap-5">
-      <Link to={paths.user.byId(like.user.id)}>
+      <Link
+        to={paths.user.byId(like.user.id)}
+        onClick={() => onOpenChange?.(false)}
+      >
         <div className="flex items-center gap-2">
           <AvatarWithColorInitials user={like.user} size={40} />
           <div className="flex flex-col items-start">

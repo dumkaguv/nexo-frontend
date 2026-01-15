@@ -89,6 +89,7 @@ export default tseslint.config(
       'no-nested-ternary': 'error',
       'no-unneeded-ternary': 'error',
       'no-lonely-if': 'error',
+      'no-return-await': 'error',
       curly: ['error', 'all'],
       'func-style': ['warn', 'expression'],
       'prefer-arrow-callback': ['error'],

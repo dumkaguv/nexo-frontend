@@ -92,9 +92,13 @@
   "photo": "Photo",
   "attach": "Attach",
   "publish": "Publish",
+  "addPost": "Add post",
   "post": "Post",
+  "myPosts": "My posts",
   "todayAt": "Today at",
   "editedAt": "Edited at",
+  "noPostsYet": "No posts yet",
+  "noPostsYetDescription": "Create your first post to see it here.",
   "noFollowersYet": "No followers yet",
   "noFollowersYetDescription": "Once people start following you, they will appear here.",
   "noFollowingYet": "You're not following anyone yet",
@@ -160,5 +164,6 @@
   "noActiveChatsDescription": "Start a new conversation from the suggestions below.",
   "suggestions": "Suggestions",
   "joinedOn": "Joined on",
-  "lastActivity": "Last activity"
+  "lastActivity": "Last activity",
+  "about": "About"
 }

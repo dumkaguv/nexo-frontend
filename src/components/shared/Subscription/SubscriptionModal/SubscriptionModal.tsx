@@ -17,19 +17,23 @@ import {
 import { useDebouncedValue } from '@/hooks'
 import { useAuthStore } from '@/stores'
 
+import type { ResponseUserDto } from '@/api'
+
 import type { DialogProps } from '@radix-ui/react-dialog'
 
 type Props = {
+  user?: ResponseUserDto
   isFollowersTab?: boolean
 } & DialogProps
 
 export const SubscriptionModal = ({
+  user: userProps,
   isFollowersTab = true,
   open,
   onOpenChange,
   ...props
 }: Props) => {
-  const { user } = useAuthStore()
+  const { user: userStore } = useAuthStore()
 
   const [searchValue, setSearchValue] = useState<string | undefined>()
   const debouncedSearchValue = useDebouncedValue(searchValue)
@@ -37,6 +41,8 @@ export const SubscriptionModal = ({
   const { t } = useTranslation()
 
   const onChangeTab = () => setSearchValue('')
+
+  const user = userProps || userStore
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange} {...props}>
@@ -68,6 +74,7 @@ export const SubscriptionModal = ({
           <TabsContent value="followers" className="mt-4">
             <SubscriptionList
               searchValue={debouncedSearchValue}
+              onOpenChange={onOpenChange}
               isFollowersTab
             />
           </TabsContent>
@@ -75,6 +82,7 @@ export const SubscriptionModal = ({
           <TabsContent value="following" className="mt-4">
             <SubscriptionList
               searchValue={debouncedSearchValue}
+              onOpenChange={onOpenChange}
               isFollowersTab={false}
             />
           </TabsContent>

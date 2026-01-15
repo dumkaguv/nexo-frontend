@@ -569,6 +569,39 @@ export type PostControllerCreateResponses = {
 export type PostControllerCreateResponse =
   PostControllerCreateResponses[keyof PostControllerCreateResponses]
 
+export type PostControllerFindAllMyData = {
+  body?: never
+  path?: never
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page.
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/posts/my'
+}
+
+export type PostControllerFindAllMyResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponsePostDto>
+  }
+}
+
+export type PostControllerFindAllMyResponse =
+  PostControllerFindAllMyResponses[keyof PostControllerFindAllMyResponses]
+
 export type PostControllerFindAllCommentsData = {
   body?: never
   path: {

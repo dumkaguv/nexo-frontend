@@ -11,6 +11,7 @@ import {
   postControllerCreateLikeMutation,
   postControllerFindAllInfiniteQueryKey,
   postControllerFindAllLikesQueryKey,
+  postControllerFindAllMyQueryKey,
   postControllerRemoveLikeMutation
 } from '@/api'
 import {
@@ -41,7 +42,10 @@ export const PostLikes = ({ postId, likesCount, isLiked }: Props) => {
   const getMutationConfig = () => ({
     onSuccess: async () => {
       void invalidateQueries([postControllerFindAllLikesQueryKey({ path })])
-      await invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      await invalidateQueries([
+        postControllerFindAllInfiniteQueryKey(),
+        postControllerFindAllMyQueryKey()
+      ])
       toast.success(t('success'))
     },
     onError: (e: unknown) => showApiErrors(e)

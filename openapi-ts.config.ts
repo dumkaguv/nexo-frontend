@@ -2,12 +2,14 @@ import path from 'path'
 
 import { defaultPlugins, defineConfig } from '@hey-api/openapi-ts'
 
+const API_URL_SWAGGER = 'http://localhost:3000/swagger.json'
+
 export default defineConfig({
   input: {
     filters: {
       deprecated: false
     },
-    path: 'http://localhost:3000/swagger.json'
+    path: API_URL_SWAGGER
   },
 
   output: {

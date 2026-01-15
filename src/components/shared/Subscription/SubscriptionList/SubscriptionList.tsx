@@ -17,13 +17,17 @@ import { SubscriptionListSkeleton } from '@/components/shared/Subscription/Subsc
 import { paths } from '@/config'
 import { useAuthStore } from '@/stores'
 
+import type { DialogProps } from '@radix-ui/react-dialog'
+
 type Props = {
   isFollowersTab?: boolean
   searchValue?: string
+  onOpenChange?: DialogProps['onOpenChange']
 }
 
 export const SubscriptionList = ({
   searchValue,
+  onOpenChange,
   isFollowersTab = true
 }: Props) => {
   const { user } = useAuthStore()
@@ -97,6 +101,7 @@ export const SubscriptionList = ({
             <Link
               key={record.user.id}
               to={paths.user.byId(record.user.id)}
+              onClick={() => onOpenChange?.(false)}
               className="hover:cursor-pointer"
             >
               <SubscriptionListItem

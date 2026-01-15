@@ -2,19 +2,31 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { postControllerFindAllInfiniteOptions } from '@/api'
+import {
+  postControllerFindAllInfiniteOptions,
+  type ResponsePostDto
+} from '@/api'
 
 import { PostCard, PostCardListSkeleton } from '@/features/posts/components'
 
-export const PostList = () => {
+type Props = {
+  posts?: ResponsePostDto[]
+  isLoading?: boolean
+}
+
+export const PostList = ({
+  posts: postsProps,
+  isLoading: isLoadingProps
+}: Props) => {
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     ...postControllerFindAllInfiniteOptions(),
-    getNextPageParam: ({ nextPage }) => nextPage
+    getNextPageParam: ({ nextPage }) => nextPage,
+    enabled: !!postsProps?.length
   })
 
-  const posts = data?.pages.flatMap(({ data }) => data)
+  const posts = postsProps || data?.pages.flatMap(({ data }) => data)
 
-  if (isLoading) {
+  if (isLoadingProps || isLoading) {
     return <PostCardListSkeleton />
   }
 

@@ -11,7 +11,8 @@ import { toast } from 'sonner'
 import {
   postControllerCreateCommentMutation,
   postControllerFindAllCommentsInfiniteQueryKey,
-  postControllerFindAllInfiniteQueryKey
+  postControllerFindAllInfiniteQueryKey,
+  postControllerFindAllMyQueryKey
 } from '@/api'
 import { AvatarWithColorInitials, TipTapEditor } from '@/components/shared'
 import {
@@ -65,7 +66,10 @@ export const PostCommentsSection = ({ postId }: Props) => {
           path: { id: String(postId) }
         })
       ])
-      void invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      void invalidateQueries([
+        postControllerFindAllInfiniteQueryKey(),
+        postControllerFindAllMyQueryKey()
+      ])
       toast.success(t('success'))
     },
     onError: (e) => showApiErrors(e)
@@ -93,8 +97,8 @@ export const PostCommentsSection = ({ postId }: Props) => {
                 <div className="relative">
                   <TipTapEditor
                     placeholder={t('addComment')}
-                    toolbarClassName="border-b-0"
-                    className="border-t-0 pr-15"
+                    toolbarClassName="border-b-0 mb-2"
+                    className="pr-15"
                     {...field}
                   />
 

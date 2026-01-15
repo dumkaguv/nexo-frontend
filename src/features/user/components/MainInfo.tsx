@@ -9,15 +9,21 @@ import * as Person from '@/components/shared/Person'
 import { Button } from '@/components/ui'
 import { paths } from '@/config'
 
+import { useAuthStore } from '@/stores'
+
 import type { ResponseUserDto } from '@/api'
 
 type Props = {
   userData?: ResponseUserDto
-  isMe?: boolean
+  isLoading?: boolean
 }
 
-export const MainInfo = ({ userData, isMe }: Props) => {
+export const MainInfo = ({ userData, isLoading }: Props) => {
+  const { user } = useAuthStore()
+
   const { t } = useTranslation()
+
+  const isMe = Number(user?.id) === Number(userData?.id)
 
   return (
     <div className="flex flex-col gap-5">
@@ -37,7 +43,11 @@ export const MainInfo = ({ userData, isMe }: Props) => {
               nickname={userData?.username}
               className="cursor-auto text-base"
             />
-            <Person.FollowInfo isVertical={false} />
+            <Person.FollowInfo
+              user={userData}
+              isLoading={isLoading}
+              isVertical={false}
+            />
           </div>
         </div>
 

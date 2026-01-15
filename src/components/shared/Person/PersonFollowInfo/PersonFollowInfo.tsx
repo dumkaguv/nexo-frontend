@@ -6,12 +6,22 @@ import { Separator, Skeleton } from '@/components/ui'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
+import type { ResponseUserDto } from '@/api'
+
 type Props = {
+  user?: ResponseUserDto
+  isLoading?: boolean
   isVertical?: boolean
 } & ComponentProps<'div'>
 
-export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
-  const { user, isPendingUser } = useAuthStore()
+export const PersonFollowInfo = ({
+  user: userProps,
+  isLoading,
+  isVertical,
+  className,
+  ...rest
+}: Props) => {
+  const { user: userStore, isPendingUser } = useAuthStore()
 
   const [isClickOnFollowers, setIsClickOnFollowers] = useState(false)
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -30,7 +40,7 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
 
   const renderFollowInfo = (translationKey: string, count?: number) => (
     <div className={cn('flex items-center', isVertical && 'flex-col')}>
-      {isPendingUser ? (
+      {isPendingUser || isLoading ? (
         <>
           <Skeleton
             className={cn('h-5 w-8 rounded', !isVertical && 'mr-1.5')}
@@ -57,15 +67,17 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
 
   const commonBtnClass = 'hover:text-primary/90 cursor-pointer duration-200'
 
+  const user = userProps || userStore
+
   return (
     <>
       {isVertical ? (
         <div className={cn('flex h-12 gap-4', className)} {...rest}>
           <button
             type="button"
-            className={commonBtnClass}
             onClick={openModalFollowers}
-            disabled={isPendingUser}
+            disabled={isPendingUser || isLoading}
+            className={commonBtnClass}
           >
             {renderFollowInfo('followers', user?.followersCount)}
           </button>
@@ -74,9 +86,9 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
 
           <button
             type="button"
-            className={commonBtnClass}
             onClick={openModalFollowing}
-            disabled={isPendingUser}
+            disabled={isPendingUser || isLoading}
+            className={commonBtnClass}
           >
             {renderFollowInfo('following', user?.followingCount)}
           </button>
@@ -85,9 +97,9 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
         <div className={cn('flex gap-3', className)} {...rest}>
           <button
             type="button"
-            className={commonBtnClass}
             onClick={openModalFollowers}
-            disabled={isPendingUser}
+            disabled={isPendingUser || isLoading}
+            className={commonBtnClass}
           >
             {renderFollowInfo('followers', user?.followersCount)}
           </button>
@@ -96,9 +108,9 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
 
           <button
             type="button"
-            className={commonBtnClass}
             onClick={openModalFollowing}
-            disabled={isPendingUser}
+            disabled={isPendingUser || isLoading}
+            className={commonBtnClass}
           >
             {renderFollowInfo('following', user?.followingCount)}
           </button>
@@ -106,6 +118,7 @@ export const PersonFollowInfo = ({ isVertical, className, ...rest }: Props) => {
       )}
 
       <SubscriptionModal
+        user={userProps}
         open={isOpenModal}
         onOpenChange={(open) => setIsOpenModal(open)}
         isFollowersTab={isClickOnFollowers}

@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import {
   type ResponsePostDto,
   postControllerFindAllInfiniteQueryKey,
+  postControllerFindAllMyQueryKey,
   postControllerRemoveMutation
 } from '@/api'
 import { ButtonMoreActions, ModalConfirm } from '@/components/shared'
@@ -37,7 +38,10 @@ export const PostMoreActions = ({ post, onButtonEdit }: Props) => {
   const { mutate: deleteAsync, isPending } = useMutation({
     ...postControllerRemoveMutation(),
     onSuccess: async () => {
-      await invalidateQueries([postControllerFindAllInfiniteQueryKey()])
+      await invalidateQueries([
+        postControllerFindAllInfiniteQueryKey(),
+        postControllerFindAllMyQueryKey()
+      ])
       toast.success(t('success'))
     },
     onError: (e) => showApiErrors(e)

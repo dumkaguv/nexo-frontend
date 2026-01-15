@@ -33,6 +33,7 @@ import {
   postControllerFindAll,
   postControllerFindAllComments,
   postControllerFindAllLikes,
+  postControllerFindAllMy,
   postControllerFindOne,
   postControllerRemove,
   postControllerRemoveComment,
@@ -95,6 +96,8 @@ import type {
   PostControllerFindAllData,
   PostControllerFindAllLikesData,
   PostControllerFindAllLikesResponse,
+  PostControllerFindAllMyData,
+  PostControllerFindAllMyResponse,
   PostControllerFindAllResponse,
   PostControllerFindOneData,
   PostControllerRemoveCommentData,
@@ -631,6 +634,75 @@ export const postControllerCreateMutation = (
     }
   }
   return mutationOptions
+}
+
+export const postControllerFindAllMyQueryKey = (
+  options?: Options<PostControllerFindAllMyData>
+) => createQueryKey('postControllerFindAllMy', options)
+
+export const postControllerFindAllMyOptions = (
+  options?: Options<PostControllerFindAllMyData>
+) => {
+  return queryOptions({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await postControllerFindAllMy({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: postControllerFindAllMyQueryKey(options)
+  })
+}
+
+export const postControllerFindAllMyInfiniteQueryKey = (
+  options?: Options<PostControllerFindAllMyData>
+): QueryKey<Options<PostControllerFindAllMyData>> =>
+  createQueryKey('postControllerFindAllMy', options, true)
+
+export const postControllerFindAllMyInfiniteOptions = (
+  options?: Options<PostControllerFindAllMyData>
+) => {
+  return infiniteQueryOptions<
+    PostControllerFindAllMyResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<PostControllerFindAllMyResponse>,
+    QueryKey<Options<PostControllerFindAllMyData>>,
+    | number
+    | Pick<
+        QueryKey<Options<PostControllerFindAllMyData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<PostControllerFindAllMyData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await postControllerFindAllMy({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+        return data
+      },
+      queryKey: postControllerFindAllMyInfiniteQueryKey(options)
+    }
+  )
 }
 
 export const postControllerFindAllCommentsQueryKey = (
