@@ -103,10 +103,13 @@ export const useFormCreatePost = ({
         ({ file: { url } }) => !previewsSet.has(url)
       )
 
-      await Promise.all([
+      const deletePromises =
         filesToDelete?.map(({ file }) =>
           uploadDelete({ path: { id: String(file.id) } })
-        ),
+        ) ?? []
+
+      await Promise.all([
+        ...deletePromises,
         updatePost({
           path: { id: String(post.id) },
           body: { ...body, files: fileIds }
