@@ -44,6 +44,7 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
     if (!editor) {
       return
     }
+
     editor.chain().focus().insertContent(emoji).run()
   }
 

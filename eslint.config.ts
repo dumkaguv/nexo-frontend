@@ -89,10 +89,10 @@ export default tseslint.config(
       'no-nested-ternary': 'error',
       'no-unneeded-ternary': 'error',
       'no-lonely-if': 'error',
-      'no-return-await': 'error',
       curly: ['error', 'all'],
       'func-style': ['warn', 'expression'],
       'prefer-arrow-callback': ['error'],
+      'require-await': 'error',
 
       'regexp/no-dupe-characters-character-class': 'error',
       'regexp/no-empty-character-class': 'error',
@@ -114,6 +114,8 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-enum-comparison': 'error',
       '@typescript-eslint/return-await': ['error', 'in-try-catch'],
       '@typescript-eslint/no-redundant-type-constituents': 'error',
+      '@typescript-eslint/require-await': 'error',
+
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {
@@ -165,7 +167,8 @@ export default tseslint.config(
         { blankLine: 'any', prev: 'directive', next: 'directive' },
         { blankLine: 'always', prev: ['case', 'default'], next: '*' },
         { blankLine: 'always', prev: 'import', next: '*' },
-        { blankLine: 'any', prev: 'import', next: 'import' }
+        { blankLine: 'any', prev: 'import', next: 'import' },
+        { blankLine: 'always', prev: 'if', next: '*' }
       ],
 
       'unicorn/filename-case': [

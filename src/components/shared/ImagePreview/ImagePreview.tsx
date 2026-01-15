@@ -57,6 +57,7 @@ export const ImagePreview = ({
     if (files?.length) {
       return files.map((file) => ({ src: URL.createObjectURL(file) }))
     }
+
     if (srcs?.length) {
       return srcs.map((src) => ({ src }))
     }

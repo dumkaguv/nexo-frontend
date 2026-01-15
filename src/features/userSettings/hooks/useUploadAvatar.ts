@@ -113,6 +113,7 @@ export const useUploadAvatar = () => {
     if (!file) {
       return
     }
+
     const hasAvatar = !!user?.profile.avatar
 
     if (hasAvatar) {

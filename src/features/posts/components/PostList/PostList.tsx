@@ -21,7 +21,7 @@ export const PostList = ({
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery({
     ...postControllerFindAllInfiniteOptions(),
     getNextPageParam: ({ nextPage }) => nextPage,
-    enabled: !!postsProps?.length
+    enabled: !postsProps?.length
   })
 
   const posts = postsProps || data?.pages.flatMap(({ data }) => data)

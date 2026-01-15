@@ -14,6 +14,7 @@ const baseURL = import.meta.env.VITE_PUBLIC_API_URL as string | undefined
 if (!baseURL) {
   throw new Error('Missing VITE_PUBLIC_API_URL')
 }
+
 const refreshUrl = `${baseURL}/api/auth/refresh`
 
 type Client = {
@@ -59,6 +60,7 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
 
             return (window.location.href = paths.auth.login)
           }
+
           saveAccessToken(newAccessToken)
 
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`

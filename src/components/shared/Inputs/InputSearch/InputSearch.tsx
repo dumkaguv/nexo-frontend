@@ -51,6 +51,7 @@ export const InputSearch = ({
     if (!isControlled) {
       setInnerValue('')
     }
+
     onChange?.({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
     onButtonClearClick?.()
   }
