@@ -51,9 +51,8 @@ const router = createBrowserRouter([
           {
             path: paths.conversations.new,
             lazy: async () => {
-              const { Chat } = await import(
-                '@/features/conversations/components'
-              )
+              const { Chat } =
+                await import('@/features/conversations/components')
 
               return { Component: Chat }
             }
@@ -61,9 +60,8 @@ const router = createBrowserRouter([
           {
             path: paths.conversations.byId(':id'),
             lazy: async () => {
-              const { Chat } = await import(
-                '@/features/conversations/components'
-              )
+              const { Chat } =
+                await import('@/features/conversations/components')
 
               return { Component: Chat }
             }

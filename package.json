@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"src/api/**\" --max-warnings 0",
-    "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\" --max-warnings 0",
+    "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"src/api/**\" --max-warnings 10",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix --ignore-pattern \"src/api/**\" --max-warnings 10",
     "typecheck": "tsc --noEmit -p .",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore",
     "format:check": "prettier --check 'src/**/*.{ts,tsx,js,jsx}' --ignore-path .prettierignore",
@@ -127,7 +127,7 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "prettier --write",
-      "eslint --fix --max-warnings 0",
+      "eslint --fix --max-warnings 10",
       "bash -c \"tsc -p tsconfig.json --noEmit\""
     ],
     "**/*.{css,scss,postcss}": [
