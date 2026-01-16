@@ -43,6 +43,7 @@ vi.mock('@/api', () => ({
   profileControllerMeDetailedQueryKey: () => [],
   subscriptionControllerFindAllFollowersInfiniteQueryKey: () => [],
   subscriptionControllerFindAllFollowingInfiniteQueryKey: () => [],
+  subscriptionControllerRemoveFollowerMutation: () => ({}),
   subscriptionControllerUnfollowMutation: () => ({})
 }))
 
