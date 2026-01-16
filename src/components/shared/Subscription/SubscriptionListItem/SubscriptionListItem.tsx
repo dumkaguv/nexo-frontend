@@ -4,7 +4,7 @@ import { X } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import {
@@ -13,7 +13,9 @@ import {
   profileControllerMeDetailedQueryKey,
   subscriptionControllerFindAllFollowersInfiniteQueryKey,
   subscriptionControllerFindAllFollowingInfiniteQueryKey,
-  subscriptionControllerUnfollowMutation
+  subscriptionControllerRemoveFollowerMutation,
+  subscriptionControllerUnfollowMutation,
+  userControllerFindAllInfiniteQueryKey
 } from '@/api'
 import { AvatarWithColorInitials } from '@/components/shared'
 import * as Person from '@/components/shared/Person'
@@ -41,6 +43,7 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
   const { user } = useAuthStore()
 
   const { t } = useTranslation()
+  const { id } = useParams()
   const navigate = useNavigate()
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
@@ -52,23 +55,45 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
   })
 
   const path = { path: { id: String(user?.id) } }
+  const invalidateQueriesFunction = async () => {
+    await invalidateQueries([
+      isFollowersTab
+        ? subscriptionControllerFindAllFollowersInfiniteQueryKey(path)
+        : subscriptionControllerFindAllFollowingInfiniteQueryKey(path),
+      profileControllerMeDetailedQueryKey()
+    ])
+    void invalidateQueries([userControllerFindAllInfiniteQueryKey()])
+  }
   const { mutate: unfollow, isPending: isPendingUnfollow } = useMutation({
     ...subscriptionControllerUnfollowMutation(),
     onSuccess: async () => {
-      await invalidateQueries([
-        isFollowersTab
-          ? subscriptionControllerFindAllFollowersInfiniteQueryKey(path)
-          : subscriptionControllerFindAllFollowingInfiniteQueryKey(path),
-        profileControllerMeDetailedQueryKey()
-      ])
+      await invalidateQueriesFunction()
       toast.success(t('success'))
     },
     onError: (e) => showApiErrors(e)
   })
 
+  const { mutate: unfollowFollower, isPending: isPendingUnfollowFollower } =
+    useMutation({
+      ...subscriptionControllerRemoveFollowerMutation(),
+      onSuccess: async () => {
+        await invalidateQueriesFunction()
+        toast.success(t('success'))
+      },
+      onError: (e) => showApiErrors(e)
+    })
+
   const onUnfollow = (event: MouseEvent) => {
     event.preventDefault()
-    unfollow({ path: { id: String(data.user.id) } })
+    event.stopPropagation()
+
+    const path = { id: String(data.user.id) }
+
+    if (isFollowersTab) {
+      unfollowFollower({ path })
+    } else {
+      unfollow({ path })
+    }
   }
 
   const onSendMessage = async (event: MouseEvent) => {
@@ -83,6 +108,8 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
     }
   }
 
+  const isMine = id ? Number(user?.id) === Number(id) : true
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2.5">
@@ -94,36 +121,44 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        {isFollowersTab ? (
-          <Button
-            variant="secondary"
-            onClick={onSendMessage}
-            loading={isFetching}
-          >
-            {t('sendMessage')}
-          </Button>
-        ) : (
-          <Button
-            variant="secondary"
-            onClick={onUnfollow}
-            loading={isPendingUnfollow}
-          >
-            {t('unfollow')}
-          </Button>
-        )}
+      {isMine && (
+        <div className="flex items-center gap-2">
+          {isFollowersTab ? (
+            <Button
+              variant="secondary"
+              onClick={onSendMessage}
+              loading={isFetching}
+            >
+              {t('sendMessage')}
+            </Button>
+          ) : (
+            <Button
+              variant="secondary"
+              onClick={onUnfollow}
+              loading={isPendingUnfollow}
+            >
+              {t('unfollow')}
+            </Button>
+          )}
 
-        {isFollowersTab && (
-          <Tooltip>
-            <TooltipContent>{t('unfollow')}</TooltipContent>
-            <TooltipTrigger asChild>
-              <Button variant="link" onClick={onUnfollow} className="p-1!">
-                <X />
-              </Button>
-            </TooltipTrigger>
-          </Tooltip>
-        )}
-      </div>
+          {isFollowersTab && (
+            <Tooltip>
+              <TooltipContent>{t('unfollow')}</TooltipContent>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="link"
+                  onClick={onUnfollow}
+                  loading={isPendingUnfollowFollower}
+                  showChildrenWhenLoading={false}
+                  className="p-1!"
+                >
+                  <X />
+                </Button>
+              </TooltipTrigger>
+            </Tooltip>
+          )}
+        </div>
+      )}
     </div>
   )
 }

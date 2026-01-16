@@ -1,4 +1,4 @@
-import { Eye, Image, X } from 'lucide-react'
+import { Bookmark, Check, Eye, Image, X } from 'lucide-react'
 
 import { useEffect, useState } from 'react'
 import { Controller, useWatch } from 'react-hook-form'
@@ -24,7 +24,7 @@ import {
 } from '@/components/ui'
 import { paths } from '@/config'
 
-import { useCreatePostForm } from '@/features/posts/hooks'
+import { usePostCreateForm } from '@/features/posts/hooks'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
@@ -39,7 +39,7 @@ type Props = {
   onSuccessCallback?: () => void
 }
 
-export const CreatePostForm = ({
+export const PostCreateForm = ({
   post,
   isEditing,
   onCancelEdit,
@@ -52,7 +52,7 @@ export const CreatePostForm = ({
   const [isPreview, setIsPreview] = useState(false)
 
   const { user, isPendingUser } = useAuthStore()
-  const { control, onSubmit, errors, isPending } = useCreatePostForm({
+  const { control, onSubmit, errors, isPending } = usePostCreateForm({
     post,
     files,
     previews,
@@ -192,6 +192,7 @@ export const CreatePostForm = ({
                 </Button>
               )}
               <Button type="submit" loading={isPending}>
+                {isEditing ? <Check /> : <Bookmark />}
                 {t(isEditing ? 'saveChanges' : 'publish')}{' '}
                 {!isEditing && t('post').toLowerCase()}
               </Button>

@@ -35,7 +35,11 @@ export const SubscriptionList = ({
   const { id: userIdParam } = useParams()
 
   const userId = userIdParam ? String(userIdParam) : String(user?.id)
-  const queryConfig = { path: { id: userId }, query: { search: searchValue } }
+  const normalizedSearch = searchValue?.trim() || undefined
+  const queryConfig = {
+    path: { id: userId },
+    query: normalizedSearch ? { search: normalizedSearch } : undefined
+  }
 
   const {
     data: followers,

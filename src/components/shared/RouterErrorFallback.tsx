@@ -1,4 +1,4 @@
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, RotateCcw } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
 
@@ -37,7 +37,8 @@ export const RouterErrorFallback = () => {
           <EmptyDescription>{message}</EmptyDescription>
         </EmptyHeader>
 
-        <Button onClick={() => window.location.reload()} className="mt-4">
+        <Button onClick={() => window.location.reload()}>
+          <RotateCcw />
           {t('tryAgain')}
         </Button>
       </Empty>

@@ -251,8 +251,22 @@ export type ResponseUserDtoWritable = {
   profile: ResponseProfileDtoWritable
 }
 
+export type ResponseRegisterDtoWritable = {
+  user: ResponseUserDtoWritable
+  accessToken: string
+}
+
+export type ResponseLoginDtoWritable = {
+  user: ResponseUserDtoWritable
+  accessToken: string
+}
+
 export type EmptyResponseDtoWritable = {
   [key: string]: unknown
+}
+
+export type ResponseProfileDetailedDtoWritable = {
+  user: ResponseUserDtoWritable
 }
 
 export type ResponseUserProfileDtoWritable = {
@@ -261,11 +275,15 @@ export type ResponseUserProfileDtoWritable = {
   profile: ResponseProfileDtoWritable
 }
 
+export type ResponsePostFileDtoWritable = {
+  file: ResponseFileDtoWritable
+}
+
 export type ResponsePostDtoWritable = {
   content: string
   isLiked: boolean
   user: ResponseUserProfileDtoWritable
-  files?: Array<ResponsePostFileDto> | null
+  files?: Array<ResponsePostFileDtoWritable> | null
   likesCount: number
   commentsCount: number
 }

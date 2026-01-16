@@ -19,9 +19,7 @@ import { paths } from '@/config'
 export const MyPosts = () => {
   const { t } = useTranslation()
 
-  const { data, isLoading } = useQuery({
-    ...postControllerFindAllMyOptions()
-  })
+  const { data, isLoading } = useQuery(postControllerFindAllMyOptions())
 
   const myPosts = data?.data
   const totalPosts = data?.total ?? 0
@@ -37,7 +35,7 @@ export const MyPosts = () => {
         </Typography.Title>
       )}
 
-      {totalPosts > 0 && <PostList posts={myPosts} isLoading={isLoading} />}
+      <PostList posts={myPosts} isLoading={isLoading} />
 
       {showEmptyState && (
         <Empty className="p-5 md:p-7">

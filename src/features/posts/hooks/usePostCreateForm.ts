@@ -27,7 +27,7 @@ type Props = {
   onSuccessCallback?: () => void
 }
 
-export const useCreatePostForm = ({
+export const usePostCreateForm = ({
   files,
   previews,
   content,

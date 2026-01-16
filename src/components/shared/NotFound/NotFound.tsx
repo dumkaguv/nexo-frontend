@@ -1,4 +1,4 @@
-import { FileQuestion } from 'lucide-react'
+import { ArrowLeft, FileQuestion, House } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -27,12 +27,19 @@ export const NotFound = () => {
           <EmptyTitle>{t('pageNotFound')}</EmptyTitle>
           <EmptyDescription>{t('pageNotFoundDescription')}</EmptyDescription>
         </EmptyHeader>
-        <div className="mt-4 flex gap-3">
+        <div className="flex gap-3">
           <Button onClick={() => navigate(-1)} variant="outline">
+            <ArrowLeft />
             {t('goBack')}
           </Button>
           <Button asChild variant="default">
-            <Link to={paths.home.root}>{t('goToHome')}</Link>
+            <Link
+              to={paths.home.root}
+              className="inline-flex items-center gap-2"
+            >
+              <House />
+              <span>{t('goToHome')}</span>
+            </Link>
           </Button>
         </div>
       </Empty>

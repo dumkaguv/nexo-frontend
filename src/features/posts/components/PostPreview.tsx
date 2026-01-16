@@ -1,3 +1,4 @@
+import { Undo2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -56,6 +57,7 @@ export const PostPreview = ({ content, previews, onBack }: Props) => {
       </div>
 
       <Button onClick={onBack} className="w-fit">
+        <Undo2 />
         {t('back')}
       </Button>
     </Card>

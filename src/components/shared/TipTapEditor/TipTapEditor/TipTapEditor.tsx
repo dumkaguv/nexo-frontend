@@ -45,7 +45,7 @@ export const TipTapEditor = ({
     extensions: [
       ...extensions,
       Placeholder.configure({
-        placeholder: placeholder || t('defaultPlaceholder'),
+        placeholder: placeholder?.trim() || t('defaultPlaceholder'),
         emptyNodeClass:
           'first:before:text-muted-foreground/50 first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none first:before:text-sm '
       })
