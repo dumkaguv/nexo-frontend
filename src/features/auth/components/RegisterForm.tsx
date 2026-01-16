@@ -40,7 +40,7 @@ export const RegisterForm = () => {
         loading={isPending}
         className="mt-2 h-12 w-full text-lg"
       >
-        {t('auth.signUp')}
+        {t('signUp')}
       </Button>
     </form>
   )

@@ -11,11 +11,11 @@ export const createAvatarSchema = (t: TFunction) =>
       .custom<FileList>(
         (files) => files instanceof FileList && files.length > 0,
         {
-          message: t('validation.required')
+          error: t('required')
         }
       )
       .refine((files) => files?.[0]?.size <= MAX_MB_SIZE_FILE, {
-        message: t('validation.fileTooLarge', { max: MAX_MB_SIZE })
+        error: t('fileTooLarge', { max: MAX_MB_SIZE })
       })
   })
 

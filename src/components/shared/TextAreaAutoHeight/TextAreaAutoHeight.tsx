@@ -5,7 +5,11 @@ import { cn } from '@/utils'
 
 import type { ComponentProps, FormEvent } from 'react'
 
-export const TextAreaAutoHeight = (props: ComponentProps<'textarea'>) => {
+export const TextAreaAutoHeight = ({
+  className,
+  placeholder,
+  ...props
+}: ComponentProps<'textarea'>) => {
   const { t } = useTranslation()
 
   const onInput = (e: FormEvent<HTMLTextAreaElement>) => {
@@ -19,9 +23,9 @@ export const TextAreaAutoHeight = (props: ComponentProps<'textarea'>) => {
     <Textarea
       className={cn(
         'h-auto resize-none overflow-hidden pt-3 outline-0',
-        props.className
+        className
       )}
-      placeholder={props.placeholder ?? t('shareYourThoughts')}
+      placeholder={placeholder ?? t('shareYourThoughts')}
       onInput={onInput}
       {...props}
     />

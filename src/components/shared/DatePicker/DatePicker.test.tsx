@@ -7,6 +7,6 @@ describe('DatePicker', () => {
   it('renders placeholder when no date is selected', () => {
     render(<DatePicker />)
 
-    expect(screen.getByText('inputs.selectPlaceholder')).toBeInTheDocument()
+    expect(screen.getByText('selectPlaceholder')).toBeInTheDocument()
   })
 })

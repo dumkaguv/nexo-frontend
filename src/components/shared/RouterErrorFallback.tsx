@@ -16,7 +16,7 @@ export const RouterErrorFallback = () => {
   const { t } = useTranslation()
   const err = useRouteError()
 
-  let message = t('error.errorOccurred')
+  let message = t('errorOccurred')
 
   if (isRouteErrorResponse(err)) {
     message = `${err.status} ${err.statusText}`
@@ -33,12 +33,12 @@ export const RouterErrorFallback = () => {
           <EmptyMedia variant="icon">
             <AlertTriangle className="text-destructive" />
           </EmptyMedia>
-          <EmptyTitle>{t('error.somethingWentWrong')}</EmptyTitle>
+          <EmptyTitle>{t('somethingWentWrong')}</EmptyTitle>
           <EmptyDescription>{message}</EmptyDescription>
         </EmptyHeader>
 
         <Button onClick={() => window.location.reload()} className="mt-4">
-          {t('error.tryAgain')}
+          {t('tryAgain')}
         </Button>
       </Empty>
     </Container>

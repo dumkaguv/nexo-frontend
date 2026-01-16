@@ -25,9 +25,7 @@ export const Sidebar = ({ userData }: Props) => {
         <div className="flex items-center gap-2">
           <Mail size={18} />
           <div className="flex items-center gap-1">
-            <Typography.Text className="text-sm">
-              {t('auth.email')}:
-            </Typography.Text>
+            <Typography.Text className="text-sm">{t('email')}:</Typography.Text>
             <Typography.Text className="text-sm font-bold">
               {userData.email}
             </Typography.Text>

@@ -5,9 +5,9 @@ import { FormHeader, LoginForm } from '@/features/auth/components'
 export const LoginPage = () => (
   <Card>
     <FormHeader
-      titleKey="auth.signIn"
-      accountTextKey="auth.dontHaveAccount"
-      urlTextKey="auth.clickHereToSignUp"
+      titleKey="signIn"
+      accountTextKey="dontHaveAccount"
+      urlTextKey="clickHereToSignUp"
       url={paths.auth.register}
     />
     <LoginForm />

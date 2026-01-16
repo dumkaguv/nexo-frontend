@@ -6,9 +6,9 @@ import { InputUpload } from './InputUpload'
 
 describe('InputUpload', () => {
   it('renders label when provided', () => {
-    render(<InputUpload label="inputs.uploadLabel" />)
+    render(<InputUpload label="uploadLabel" />)
 
-    expect(screen.getByText('inputs.uploadLabel')).toBeInTheDocument()
+    expect(screen.getByText('uploadLabel')).toBeInTheDocument()
   })
 
   it('renders default button', () => {

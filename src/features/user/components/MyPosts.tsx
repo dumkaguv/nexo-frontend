@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { postControllerFindAllMyOptions } from '@/api'
-import { Typography } from '@/components/shared'
+import { PostList, Typography } from '@/components/shared'
 import {
   Button,
   Empty,
@@ -15,7 +15,6 @@ import {
   Skeleton
 } from '@/components/ui'
 import { paths } from '@/config'
-import { PostList } from '@/features/posts'
 
 export const MyPosts = () => {
   const { t } = useTranslation()

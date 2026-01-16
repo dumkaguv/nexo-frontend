@@ -22,7 +22,7 @@ export const FormMainSettings = () => {
       >
         <div className="flex gap-5">
           <Field className="flex w-full flex-col gap-1">
-            <FieldLabel htmlFor="email">{t('auth.email')}</FieldLabel>
+            <FieldLabel htmlFor="email">{t('email')}</FieldLabel>
             <Input id="email" {...register('email')} />
             <FieldError>{errors.email?.message}</FieldError>
           </Field>

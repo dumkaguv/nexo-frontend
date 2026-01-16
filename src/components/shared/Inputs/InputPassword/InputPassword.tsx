@@ -19,7 +19,7 @@ export const InputPassword = ({ className, ...rest }: Props) => {
     <div className="flex h-12 items-center">
       <Input
         type={isShowed ? 'text' : 'password'}
-        placeholder={t('inputs.inputPassword')}
+        placeholder={t('inputPassword')}
         className={cn('flex-1 rounded-r-none', className)}
         autoComplete="current-password"
         {...rest}
@@ -29,9 +29,7 @@ export const InputPassword = ({ className, ...rest }: Props) => {
         onClick={onShow}
         variant="outline"
         size="icon"
-        aria-label={
-          isShowed ? t('inputs.hidePassword') : t('inputs.showPassword')
-        }
+        aria-label={isShowed ? t('hidePassword') : t('showPassword')}
         className="h-full rounded-l-none border-l-0"
       >
         {isShowed ? <Eye /> : <EyeOff />}

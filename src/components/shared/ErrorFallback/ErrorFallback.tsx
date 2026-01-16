@@ -29,13 +29,13 @@ export const ErrorFallback = ({
           <EmptyMedia variant="icon">
             <AlertTriangle className="text-destructive" />
           </EmptyMedia>
-          <EmptyTitle>{t('error.somethingWentWrong')}</EmptyTitle>
+          <EmptyTitle>{t('somethingWentWrong')}</EmptyTitle>
           <EmptyDescription>
-            {error?.message || t('error.errorOccurred')}
+            {error?.message || t('errorOccurred')}
           </EmptyDescription>
         </EmptyHeader>
         <Button onClick={resetErrorBoundary} variant="default" className="mt-4">
-          {t('error.tryAgain')}
+          {t('tryAgain')}
         </Button>
       </Empty>
     </Container>

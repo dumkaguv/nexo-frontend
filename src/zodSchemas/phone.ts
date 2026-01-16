@@ -15,6 +15,6 @@ export const createPhoneSchema = (t: TFunction) =>
         return /^\+?\d+$/.test(val)
       },
       {
-        message: t('validation.phone')
+        error: t('phoneInvalid')
       }
     )

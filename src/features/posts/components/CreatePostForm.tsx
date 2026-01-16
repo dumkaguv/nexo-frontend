@@ -23,8 +23,8 @@ import {
   TooltipTrigger
 } from '@/components/ui'
 import { paths } from '@/config'
-import { useFormCreatePost } from '@/features/posts/hooks'
 
+import { useCreatePostForm } from '@/features/posts/hooks'
 import { useAuthStore } from '@/stores'
 import { cn } from '@/utils'
 
@@ -39,7 +39,7 @@ type Props = {
   onSuccessCallback?: () => void
 }
 
-export const FormCreatePost = ({
+export const CreatePostForm = ({
   post,
   isEditing,
   onCancelEdit,
@@ -52,7 +52,7 @@ export const FormCreatePost = ({
   const [isPreview, setIsPreview] = useState(false)
 
   const { user, isPendingUser } = useAuthStore()
-  const { control, onSubmit, errors, isPending } = useFormCreatePost({
+  const { control, onSubmit, errors, isPending } = useCreatePostForm({
     post,
     files,
     previews,

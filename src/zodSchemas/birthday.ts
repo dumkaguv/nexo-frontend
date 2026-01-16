@@ -9,12 +9,12 @@ export const createBirthdaySchema = (t: TFunction) =>
       (date) =>
         date === null || (date instanceof Date && !isNaN(date.getTime())),
       {
-        message: t('validation.birthDay.invalid')
+        error: t('birthDayInvalid')
       }
     )
     .refine(
       (date) => date === null || (date instanceof Date && date <= new Date()),
       {
-        message: t('validation.birthDay.futureDate')
+        error: t('birthDayFutureDate')
       }
     )

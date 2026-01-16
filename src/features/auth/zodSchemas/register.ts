@@ -7,18 +7,14 @@ import type { TFunction } from 'i18next'
 export const createRegisterFormSchema = (t: TFunction) =>
   z
     .object({
-      email: z.email({ error: t('validation.emailInvalid') }),
-      username: z
-        .string()
-        .min(2, { error: t('validation.minLength', { count: 2 }) }),
-      fullName: z
-        .string()
-        .min(2, { error: t('validation.minLength', { count: 2 }) }),
+      email: z.email({ error: t('emailInvalid') }),
+      username: z.string().min(2, { error: t('minLength', { count: 2 }) }),
+      fullName: z.string().min(2, { error: t('minLength', { count: 2 }) }),
       password: createPasswordSchema(t),
-      confirmPassword: z.string().min(1, { error: t('validation.required') })
+      confirmPassword: z.string().min(1, { error: t('required') })
     })
     .refine((fields) => fields.password === fields.confirmPassword, {
-      error: t('validation.password.mismatch'),
+      error: t('passwordMismatch'),
       path: ['confirmPassword']
     })
 

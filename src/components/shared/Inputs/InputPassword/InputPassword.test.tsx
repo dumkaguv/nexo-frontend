@@ -8,7 +8,7 @@ describe('InputPassword', () => {
   it('renders with placeholder', () => {
     render(<InputPassword />)
 
-    const input = screen.getByPlaceholderText('inputs.inputPassword')
+    const input = screen.getByPlaceholderText('inputPassword')
 
     expect(input).toBeInTheDocument()
   })
@@ -16,7 +16,7 @@ describe('InputPassword', () => {
   it('renders with default type = "password" by default', () => {
     render(<InputPassword />)
 
-    const input = screen.getByPlaceholderText('inputs.inputPassword')
+    const input = screen.getByPlaceholderText('inputPassword')
 
     expect(input).toHaveAttribute('type', 'password')
   })
@@ -26,7 +26,7 @@ describe('InputPassword', () => {
 
     render(<InputPassword />)
 
-    const input = screen.getByPlaceholderText('inputs.inputPassword')
+    const input = screen.getByPlaceholderText('inputPassword')
     const button = screen.getByRole('button')
 
     expect(input).toHaveAttribute('type', 'password')
@@ -44,7 +44,7 @@ describe('InputPassword', () => {
 
     render(<InputPassword onChange={onChange} />)
 
-    const input = screen.getByPlaceholderText('inputs.inputPassword')
+    const input = screen.getByPlaceholderText('inputPassword')
 
     await user.type(input, 'abc')
 

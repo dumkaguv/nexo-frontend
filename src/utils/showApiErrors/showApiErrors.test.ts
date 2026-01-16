@@ -30,6 +30,6 @@ describe('showApiErrors', () => {
   it('falls back to generic translation', () => {
     showApiErrors({})
 
-    expect(toastError).toHaveBeenCalledWith('error.generic')
+    expect(toastError).toHaveBeenCalledWith('generic')
   })
 })

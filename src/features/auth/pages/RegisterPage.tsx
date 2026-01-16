@@ -5,10 +5,10 @@ import { FormHeader, RegisterForm } from '@/features/auth/components'
 export const RegisterPage = () => (
   <Card>
     <FormHeader
-      titleKey="auth.signUp"
-      accountTextKey="auth.haveAccount"
+      titleKey="signUp"
+      accountTextKey="haveAccount"
       url={paths.auth.login}
-      urlTextKey="auth.clickHereToSignIn"
+      urlTextKey="clickHereToSignIn"
     />
     <RegisterForm />
   </Card>

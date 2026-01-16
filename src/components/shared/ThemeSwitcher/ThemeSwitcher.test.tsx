@@ -21,8 +21,8 @@ describe('ThemeSwitcher', () => {
 
     render(<ThemeSwitcher />)
 
-    await user.click(screen.getByRole('button', { name: 'theme.toggleTheme' }))
-    await user.click(screen.getByText('theme.dark'))
+    await user.click(screen.getByRole('button', { name: 'toggleTheme' }))
+    await user.click(screen.getByText('dark'))
 
     expect(setTheme).toHaveBeenCalledWith('dark')
   })

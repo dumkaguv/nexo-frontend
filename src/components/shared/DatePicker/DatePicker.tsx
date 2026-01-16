@@ -38,9 +38,7 @@ export const DatePicker = <T extends FieldValues>({
             !field?.value && 'text-muted-foreground'
           )}
         >
-          {field?.value
-            ? format(field?.value, 'PPP')
-            : t('inputs.selectPlaceholder')}
+          {field?.value ? format(field?.value, 'PPP') : t('selectPlaceholder')}
           <CalendarIcon />
         </Button>
       </PopoverTrigger>

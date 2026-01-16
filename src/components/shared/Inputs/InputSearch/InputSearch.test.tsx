@@ -8,7 +8,7 @@ describe('InputSearch', () => {
   it('renders input with placeholder', () => {
     render(<InputSearch />)
 
-    const input = screen.getByPlaceholderText('inputs.inputSearch')
+    const input = screen.getByPlaceholderText('inputSearch')
 
     expect(input).toBeInTheDocument()
   })

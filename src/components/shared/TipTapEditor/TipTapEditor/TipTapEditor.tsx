@@ -39,14 +39,13 @@ export const TipTapEditor = ({
 }: TipTapEditorProps) => {
   const { t } = useTranslation()
   const { 'aria-label': ariaLabelProp, ...restProps } = props
-  const ariaLabel =
-    ariaLabelProp ?? placeholder ?? t('inputs.defaultPlaceholder')
+  const ariaLabel = ariaLabelProp ?? placeholder ?? t('defaultPlaceholder')
 
   const editor = useEditor({
     extensions: [
       ...extensions,
       Placeholder.configure({
-        placeholder: placeholder || t('inputs.defaultPlaceholder'),
+        placeholder: placeholder || t('defaultPlaceholder'),
         emptyNodeClass:
           'first:before:text-muted-foreground/50 first:before:float-left first:before:content-[attr(data-placeholder)] first:before:pointer-events-none first:before:text-sm '
       })

@@ -34,11 +34,11 @@ export const useLoginForm = () => {
   const { mutate: loginMutate, isPending } = useMutation({
     ...authControllerLoginMutation(),
     onSuccess: ({ data: { accessToken } }) => {
-      toast.success(t('auth.loginSuccess'))
+      toast.success(t('loginSuccess'))
       saveAccessToken(accessToken)
       void navigate(paths.home.root)
     },
-    onError: (error) => showApiErrors(error, t('auth.loginError'))
+    onError: (error) => showApiErrors(error, t('loginError'))
   })
 
   const onSubmit = (data: CreateLoginDto) => loginMutate({ body: data })
@@ -46,7 +46,7 @@ export const useLoginForm = () => {
   const inputFields: InputField<LoginFormSchema>[] = [
     {
       name: 'email',
-      label: t('auth.email'),
+      label: t('email'),
       type: 'text',
       placeholder: 'alex-johnson@gmail.com',
       id: 'email',
@@ -54,7 +54,7 @@ export const useLoginForm = () => {
     },
     {
       name: 'password',
-      label: t('auth.password'),
+      label: t('password'),
       type: 'password',
       placeholder: 'sHa$#as34Kh^',
       id: 'password',

@@ -33,12 +33,12 @@ export const useChatWebsocket = ({ conversation }: Props) => {
   const onException = useCallback(
     (payload?: unknown) => {
       if (!isWsError(payload)) {
-        toast.error(t('error.somethingWentWrong'))
+        toast.error(t('somethingWentWrong'))
 
         return
       }
 
-      toast.error(payload.message || t('error.somethingWentWrong'))
+      toast.error(payload.message || t('somethingWentWrong'))
     },
     [t]
   )

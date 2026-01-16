@@ -7,9 +7,9 @@ import type { TFunction } from 'i18next'
 export const createPostSchema = (t: TFunction) =>
   z.object({
     content: z
-      .string({ error: t('validation.minLength', { count: 1 }) })
+      .string({ error: t('minLength', { count: 1 }) })
       .refine((val) => !emptyHtmlRegex.test(val), {
-        error: t('validation.minLength', { count: 1 })
+        error: t('minLength', { count: 1 })
       })
   })
 

@@ -76,7 +76,7 @@ export const Chat = () => {
   }
 
   if (isError) {
-    toast.error(t('error.notFound'))
+    toast.error(t('notFound'))
 
     void navigate(paths.conversations.root)
   }

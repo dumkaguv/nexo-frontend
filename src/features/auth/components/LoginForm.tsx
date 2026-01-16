@@ -39,7 +39,7 @@ export const LoginForm = () => {
         loading={isPending}
         className="mt-2 h-12 w-full text-lg text-white"
       >
-        {t('auth.signIn')}
+        {t('signIn')}
       </Button>
     </form>
   )

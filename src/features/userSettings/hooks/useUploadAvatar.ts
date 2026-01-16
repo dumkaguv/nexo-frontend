@@ -94,9 +94,7 @@ export const useUploadAvatar = () => {
       const file = files[0]
 
       if (file.size > MAX_FILE_SIZE) {
-        setFileSizeError(
-          t('validation.fileTooLarge', { max: MAX_FILE_SIZE_MB })
-        )
+        setFileSizeError(t('fileTooLarge', { max: MAX_FILE_SIZE_MB }))
 
         return
       }

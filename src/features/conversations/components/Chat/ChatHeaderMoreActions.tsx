@@ -46,7 +46,7 @@ export const ChatHeaderMoreActions = () => {
 
   const onDelete = () => {
     if (!id) {
-      toast.error(t('error.somethingWentWrong'))
+      toast.error(t('somethingWentWrong'))
 
       return
     }

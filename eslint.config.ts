@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import stylisticTs from '@stylistic/eslint-plugin'
+import i18nPlugin from 'eslint-plugin-i18next'
 import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import reactPlugin from 'eslint-plugin-react'
@@ -38,27 +39,13 @@ export default tseslint.config(
       regexp: regexpPlugin,
       '@stylistic/ts': stylisticTs,
       'unused-imports': unusedImports,
-      'jsx-a11y': jsxA11y
+      'jsx-a11y': jsxA11y,
+      i18next: i18nPlugin
     },
     rules: {
       ...reactPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.configs.recommended.rules,
-
-      'jsx-a11y/alt-text': 'error',
-      'jsx-a11y/anchor-is-valid': 'error',
-      'jsx-a11y/no-static-element-interactions': 'error',
-      'jsx-a11y/click-events-have-key-events': 'error',
-      'jsx-a11y/label-has-associated-control': [
-        'error',
-        {
-          assert: 'either'
-        }
-      ],
-      'jsx-a11y/aria-props': 'error',
-      'jsx-a11y/aria-unsupported-elements': 'error',
-      'jsx-a11y/role-has-required-aria-props': 'error',
-      'jsx-a11y/role-supports-aria-props': 'error',
 
       'react-refresh/only-export-components': 'warn',
       'react/display-name': 'off',
@@ -75,6 +62,44 @@ export default tseslint.config(
       'react/self-closing-comp': 'error',
       'react/jsx-boolean-value': ['error', 'never'],
       'react/jsx-no-useless-fragment': ['error', { allowExpressions: false }],
+      'react/jsx-no-bind': [
+        'warn',
+        {
+          allowArrowFunctions: true,
+          allowFunctions: false
+        }
+      ],
+      'react/destructuring-assignment': ['warn', 'always'],
+
+      'jsx-a11y/alt-text': 'error',
+      'jsx-a11y/anchor-is-valid': 'error',
+      'jsx-a11y/no-static-element-interactions': 'error',
+      'jsx-a11y/click-events-have-key-events': 'error',
+      'jsx-a11y/label-has-associated-control': [
+        'error',
+        {
+          assert: 'either'
+        }
+      ],
+      'jsx-a11y/aria-props': 'error',
+      'jsx-a11y/aria-unsupported-elements': 'error',
+      'jsx-a11y/role-has-required-aria-props': 'error',
+      'jsx-a11y/role-supports-aria-props': 'error',
+
+      'i18next/no-literal-string': [
+        'error',
+        {
+          markupOnly: true,
+          ignoreAttribute: [
+            'data-testid',
+            'to',
+            'href',
+            'id',
+            'key',
+            'className'
+          ]
+        }
+      ],
 
       'no-else-return': 'warn',
       'no-extra-boolean-cast': 'error',
@@ -93,6 +118,7 @@ export default tseslint.config(
       'func-style': ['warn', 'expression'],
       'prefer-arrow-callback': ['error'],
       'require-await': 'error',
+      'default-param-last': 'error',
 
       'regexp/no-dupe-characters-character-class': 'error',
       'regexp/no-empty-character-class': 'error',
@@ -194,6 +220,13 @@ export default tseslint.config(
         }
       ],
 
+      // 'import/no-restricted-paths': [
+      //   'error',
+      //   {
+      //     zones: crossFeatureZones
+      //   }
+      // ],
+
       'no-restricted-imports': [
         'error',
         {
@@ -247,6 +280,8 @@ export default tseslint.config(
   {
     files: ['**/*.{spec,test}.{ts,tsx,js,jsx}'],
     rules: {
+      'i18next/no-literal-string': 'off',
+
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',

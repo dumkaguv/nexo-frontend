@@ -14,7 +14,7 @@ import { paths } from '@/config'
 
 import { cn } from '@/utils'
 
-import { FormCreatePost } from './'
+import { CreatePostForm } from './'
 import { PostComments, PostCommentsSection } from './PostComments'
 import { PostLikes } from './PostLikes'
 import { PostMoreActions } from './PostMoreActions'
@@ -38,7 +38,7 @@ export const PostCard = ({ post }: Props) => {
 
   if (isEditing) {
     return (
-      <FormCreatePost
+      <CreatePostForm
         post={post}
         isEditing={isEditing}
         onCancelEdit={onCancelEdit}

@@ -31,7 +31,7 @@ describe('LanguageSwitcher', () => {
     render(<LanguageSwitcher />)
 
     await user.click(screen.getByRole('button', { name: 'changeLanguage' }))
-    await user.click(screen.getByText('languages.ru'))
+    await user.click(screen.getByText('ru'))
 
     expect(changeLanguage).toHaveBeenCalledWith('ru')
   })

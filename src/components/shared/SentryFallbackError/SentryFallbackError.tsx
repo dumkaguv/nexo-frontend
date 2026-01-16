@@ -1,3 +1,5 @@
+/* eslint-disable i18next/no-literal-string */
+
 type Props = {
   error: unknown
   componentStack: string

@@ -58,7 +58,7 @@ vi.mock('react-infinite-scroll-component', () => ({
   )
 }))
 
-describe.skip('PostList (moved)', () => {
+describe('PostList', () => {
   beforeEach(() => {
     mockUseInfiniteQuery.mockReset()
   })

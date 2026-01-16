@@ -65,7 +65,7 @@ export const InputSearch = ({
         value={currentValue}
         onChange={onChangeInner}
         className={cn('bg-custom-gray h-10 px-8', inputClassName)}
-        placeholder={placeholder ?? t('inputs.inputSearch')}
+        placeholder={placeholder ?? t('inputSearch')}
       />
 
       <Search

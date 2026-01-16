@@ -47,21 +47,21 @@ export const ThemeSwitcher = () => {
               <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
               <Typography.Text className="sr-only">
-                {t('theme.toggleTheme')}
+                {t('toggleTheme')}
               </Typography.Text>
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
-        <TooltipContent>{t('theme.toggleTheme')}</TooltipContent>
+        <TooltipContent>{t('toggleTheme')}</TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent
         align="end"
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
-        {renderMenuItem('light', t('theme.light'), <Sun size={16} />)}
-        {renderMenuItem('dark', t('theme.dark'), <Moon size={16} />)}
-        {renderMenuItem('system', t('theme.system'), <Laptop size={16} />)}
+        {renderMenuItem('light', t('light'), <Sun size={16} />)}
+        {renderMenuItem('dark', t('dark'), <Moon size={16} />)}
+        {renderMenuItem('system', t('system'), <Laptop size={16} />)}
       </DropdownMenuContent>
     </DropdownMenu>
   )

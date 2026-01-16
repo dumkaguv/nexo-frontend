@@ -14,7 +14,7 @@ export const createSendMessageSchema = (t: TFunction) =>
       ({ content, files }) =>
         !emptyHtmlRegex.test(content) || (files?.length ?? 0) > 0,
       {
-        error: t('validation.minLength', { count: 1 }),
+        error: t('minLength', { count: 1 }),
         path: ['content']
       }
     )

@@ -41,7 +41,7 @@ export const HeaderAvatar = () => {
       await queryClient.cancelQueries()
       disconnect()
       queryClient.clear()
-      toast.success(t('auth.logoutSuccess'))
+      toast.success(t('logoutSuccess'))
       void navigate(paths.auth.login)
     },
     onError: (error) => showApiErrors(error)
@@ -62,7 +62,7 @@ export const HeaderAvatar = () => {
     },
     {
       icon: <LogOut className="text-primary" />,
-      label: t('auth.logout'),
+      label: t('logout'),
       onClick: () => logout({})
     }
   ]

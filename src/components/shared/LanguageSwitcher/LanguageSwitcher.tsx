@@ -24,8 +24,8 @@ export const LanguageSwitcher = () => {
   const { t } = useTranslation()
 
   const languages = [
-    { code: 'en', label: t('languages.en') },
-    { code: 'ru', label: t('languages.ru') }
+    { code: 'en', label: t('en') },
+    { code: 'ru', label: t('ru') }
   ]
 
   const onLanguageChange = (code: string) => i18n.changeLanguage(code)

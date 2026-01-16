@@ -74,6 +74,6 @@ describe('HeaderAvatar', () => {
 
     expect(screen.getByText('messages')).toBeInTheDocument()
     expect(screen.getByText('settings')).toBeInTheDocument()
-    expect(screen.getByText('auth.logout')).toBeInTheDocument()
+    expect(screen.getByText('logout')).toBeInTheDocument()
   })
 })

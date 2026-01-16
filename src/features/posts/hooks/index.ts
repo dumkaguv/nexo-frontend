@@ -1,1 +1,1 @@
-export * from './useFormCreatePost'
+export * from './useCreatePostForm'

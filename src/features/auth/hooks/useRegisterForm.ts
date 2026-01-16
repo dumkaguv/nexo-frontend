@@ -34,11 +34,11 @@ export const useRegisterForm = () => {
   const { mutate: registerMutate, isPending } = useMutation({
     ...authControllerRegisterMutation(),
     onSuccess: ({ data: { accessToken } }) => {
-      toast.success(t('auth.loginSuccess'))
+      toast.success(t('loginSuccess'))
       saveAccessToken(accessToken)
       void navigate(paths.home.root)
     },
-    onError: (error) => showApiErrors(error, t('auth.loginError'))
+    onError: (error) => showApiErrors(error, t('loginError'))
   })
 
   const onSubmit = (body: RegisterFormSchema) => registerMutate({ body })
@@ -46,7 +46,7 @@ export const useRegisterForm = () => {
   const inputFields: InputField<RegisterFormSchema>[] = [
     {
       name: 'email',
-      label: t('auth.email'),
+      label: t('email'),
       type: 'text',
       placeholder: 'alex-johnson@gmail.com',
       id: 'email',
@@ -54,7 +54,7 @@ export const useRegisterForm = () => {
     },
     {
       name: 'username',
-      label: t('auth.username'),
+      label: t('username'),
       type: 'text',
       placeholder: 'alex_j',
       id: 'username',
@@ -62,7 +62,7 @@ export const useRegisterForm = () => {
     },
     {
       name: 'fullName',
-      label: t('auth.fullName'),
+      label: t('authFullName'),
       type: 'text',
       placeholder: 'Alex Johnson',
       id: 'full-name',
@@ -70,7 +70,7 @@ export const useRegisterForm = () => {
     },
     {
       name: 'password',
-      label: t('auth.password'),
+      label: t('password'),
       type: 'password',
       placeholder: 'sHa$#as34Kh^',
       id: 'password',
@@ -78,7 +78,7 @@ export const useRegisterForm = () => {
     },
     {
       name: 'confirmPassword',
-      label: t('auth.confirmPassword'),
+      label: t('confirmPassword'),
       type: 'password',
       placeholder: 'sHa$#as34Kh^',
       id: 'confirm-password',

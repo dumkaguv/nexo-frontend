@@ -15,7 +15,7 @@ describe('ErrorFallback', () => {
 
     expect(screen.getByText('Boom')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'error.tryAgain' }))
+    await user.click(screen.getByRole('button', { name: 'tryAgain' }))
 
     expect(onReset).toHaveBeenCalledTimes(1)
   })
