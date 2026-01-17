@@ -7,6 +7,10 @@ import { toast } from 'sonner'
 import {
   conversationControllerFindAllConversationMessagesInfiniteQueryKey,
   type PaginatedResponseDto,
+  type PostWsMessagesEventMessageDeletedResponse,
+  type PostWsMessagesEventMessageNewResponse,
+  type PostWsMessagesEventMessageSentResponse,
+  type PostWsMessagesEventMessageUpdatedResponse,
   type ResponseConversationDto,
   type ResponseMessageDto
 } from '@/api'
@@ -49,7 +53,9 @@ export const useChatWebsocket = ({ conversation }: Props) => {
         path: { id: String(conversation?.id) }
       })
 
-    const addMessageToCache = (incomingMessage?: ResponseMessageDto) =>
+    const addMessageToCache = (
+      incomingMessage?: PostWsMessagesEventMessageNewResponse
+    ) =>
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
         if (!incomingMessage) {
           onException()
@@ -114,13 +120,13 @@ export const useChatWebsocket = ({ conversation }: Props) => {
         }
       })
 
-    const onNew = (newMessage?: ResponseMessageDto) =>
+    const onNew = (newMessage?: PostWsMessagesEventMessageNewResponse) =>
       addMessageToCache(newMessage)
 
-    const onSent = (newMessage?: ResponseMessageDto) =>
+    const onSent = (newMessage?: PostWsMessagesEventMessageSentResponse) =>
       addMessageToCache(newMessage)
 
-    const onDelete = (dto?: { deletedMessageId?: number }) => {
+    const onDelete = (dto?: PostWsMessagesEventMessageDeletedResponse) => {
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
         if (!old || !dto?.deletedMessageId) {
           onException()
@@ -157,7 +163,9 @@ export const useChatWebsocket = ({ conversation }: Props) => {
       })
     }
 
-    const onUpdate = (updatedMessage?: ResponseMessageDto) => {
+    const onUpdate = (
+      updatedMessage?: PostWsMessagesEventMessageUpdatedResponse
+    ) => {
       queryClient.setQueryData<InfiniteData<MessagesPage>>(queryKey, (old) => {
         if (!old || !updatedMessage) {
           onException()

@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next'
 
 import {
   uploadControllerUploadMutation,
+  type PostWsMessagesMessageSendData,
+  type PostWsMessagesMessageUpdateData,
   type ResponseConversationDto,
   type ResponseMessageDto,
   type ResponseUserDto
@@ -67,20 +69,25 @@ export const useChatForm = ({
       .map(({ data }) => data?.id)
       .filter((id): id is number => !!id)
 
-    const sendMessage = (conversation: ResponseConversationDto) =>
-      emit(CLIENT_TO_SERVER_EVENTS.message.send, {
+    const sendMessage = (conversation: ResponseConversationDto) => {
+      const payload: PostWsMessagesMessageSendData['body'] = {
         receiverId: conversation.receiver.id,
         conversationId: conversation.id,
         content,
         fileIds
-      })
+      }
+
+      emit(CLIENT_TO_SERVER_EVENTS.message.send, payload)
+    }
 
     if (conversation?.id) {
       if (editingMessage) {
-        emit(CLIENT_TO_SERVER_EVENTS.message.update, {
+        const payload: PostWsMessagesMessageUpdateData['body'] = {
           id: editingMessage.id,
           content
-        })
+        }
+
+        emit(CLIENT_TO_SERVER_EVENTS.message.update, payload)
       } else {
         sendMessage(conversation)
       }
