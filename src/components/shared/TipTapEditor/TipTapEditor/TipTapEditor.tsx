@@ -85,7 +85,10 @@ export const TipTapEditor = ({
         {...restProps}
         editor={editor}
         aria-label={ariaLabel}
-        className={cn('min-h-15 overflow-hidden rounded-lg border', className)}
+        className={cn(
+          'min-h-12 overflow-hidden rounded-lg border sm:min-h-15',
+          className
+        )}
       />
     </>
   )

@@ -21,10 +21,10 @@ export const useProtectedRoute = () => {
   }, [isPendingUser, setIsPendingUser])
 
   useEffect(() => {
-    if (user?.data.user) {
+    if (user?.data?.user) {
       setUser(user?.data.user)
     }
-  }, [user?.data.user, setUser])
+  }, [user?.data?.user, setUser])
 
   return isAuth
 }

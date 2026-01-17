@@ -18,7 +18,7 @@ export const NotFound = () => {
   const navigate = useNavigate()
 
   return (
-    <Container className="flex flex-col items-center justify-center p-6">
+    <Container className="flex flex-col items-center justify-center p-4 sm:p-6">
       <Empty className="max-w-md">
         <EmptyHeader>
           <EmptyMedia variant="icon">
@@ -27,7 +27,7 @@ export const NotFound = () => {
           <EmptyTitle>{t('pageNotFound')}</EmptyTitle>
           <EmptyDescription>{t('pageNotFoundDescription')}</EmptyDescription>
         </EmptyHeader>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Button onClick={() => navigate(-1)} variant="outline">
             <ArrowLeft />
             {t('goBack')}

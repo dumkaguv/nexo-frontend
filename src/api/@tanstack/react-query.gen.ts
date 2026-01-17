@@ -40,6 +40,19 @@ import {
   postControllerRemoveLike,
   postControllerUpdate,
   postControllerUpdateComment,
+  postWsConversationsEventConversationDeleted,
+  postWsConversationsEventConversationNew,
+  postWsMessagesEventMessageDeleted,
+  postWsMessagesEventMessageNew,
+  postWsMessagesEventMessageSent,
+  postWsMessagesEventMessageUpdated,
+  postWsMessagesMessageDelete,
+  postWsMessagesMessageSend,
+  postWsMessagesMessageUpdate,
+  postWsUsersEventUserOffline,
+  postWsUsersEventUserOnline,
+  postWsUsersEventUserOnlineList,
+  postWsUsersUserOnlineListRequest,
   profileControllerMe,
   profileControllerMeDetailed,
   profileControllerUpdate,
@@ -110,6 +123,32 @@ import type {
   PostControllerUpdateCommentResponse,
   PostControllerUpdateData,
   PostControllerUpdateResponse,
+  PostWsConversationsEventConversationDeletedData,
+  PostWsConversationsEventConversationDeletedResponse,
+  PostWsConversationsEventConversationNewData,
+  PostWsConversationsEventConversationNewResponse,
+  PostWsMessagesEventMessageDeletedData,
+  PostWsMessagesEventMessageDeletedResponse,
+  PostWsMessagesEventMessageNewData,
+  PostWsMessagesEventMessageNewResponse,
+  PostWsMessagesEventMessageSentData,
+  PostWsMessagesEventMessageSentResponse,
+  PostWsMessagesEventMessageUpdatedData,
+  PostWsMessagesEventMessageUpdatedResponse,
+  PostWsMessagesMessageDeleteData,
+  PostWsMessagesMessageDeleteResponse,
+  PostWsMessagesMessageSendData,
+  PostWsMessagesMessageSendResponse,
+  PostWsMessagesMessageUpdateData,
+  PostWsMessagesMessageUpdateResponse,
+  PostWsUsersEventUserOfflineData,
+  PostWsUsersEventUserOfflineResponse,
+  PostWsUsersEventUserOnlineData,
+  PostWsUsersEventUserOnlineListData,
+  PostWsUsersEventUserOnlineListResponse,
+  PostWsUsersEventUserOnlineResponse,
+  PostWsUsersUserOnlineListRequestData,
+  PostWsUsersUserOnlineListRequestResponse,
   ProfileControllerMeData,
   ProfileControllerMeDetailedData,
   ProfileControllerUpdateData,
@@ -1713,4 +1752,381 @@ export const conversationControllerFindOneOptions = (
     },
     queryKey: conversationControllerFindOneQueryKey(options)
   })
+}
+
+/**
+ * message:send (client -> server)
+ *
+ * Client emits `message:send`. Server acknowledges with the created message and emits `message:new` (receiver) and `message:sent` (sender).
+ */
+export const postWsMessagesMessageSendMutation = (
+  options?: Partial<Options<PostWsMessagesMessageSendData>>
+): UseMutationOptions<
+  PostWsMessagesMessageSendResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesMessageSendData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesMessageSendResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesMessageSendData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesMessageSend({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * message:update (client -> server)
+ *
+ * Client emits `message:update`. Server acknowledges with the updated message and emits `message:updated` to both participants.
+ */
+export const postWsMessagesMessageUpdateMutation = (
+  options?: Partial<Options<PostWsMessagesMessageUpdateData>>
+): UseMutationOptions<
+  PostWsMessagesMessageUpdateResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesMessageUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesMessageUpdateResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesMessageUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesMessageUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * message:delete (client -> server)
+ *
+ * Client emits `message:delete`. Server emits `message:deleted` to both participants.
+ */
+export const postWsMessagesMessageDeleteMutation = (
+  options?: Partial<Options<PostWsMessagesMessageDeleteData>>
+): UseMutationOptions<
+  PostWsMessagesMessageDeleteResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesMessageDeleteData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesMessageDeleteResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesMessageDeleteData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesMessageDelete({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * message:new (server -> client)
+ *
+ * Emitted to the receiver when a new message is created.
+ */
+export const postWsMessagesEventMessageNewMutation = (
+  options?: Partial<Options<PostWsMessagesEventMessageNewData>>
+): UseMutationOptions<
+  PostWsMessagesEventMessageNewResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesEventMessageNewData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesEventMessageNewResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesEventMessageNewData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesEventMessageNew({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * message:sent (server -> client)
+ *
+ * Emitted to the sender after `message:send` succeeds.
+ */
+export const postWsMessagesEventMessageSentMutation = (
+  options?: Partial<Options<PostWsMessagesEventMessageSentData>>
+): UseMutationOptions<
+  PostWsMessagesEventMessageSentResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesEventMessageSentData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesEventMessageSentResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesEventMessageSentData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesEventMessageSent({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * message:updated (server -> client)
+ *
+ * Emitted to both participants after a message update.
+ */
+export const postWsMessagesEventMessageUpdatedMutation = (
+  options?: Partial<Options<PostWsMessagesEventMessageUpdatedData>>
+): UseMutationOptions<
+  PostWsMessagesEventMessageUpdatedResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesEventMessageUpdatedData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesEventMessageUpdatedResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesEventMessageUpdatedData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesEventMessageUpdated({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * message:deleted (server -> client)
+ *
+ * Emitted to both participants after a message is deleted.
+ */
+export const postWsMessagesEventMessageDeletedMutation = (
+  options?: Partial<Options<PostWsMessagesEventMessageDeletedData>>
+): UseMutationOptions<
+  PostWsMessagesEventMessageDeletedResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsMessagesEventMessageDeletedData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsMessagesEventMessageDeletedResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsMessagesEventMessageDeletedData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsMessagesEventMessageDeleted({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * conversation:new (server -> client)
+ *
+ * Emitted when a new conversation is created.
+ */
+export const postWsConversationsEventConversationNewMutation = (
+  options?: Partial<Options<PostWsConversationsEventConversationNewData>>
+): UseMutationOptions<
+  PostWsConversationsEventConversationNewResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsConversationsEventConversationNewData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsConversationsEventConversationNewResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsConversationsEventConversationNewData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsConversationsEventConversationNew({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * conversation:deleted (server -> client)
+ *
+ * Emitted when a conversation is deleted.
+ */
+export const postWsConversationsEventConversationDeletedMutation = (
+  options?: Partial<Options<PostWsConversationsEventConversationDeletedData>>
+): UseMutationOptions<
+  PostWsConversationsEventConversationDeletedResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsConversationsEventConversationDeletedData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsConversationsEventConversationDeletedResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsConversationsEventConversationDeletedData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsConversationsEventConversationDeleted({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * user:online:list:request (client -> server)
+ *
+ * Client emits `user:online:list:request`. Server emits `user:online:list` with the current online user ids.
+ */
+export const postWsUsersUserOnlineListRequestMutation = (
+  options?: Partial<Options<PostWsUsersUserOnlineListRequestData>>
+): UseMutationOptions<
+  PostWsUsersUserOnlineListRequestResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsUsersUserOnlineListRequestData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsUsersUserOnlineListRequestResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsUsersUserOnlineListRequestData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsUsersUserOnlineListRequest({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * user:online (server -> client)
+ *
+ * Emitted when a user comes online.
+ */
+export const postWsUsersEventUserOnlineMutation = (
+  options?: Partial<Options<PostWsUsersEventUserOnlineData>>
+): UseMutationOptions<
+  PostWsUsersEventUserOnlineResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsUsersEventUserOnlineData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsUsersEventUserOnlineResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsUsersEventUserOnlineData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsUsersEventUserOnline({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * user:offline (server -> client)
+ *
+ * Emitted when a user goes offline.
+ */
+export const postWsUsersEventUserOfflineMutation = (
+  options?: Partial<Options<PostWsUsersEventUserOfflineData>>
+): UseMutationOptions<
+  PostWsUsersEventUserOfflineResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsUsersEventUserOfflineData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsUsersEventUserOfflineResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsUsersEventUserOfflineData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsUsersEventUserOffline({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+/**
+ * user:online:list (server -> client)
+ *
+ * Emitted with the list of currently online user ids.
+ */
+export const postWsUsersEventUserOnlineListMutation = (
+  options?: Partial<Options<PostWsUsersEventUserOnlineListData>>
+): UseMutationOptions<
+  PostWsUsersEventUserOnlineListResponse,
+  AxiosError<DefaultError>,
+  Options<PostWsUsersEventUserOnlineListData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    PostWsUsersEventUserOnlineListResponse,
+    AxiosError<DefaultError>,
+    Options<PostWsUsersEventUserOnlineListData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await postWsUsersEventUserOnlineList({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
 }

@@ -58,15 +58,15 @@ export const useUploadAvatar = () => {
 
   const { mutateAsync: uploadAvatar, isPending } = useMutation({
     ...uploadControllerUploadMutation(),
-    onSuccess: async ({ data: { id } }) => {
-      await updateProfile({ body: { avatar: id } })
-      const { data } = await fetchMe()
+    onSuccess: async ({ data }) => {
+      await updateProfile({ body: { avatar: data?.id } })
+      const response = await fetchMe()
 
       await invalidateQueries([
         postControllerFindAllInfiniteQueryKey(),
         profileControllerMeDetailedOptions()
       ])
-      setUser(data?.data.user)
+      setUser(response?.data?.data?.user)
       toast.success(t('uploadSuccess'))
     },
     onError: (e) => showApiErrors(e)

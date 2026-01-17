@@ -36,8 +36,9 @@ export const ChatMessagesList = ({
   })
 
   const messages = useMemo(() => {
-    const allMessages =
-      messagesResponse?.pages?.flatMap(({ data }) => data) ?? []
+    const allMessages = messagesResponse?.pages?.flatMap(
+      (page) => page?.data ?? []
+    )
     const seenIds = new Set<number>()
 
     return allMessages.filter((message) => {
@@ -67,7 +68,7 @@ export const ChatMessagesList = ({
   return (
     <div
       id="messages-scrollable-list"
-      className="flex max-h-[70dvh] flex-1 flex-col-reverse gap-6 overflow-y-auto px-6 py-5"
+      className="flex max-h-[65dvh] flex-1 flex-col-reverse gap-6 overflow-y-auto px-4 py-4 sm:max-h-[70dvh] sm:px-6 sm:py-5"
     >
       <InfiniteScroll
         dataLength={messages?.length ?? 0}
@@ -76,7 +77,7 @@ export const ChatMessagesList = ({
         scrollableTarget="messages-scrollable-list"
         inverse
         loader={<ChatMessagesListSkeleton count={3} />}
-        className="flex flex-col-reverse gap-4 pr-2"
+        className="flex flex-col-reverse gap-4 pr-1 sm:pr-2"
       >
         {messages?.map((message) => (
           <ChatMessagesListItem

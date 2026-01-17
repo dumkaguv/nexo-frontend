@@ -104,7 +104,7 @@ export const PostCreateForm = ({
     <form onSubmit={onSubmit}>
       <Card>
         <div className="flex flex-col">
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row">
             {isPendingUser ? (
               <Skeleton className="size-12 shrink-0 rounded-full" />
             ) : (
@@ -140,13 +140,13 @@ export const PostCreateForm = ({
             isPending={isPending}
             onDeleteImage={onDeleteImage}
             containerClassName={cn(
-              'grid grid-cols-2 gap-4 mt-5 w-[calc(100%-48px-16px)] self-end',
-              previews.length >= 3 && 'grid-cols-3'
+              'grid grid-cols-2 gap-3 mt-5 w-full sm:w-[calc(100%-48px-16px)] sm:self-end sm:gap-4',
+              previews.length >= 3 && 'sm:grid-cols-3'
             )}
           />
 
-          <div className="flex items-center justify-between gap-3 pt-5">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-3 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-wrap items-center gap-3">
               <Tooltip>
                 <InputUpload accept="image/*" onChange={onChange} multiple>
                   <TooltipTrigger asChild>
@@ -179,7 +179,7 @@ export const PostCreateForm = ({
               </Button>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
               {isEditing && (
                 <Button
                   variant="destructive"

@@ -32,7 +32,7 @@ export const PostCommentsList = ({ postId }: Props) => {
     enabled: !!postId
   })
 
-  const data = allData?.pages.flatMap(({ data }) => data)
+  const data = allData?.pages.flatMap((page) => page?.data ?? [])
   const totalComments = allData?.pages?.[0].total
 
   const onFetchMore = () => fetchNextPage()

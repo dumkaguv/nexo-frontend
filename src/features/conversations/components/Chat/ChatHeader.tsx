@@ -34,7 +34,7 @@ export const ChatHeader = ({ conversation, user }: Props) => {
   const isOnline = onlineUserIds.has(receiver.id)
 
   return (
-    <header className="flex items-center justify-between px-6 py-4">
+    <header className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4">
       <Link to={paths.user.byId(Number(receiver.id))}>
         <div className="flex items-center gap-3">
           <AvatarWithColorInitials user={receiver} showOnlineBadge size={48} />

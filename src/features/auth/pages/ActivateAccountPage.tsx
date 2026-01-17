@@ -19,7 +19,7 @@ export const ActivateAccountPage = () => {
     staleTime: 0
   })
 
-  if (user?.data.isActivated) {
+  if (user?.data?.isActivated) {
     return <Navigate to={paths.home.root} />
   }
 

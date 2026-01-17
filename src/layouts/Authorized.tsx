@@ -10,7 +10,7 @@ export const AuthorizedLayout = () => {
   return (
     <ProtectedRoute>
       <Container>
-        <Header className="mb-6" />
+        <Header className="mb-4 sm:mb-6" />
 
         <Outlet />
       </Container>

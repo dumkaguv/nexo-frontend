@@ -27,7 +27,7 @@ export const PostPreview = ({ content, previews, onBack }: Props) => {
 
   return (
     <Card className="flex flex-col gap-6">
-      <div className="flex items-center justify-between gap-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
         <div className="flex items-center gap-3">
           <AvatarWithColorInitials user={user} />
           <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ export const PostPreview = ({ content, previews, onBack }: Props) => {
               'grid gap-3',
               totalFiles === 1 && 'grid-cols-1',
               totalFiles === 2 && 'grid-cols-2',
-              totalFiles >= 3 && 'grid-cols-3'
+              totalFiles >= 3 && 'grid-cols-2 sm:grid-cols-3'
             )}
           />
         </div>

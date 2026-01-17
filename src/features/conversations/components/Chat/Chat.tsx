@@ -70,7 +70,7 @@ export const Chat = () => {
     isConnecting ||
     !user?.id ||
     isLoading ||
-    (isCreatingConversation && !conversation?.data.id)
+    (isCreatingConversation && !conversation?.data?.id)
   ) {
     return <ChatSkeleton />
   }

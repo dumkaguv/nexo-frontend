@@ -63,7 +63,9 @@ export const useChatForm = ({
     const uploadResponse = await Promise.all(
       files?.map((file) => upload({ body: { file } })) ?? []
     )
-    const fileIds = uploadResponse.map(({ data: { id } }) => id)
+    const fileIds = uploadResponse
+      .map(({ data }) => data?.id)
+      .filter((id): id is number => !!id)
 
     const sendMessage = (conversation: ResponseConversationDto) =>
       emit(CLIENT_TO_SERVER_EVENTS.message.send, {

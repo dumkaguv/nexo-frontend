@@ -33,9 +33,15 @@ export const useLoginForm = () => {
 
   const { mutate: loginMutate, isPending } = useMutation({
     ...authControllerLoginMutation(),
-    onSuccess: ({ data: { accessToken } }) => {
+    onSuccess: ({ data }) => {
+      if (!data?.accessToken) {
+        toast.error(t('loginError'))
+
+        return
+      }
+
       toast.success(t('loginSuccess'))
-      saveAccessToken(accessToken)
+      saveAccessToken(data.accessToken)
       void navigate(paths.home.root)
     },
     onError: (error) => showApiErrors(error, t('loginError'))

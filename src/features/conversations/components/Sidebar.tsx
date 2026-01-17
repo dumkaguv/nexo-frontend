@@ -50,8 +50,10 @@ export const Sidebar = () => {
     getNextPageParam: ({ nextPage }) => nextPage
   })
 
-  const conversations = data?.pages.flatMap(({ data }) => data)
-  const suggestions = suggestionsResponse?.pages.flatMap(({ data }) => data)
+  const conversations = data?.pages.flatMap((page) => page?.data ?? [])
+  const suggestions = suggestionsResponse?.pages.flatMap(
+    (page) => page?.data ?? []
+  )
 
   const renderConversations = () => {
     if (isLoading || isConnecting) {
@@ -82,7 +84,7 @@ export const Sidebar = () => {
   }
 
   return (
-    <SidebarUi className="w-full max-w-92.5" bodyClassName="items-start">
+    <SidebarUi className="w-full lg:max-w-92.5" bodyClassName="items-start">
       <div className="flex w-full flex-col gap-5">
         <div className="flex items-center gap-2">
           <Typography.Title level={3} className="text-base">

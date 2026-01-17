@@ -24,7 +24,7 @@ export const PostList = ({
     enabled: !postsProps?.length
   })
 
-  const posts = postsProps || data?.pages.flatMap(({ data }) => data)
+  const posts = postsProps || data?.pages?.flatMap((page) => page?.data ?? [])
 
   if (isLoadingProps || isLoading) {
     return <PostCardListSkeleton />

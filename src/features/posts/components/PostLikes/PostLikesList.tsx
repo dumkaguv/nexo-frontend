@@ -28,7 +28,7 @@ export const PostLikesList = ({ postId, search, onOpenChange }: Props) => {
     enabled: !!postId
   })
 
-  const likes = data?.pages?.flatMap(({ data }) => data)
+  const likes = data?.pages?.flatMap((page) => page?.data ?? [])
 
   const isEmptySearchResult =
     data?.pages?.[0].total === 0 && !isLoading && search

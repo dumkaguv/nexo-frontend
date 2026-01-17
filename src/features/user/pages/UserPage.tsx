@@ -24,7 +24,7 @@ export const UserPage = () => {
   }
 
   return (
-    <div className="flex gap-10">
+    <div className="flex flex-col gap-6 lg:flex-row lg:gap-10">
       <Card className="flex w-full flex-col gap-5">
         <MainInfo userData={userData} isLoading={isLoading} />
 
@@ -39,7 +39,7 @@ export const UserPage = () => {
         )}
       </Card>
 
-      <SidebarUi className="w-full max-w-85" bodyClassName="items-start">
+      <SidebarUi className="w-full lg:max-w-85" bodyClassName="items-start">
         <Sidebar userData={userData} />
       </SidebarUi>
     </div>

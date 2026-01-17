@@ -87,7 +87,7 @@ export const ImagePreview = ({
             height={100}
             onClick={() => onImageClick(index)}
             className={cn(
-              'h-25 w-30 cursor-pointer rounded-sm object-cover',
+              'h-20 w-24 cursor-pointer rounded-sm object-cover sm:h-25 sm:w-30',
               className
             )}
             {...props}

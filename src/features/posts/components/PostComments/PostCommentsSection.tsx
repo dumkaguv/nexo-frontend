@@ -85,7 +85,7 @@ export const PostCommentsSection = ({ postId }: Props) => {
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row">
         <AvatarWithColorInitials user={user} />
 
         <form onSubmit={onSubmit} className="w-full">

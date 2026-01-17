@@ -95,7 +95,9 @@ export const usePostCreateForm = ({
     const response = await Promise.all(
       files?.map((file) => upload({ body: { file } })) ?? []
     )
-    const fileIds = response.map(({ data: { id } }) => id)
+    const fileIds = response
+      .map(({ data }) => data?.id)
+      .filter((id): id is number => !!id)
 
     if (post) {
       const previewsSet = new Set(previews)

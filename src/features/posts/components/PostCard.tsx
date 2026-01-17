@@ -49,7 +49,7 @@ export const PostCard = ({ post }: Props) => {
 
   return (
     <Card className="flex flex-col gap-6">
-      <div className="flex items-center justify-between gap-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
         <div className="flex items-center gap-3">
           <Link to={paths.user.byId(post.user.id)}>
             <AvatarWithColorInitials user={post.user} />
@@ -81,12 +81,12 @@ export const PostCard = ({ post }: Props) => {
               'grid gap-3',
               totalFiles === 1 && 'grid-cols-1',
               totalFiles === 2 && 'grid-cols-2',
-              totalFiles >= 3 && 'grid-cols-3'
+              totalFiles >= 3 && 'grid-cols-2 sm:grid-cols-3'
             )}
           />
         </div>
 
-        <div className="mt-2 flex items-center gap-5">
+        <div className="mt-2 flex flex-wrap items-center gap-4">
           <PostLikes
             postId={post.id}
             likesCount={post.likesCount}

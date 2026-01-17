@@ -5,7 +5,7 @@ import {
 } from '@/features/userSettings/components'
 
 export const SettingsPage = () => (
-  <div className="flex gap-5">
+  <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
     <SidebarSettings />
 
     <main className="w-full flex-1">

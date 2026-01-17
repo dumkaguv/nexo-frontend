@@ -52,7 +52,7 @@ export const HeaderSearch = () => {
     enabled: !!debouncedSearch
   })
 
-  const allUsers = data?.pages.flatMap((page) => page.data) ?? []
+  const allUsers = data?.pages.flatMap((page) => page?.data ?? [])
   const total = data?.pages[0]?.total ?? 0
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export const HeaderSearch = () => {
             value={searchValue}
             onChange={(e) => onValueChange(e.target.value)}
             placeholder={t('usersSearch') + '...'}
-            className="w-75"
+            className="w-full sm:w-75"
           />
 
           {isLoading && (
@@ -105,7 +105,7 @@ export const HeaderSearch = () => {
       </PopoverAnchor>
 
       <PopoverContent
-        className="w-75 overflow-y-hidden p-0"
+        className="w-[calc(100vw-2rem)] overflow-y-hidden p-0 sm:w-75"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <Command className="bg-input/50">
@@ -126,7 +126,7 @@ export const HeaderSearch = () => {
             </CommandEmpty>
           )}
 
-          {allUsers.length > 0 && (
+          {allUsers?.length > 0 && (
             <CommandList className="overflow-y-hidden">
               <div
                 id="users-scrollable-list"

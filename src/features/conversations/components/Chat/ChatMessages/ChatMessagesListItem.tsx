@@ -67,7 +67,7 @@ export const ChatMessagesListItem = ({
 
       <div
         className={cn(
-          'flex max-w-[45%] flex-col items-end gap-1',
+          'flex max-w-[80%] flex-col items-end gap-1 sm:max-w-[45%]',
           isMine ? 'items-end' : 'items-start'
         )}
       >
@@ -83,7 +83,7 @@ export const ChatMessagesListItem = ({
           <TipTapEditorPreview
             content={message.content ?? ''}
             className={cn(
-              'w-fit rounded-2xl px-4 py-3 text-sm leading-relaxed',
+              'w-fit rounded-2xl px-3 py-2 text-sm leading-relaxed sm:px-4 sm:py-3',
               isMine ? 'bg-primary/80 text-white!' : 'bg-muted text-foreground'
             )}
           />

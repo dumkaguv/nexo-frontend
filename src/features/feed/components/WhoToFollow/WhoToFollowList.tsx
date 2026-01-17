@@ -21,7 +21,7 @@ export const WhoToFollowList = () => {
 
   const onLoadMore = () => fetchNextPage()
 
-  const users = data?.pages.flatMap(({ data }) => data)
+  const users = data?.pages.flatMap((page) => page?.data ?? [])
   const isLoadingButtonState = isFetchingNextPage || isLoading
 
   if (isLoading) {

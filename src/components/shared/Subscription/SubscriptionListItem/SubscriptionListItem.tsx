@@ -101,7 +101,7 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
 
     const { data: conversation } = await fetchConversation()
 
-    if (!conversation?.data.id) {
+    if (!conversation?.data?.id) {
       void navigate(`${paths.conversations.new}?receiverId=${data.user.id}`)
     } else {
       void navigate(paths.conversations.byId(conversation.data.id))

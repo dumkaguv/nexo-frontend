@@ -18,8 +18,8 @@ export const useCreateNewConversation = () => {
     useMutation({
       ...conversationControllerCreateMutation(),
       onError: (e) => showApiErrors(e),
-      onSuccess: async ({ data: { id } }) => {
-        if (!id) {
+      onSuccess: async ({ data }) => {
+        if (!data?.id) {
           return
         }
 
@@ -29,7 +29,7 @@ export const useCreateNewConversation = () => {
         ])
 
         void navigate(
-          { pathname: paths.conversations.byId(id), search: '' },
+          { pathname: paths.conversations.byId(data.id), search: '' },
           { replace: true }
         )
       }

@@ -13,10 +13,13 @@ export const Sidebar = ({
   children,
   ...rest
 }: Props) => (
-  <aside className={cn('w-[280px] max-w-[280px]', className)} {...rest}>
+  <aside
+    className={cn('w-full max-w-full lg:max-w-[280px]', className)}
+    {...rest}
+  >
     <Card
       className={cn(
-        'sticky top-[calc(var(--header-height)+20px)] flex flex-col items-center justify-start',
+        'flex flex-col items-center justify-start lg:sticky lg:top-[calc(var(--header-height)+20px)]',
         bodyClassName
       )}
     >

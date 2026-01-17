@@ -64,6 +64,32 @@ import type {
   PostControllerUpdateCommentResponses,
   PostControllerUpdateData,
   PostControllerUpdateResponses,
+  PostWsConversationsEventConversationDeletedData,
+  PostWsConversationsEventConversationDeletedResponses,
+  PostWsConversationsEventConversationNewData,
+  PostWsConversationsEventConversationNewResponses,
+  PostWsMessagesEventMessageDeletedData,
+  PostWsMessagesEventMessageDeletedResponses,
+  PostWsMessagesEventMessageNewData,
+  PostWsMessagesEventMessageNewResponses,
+  PostWsMessagesEventMessageSentData,
+  PostWsMessagesEventMessageSentResponses,
+  PostWsMessagesEventMessageUpdatedData,
+  PostWsMessagesEventMessageUpdatedResponses,
+  PostWsMessagesMessageDeleteData,
+  PostWsMessagesMessageDeleteResponses,
+  PostWsMessagesMessageSendData,
+  PostWsMessagesMessageSendResponses,
+  PostWsMessagesMessageUpdateData,
+  PostWsMessagesMessageUpdateResponses,
+  PostWsUsersEventUserOfflineData,
+  PostWsUsersEventUserOfflineResponses,
+  PostWsUsersEventUserOnlineData,
+  PostWsUsersEventUserOnlineListData,
+  PostWsUsersEventUserOnlineListResponses,
+  PostWsUsersEventUserOnlineResponses,
+  PostWsUsersUserOnlineListRequestData,
+  PostWsUsersUserOnlineListRequestResponses,
   ProfileControllerMeData,
   ProfileControllerMeDetailedData,
   ProfileControllerMeDetailedResponses,
@@ -1060,6 +1086,290 @@ export const conversationControllerFindOne = <
       }
     ],
     url: '/api/conversations/{id}',
+    ...options
+  })
+}
+
+/**
+ * message:send (client -> server)
+ *
+ * Client emits `message:send`. Server acknowledges with the created message and emits `message:new` (receiver) and `message:sent` (sender).
+ */
+export const postWsMessagesMessageSend = <ThrowOnError extends boolean = false>(
+  options: Options<PostWsMessagesMessageSendData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    PostWsMessagesMessageSendResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/messages/message-send',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+/**
+ * message:update (client -> server)
+ *
+ * Client emits `message:update`. Server acknowledges with the updated message and emits `message:updated` to both participants.
+ */
+export const postWsMessagesMessageUpdate = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostWsMessagesMessageUpdateData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    PostWsMessagesMessageUpdateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/messages/message-update',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+/**
+ * message:delete (client -> server)
+ *
+ * Client emits `message:delete`. Server emits `message:deleted` to both participants.
+ */
+export const postWsMessagesMessageDelete = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<PostWsMessagesMessageDeleteData, ThrowOnError>
+) => {
+  return (options.client ?? client).post<
+    PostWsMessagesMessageDeleteResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: '/ws/messages/message-delete',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+}
+
+/**
+ * message:new (server -> client)
+ *
+ * Emitted to the receiver when a new message is created.
+ */
+export const postWsMessagesEventMessageNew = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsMessagesEventMessageNewData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsMessagesEventMessageNewResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/messages/event-message-new',
+    ...options
+  })
+}
+
+/**
+ * message:sent (server -> client)
+ *
+ * Emitted to the sender after `message:send` succeeds.
+ */
+export const postWsMessagesEventMessageSent = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsMessagesEventMessageSentData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsMessagesEventMessageSentResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/messages/event-message-sent',
+    ...options
+  })
+}
+
+/**
+ * message:updated (server -> client)
+ *
+ * Emitted to both participants after a message update.
+ */
+export const postWsMessagesEventMessageUpdated = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsMessagesEventMessageUpdatedData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsMessagesEventMessageUpdatedResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/messages/event-message-updated',
+    ...options
+  })
+}
+
+/**
+ * message:deleted (server -> client)
+ *
+ * Emitted to both participants after a message is deleted.
+ */
+export const postWsMessagesEventMessageDeleted = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsMessagesEventMessageDeletedData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsMessagesEventMessageDeletedResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/messages/event-message-deleted',
+    ...options
+  })
+}
+
+/**
+ * conversation:new (server -> client)
+ *
+ * Emitted when a new conversation is created.
+ */
+export const postWsConversationsEventConversationNew = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsConversationsEventConversationNewData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsConversationsEventConversationNewResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/conversations/event-conversation-new',
+    ...options
+  })
+}
+
+/**
+ * conversation:deleted (server -> client)
+ *
+ * Emitted when a conversation is deleted.
+ */
+export const postWsConversationsEventConversationDeleted = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<
+    PostWsConversationsEventConversationDeletedData,
+    ThrowOnError
+  >
+) => {
+  return (options?.client ?? client).post<
+    PostWsConversationsEventConversationDeletedResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/conversations/event-conversation-deleted',
+    ...options
+  })
+}
+
+/**
+ * user:online:list:request (client -> server)
+ *
+ * Client emits `user:online:list:request`. Server emits `user:online:list` with the current online user ids.
+ */
+export const postWsUsersUserOnlineListRequest = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsUsersUserOnlineListRequestData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsUsersUserOnlineListRequestResponses,
+    unknown,
+    ThrowOnError
+  >({
+    url: '/ws/users/user-online-list-request',
+    ...options
+  })
+}
+
+/**
+ * user:online (server -> client)
+ *
+ * Emitted when a user comes online.
+ */
+export const postWsUsersEventUserOnline = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsUsersEventUserOnlineData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsUsersEventUserOnlineResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/users/event-user-online',
+    ...options
+  })
+}
+
+/**
+ * user:offline (server -> client)
+ *
+ * Emitted when a user goes offline.
+ */
+export const postWsUsersEventUserOffline = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsUsersEventUserOfflineData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsUsersEventUserOfflineResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/users/event-user-offline',
+    ...options
+  })
+}
+
+/**
+ * user:online:list (server -> client)
+ *
+ * Emitted with the list of currently online user ids.
+ */
+export const postWsUsersEventUserOnlineList = <
+  ThrowOnError extends boolean = false
+>(
+  options?: Options<PostWsUsersEventUserOnlineListData, ThrowOnError>
+) => {
+  return (options?.client ?? client).post<
+    PostWsUsersEventUserOnlineListResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    url: '/ws/users/event-user-online-list',
     ...options
   })
 }

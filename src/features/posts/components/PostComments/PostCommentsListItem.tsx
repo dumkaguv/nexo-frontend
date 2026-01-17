@@ -83,8 +83,8 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
         <AvatarWithColorInitials user={comment.user} />
       </Link>
 
-      <Card className="bg-input/25 grid w-full gap-1 px-5 py-3">
-        <div className="flex items-center justify-between gap-5">
+      <Card className="bg-input/25 grid w-full gap-1 px-4 py-3 sm:px-5">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
           <Link to={paths.user.byId(comment.user.id)}>
             <Person.Name
               name={comment.user.profile.fullName}

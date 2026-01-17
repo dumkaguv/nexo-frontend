@@ -51,7 +51,7 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
             BaseResponseDto & ResponseRefreshDto
           >(refreshUrl, {}, { withCredentials: true })
 
-          const newAccessToken = response.data?.data.accessToken as
+          const newAccessToken = response?.data?.data?.accessToken as
             | string
             | undefined
 

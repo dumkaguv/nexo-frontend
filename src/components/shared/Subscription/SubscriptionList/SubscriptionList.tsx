@@ -64,8 +64,8 @@ export const SubscriptionList = ({
   })
 
   const data = isFollowersTab
-    ? followers?.pages.flatMap(({ data }) => data)
-    : following?.pages.flatMap(({ data }) => data)
+    ? followers?.pages.flatMap((page) => page?.data ?? [])
+    : following?.pages.flatMap((page) => page?.data ?? [])
   const fetchNextPage = isFollowersTab
     ? fetchNextPageFollowers
     : fetchNextPageFollowing

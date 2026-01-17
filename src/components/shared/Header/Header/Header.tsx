@@ -27,22 +27,28 @@ export const Header = ({ className, ...rest }: Props) => {
     }
 
     defineHeaderHeightCssVar()
+
+    window.addEventListener('resize', defineHeaderHeightCssVar)
+
+    return () => {
+      window.removeEventListener('resize', defineHeaderHeightCssVar)
+    }
   }, [])
 
   return (
     <header
       className={cn(
-        'bg-card sticky top-0 z-10 flex items-center justify-between gap-5 rounded-b-md p-2 shadow-md',
+        'bg-card sticky top-0 z-10 flex flex-col gap-3 rounded-b-md p-2 shadow-md sm:flex-row sm:items-center sm:justify-between sm:gap-5',
         className
       )}
       {...rest}
     >
-      <div className="flex items-center gap-5">
+      <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-5">
         <HeaderLogo />
         <HeaderSearch />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
         <ThemeSwitcher />
         <LanguageSwitcher />
         <HeaderAvatar />

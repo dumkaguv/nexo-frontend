@@ -59,7 +59,7 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
   }
 
   return (
-    <footer className="flex items-end gap-3 px-4 py-3">
+    <footer className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-end">
       <div className="flex w-full flex-col gap-4">
         <ImagePreview
           files={files ?? []}
@@ -67,7 +67,7 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
           className="size-full"
           maxImages={4}
           showDeleteIcon
-          containerClassName="grid grid-cols-4 gap-4"
+          containerClassName="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
         />
 
         <Field>
@@ -88,7 +88,7 @@ export const ChatFooter = ({ isPendingUpload }: Props) => {
         </Field>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2 sm:flex-nowrap">
         <DropdownMenu>
           <Tooltip>
             <TooltipContent>

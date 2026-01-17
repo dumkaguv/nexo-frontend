@@ -41,10 +41,10 @@ export type ResponseRegisterDto = {
 }
 
 export type BaseResponseDto = {
-  message: string
-  data: {
+  message?: string | null
+  data?: {
     [key: string]: unknown
-  }
+  } | null
 }
 
 export type CreateUserDto = {
@@ -73,10 +73,10 @@ export type ResponseRefreshDto = {
 }
 
 export type PaginatedResponseDto = {
-  message: string
-  data: {
+  message?: string | null
+  data?: {
     [key: string]: unknown
-  }
+  } | null
   total: number
   page: number
   pageSize: number
@@ -230,6 +230,10 @@ export type ResponseConversationDto = {
 
 export type CreateConversationDto = {
   receiverId: number
+}
+
+export type DeleteMessageDto = {
+  id: number
 }
 
 export type ResponseFileDtoWritable = {
@@ -1240,3 +1244,228 @@ export type ConversationControllerFindOneResponses = {
 
 export type ConversationControllerFindOneResponse =
   ConversationControllerFindOneResponses[keyof ConversationControllerFindOneResponses]
+
+export type PostWsMessagesMessageSendData = {
+  body: CreateMessageDto
+  path?: never
+  query?: never
+  url: '/ws/messages/message-send'
+}
+
+export type PostWsMessagesMessageSendResponses = {
+  /**
+   * Ack payload.
+   */
+  200: ResponseMessageDto
+}
+
+export type PostWsMessagesMessageSendResponse =
+  PostWsMessagesMessageSendResponses[keyof PostWsMessagesMessageSendResponses]
+
+export type PostWsMessagesMessageUpdateData = {
+  body: UpdateMessageDto
+  path?: never
+  query?: never
+  url: '/ws/messages/message-update'
+}
+
+export type PostWsMessagesMessageUpdateResponses = {
+  /**
+   * Ack payload.
+   */
+  200: ResponseMessageDto
+}
+
+export type PostWsMessagesMessageUpdateResponse =
+  PostWsMessagesMessageUpdateResponses[keyof PostWsMessagesMessageUpdateResponses]
+
+export type PostWsMessagesMessageDeleteData = {
+  body: DeleteMessageDto
+  path?: never
+  query?: never
+  url: '/ws/messages/message-delete'
+}
+
+export type PostWsMessagesMessageDeleteResponses = {
+  /**
+   * No ack payload.
+   */
+  204: void
+}
+
+export type PostWsMessagesMessageDeleteResponse =
+  PostWsMessagesMessageDeleteResponses[keyof PostWsMessagesMessageDeleteResponses]
+
+export type PostWsMessagesEventMessageNewData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/messages/event-message-new'
+}
+
+export type PostWsMessagesEventMessageNewResponses = {
+  /**
+   * Event payload.
+   */
+  200: ResponseMessageDto
+}
+
+export type PostWsMessagesEventMessageNewResponse =
+  PostWsMessagesEventMessageNewResponses[keyof PostWsMessagesEventMessageNewResponses]
+
+export type PostWsMessagesEventMessageSentData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/messages/event-message-sent'
+}
+
+export type PostWsMessagesEventMessageSentResponses = {
+  /**
+   * Event payload.
+   */
+  200: ResponseMessageDto
+}
+
+export type PostWsMessagesEventMessageSentResponse =
+  PostWsMessagesEventMessageSentResponses[keyof PostWsMessagesEventMessageSentResponses]
+
+export type PostWsMessagesEventMessageUpdatedData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/messages/event-message-updated'
+}
+
+export type PostWsMessagesEventMessageUpdatedResponses = {
+  /**
+   * Event payload.
+   */
+  200: ResponseMessageDto
+}
+
+export type PostWsMessagesEventMessageUpdatedResponse =
+  PostWsMessagesEventMessageUpdatedResponses[keyof PostWsMessagesEventMessageUpdatedResponses]
+
+export type PostWsMessagesEventMessageDeletedData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/messages/event-message-deleted'
+}
+
+export type PostWsMessagesEventMessageDeletedResponses = {
+  /**
+   * Event payload.
+   */
+  200: {
+    deletedMessageId: number
+  }
+}
+
+export type PostWsMessagesEventMessageDeletedResponse =
+  PostWsMessagesEventMessageDeletedResponses[keyof PostWsMessagesEventMessageDeletedResponses]
+
+export type PostWsConversationsEventConversationNewData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/conversations/event-conversation-new'
+}
+
+export type PostWsConversationsEventConversationNewResponses = {
+  /**
+   * Event payload.
+   */
+  200: ResponseConversationDto
+}
+
+export type PostWsConversationsEventConversationNewResponse =
+  PostWsConversationsEventConversationNewResponses[keyof PostWsConversationsEventConversationNewResponses]
+
+export type PostWsConversationsEventConversationDeletedData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/conversations/event-conversation-deleted'
+}
+
+export type PostWsConversationsEventConversationDeletedResponses = {
+  /**
+   * Event payload.
+   */
+  200: {
+    deletedConversationId: number
+  }
+}
+
+export type PostWsConversationsEventConversationDeletedResponse =
+  PostWsConversationsEventConversationDeletedResponses[keyof PostWsConversationsEventConversationDeletedResponses]
+
+export type PostWsUsersUserOnlineListRequestData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/users/user-online-list-request'
+}
+
+export type PostWsUsersUserOnlineListRequestResponses = {
+  /**
+   * No ack payload.
+   */
+  204: void
+}
+
+export type PostWsUsersUserOnlineListRequestResponse =
+  PostWsUsersUserOnlineListRequestResponses[keyof PostWsUsersUserOnlineListRequestResponses]
+
+export type PostWsUsersEventUserOnlineData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/users/event-user-online'
+}
+
+export type PostWsUsersEventUserOnlineResponses = {
+  /**
+   * Event payload.
+   */
+  200: number
+}
+
+export type PostWsUsersEventUserOnlineResponse =
+  PostWsUsersEventUserOnlineResponses[keyof PostWsUsersEventUserOnlineResponses]
+
+export type PostWsUsersEventUserOfflineData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/users/event-user-offline'
+}
+
+export type PostWsUsersEventUserOfflineResponses = {
+  /**
+   * Event payload.
+   */
+  200: number
+}
+
+export type PostWsUsersEventUserOfflineResponse =
+  PostWsUsersEventUserOfflineResponses[keyof PostWsUsersEventUserOfflineResponses]
+
+export type PostWsUsersEventUserOnlineListData = {
+  body?: never
+  path?: never
+  query?: never
+  url: '/ws/users/event-user-online-list'
+}
+
+export type PostWsUsersEventUserOnlineListResponses = {
+  /**
+   * Event payload.
+   */
+  200: Array<number>
+}
+
+export type PostWsUsersEventUserOnlineListResponse =
+  PostWsUsersEventUserOnlineListResponses[keyof PostWsUsersEventUserOnlineListResponses]
