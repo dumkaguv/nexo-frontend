@@ -21,7 +21,9 @@ type Client = {
   instance: AxiosInstance
 }
 
-type RetryConfig = { _retry?: boolean }
+type RetryConfig = {
+  _retry?: boolean
+}
 
 export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
   axiosInstance.interceptors.request.use((config) => {
@@ -67,6 +69,9 @@ export const getConfigInterceptors = (axiosInstance: Client['instance']) => {
 
           return await axiosInstance(originalRequest)
         } catch (err) {
+          clearAccessToken()
+          window.location.href = paths.auth.login
+
           if (err instanceof Error) {
             return Promise.reject(err)
           }
