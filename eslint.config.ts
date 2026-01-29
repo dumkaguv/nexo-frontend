@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import stylisticTs from '@stylistic/eslint-plugin'
+import boundaries from 'eslint-plugin-boundaries'
 import i18nPlugin from 'eslint-plugin-i18next'
 import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
@@ -7,19 +8,21 @@ import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import regexpPlugin from 'eslint-plugin-regexp'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'src/api/**'] },
+  { ignores: ['dist', 'src/shared/api/**'] },
   {
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked
     ],
+
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -30,6 +33,7 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname
       }
     },
+
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooks,
@@ -40,8 +44,11 @@ export default tseslint.config(
       '@stylistic/ts': stylisticTs,
       'unused-imports': unusedImports,
       'jsx-a11y': jsxA11y,
-      i18next: i18nPlugin
+      i18next: i18nPlugin,
+      'simple-import-sort': simpleImportSort,
+      boundaries
     },
+
     rules: {
       ...reactPlugin.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
@@ -141,6 +148,7 @@ export default tseslint.config(
       '@typescript-eslint/return-await': ['error', 'in-try-catch'],
       '@typescript-eslint/no-redundant-type-constituents': 'error',
       '@typescript-eslint/require-await': 'error',
+      '@typescript-eslint/no-unnecessary-template-expression': 'error',
 
       '@typescript-eslint/consistent-type-imports': [
         'error',
@@ -220,25 +228,42 @@ export default tseslint.config(
         }
       ],
 
-      // 'import/no-restricted-paths': [
-      //   'error',
-      //   {
-      //     zones: crossFeatureZones
-      //   }
-      // ],
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            {
+              from: 'app',
+              allow: ['pages', 'widgets', 'features', 'entities', 'shared']
+            },
+            {
+              from: 'pages',
+              allow: ['widgets', 'features', 'entities', 'shared']
+            },
+            { from: 'widgets', allow: ['features', 'entities', 'shared'] },
+            { from: 'features', allow: ['entities', 'shared'] },
+            { from: 'entities', allow: ['shared'] },
+            { from: 'shared', allow: ['shared'] }
+          ]
+        }
+      ],
 
       'no-restricted-imports': [
         'error',
         {
           patterns: [
             {
-              group: ['../*', '../**'],
+              regex: String.raw`^(\./)*(\.\./){2,}`,
               message:
-                'Do not use ../ in imports — use @/alias (or ./ for same-folder).'
+                'Do not use 2+ parent relative imports. Use @/alias instead.'
             }
           ]
         }
       ],
+
+      'simple-import-sort/imports': 'off',
+      'simple-import-sort/exports': 'off',
 
       'import/order': [
         'error',
@@ -270,6 +295,17 @@ export default tseslint.config(
       react: {
         version: 'detect'
       },
+
+      'boundaries/elements': [
+        { type: 'app', pattern: 'src/app/**' },
+        { type: 'pages', pattern: 'src/pages/**' },
+        { type: 'widgets', pattern: 'src/widgets/**' },
+        { type: 'features', pattern: 'src/features/**' },
+        { type: 'entities', pattern: 'src/entities/**' },
+        { type: 'shared', pattern: 'src/shared/**' }
+      ],
+      'boundaries/include': ['src/**/*.{ts,tsx,js,jsx}'],
+
       'import/resolver': {
         typescript: {}
       }
@@ -292,6 +328,15 @@ export default tseslint.config(
 
       '@typescript-eslint/no-floating-promises': 'off',
       '@typescript-eslint/no-misused-promises': 'off'
+    }
+  },
+
+  // OVERRIDE for barrel-files index.{ts,tsx}
+  {
+    files: ['**/index.{ts,tsx}'],
+    rules: {
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error'
     }
   }
 )

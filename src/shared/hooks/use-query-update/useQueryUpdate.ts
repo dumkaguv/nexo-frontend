@@ -1,0 +1,41 @@
+import { default as queryString, type ParsedQuery } from 'query-string'
+import { useCallback } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import { useQueryParams } from '../use-query-params'
+
+import type { AnyObject } from '@/shared/types'
+
+export const useQueryUpdate = () => {
+  const push = useNavigate()
+  const location = useLocation()
+  const params = useQueryParams()
+
+  const updateQuery = useCallback(
+    (filters: ParsedQuery | AnyObject, reset = false) => {
+      const { pathname, search, hash } = location
+      const parsedSearchQuery = queryString.parse(search)
+
+      const query = reset ? filters : { ...parsedSearchQuery, ...filters }
+
+      const pushURL = queryString.stringifyUrl(
+        {
+          url: pathname + hash,
+          query
+        },
+        {
+          skipEmptyString: true,
+          skipNull: true,
+          arrayFormat: 'comma'
+        }
+      )
+
+      if (pathname + search + hash !== pushURL.replace(/\?+$/g, '')) {
+        void push(pushURL)
+      }
+    },
+    [push, location]
+  )
+
+  return { params, updateQuery }
+}

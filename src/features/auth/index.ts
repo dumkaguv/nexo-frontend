@@ -1,2 +1,3 @@
-export { ProtectedRoute } from './components'
-export * from './pages'
+export * from './login'
+export * from './logout'
+export * from './register'

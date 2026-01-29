@@ -34,9 +34,9 @@ if (!globalThis.ResizeObserver) {
   }
 }
 
-vi.mock('@/utils/cn', async () => {
+vi.mock('@/shared/lib', async () => {
   const actual =
-    await vi.importActual<typeof import('@/utils/cn')>('@/utils/cn')
+    await vi.importActual<typeof import('@/shared/lib')>('@/shared/lib')
 
   return {
     ...actual,
@@ -48,8 +48,9 @@ vi.mock('@/utils/cn', async () => {
   }
 })
 
-vi.mock('@/utils', async () => {
-  const actual = await vi.importActual<typeof import('@/utils')>('@/utils')
+vi.mock('@/shared/lib', async () => {
+  const actual =
+    await vi.importActual<typeof import('@/shared/lib')>('@/shared/lib')
 
   return {
     ...actual,

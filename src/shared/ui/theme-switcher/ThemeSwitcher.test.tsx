@@ -1,0 +1,29 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+
+import { ThemeSwitcher } from '@/shared/ui'
+
+const { setTheme } = vi.hoisted(() => ({
+  setTheme: vi.fn()
+}))
+
+vi.mock('@/shared/model', () => ({
+  useThemeStore: () => ({
+    theme: 'light',
+    setTheme
+  })
+}))
+
+describe('ThemeSwitcher', () => {
+  it('updates theme from menu', async () => {
+    const user = userEvent.setup()
+
+    render(<ThemeSwitcher />)
+
+    await user.click(screen.getByRole('button', { name: 'toggleTheme' }))
+    await user.click(screen.getByText('dark'))
+
+    expect(setTheme).toHaveBeenCalledWith('dark')
+  })
+})

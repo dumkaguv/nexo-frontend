@@ -1,0 +1,79 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
+import { describe, expect, it, vi } from 'vitest'
+
+import { HeaderAvatar } from './HeaderAvatar'
+
+const { mutateAsync } = vi.hoisted(() => ({
+  mutateAsync: vi.fn()
+}))
+
+vi.mock('@/shared/hooks', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/shared/hooks')>()
+
+  return {
+    ...actual,
+    useWebSocket: () => ({
+      socket: null,
+      isConnected: true,
+      isConnecting: false,
+      lastError: null,
+      connect: vi.fn(),
+      disconnect: vi.fn(),
+      emit: vi.fn()
+    })
+  }
+})
+
+vi.mock('@tanstack/react-query', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/react-query')>()
+
+  return {
+    ...actual,
+    useMutation: () => ({ mutateAsync, isPending: false }),
+    useQueryClient: () => ({
+      cancelQueries: vi.fn(),
+      clear: vi.fn()
+    })
+  }
+})
+
+vi.mock('@/shared/api', () => ({
+  authControllerLogoutMutation: () => ({})
+}))
+
+vi.mock('@/shared/model', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/shared/model')>()
+
+  return {
+    ...actual,
+    useAuthStore: () => ({ setUser: vi.fn() })
+  }
+})
+
+vi.mock('@/entities/person/ui/PersonAvatar', () => ({
+  PersonAvatar: () => <div data-testid="person-avatar" />
+}))
+
+vi.mock('sonner', () => ({
+  toast: { success: vi.fn() }
+}))
+
+describe('HeaderAvatar', () => {
+  it('shows menu items when opened', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <HeaderAvatar />
+      </MemoryRouter>
+    )
+
+    await user.click(screen.getByRole('button'))
+
+    expect(screen.getByText('messages')).toBeInTheDocument()
+    expect(screen.getByText('settings')).toBeInTheDocument()
+    expect(screen.getByText('logout')).toBeInTheDocument()
+  })
+})
