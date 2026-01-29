@@ -32,7 +32,7 @@ vi.mock('@/shared/ui/shadcn', () => ({
 
 describe('UserAvatar', () => {
   it('renders skeleton while loading', () => {
-    const { container } = render(<UserAvatar isLoading />)
+    const { container } = render(<UserAvatar user={undefined} isLoading />)
 
     expect(
       container.querySelector('[data-slot="skeleton"]')
