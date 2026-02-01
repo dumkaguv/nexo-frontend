@@ -8,8 +8,7 @@ import { Field, FieldError, FieldLabel, Input } from '@/shared/ui/shadcn'
 import { useMainAccountSettingsForm } from '../model'
 
 export const MainSettingsForm = () => {
-  const { onSubmit, register, control, errors, isPending } =
-    useMainAccountSettingsForm()
+  const { onSubmit, control, errors, isPending } = useMainAccountSettingsForm()
 
   const { t } = useTranslation()
 
@@ -23,13 +22,21 @@ export const MainSettingsForm = () => {
         <div className="flex gap-5">
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="email">{t('email')}</FieldLabel>
-            <Input id="email" {...register('email')} />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => <Input id="email" {...field} />}
+            />
             <FieldError>{errors.email?.message}</FieldError>
           </Field>
 
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="userName">{t('nickName')}</FieldLabel>
-            <Input id="userName" {...register('username')} />
+            <Controller
+              name="username"
+              control={control}
+              render={({ field }) => <Input id="userName" {...field} />}
+            />
             <FieldError>{errors.username?.message}</FieldError>
           </Field>
         </div>
@@ -37,13 +44,21 @@ export const MainSettingsForm = () => {
         <div className="flex gap-5">
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="fullName">{t('fullName')}</FieldLabel>
-            <Input id="fullName" {...register('fullName')} />
+            <Controller
+              name="fullName"
+              control={control}
+              render={({ field }) => <Input id="fullName" {...field} />}
+            />
             <FieldError>{errors.fullName?.message}</FieldError>
           </Field>
 
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="phone">{t('phone')}</FieldLabel>
-            <Input id="phone" {...register('phone')} />
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => <Input id="phone" {...field} />}
+            />
             <FieldError>{errors.phone?.message}</FieldError>
           </Field>
         </div>

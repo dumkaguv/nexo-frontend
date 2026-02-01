@@ -30,7 +30,6 @@ export const useMainAccountSettingsForm = () => {
   const { invalidateQueries } = useInvalidatePredicateQueries()
 
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors }
@@ -85,7 +84,6 @@ export const useMainAccountSettingsForm = () => {
   return {
     onSubmit: handleSubmit(onSubmit),
     control,
-    register,
     errors,
     isPending: isPendingUser || isPending || isUserLoading
   }
