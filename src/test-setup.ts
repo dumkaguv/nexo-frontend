@@ -34,6 +34,20 @@ if (!globalThis.ResizeObserver) {
   }
 }
 
+if (!window.matchMedia) {
+  window.matchMedia = (query) =>
+    ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      addListener: () => {},
+      removeListener: () => {},
+      dispatchEvent: () => false
+    }) as never
+}
+
 vi.mock('@/shared/lib', async () => {
   const actual =
     await vi.importActual<typeof import('@/shared/lib')>('@/shared/lib')

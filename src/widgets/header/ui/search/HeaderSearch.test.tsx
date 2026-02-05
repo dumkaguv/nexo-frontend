@@ -30,7 +30,9 @@ vi.mock('@/shared/api', () => ({
 
 vi.mock('@/shared/hooks', () => ({
   useDebouncedValue: (value: string) => value,
-  useQueryUpdate: () => ({ updateQuery: vi.fn(), params: {} })
+  useQueryUpdate: () => ({ updateQuery: vi.fn(), params: {} }),
+  useMinWidth: () => false,
+  useMaxWidth: () => false
 }))
 
 describe('HeaderSearch', () => {

@@ -12,7 +12,7 @@ export const UserSettingsForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <Typography.Title level={1} className="text-xl font-bold">
+      <Typography.Title level={1} className="text-xl font-bold max-lg:text-xl">
         {t('accountSettings')}
       </Typography.Title>
 

@@ -21,7 +21,6 @@ export const UserPage = () => {
     <UserPageContent
       userData={userData}
       isLoading={isLoading || isUserLoading}
-      isMe={isMe}
     />
   )
 }

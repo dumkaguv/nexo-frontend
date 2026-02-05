@@ -1,3 +1,5 @@
+import { ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import {
@@ -7,7 +9,12 @@ import {
   UserLastActivity,
   UserNickname
 } from '@/entities/user'
-import { paths } from '@/shared/config'
+import { Breakpoints, BreakpointsMax, paths } from '@/shared/config'
+
+import { useMaxWidth } from '@/shared/hooks'
+
+import { cn } from '@/shared/lib'
+import { Button } from '@/shared/ui/shadcn'
 
 import { ChatHeaderMoreActions } from './ChatHeaderMoreActions'
 
@@ -23,7 +30,12 @@ const isConversationDto = (
 ): data is ResponseConversationDto => 'receiver' in data
 
 export const ChatHeader = ({ conversation, user }: Props) => {
+  const { t } = useTranslation()
   const onlineUserIds = useOnlineUsersStore((state) => state.onlineUserIds)
+
+  const isTablet = useMaxWidth(Breakpoints.lg)
+  const isMobile = useMaxWidth(BreakpointsMax.md)
+  const isSmall = useMaxWidth(BreakpointsMax.sm)
 
   const data = conversation ?? user
 
@@ -36,28 +48,46 @@ export const ChatHeader = ({ conversation, user }: Props) => {
   const isOnline = onlineUserIds.has(receiver.id)
 
   return (
-    <header className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4">
-      <Link to={paths.user.byId(Number(receiver.id))}>
-        <div className="flex items-center gap-3">
-          <UserAvatar
-            user={receiver}
-            showOnlineBadge
-            className="size-12"
-            size={48}
-          />
+    <header className="flex items-center justify-between gap-3 px-4 py-3 max-md:gap-2 lg:px-6 lg:py-4">
+      <div className="flex min-w-0 items-center gap-3 max-lg:gap-2">
+        {isMobile && (
+          <Button
+            asChild
+            variant="ghost"
+            size="icon"
+            className="-ml-1 self-start"
+            aria-label={t('back')}
+          >
+            <Link to={paths.conversations.root}>
+              <ArrowLeft />
+            </Link>
+          </Button>
+        )}
 
-          <div className="flex flex-col items-start">
-            <UserFullName
-              name={receiver.profile.fullName}
-              className="text-base"
-            />
+        <Link to={paths.user.byId(Number(receiver.id))} className="min-w-0">
+          <div className="flex min-w-0 gap-3 max-lg:gap-2">
+            {!isSmall && (
+              <UserAvatar
+                user={receiver}
+                showOnlineBadge
+                className={cn('size-12', isTablet && 'size-11')}
+                size={isTablet ? 44 : 48}
+              />
+            )}
 
-            <UserNickname nickname={receiver.username} />
+            <div className="flex min-w-0 flex-col items-start">
+              <UserFullName
+                name={receiver.profile.fullName}
+                className="text-base max-lg:text-base"
+              />
 
-            {!isOnline && <UserLastActivity user={receiver} />}
+              <UserNickname nickname={receiver.username} />
+
+              {!isOnline && <UserLastActivity user={receiver} />}
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
 
       <div className="flex items-center gap-2">
         {isConversationDto(data) && <ChatHeaderMoreActions />}

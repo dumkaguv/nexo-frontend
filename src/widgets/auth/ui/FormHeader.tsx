@@ -22,16 +22,16 @@ export const FormHeader = ({
     <>
       <Typography.Title
         level={1}
-        className="mb-2 text-center text-4xl font-bold"
+        className="mb-2 text-center text-4xl font-bold max-lg:mb-1.5"
       >
         {t(titleKey)}
       </Typography.Title>
 
-      <Typography.Paragraph className="mb-5">
+      <Typography.Paragraph className="mb-5 max-lg:mb-3">
         {t(accountTextKey)}{' '}
         <Link
           to={url}
-          className="text-primary underline-offset-3 hover:underline"
+          className="text-primary underline underline-offset-3 hover:underline"
         >
           {t(urlTextKey)}
         </Link>

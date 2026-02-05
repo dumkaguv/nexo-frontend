@@ -234,6 +234,32 @@ export type CreateConversationDto = {
   receiverId: number
 }
 
+export type ResponseStoryDto = {
+  readonly id: number
+  previewUrl?: string | null
+  isViewed: boolean
+  user: ResponseUserProfileDto
+  files?: Array<ResponseFileDto> | null
+  readonly createdAt: string
+  readonly updatedAt: string
+}
+
+export type ResponseStoryViewerDto = {
+  readonly id: number
+  user: ResponseUserProfileDto
+  readonly createdAt: string
+}
+
+export type CreateStoryDto = {
+  previewUrl?: string | null
+  files: Array<number>
+}
+
+export type UpdateStoryDto = {
+  previewUrl?: string | null
+  files?: Array<number>
+}
+
 export type DeleteMessageDto = {
   id: number
 }
@@ -327,6 +353,17 @@ export type ResponseSubscriptionDtoWritable = {
 
 export type ResponseConversationDtoWritable = {
   receiver: ResponseUserProfileDtoWritable
+}
+
+export type ResponseStoryDtoWritable = {
+  previewUrl?: string | null
+  isViewed: boolean
+  user: ResponseUserProfileDtoWritable
+  files?: Array<ResponseFileDtoWritable> | null
+}
+
+export type ResponseStoryViewerDtoWritable = {
+  user: ResponseUserProfileDtoWritable
 }
 
 export type AuthControllerRegisterData = {
@@ -636,8 +673,11 @@ export type PostsControllerRemoveData = {
 }
 
 export type PostsControllerRemoveResponses = {
-  200: unknown
+  204: void
 }
+
+export type PostsControllerRemoveResponse =
+  PostsControllerRemoveResponses[keyof PostsControllerRemoveResponses]
 
 export type PostsControllerFindOneData = {
   body?: never
@@ -1243,6 +1283,177 @@ export type ConversationControllerFindOneResponses = {
 
 export type ConversationControllerFindOneResponse =
   ConversationControllerFindOneResponses[keyof ConversationControllerFindOneResponses]
+
+export type StoryControllerFindAllData = {
+  body?: never
+  path?: never
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page. Maximum: 100
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/stories'
+}
+
+export type StoryControllerFindAllResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseStoryDto>
+  }
+}
+
+export type StoryControllerFindAllResponse =
+  StoryControllerFindAllResponses[keyof StoryControllerFindAllResponses]
+
+export type StoryControllerCreateData = {
+  body: CreateStoryDto
+  path?: never
+  query?: never
+  url: '/api/stories'
+}
+
+export type StoryControllerCreateResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseStoryDto
+  }
+}
+
+export type StoryControllerCreateResponse =
+  StoryControllerCreateResponses[keyof StoryControllerCreateResponses]
+
+export type StoryControllerFindAllViewersData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page. Maximum: 100
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/stories/{id}/viewers'
+}
+
+export type StoryControllerFindAllViewersResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseStoryViewerDto>
+  }
+}
+
+export type StoryControllerFindAllViewersResponse =
+  StoryControllerFindAllViewersResponses[keyof StoryControllerFindAllViewersResponses]
+
+export type StoryControllerFindAllByUserIdData = {
+  body?: never
+  path: {
+    userId: string
+  }
+  query?: {
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number
+    /**
+     * Number of results to return per page. Maximum: 100
+     */
+    pageSize?: number
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string
+    /**
+     * A search term.
+     */
+    search?: string
+  }
+  url: '/api/stories/user/{userId}'
+}
+
+export type StoryControllerFindAllByUserIdResponses = {
+  200: PaginatedResponseDto & {
+    data?: Array<ResponseStoryDto>
+  }
+}
+
+export type StoryControllerFindAllByUserIdResponse =
+  StoryControllerFindAllByUserIdResponses[keyof StoryControllerFindAllByUserIdResponses]
+
+export type StoryControllerRemoveData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/stories/{id}'
+}
+
+export type StoryControllerRemoveResponses = {
+  204: void
+}
+
+export type StoryControllerRemoveResponse =
+  StoryControllerRemoveResponses[keyof StoryControllerRemoveResponses]
+
+export type StoryControllerFindOneData = {
+  body?: never
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/stories/{id}'
+}
+
+export type StoryControllerFindOneResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseStoryDto
+  }
+}
+
+export type StoryControllerFindOneResponse =
+  StoryControllerFindOneResponses[keyof StoryControllerFindOneResponses]
+
+export type StoryControllerUpdateData = {
+  body: UpdateStoryDto
+  path: {
+    id: string
+  }
+  query?: never
+  url: '/api/stories/{id}'
+}
+
+export type StoryControllerUpdateResponses = {
+  200: BaseResponseDto & {
+    data?: ResponseStoryDto
+  }
+}
+
+export type StoryControllerUpdateResponse =
+  StoryControllerUpdateResponses[keyof StoryControllerUpdateResponses]
 
 export type PostWsMessagesMessageSendData = {
   body: CreateMessageDto

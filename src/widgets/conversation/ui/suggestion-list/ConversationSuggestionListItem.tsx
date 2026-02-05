@@ -29,7 +29,7 @@ export const ConversationSuggestionListItem = ({ suggestion }: Props) => {
         <div className="flex flex-col items-start">
           <UserFullName
             name={suggestion.profile.fullName}
-            className="text-base"
+            className="text-base max-lg:text-base"
           />
           <UserNickname nickname={suggestion.username} />
         </div>

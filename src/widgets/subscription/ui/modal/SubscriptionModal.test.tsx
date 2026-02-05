@@ -4,7 +4,9 @@ import { describe, expect, it, vi } from 'vitest'
 import { SubscriptionModal } from './SubscriptionModal'
 
 vi.mock('@/shared/hooks', () => ({
-  useDebouncedValue: (value: string | undefined) => value
+  useDebouncedValue: (value: string | undefined) => value,
+  useMinWidth: () => false,
+  useMaxWidth: () => false
 }))
 
 vi.mock('../list', () => ({

@@ -19,7 +19,9 @@ export const DeletePostAction = ({ postId }: Props) => {
 
   const { deletePost, isPending } = useDeletePost()
 
-  const onDelete = () => void deletePost({ path: { id: String(postId) } })
+  const onDelete = async () => {
+    await deletePost({ path: { id: String(postId) } })
+  }
 
   return (
     <ModalConfirm onOk={onDelete} okButtonProps={{ loading: isPending }}>

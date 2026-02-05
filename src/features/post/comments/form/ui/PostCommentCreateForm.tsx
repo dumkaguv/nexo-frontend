@@ -4,6 +4,9 @@ import { useAuthStore } from '@/entities/session'
 
 import { UserAvatar } from '@/entities/user'
 
+import { Breakpoints } from '@/shared/config'
+import { useMinWidth } from '@/shared/hooks'
+
 import { PostCommentForm } from './PostCommentForm'
 
 import { usePostCommentCreateForm } from '../model'
@@ -17,14 +20,22 @@ export const PostCommentCreateForm = ({ postId, onSuccessCallback }: Props) => {
   const { t } = useTranslation()
   const { user, isUserLoading } = useAuthStore()
 
+  const isDesktop = useMinWidth(Breakpoints.md)
+
   const { control, errors, onSubmit, isPending } = usePostCommentCreateForm({
     postId,
     onSuccessCallback
   })
 
   return (
-    <div className="flex flex-col gap-2 sm:flex-row">
-      <UserAvatar user={user} isLoading={isUserLoading} />
+    <div className="flex gap-2">
+      {isDesktop && (
+        <UserAvatar
+          user={user}
+          isLoading={isUserLoading}
+          className="max-md:hidden"
+        />
+      )}
 
       <PostCommentForm
         control={control}

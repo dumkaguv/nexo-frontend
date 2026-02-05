@@ -13,7 +13,8 @@ vi.mock('@/widgets/header/ui/logo', () => ({
 }))
 
 vi.mock('@/widgets/header/ui/search', () => ({
-  HeaderSearch: () => <div data-testid="header-search" />
+  HeaderSearch: () => <div data-testid="header-search" />,
+  HeaderSearchPopup: () => <div data-testid="header-search-popup" />
 }))
 
 vi.mock('@/widgets/header/ui/avatar', () => ({
@@ -25,7 +26,7 @@ describe('Header', () => {
     render(<Header />)
 
     expect(screen.getByTestId('header-logo')).toBeInTheDocument()
-    expect(screen.getByTestId('header-search')).toBeInTheDocument()
+    expect(screen.getByTestId('header-search-popup')).toBeInTheDocument()
     expect(screen.getByTestId('header-avatar')).toBeInTheDocument()
     expect(screen.getByTestId('language-switcher')).toBeInTheDocument()
     expect(screen.getByTestId('theme-switcher')).toBeInTheDocument()

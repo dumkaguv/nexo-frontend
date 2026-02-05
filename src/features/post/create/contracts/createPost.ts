@@ -4,11 +4,18 @@ import { isEmptyHTMLEditor } from '@/shared/lib'
 
 import type { TFunction } from 'i18next'
 
-export const createPostSchema = (t: TFunction) =>
+type CreatePostSchemaOptions = {
+  hasFiles?: boolean
+}
+
+export const createPostSchema = (
+  t: TFunction,
+  { hasFiles = false }: CreatePostSchemaOptions = {}
+) =>
   z.object({
     content: z
       .string({ error: t('minLength', { count: 1 }) })
-      .refine((val) => !isEmptyHTMLEditor(val), {
+      .refine((val) => hasFiles || !isEmptyHTMLEditor(val), {
         error: t('minLength', { count: 1 })
       })
   })

@@ -38,11 +38,12 @@ export const ChatMessagesListItem = ({
           : (file as { file?: { url?: string } }).file?.url
       )
       .filter((url): url is string => Boolean(url)) ?? []
+  const totalFiles = fileUrls.length
 
   return (
     <div
       className={cn(
-        'group flex w-full items-end gap-3',
+        'group flex w-full items-start gap-3 max-lg:gap-2',
         isMine ? 'justify-end' : 'justify-start'
       )}
     >
@@ -54,7 +55,10 @@ export const ChatMessagesListItem = ({
       )}
 
       {!isMine && (
-        <Link to={paths.user.byId(Number(conversation?.receiver.id))}>
+        <Link
+          to={paths.user.byId(Number(conversation?.receiver.id))}
+          className="mt-1"
+        >
           <UserAvatar user={conversation?.receiver} size={32} />
         </Link>
       )}
@@ -65,11 +69,17 @@ export const ChatMessagesListItem = ({
           isMine ? 'items-end' : 'items-start'
         )}
       >
-        {fileUrls.length > 0 && (
+        {totalFiles > 0 && (
           <ImagePreview
             srcs={fileUrls}
             maxImages={4}
-            containerClassName="grid grid-cols-2 gap-2"
+            containerClassName={cn(
+              'grid gap-2',
+              totalFiles === 1 && 'grid-cols-1',
+              totalFiles === 2 && 'grid-cols-2',
+              totalFiles === 3 && 'grid-cols-2',
+              totalFiles >= 4 && 'grid-cols-2'
+            )}
           />
         )}
 
@@ -77,7 +87,7 @@ export const ChatMessagesListItem = ({
           <TipTapEditorPreview
             content={message.content ?? ''}
             className={cn(
-              'w-fit rounded-2xl px-3 py-2 text-sm leading-relaxed sm:px-4 sm:py-3',
+              'w-fit rounded-2xl px-3 py-2 text-sm leading-relaxed lg:px-4 lg:py-3',
               isMine ? 'bg-primary/80 text-white!' : 'bg-muted text-foreground'
             )}
           />

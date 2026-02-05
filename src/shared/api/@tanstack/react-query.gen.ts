@@ -56,6 +56,13 @@ import {
   profileControllerMe,
   profileControllerMeDetailed,
   profileControllerUpdate,
+  storyControllerCreate,
+  storyControllerFindAll,
+  storyControllerFindAllByUserId,
+  storyControllerFindAllViewers,
+  storyControllerFindOne,
+  storyControllerRemove,
+  storyControllerUpdate,
   subscriptionControllerFindAllFollowers,
   subscriptionControllerFindAllFollowing,
   subscriptionControllerFindOneCount,
@@ -124,6 +131,7 @@ import type {
   PostsControllerFindOneData,
   PostsControllerFindOneResponse,
   PostsControllerRemoveData,
+  PostsControllerRemoveResponse,
   PostsControllerUpdateData,
   PostsControllerUpdateResponse,
   PostWsConversationsEventConversationDeletedData,
@@ -158,6 +166,20 @@ import type {
   ProfileControllerMeResponse,
   ProfileControllerUpdateData,
   ProfileControllerUpdateResponse,
+  StoryControllerCreateData,
+  StoryControllerCreateResponse,
+  StoryControllerFindAllByUserIdData,
+  StoryControllerFindAllByUserIdResponse,
+  StoryControllerFindAllData,
+  StoryControllerFindAllResponse,
+  StoryControllerFindAllViewersData,
+  StoryControllerFindAllViewersResponse,
+  StoryControllerFindOneData,
+  StoryControllerFindOneResponse,
+  StoryControllerRemoveData,
+  StoryControllerRemoveResponse,
+  StoryControllerUpdateData,
+  StoryControllerUpdateResponse,
   SubscriptionControllerFindAllFollowersData,
   SubscriptionControllerFindAllFollowersResponse,
   SubscriptionControllerFindAllFollowingData,
@@ -773,12 +795,12 @@ export const postsControllerFindAllMyInfiniteOptions = (
 export const postsControllerRemoveMutation = (
   options?: Partial<Options<PostsControllerRemoveData>>
 ): UseMutationOptions<
-  unknown,
+  PostsControllerRemoveResponse,
   AxiosError<DefaultError>,
   Options<PostsControllerRemoveData>
 > => {
   const mutationOptions: UseMutationOptions<
-    unknown,
+    PostsControllerRemoveResponse,
     AxiosError<DefaultError>,
     Options<PostsControllerRemoveData>
   > = {
@@ -1820,6 +1842,319 @@ export const conversationControllerFindOneOptions = (
     },
     queryKey: conversationControllerFindOneQueryKey(options)
   })
+
+export const storyControllerFindAllQueryKey = (
+  options?: Options<StoryControllerFindAllData>
+) => createQueryKey('storyControllerFindAll', options)
+
+export const storyControllerFindAllOptions = (
+  options?: Options<StoryControllerFindAllData>
+) =>
+  queryOptions<
+    StoryControllerFindAllResponse,
+    AxiosError<DefaultError>,
+    StoryControllerFindAllResponse,
+    ReturnType<typeof storyControllerFindAllQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await storyControllerFindAll({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: storyControllerFindAllQueryKey(options)
+  })
+
+export const storyControllerFindAllInfiniteQueryKey = (
+  options?: Options<StoryControllerFindAllData>
+): QueryKey<Options<StoryControllerFindAllData>> =>
+  createQueryKey('storyControllerFindAll', options, true)
+
+export const storyControllerFindAllInfiniteOptions = (
+  options?: Options<StoryControllerFindAllData>
+) =>
+  infiniteQueryOptions<
+    StoryControllerFindAllResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<StoryControllerFindAllResponse>,
+    QueryKey<Options<StoryControllerFindAllData>>,
+    | number
+    | Pick<
+        QueryKey<Options<StoryControllerFindAllData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<StoryControllerFindAllData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await storyControllerFindAll({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+        return data
+      },
+      queryKey: storyControllerFindAllInfiniteQueryKey(options)
+    }
+  )
+
+export const storyControllerCreateMutation = (
+  options?: Partial<Options<StoryControllerCreateData>>
+): UseMutationOptions<
+  StoryControllerCreateResponse,
+  AxiosError<DefaultError>,
+  Options<StoryControllerCreateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    StoryControllerCreateResponse,
+    AxiosError<DefaultError>,
+    Options<StoryControllerCreateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await storyControllerCreate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+export const storyControllerFindAllViewersQueryKey = (
+  options: Options<StoryControllerFindAllViewersData>
+) => createQueryKey('storyControllerFindAllViewers', options)
+
+export const storyControllerFindAllViewersOptions = (
+  options: Options<StoryControllerFindAllViewersData>
+) =>
+  queryOptions<
+    StoryControllerFindAllViewersResponse,
+    AxiosError<DefaultError>,
+    StoryControllerFindAllViewersResponse,
+    ReturnType<typeof storyControllerFindAllViewersQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await storyControllerFindAllViewers({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: storyControllerFindAllViewersQueryKey(options)
+  })
+
+export const storyControllerFindAllViewersInfiniteQueryKey = (
+  options: Options<StoryControllerFindAllViewersData>
+): QueryKey<Options<StoryControllerFindAllViewersData>> =>
+  createQueryKey('storyControllerFindAllViewers', options, true)
+
+export const storyControllerFindAllViewersInfiniteOptions = (
+  options: Options<StoryControllerFindAllViewersData>
+) =>
+  infiniteQueryOptions<
+    StoryControllerFindAllViewersResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<StoryControllerFindAllViewersResponse>,
+    QueryKey<Options<StoryControllerFindAllViewersData>>,
+    | number
+    | Pick<
+        QueryKey<Options<StoryControllerFindAllViewersData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<StoryControllerFindAllViewersData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await storyControllerFindAllViewers({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+        return data
+      },
+      queryKey: storyControllerFindAllViewersInfiniteQueryKey(options)
+    }
+  )
+
+export const storyControllerFindAllByUserIdQueryKey = (
+  options: Options<StoryControllerFindAllByUserIdData>
+) => createQueryKey('storyControllerFindAllByUserId', options)
+
+export const storyControllerFindAllByUserIdOptions = (
+  options: Options<StoryControllerFindAllByUserIdData>
+) =>
+  queryOptions<
+    StoryControllerFindAllByUserIdResponse,
+    AxiosError<DefaultError>,
+    StoryControllerFindAllByUserIdResponse,
+    ReturnType<typeof storyControllerFindAllByUserIdQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await storyControllerFindAllByUserId({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: storyControllerFindAllByUserIdQueryKey(options)
+  })
+
+export const storyControllerFindAllByUserIdInfiniteQueryKey = (
+  options: Options<StoryControllerFindAllByUserIdData>
+): QueryKey<Options<StoryControllerFindAllByUserIdData>> =>
+  createQueryKey('storyControllerFindAllByUserId', options, true)
+
+export const storyControllerFindAllByUserIdInfiniteOptions = (
+  options: Options<StoryControllerFindAllByUserIdData>
+) =>
+  infiniteQueryOptions<
+    StoryControllerFindAllByUserIdResponse,
+    AxiosError<DefaultError>,
+    InfiniteData<StoryControllerFindAllByUserIdResponse>,
+    QueryKey<Options<StoryControllerFindAllByUserIdData>>,
+    | number
+    | Pick<
+        QueryKey<Options<StoryControllerFindAllByUserIdData>>[0],
+        'body' | 'headers' | 'path' | 'query'
+      >
+  >(
+    // @ts-ignore
+    {
+      queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<
+          QueryKey<Options<StoryControllerFindAllByUserIdData>>[0],
+          'body' | 'headers' | 'path' | 'query'
+        > =
+          typeof pageParam === 'object'
+            ? pageParam
+            : {
+                query: {
+                  page: pageParam
+                }
+              }
+        const params = createInfiniteParams(queryKey, page)
+        const { data } = await storyControllerFindAllByUserId({
+          ...options,
+          ...params,
+          signal,
+          throwOnError: true
+        })
+        return data
+      },
+      queryKey: storyControllerFindAllByUserIdInfiniteQueryKey(options)
+    }
+  )
+
+export const storyControllerRemoveMutation = (
+  options?: Partial<Options<StoryControllerRemoveData>>
+): UseMutationOptions<
+  StoryControllerRemoveResponse,
+  AxiosError<DefaultError>,
+  Options<StoryControllerRemoveData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    StoryControllerRemoveResponse,
+    AxiosError<DefaultError>,
+    Options<StoryControllerRemoveData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await storyControllerRemove({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
+
+export const storyControllerFindOneQueryKey = (
+  options: Options<StoryControllerFindOneData>
+) => createQueryKey('storyControllerFindOne', options)
+
+export const storyControllerFindOneOptions = (
+  options: Options<StoryControllerFindOneData>
+) =>
+  queryOptions<
+    StoryControllerFindOneResponse,
+    AxiosError<DefaultError>,
+    StoryControllerFindOneResponse,
+    ReturnType<typeof storyControllerFindOneQueryKey>
+  >({
+    queryFn: async ({ queryKey, signal }) => {
+      const { data } = await storyControllerFindOne({
+        ...options,
+        ...queryKey[0],
+        signal,
+        throwOnError: true
+      })
+      return data
+    },
+    queryKey: storyControllerFindOneQueryKey(options)
+  })
+
+export const storyControllerUpdateMutation = (
+  options?: Partial<Options<StoryControllerUpdateData>>
+): UseMutationOptions<
+  StoryControllerUpdateResponse,
+  AxiosError<DefaultError>,
+  Options<StoryControllerUpdateData>
+> => {
+  const mutationOptions: UseMutationOptions<
+    StoryControllerUpdateResponse,
+    AxiosError<DefaultError>,
+    Options<StoryControllerUpdateData>
+  > = {
+    mutationFn: async (fnOptions) => {
+      const { data } = await storyControllerUpdate({
+        ...options,
+        ...fnOptions,
+        throwOnError: true
+      })
+      return data
+    }
+  }
+  return mutationOptions
+}
 
 /**
  * message:send (client -> server)

@@ -3,6 +3,8 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import * as React from 'react'
 
+import { Breakpoints } from '@/shared/config'
+import { useMinWidth } from '@/shared/hooks'
 import { cn } from '@/shared/lib'
 
 function TooltipProvider({
@@ -19,11 +21,33 @@ function TooltipProvider({
 }
 
 function Tooltip({
+  children,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+  const isTablet = useMinWidth(Breakpoints.lg)
+  const isControlled = props.open !== undefined
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(
+    props.defaultOpen ?? false
+  )
+  const open = isControlled ? props.open : uncontrolledOpen
+  const onOpenChange =
+    props.onOpenChange ??
+    ((nextOpen: boolean) => {
+      if (!isControlled) {
+        setUncontrolledOpen(nextOpen)
+      }
+    })
+  const rootProps = {
+    ...props,
+    open: isTablet ? open : false,
+    onOpenChange
+  }
+
   return (
     <TooltipProvider>
-      <TooltipPrimitive.Root data-slot="tooltip" {...props} />
+      <TooltipPrimitive.Root data-slot="tooltip" {...rootProps}>
+        {children}
+      </TooltipPrimitive.Root>
     </TooltipProvider>
   )
 }

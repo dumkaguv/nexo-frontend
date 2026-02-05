@@ -7,7 +7,8 @@ import {
   type EditorContentProps
 } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { useEffect, type RefObject } from 'react'
+
+import { useEffect, type RefObject, type ReactNode } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
@@ -22,7 +23,11 @@ type TipTapEditorProps = {
   onChange?: (value: string) => void
   onBlur?: () => void
   placeholder?: string
+  editorBeforeChildren?: ReactNode
+  editorAfterChildren?: ReactNode
   toolbarClassName?: string
+  toolbarBeforeChildren?: ReactNode
+  toolbarAfterChildren?: ReactNode
   editorRef?: RefObject<Editor | null>
 } & Partial<EditorContentProps>
 
@@ -32,6 +37,10 @@ export const TipTapEditor = ({
   onChange,
   onBlur,
   placeholder,
+  editorBeforeChildren,
+  editorAfterChildren,
+  toolbarBeforeChildren,
+  toolbarAfterChildren,
   toolbarClassName,
   editorRef,
   className,
@@ -78,18 +87,26 @@ export const TipTapEditor = ({
   return (
     <>
       {showToolbar && (
-        <TipTapToolbar editor={editor} className={toolbarClassName} />
+        <div className="flex w-full gap-2">
+          {toolbarBeforeChildren}
+          <TipTapToolbar editor={editor} className={toolbarClassName} />
+          {toolbarAfterChildren}
+        </div>
       )}
 
-      <EditorContent
-        {...restProps}
-        editor={editor}
-        aria-label={ariaLabel}
-        className={cn(
-          'min-h-12 overflow-hidden rounded-lg border sm:min-h-15',
-          className
-        )}
-      />
+      <div className="flex w-full gap-2">
+        {editorBeforeChildren}
+        <EditorContent
+          {...restProps}
+          editor={editor}
+          aria-label={ariaLabel}
+          className={cn(
+            'min-h-12 w-full overflow-hidden rounded-lg border sm:min-h-15',
+            className
+          )}
+        />
+        {editorAfterChildren}
+      </div>
     </>
   )
 }

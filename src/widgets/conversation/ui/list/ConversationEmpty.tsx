@@ -13,7 +13,7 @@ export const ConversationEmpty = () => {
   const { t } = useTranslation()
 
   return (
-    <Empty className="p-5 md:p-7">
+    <Empty className="p-3.5 lg:p-7">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <MessageSquareText />

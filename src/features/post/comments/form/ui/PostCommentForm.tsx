@@ -1,7 +1,13 @@
 import { Check, Send, X } from 'lucide-react'
-import { Controller, type Control, type FieldErrors } from 'react-hook-form'
+import {
+  Controller,
+  useWatch,
+  type Control,
+  type FieldErrors
+} from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
+import { isEmptyHTMLEditor } from '@/shared/lib'
 import { TipTapEditor } from '@/shared/ui'
 import {
   Button,
@@ -42,6 +48,8 @@ export const PostCommentForm = ({
 }: Props) => {
   const { t } = useTranslation()
 
+  const content = useWatch({ control, name: 'content', defaultValue: '' })
+
   return (
     <form onSubmit={onSubmit} className={formClassName}>
       <div className="flex flex-col gap-5">
@@ -66,6 +74,7 @@ export const PostCommentForm = ({
                         size="icon"
                         variant="secondary"
                         type="submit"
+                        disabled={isEmptyHTMLEditor(content)}
                         loading={isPending}
                         showChildrenWhenLoading={false}
                         className="absolute right-1.5 bottom-1.5 bg-transparent"

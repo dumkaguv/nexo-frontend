@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -22,7 +23,8 @@ type Props = {
 export const useCreatePostForm = ({ files, onSuccessCallback }: Props) => {
   const { t } = useTranslation()
   const { invalidateQueries } = useInvalidatePredicateQueries()
-  const schema = createPostSchema(t)
+  const schema = createPostSchema(t, { hasFiles: (files?.length ?? 0) > 0 })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
     control,
@@ -65,20 +67,26 @@ export const useCreatePostForm = ({ files, onSuccessCallback }: Props) => {
   })
 
   const onSubmit = async (body: PostSchema) => {
-    const response = await Promise.all(
-      files?.map((file) => upload({ body: { file } })) ?? []
-    )
-    const fileIds = response
-      .map(({ data }) => data?.id)
-      .filter((id): id is number => !!id)
+    setIsSubmitting(true)
 
-    await createPost({ body: { ...body, files: fileIds } })
+    try {
+      const response = await Promise.all(
+        files?.map((file) => upload({ body: { file } })) ?? []
+      )
+      const fileIds = response
+        .map(({ data }) => data?.id)
+        .filter((id): id is number => !!id)
+
+      await createPost({ body: { ...body, files: fileIds } })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return {
     control,
     onSubmit: handleSubmit(onSubmit),
     errors,
-    isPending: isUploading || isPending
+    isPending: isSubmitting || isUploading || isPending
   }
 }

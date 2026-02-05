@@ -8,14 +8,15 @@ import type { ResponseUserDto } from '@/shared/api'
 
 type Props = {
   userData?: ResponseUserDto
+  showTitle?: boolean
 }
 
-export const Sidebar = ({ userData }: Props) => {
+export const Sidebar = ({ userData, showTitle = true }: Props) => {
   const { t } = useTranslation()
 
   return (
     <div className="flex flex-col gap-2.5">
-      <Typography.Title level={3}>{t('about')}</Typography.Title>
+      {showTitle && <Typography.Title level={3}>{t('about')}</Typography.Title>}
 
       {userData?.profile.biography && (
         <TipTapEditorPreview content={userData.profile.biography} />

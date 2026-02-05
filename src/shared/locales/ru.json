@@ -1,4 +1,4 @@
-{
+﻿{
   "signUp": "Регистрация",
   "signIn": "Вход",
   "logout": "Выход",
@@ -51,6 +51,8 @@
   "messages": "Сообщения",
   "settings": "Настройки",
   "feed": "Лента",
+  "stories": "Истории",
+  "addStory": "Добавить историю",
   "followers": "Подписчики",
   "following": "Подписки",
   "changeLanguage": "Поменять язык",
@@ -84,9 +86,13 @@
   "noPostsYet": "Пока нет постов",
   "noPostsYetDescription": "Создайте первый пост, чтобы он появился здесь.",
   "noFollowersYet": "Пока нет подписчиков",
+  "noFollowersYetOther": "У этого пользователя пока нет подписчиков",
   "noFollowersYetDescription": "Когда люди начнут подписываться на вас, они появятся здесь.",
+  "noFollowersYetDescriptionOther": "Когда люди начнут подписываться на этого пользователя, они появятся здесь.",
   "noFollowingYet": "Вы ни на кого не подписаны",
+  "noFollowingYetOther": "Этот пользователь пока ни на кого не подписан",
   "noFollowingYetDescription": "Когда вы подпишетесь на кого-то, он появится здесь.",
+  "noFollowingYetDescriptionOther": "Когда этот пользователь подпишется на кого-то, он появится здесь.",
   "usersSearch": "Поиск пользователей",
   "clear": "Очистить",
   "loading": "Загрузка...",
@@ -149,5 +155,12 @@
   "suggestions": "Рекомендации",
   "joinedOn": "Дата регистрации",
   "lastActivity": "Последняя активность",
-  "about": "О себе"
+  "about": "О себе",
+  "save": "Сохранить",
+  "profile": "Профиль",
+  "yourMessages": "Ваши сообщения",
+  "sendMessagesAndPhotos": "Отправляйте сообщения и фотографии",
+  "serverWakingUp": "Сервер сейчас включается. Проверить можно здесь.",
+  "checkStatus": "Проверить статус"
 }
+

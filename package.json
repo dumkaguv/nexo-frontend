@@ -66,6 +66,7 @@
     "react-hook-form": "^7.61.1",
     "react-i18next": "^15.6.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-insta-stories": "^2.6.0",
     "react-router-dom": "^7.6.1",
     "react-top-loading-bar": "^3.0.2",
     "socket.io-client": "^4.8.3",

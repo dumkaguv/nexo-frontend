@@ -18,7 +18,7 @@ export const ChangePasswordForm = () => {
         isPending={isPending}
         className="flex flex-col gap-5"
       >
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 max-lg:gap-4 max-md:gap-3">
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="oldPassword">
               {t('currentPassword')}

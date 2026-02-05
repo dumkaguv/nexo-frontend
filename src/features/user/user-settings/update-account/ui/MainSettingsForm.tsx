@@ -17,9 +17,9 @@ export const MainSettingsForm = () => {
       <Section
         titleKey="mainSettings"
         isPending={isPending}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-6 max-lg:gap-4"
       >
-        <div className="flex gap-5">
+        <div className="flex gap-5 max-lg:gap-4 max-md:gap-3 max-sm:flex-col">
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="email">{t('email')}</FieldLabel>
             <Controller
@@ -41,7 +41,7 @@ export const MainSettingsForm = () => {
           </Field>
         </div>
 
-        <div className="flex gap-5">
+        <div className="flex gap-5 max-lg:gap-4 max-md:gap-3 max-sm:flex-col">
           <Field className="flex w-full flex-col gap-1">
             <FieldLabel htmlFor="fullName">{t('fullName')}</FieldLabel>
             <Controller

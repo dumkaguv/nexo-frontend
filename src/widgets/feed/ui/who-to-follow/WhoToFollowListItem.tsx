@@ -55,7 +55,10 @@ export const WhoToFollowListItem = ({ user }: Props) => {
           <UserAvatar user={user} size={40} className="size-10" />
 
           <div className="flex flex-col items-start">
-            <UserFullName name={user.profile.fullName} className="text-sm" />
+            <UserFullName
+              name={user.profile.fullName}
+              className="text-sm max-lg:text-base"
+            />
             <UserNickname nickname={user.username} className="text-xs" />
           </div>
         </div>

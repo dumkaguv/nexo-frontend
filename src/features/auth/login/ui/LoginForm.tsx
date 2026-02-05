@@ -17,7 +17,10 @@ export const LoginForm = () => {
   const { t } = useTranslation()
 
   return (
-    <form onSubmit={onSubmit} className="mt-3 flex flex-col gap-5 text-start">
+    <form
+      onSubmit={onSubmit}
+      className="mt-3 flex flex-col gap-5 text-start max-lg:gap-3"
+    >
       {inputFields.map(
         ({ name, id, label, placeholder, type, autoComplete }) => {
           const inputProps = {

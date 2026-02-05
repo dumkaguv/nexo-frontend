@@ -1,4 +1,4 @@
-import { MessageSquareText, Newspaper } from 'lucide-react'
+import { MessageSquareText, Newspaper, User } from 'lucide-react'
 
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
@@ -29,11 +29,16 @@ export const Sidebar = ({ className, ...rest }: Props) => {
       name: t('messages'),
       href: paths.conversations.root,
       icon: MessageSquareText
+    },
+    {
+      name: t('profile'),
+      href: paths.user.byId(Number(user?.id)),
+      icon: User
     }
   ]
 
   return (
-    <SidebarUi className={className} {...rest}>
+    <SidebarUi className={className} bodyClassName={className} {...rest}>
       <UserAvatar
         user={user}
         isLoading={isUserLoading}

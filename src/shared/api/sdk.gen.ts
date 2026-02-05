@@ -96,6 +96,20 @@ import type {
   ProfileControllerMeResponses,
   ProfileControllerUpdateData,
   ProfileControllerUpdateResponses,
+  StoryControllerCreateData,
+  StoryControllerCreateResponses,
+  StoryControllerFindAllByUserIdData,
+  StoryControllerFindAllByUserIdResponses,
+  StoryControllerFindAllData,
+  StoryControllerFindAllResponses,
+  StoryControllerFindAllViewersData,
+  StoryControllerFindAllViewersResponses,
+  StoryControllerFindOneData,
+  StoryControllerFindOneResponses,
+  StoryControllerRemoveData,
+  StoryControllerRemoveResponses,
+  StoryControllerUpdateData,
+  StoryControllerUpdateResponses,
   SubscriptionControllerFindAllFollowersData,
   SubscriptionControllerFindAllFollowersResponses,
   SubscriptionControllerFindAllFollowingData,
@@ -848,6 +862,115 @@ export const conversationControllerFindOne = <
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/api/conversations/{id}',
     ...options
+  })
+
+export const storyControllerFindAll = <ThrowOnError extends boolean = false>(
+  options?: Options<StoryControllerFindAllData, ThrowOnError>
+) =>
+  (options?.client ?? client).get<
+    StoryControllerFindAllResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories',
+    ...options
+  })
+
+export const storyControllerCreate = <ThrowOnError extends boolean = false>(
+  options: Options<StoryControllerCreateData, ThrowOnError>
+) =>
+  (options.client ?? client).post<
+    StoryControllerCreateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
+  })
+
+export const storyControllerFindAllViewers = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<StoryControllerFindAllViewersData, ThrowOnError>
+) =>
+  (options.client ?? client).get<
+    StoryControllerFindAllViewersResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories/{id}/viewers',
+    ...options
+  })
+
+export const storyControllerFindAllByUserId = <
+  ThrowOnError extends boolean = false
+>(
+  options: Options<StoryControllerFindAllByUserIdData, ThrowOnError>
+) =>
+  (options.client ?? client).get<
+    StoryControllerFindAllByUserIdResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories/user/{userId}',
+    ...options
+  })
+
+export const storyControllerRemove = <ThrowOnError extends boolean = false>(
+  options: Options<StoryControllerRemoveData, ThrowOnError>
+) =>
+  (options.client ?? client).delete<
+    StoryControllerRemoveResponses,
+    unknown,
+    ThrowOnError
+  >({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories/{id}',
+    ...options
+  })
+
+export const storyControllerFindOne = <ThrowOnError extends boolean = false>(
+  options: Options<StoryControllerFindOneData, ThrowOnError>
+) =>
+  (options.client ?? client).get<
+    StoryControllerFindOneResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories/{id}',
+    ...options
+  })
+
+export const storyControllerUpdate = <ThrowOnError extends boolean = false>(
+  options: Options<StoryControllerUpdateData, ThrowOnError>
+) =>
+  (options.client ?? client).patch<
+    StoryControllerUpdateResponses,
+    unknown,
+    ThrowOnError
+  >({
+    responseType: 'json',
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/api/stories/{id}',
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    }
   })
 
 /**

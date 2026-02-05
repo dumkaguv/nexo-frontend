@@ -71,6 +71,7 @@ export const SubscriptionModal = ({
               searchValue={debouncedSearchValue}
               onOpenChange={onOpenChange}
               isFollowersTab
+              user={user}
             />
           </TabsContent>
 
@@ -79,6 +80,7 @@ export const SubscriptionModal = ({
               searchValue={debouncedSearchValue}
               onOpenChange={onOpenChange}
               isFollowersTab={false}
+              user={user}
             />
           </TabsContent>
         </Tabs>

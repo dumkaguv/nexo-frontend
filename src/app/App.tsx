@@ -12,4 +12,6 @@ client.setConfig({
 
 getConfigInterceptors(client.instance)
 
-export const App = () => <Providers />
+export const App = () => {
+  return <Providers />
+}

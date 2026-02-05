@@ -272,7 +272,9 @@ export default tseslint.config(
             'builtin',
             'external',
             'internal',
-            ['parent', 'sibling', 'index'],
+            'sibling',
+            'parent',
+            'index',
             'object',
             'type'
           ],

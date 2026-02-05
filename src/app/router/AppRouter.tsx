@@ -111,8 +111,10 @@ const router = createBrowserRouter([
   }
 ])
 
-export const AppRouter = () => (
-  <ErrorBoundary FallbackComponent={ErrorFallback}>
-    <RouterProvider router={router} />
-  </ErrorBoundary>
-)
+export const AppRouter = () => {
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  )
+}

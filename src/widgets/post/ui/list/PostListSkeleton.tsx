@@ -7,7 +7,7 @@ type Props = {
 } & ComponentProps<'ul'>
 
 export const PostListSkeleton = ({ count = 4, className, ...props }: Props) => (
-  <ul className={cn('flex flex-col gap-8', className)} {...props}>
+  <ul className={cn('flex flex-col gap-8 max-lg:gap-6', className)} {...props}>
     {Array.from({ length: count }).map((_, idx) => (
       <li key={idx}>
         <div className="flex animate-pulse flex-col gap-6 rounded-2xl bg-white p-4 shadow-sm dark:bg-neutral-800">

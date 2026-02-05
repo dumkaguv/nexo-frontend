@@ -1,4 +1,4 @@
-import { LogOut, MessageSquareText, Settings } from 'lucide-react'
+import { LogOut, MessageSquareText, Settings, User } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -30,6 +30,11 @@ export const HeaderAvatar = () => {
   const onCloseMenu = () => setIsOpen(false)
 
   const menuItems = [
+    {
+      icon: <User className="text-primary" />,
+      label: t('profile'),
+      to: paths.user.byId(Number(user?.id))
+    },
     {
       icon: <MessageSquareText className="text-primary" />,
       label: t('messages'),

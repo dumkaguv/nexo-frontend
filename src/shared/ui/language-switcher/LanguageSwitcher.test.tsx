@@ -20,9 +20,14 @@ vi.mock('react-i18next', async (importOriginal) => {
   }
 })
 
-vi.mock('@/shared/config', () => ({
-  i18n: { changeLanguage }
-}))
+vi.mock('@/shared/config', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/shared/config')>()
+
+  return {
+    ...actual,
+    i18n: { changeLanguage }
+  }
+})
 
 describe('LanguageSwitcher', () => {
   it('changes language when menu item is clicked', async () => {

@@ -24,9 +24,10 @@ import { ChatEditingMessage } from './ChatEditingMessage'
 import { ChatFooter } from './ChatFooter'
 import { ChatSkeleton } from './ChatSkeleton'
 
-import { useChatForm } from '../model'
 import { ChatHeader } from './header'
 import { ChatMessagesList } from './messages'
+
+import { useChatForm } from '../model'
 
 export const Chat = () => {
   const { user } = useAuthStore()
@@ -83,7 +84,7 @@ export const Chat = () => {
   }
 
   return (
-    <section className="bg-card flex h-full min-h-[85dvh] flex-1 flex-col rounded-md border">
+    <section className="bg-card flex h-full min-h-[80vh] flex-col rounded-md border max-md:min-h-[90vh]">
       <ChatHeader conversation={conversation?.data} user={userResponse?.data} />
 
       <Separator />
@@ -101,7 +102,7 @@ export const Chat = () => {
           />
         )}
 
-        <div className="mt-auto flex flex-col">
+        <div className="mt-4 flex flex-col max-lg:mt-2.5">
           <Separator />
 
           <form onSubmit={onSubmit}>

@@ -41,7 +41,7 @@ export const PostLikesList = ({ postId, search, onOpenChange }: Props) => {
   }
 
   return (
-    <Card id="liked-users-scrollable-list">
+    <Card id="liked-users-scrollable-list" className="p-2.5!">
       <InfiniteScroll
         dataLength={data?.pages?.[0]?.total ?? 0}
         next={fetchNextPage}

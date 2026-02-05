@@ -36,6 +36,7 @@ export const PostCommentEditForm = ({
       isPending={isPending}
       isEditing
       onCancelEdit={onCancelEdit}
+      toolbarClassName="mb-2"
     />
   )
 }

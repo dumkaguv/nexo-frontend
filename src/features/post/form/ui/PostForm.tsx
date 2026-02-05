@@ -17,7 +17,8 @@ import { Link } from 'react-router-dom'
 
 import { useAuthStore } from '@/entities/session'
 import { UserAvatar } from '@/entities/user'
-import { paths } from '@/shared/config'
+import { BreakpointsMax, paths } from '@/shared/config'
+import { useMaxWidth } from '@/shared/hooks'
 import { cn } from '@/shared/lib'
 import { Card, ImagePreview, TipTapEditor } from '@/shared/ui'
 import { Field, FieldError, Skeleton } from '@/shared/ui/shadcn'
@@ -64,6 +65,8 @@ export const PostForm = ({
   const { user, isUserLoading } = useAuthStore()
   const { t } = useTranslation()
   const content = useWatch({ control, name: 'content' })
+
+  const isTablet = useMaxWidth(BreakpointsMax.lg)
 
   const resetPreviews = useCallback(() => {
     setRemotePreviews(initialPreviews)
@@ -166,9 +169,12 @@ export const PostForm = ({
         <div className="flex flex-col">
           <div className="flex flex-col gap-4 sm:flex-row">
             {isUserLoading ? (
-              <Skeleton className="size-12 shrink-0 rounded-full" />
+              <Skeleton className="size-12 shrink-0 rounded-full max-lg:hidden" />
             ) : (
-              <Link to={paths.user.byId(String(user?.id))} className="h-fit">
+              <Link
+                to={paths.user.byId(String(user?.id))}
+                className="h-fit max-lg:hidden"
+              >
                 <UserAvatar
                   user={user}
                   size={48}
@@ -184,6 +190,21 @@ export const PostForm = ({
                 control={control}
                 render={({ field }) => (
                   <TipTapEditor
+                    editorBeforeChildren={
+                      isTablet && (
+                        <Link
+                          to={paths.user.byId(String(user?.id))}
+                          className="h-fit"
+                        >
+                          <UserAvatar
+                            user={user}
+                            size={48}
+                            className="size-12"
+                            isLoading={isUserLoading}
+                          />
+                        </Link>
+                      )
+                    }
                     placeholder={t('shareYourThoughts')}
                     {...field}
                   />
@@ -195,14 +216,15 @@ export const PostForm = ({
 
           <ImagePreview
             srcs={previews}
-            className="size-full"
+            className="size-30"
             maxImages={3}
             showDeleteIcon
             isPending={isPending}
             onDeleteImage={onDeleteImage}
             containerClassName={cn(
-              'grid grid-cols-2 gap-3 mt-5 w-full sm:w-[calc(100%-48px-16px)] sm:self-end sm:gap-4',
-              previews.length >= 3 && 'sm:grid-cols-3'
+              'grid gap-3 mt-5',
+              previews.length === 2 && 'grid-cols-2',
+              previews.length >= 3 && 'grid-cols-3'
             )}
           />
 

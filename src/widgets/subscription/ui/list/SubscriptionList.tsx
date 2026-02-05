@@ -11,18 +11,21 @@ import { SubscriptionListEmptySearch } from './empty-search'
 import { SubscriptionListItem } from './item'
 import { SubscriptionListSkeleton } from './skeleton'
 
+import type { ResponseUserDto } from '@/shared/api'
 import type { DialogProps } from '@radix-ui/react-dialog'
 
 type Props = {
   isFollowersTab?: boolean
   searchValue?: string
   onOpenChange?: DialogProps['onOpenChange']
+  user?: ResponseUserDto
 }
 
 export const SubscriptionList = ({
   searchValue,
   onOpenChange,
-  isFollowersTab = true
+  isFollowersTab = true,
+  user
 }: Props) => {
   const { data, isLoading, fetchNextPage, hasNextPage } = useSubscriptionList({
     isFollowersTab,
@@ -42,7 +45,12 @@ export const SubscriptionList = ({
   }
 
   if (data?.length === 0 && !isLoading) {
-    return <SubscriptionListEmpty isFollowersTab={isFollowersTab} />
+    return (
+      <SubscriptionListEmpty
+        isFollowersTab={isFollowersTab}
+        userId={user?.id}
+      />
+    )
   }
 
   return (

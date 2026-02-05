@@ -79,7 +79,7 @@ export const ImagePreview = ({
   const renderSlide = (index: number, src: string) => (
     <Tooltip key={index}>
       <TooltipContent>{t('preview')}</TooltipContent>
-      <div className="relative">
+      <div className="relative w-fit">
         <TooltipTrigger asChild>
           <Image
             src={src}
@@ -87,7 +87,7 @@ export const ImagePreview = ({
             height={100}
             onClick={() => onImageClick(index)}
             className={cn(
-              'h-20 w-24 cursor-pointer rounded-sm object-cover sm:h-25 sm:w-30',
+              'size-full cursor-pointer rounded-sm object-cover',
               className
             )}
             {...props}
@@ -115,7 +115,7 @@ export const ImagePreview = ({
 
   return (
     <>
-      <div className={cn('flex flex-wrap gap-2', containerClassName)}>
+      <div className={cn('flex w-fit flex-wrap gap-2', containerClassName)}>
         {slides.length <= maxImages ? (
           slides
             .slice(0, maxImages)
@@ -132,7 +132,9 @@ export const ImagePreview = ({
                 <button
                   type="button"
                   onClick={() => onImageClick(maxImages - 1)}
-                  className="relative m-0 size-full cursor-pointer overflow-hidden rounded-sm border-0 bg-transparent p-0"
+                  className={cn(
+                    'relative m-0 cursor-pointer overflow-hidden rounded-sm border-0 bg-transparent p-0'
+                  )}
                 >
                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                     <Typography.Text className="text-lg font-semibold text-white">
@@ -143,7 +145,7 @@ export const ImagePreview = ({
                   <Image
                     src={slides[maxImages - 1]?.src}
                     alt={`Slide ${maxImages}`}
-                    className="size-full object-cover"
+                    className={cn('size-full object-cover', className)}
                   />
                 </button>
               </TooltipTrigger>

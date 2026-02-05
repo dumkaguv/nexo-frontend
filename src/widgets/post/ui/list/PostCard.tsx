@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 
 import { UserAvatar, UserFullName } from '@/entities/user'
 import { EditPostForm } from '@/features/post'
-import { paths } from '@/shared/config'
+import { Breakpoints, paths } from '@/shared/config'
 
+import { useMinWidth } from '@/shared/hooks'
 import { cn } from '@/shared/lib'
 import { Card, DayLabel, ImagePreview, TipTapEditorPreview } from '@/shared/ui'
 
@@ -21,6 +22,8 @@ type Props = {
 export const PostCard = ({ post }: Props) => {
   const [isOpenCommentSection, setIsOpenCommentSection] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+
+  const isDesktop = useMinWidth(Breakpoints.md)
 
   const onToggleCommentSection = () => setIsOpenCommentSection((prev) => !prev)
   const onEdit = () => setIsEditing(true)
@@ -41,20 +44,20 @@ export const PostCard = ({ post }: Props) => {
 
   return (
     <Card className="flex flex-col gap-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+      <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Link to={paths.user.byId(post.user.id)}>
             <UserAvatar user={post.user} />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2 max-md:flex-col max-md:gap-0 md:items-center">
             <Link to={paths.user.byId(post.user.id)}>
               <UserFullName
                 name={post.user.profile.fullName}
-                className="text-base"
+                className="text-lg max-lg:text-lg"
               />
             </Link>
 
-            <DayLabel date={post.createdAt} />
+            <DayLabel date={post.createdAt} showIcon={isDesktop} />
           </div>
         </div>
 
@@ -67,7 +70,7 @@ export const PostCard = ({ post }: Props) => {
 
           <ImagePreview
             srcs={previewUrls}
-            maxImages={totalFiles < 3 ? totalFiles + 1 : 3}
+            maxImages={totalFiles < 4 ? totalFiles + 1 : 4}
             className="size-full max-h-80"
             containerClassName={cn(
               'grid gap-3',

@@ -25,7 +25,10 @@ export const Section = ({
     <section
       className={cn('border-foreground/20 rounded-xl border p-4', className)}
     >
-      <Typography.Title level={2} className="text-primary text-lg font-bold">
+      <Typography.Title
+        level={2}
+        className="text-primary text-lg font-bold max-lg:text-lg"
+      >
         {t(titleKey)}
       </Typography.Title>
 

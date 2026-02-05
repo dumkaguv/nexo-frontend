@@ -56,15 +56,15 @@ export const PostCommentsListItem = ({ comment, postId }: Props) => {
   return (
     <div className="flex items-start gap-2">
       <Link to={paths.user.byId(comment.user.id)}>
-        <UserAvatar user={comment.user} />
+        <UserAvatar user={comment.user} size={36} className="size-9" />
       </Link>
 
       <Card className="bg-input/25 grid w-full gap-1 px-4 py-2.5! sm:px-5">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
+        <div className="flex items-center justify-between gap-2 sm:gap-5">
           <Link to={paths.user.byId(comment.user.id)}>
             <UserFullName
               name={comment.user.profile.fullName}
-              className="text-base"
+              className="text-base max-lg:text-base"
             />
           </Link>
 

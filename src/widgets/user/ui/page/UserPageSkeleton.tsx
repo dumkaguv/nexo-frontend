@@ -8,19 +8,19 @@ export const UserPageSkeleton = ({ showMyPosts }: { showMyPosts: boolean }) => {
         <div className="flex flex-col gap-5">
           <div className="flex w-full items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <Skeleton className="size-24 rounded-full" />
+              <Skeleton className="size-24 rounded-full max-lg:size-20 max-md:size-16" />
               <div className="flex flex-col gap-2">
                 <Skeleton className="h-6 w-40" />
                 <Skeleton className="h-4 w-28" />
                 <div className="flex items-center gap-2">
-                  <Skeleton className="h-4 w-10" />
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-4 w-10" />
-                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-4 w-8" />
+                  <Skeleton className="h-4 w-18" />
+                  <Skeleton className="h-4 w-8" />
+                  <Skeleton className="h-4 w-18" />
                 </div>
               </div>
             </div>
-            <Skeleton className="h-9 w-24" />
+            <Skeleton className="h-9 w-24 max-lg:hidden" />
           </div>
 
           <Skeleton className="h-20 w-full" />

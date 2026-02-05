@@ -15,7 +15,9 @@ vi.mock('@tanstack/react-query', async (importOriginal) => {
 })
 
 vi.mock('@/shared/hooks', () => ({
-  useInvalidatePredicateQueries: () => ({ invalidateQueries: vi.fn() })
+  useInvalidatePredicateQueries: () => ({ invalidateQueries: vi.fn() }),
+  useMinWidth: () => false,
+  useMaxWidth: () => false
 }))
 
 vi.mock('@/shared/model', () => ({

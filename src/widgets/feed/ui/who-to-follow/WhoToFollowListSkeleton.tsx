@@ -16,8 +16,8 @@ export const WhoToFollowListSkeleton = ({
           <Skeleton className="size-10 rounded-full" />
 
           <div className="flex flex-col gap-1">
-            <Skeleton className="h-4 w-32 rounded" />
-            <Skeleton className="h-3 w-20 rounded" />
+            <Skeleton className="h-4 w-32 rounded max-lg:w-28" />
+            <Skeleton className="h-3 w-20 rounded max-lg:w-16" />
           </div>
         </div>
 

@@ -11,11 +11,11 @@ export type TitleProps<L extends HeadingLevel> = {
 const baseClass = 'scroll-m-20 tracking-tight font-semibold text-balance'
 
 const headingLevelClassMap: Record<HeadingLevel, string> = {
-  1: 'text-4xl font-extrabold',
-  2: 'text-3xl',
-  3: 'text-2xl',
-  4: 'text-xl',
-  5: 'text-lg',
+  1: 'text-4xl font-extrabold max-lg:text-3xl',
+  2: 'text-3xl max-lg:text-2xl',
+  3: 'text-2xl max-lg:text-xl',
+  4: 'text-xl max-lg:lg',
+  5: 'text-lg max-lg:text-base',
   6: 'text-base'
 }
 

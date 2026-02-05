@@ -17,7 +17,7 @@ export const Card = ({
 }: CardProps) => (
   <div
     className={cn(
-      'border-accent bg-card rounded-md border p-4 shadow-sm sm:p-5',
+      'border-accent bg-card rounded-md border p-5 shadow-sm max-lg:p-4 max-sm:p-3.5',
       className
     )}
     {...rest}

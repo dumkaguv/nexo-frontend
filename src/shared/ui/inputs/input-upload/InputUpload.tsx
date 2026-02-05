@@ -42,6 +42,9 @@ export const InputUpload = ({
     const files = Array.from(e.target.files)
 
     onChange?.(files)
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
   }
 
   return (

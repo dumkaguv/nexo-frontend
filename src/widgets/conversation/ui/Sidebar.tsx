@@ -10,7 +10,12 @@ import {
 } from '@/shared/api'
 import { useDebouncedValue, useWebSocket } from '@/shared/hooks'
 import { InputSearch, Typography } from '@/shared/ui'
-import { Badge, Separator, Sidebar as SidebarUi } from '@/shared/ui/shadcn'
+import {
+  Badge,
+  Separator,
+  Sidebar as SidebarUi,
+  Skeleton
+} from '@/shared/ui/shadcn'
 
 import { ConversationList } from './list'
 import { ConversationEmpty } from './list/ConversationEmpty'
@@ -83,12 +88,27 @@ export const Sidebar = () => {
   }
 
   return (
-    <SidebarUi className="w-full lg:max-w-92.5" bodyClassName="items-start">
-      <div className="flex w-full flex-col gap-5">
+    <SidebarUi
+      className="max-h-[85vh] w-full max-md:max-w-full"
+      bodyClassName="items-start "
+    >
+      <div className="flex w-full flex-col gap-5 max-lg:gap-4">
         <div className="flex items-center gap-2">
-          <Typography.Title level={3} className="text-base">
-            {t('activeChats')}
-          </Typography.Title>
+          {isLoading ? (
+            <div className="flex gap-2">
+              <Typography.Title
+                level={3}
+                className="text-base max-lg:text-base"
+              >
+                {t('activeChats')}
+              </Typography.Title>
+              <Skeleton className="size-6 rounded-full" />
+            </div>
+          ) : (
+            <Typography.Title level={3} className="text-base">
+              {t('activeChats')}
+            </Typography.Title>
+          )}
 
           {data?.pages?.[0]?.total > 0 && (
             <Badge
@@ -100,7 +120,7 @@ export const Sidebar = () => {
           )}
         </div>
 
-        <Separator className="-ml-5 w-[calc(100%+40px)]!" />
+        <Separator className="-ml-5 w-[calc(100%+40px)]! max-lg:-ml-4 max-lg:w-[calc(100%+32px)]!" />
 
         <InputSearch
           disabled={isLoading}
@@ -113,31 +133,35 @@ export const Sidebar = () => {
 
         {suggestions?.length > 0 && <Separator />}
 
-        <div className="flex flex-col gap-3">
-          {suggestions?.length > 0 && (
-            <Typography.Text>{t('suggestions')}</Typography.Text>
-          )}
+        {!isLoadingSuggestions && suggestions?.length === 0 ? null : (
+          <div className="flex flex-col gap-3">
+            {suggestions?.length > 0 && (
+              <Typography.Text>{t('suggestions')}</Typography.Text>
+            )}
 
-          {isLoadingSuggestions ? (
-            <ConversationListSkeleton />
-          ) : (
-            <div
-              id="suggestions-scrollable-list"
-              className="max-h-75 overflow-y-auto"
-            >
-              <InfiniteScroll
-                dataLength={suggestions?.length ?? 0}
-                next={fetchNextPageSuggestions}
-                hasMore={!!hasNextPageSuggestions}
-                scrollableTarget="suggestions-scrollable-list"
-                scrollThreshold={0.65}
-                loader={<ConversationListSkeleton count={3} className="mt-5" />}
+            {isLoadingSuggestions ? (
+              <ConversationListSkeleton />
+            ) : (
+              <div
+                id="suggestions-scrollable-list"
+                className="max-h-75 overflow-y-auto"
               >
-                <ConversationSuggestionList suggestions={suggestions} />
-              </InfiniteScroll>
-            </div>
-          )}
-        </div>
+                <InfiniteScroll
+                  dataLength={suggestions?.length ?? 0}
+                  next={fetchNextPageSuggestions}
+                  hasMore={!!hasNextPageSuggestions}
+                  scrollableTarget="suggestions-scrollable-list"
+                  scrollThreshold={0.65}
+                  loader={
+                    <ConversationListSkeleton count={3} className="mt-5" />
+                  }
+                >
+                  <ConversationSuggestionList suggestions={suggestions} />
+                </InfiniteScroll>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </SidebarUi>
   )

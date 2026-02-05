@@ -8,7 +8,11 @@ import { toast } from 'sonner'
 import { authControllerLoginMutation, type CreateLoginDto } from '@/shared/api'
 import { paths } from '@/shared/config'
 
-import { saveAccessToken, showApiErrors } from '@/shared/lib'
+import {
+  saveAccessToken,
+  showApiErrors,
+  useServerWarmupToast
+} from '@/shared/lib'
 
 import { createLoginFormSchema, type LoginFormSchema } from '../contracts'
 
@@ -44,6 +48,8 @@ export const useLoginForm = () => {
     },
     onError: (error) => showApiErrors(error, t('loginError'))
   })
+
+  useServerWarmupToast(isPending)
 
   const onSubmit = (data: CreateLoginDto) => loginMutate({ body: data })
 

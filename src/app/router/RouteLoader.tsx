@@ -3,11 +3,15 @@ import { useLocation, useNavigation } from 'react-router-dom'
 
 import LoadingBar, { type LoadingBarRef } from 'react-top-loading-bar'
 
+import { usePageTitle } from '@/shared/hooks'
+
 export const RouteLoader = () => {
   const ref = useRef<LoadingBarRef>(null)
   const navigation = useNavigation()
   const location = useLocation()
   const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  usePageTitle()
 
   useEffect(() => {
     if (navigation.state === 'loading') {

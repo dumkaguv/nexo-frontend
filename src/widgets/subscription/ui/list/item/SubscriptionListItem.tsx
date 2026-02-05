@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { X } from 'lucide-react'
+import { MessageSquareText, X } from 'lucide-react'
 
 import { useState, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -122,7 +122,10 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
         <UserAvatar user={data.user} />
 
         <div className="flex flex-col items-start">
-          <UserFullName name={data.user.profile.fullName} className="text-sm" />
+          <UserFullName
+            name={data.user.profile.fullName}
+            className="text-sm max-lg:text-base"
+          />
           <UserNickname nickname={data.user.username} />
         </div>
       </div>
@@ -135,7 +138,8 @@ export const SubscriptionListItem = ({ data, isFollowersTab }: Props) => {
               onClick={onSendMessage}
               loading={isFetchingConversation}
             >
-              {t('sendMessage')}
+              <MessageSquareText className="sm:hidden" />
+              <span className="max-sm:hidden">{t('sendMessage')}</span>
             </Button>
           ) : (
             <Button

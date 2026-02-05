@@ -19,7 +19,7 @@ type Props = {
 
 export const UserAvatar = ({
   user,
-  size,
+  size = 44,
   isLoading,
   showOnlineBadge = false,
   className,

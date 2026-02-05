@@ -59,7 +59,7 @@ export const PostLikesListItem = ({ like, postId, onOpenChange }: Props) => {
           <div className="flex flex-col items-start">
             <UserFullName
               name={like.user.profile?.fullName}
-              className="text-base"
+              className="text-base max-lg:text-base"
             />
             <UserNickname nickname={like.user.username} className="text-xs" />
           </div>
