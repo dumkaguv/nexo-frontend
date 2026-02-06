@@ -16,21 +16,24 @@ export const useServerWarmupToast = (isPending: boolean) => {
 
     if (isPending && !timeoutRef.current && !hasShownRef.current) {
       timeoutRef.current = window.setTimeout(() => {
-        toast.custom(() => (
-          <div className="bg-background text-foreground flex w-full flex-col gap-2 rounded-md border p-3 shadow-md">
-            <div className="text-sm">{t('serverWakingUp')}</div>
-            <a
-              href={warmupUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="text-primary text-sm font-medium underline underline-offset-2"
-            >
-              {t('checkStatus')}
-            </a>
-          </div>
-        ))
+        toast.custom(
+          () => (
+            <div className="bg-background text-foreground flex w-full flex-col gap-2 rounded-md border p-3 shadow-md">
+              <div className="text-sm">{t('serverWakingUp')}</div>
+              <a
+                href={warmupUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary text-sm font-medium underline underline-offset-2"
+              >
+                {t('checkStatus')}
+              </a>
+            </div>
+          ),
+          { duration: 8000 }
+        )
         hasShownRef.current = true
-      }, 7000)
+      }, 4500)
     }
 
     if (!isPending) {

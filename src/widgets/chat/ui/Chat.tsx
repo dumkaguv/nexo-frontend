@@ -18,6 +18,7 @@ import {
 } from '@/shared/api'
 import { paths } from '@/shared/config'
 import { useQueryUpdate, useWebSocket } from '@/shared/hooks'
+import { cn } from '@/shared/lib'
 import { Separator } from '@/shared/ui/shadcn'
 
 import { ChatEditingMessage } from './ChatEditingMessage'
@@ -84,7 +85,7 @@ export const Chat = () => {
   }
 
   return (
-    <section className="bg-card flex h-full min-h-[80vh] flex-col rounded-md border max-md:min-h-[90vh]">
+    <section className="bg-card flex h-full min-h-[80vh] flex-col rounded-md border max-md:min-h-[85vh]">
       <ChatHeader conversation={conversation?.data} user={userResponse?.data} />
 
       <Separator />
@@ -102,7 +103,12 @@ export const Chat = () => {
           />
         )}
 
-        <div className="mt-4 flex flex-col max-lg:mt-2.5">
+        <div
+          className={cn(
+            'mt-4 flex flex-col max-lg:mt-2.5',
+            !!editingMessage && 'mt-0 max-lg:mt-0'
+          )}
+        >
           <Separator />
 
           <form onSubmit={onSubmit}>

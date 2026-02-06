@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useAuthStore } from '@/entities/session'
 import { UserAvatar, UserFullName } from '@/entities/user'
+import { Breakpoints } from '@/shared/config'
+import { useMaxWidth } from '@/shared/hooks'
 import { cn } from '@/shared/lib'
 
 import { Card, DayLabel, ImagePreview, TipTapEditorPreview } from '@/shared/ui'
@@ -17,6 +19,7 @@ type Props = {
 export const PostPreview = ({ content, previews, onBack }: Props) => {
   const { user, isUserLoading } = useAuthStore()
   const { t } = useTranslation()
+  const isMobile = useMaxWidth(Breakpoints.md)
 
   const totalFiles = previews.length
 
@@ -25,10 +28,13 @@ export const PostPreview = ({ content, previews, onBack }: Props) => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
         <div className="flex items-center gap-3">
           <UserAvatar user={user} isLoading={isUserLoading} />
-          <div className="flex items-center gap-2">
-            <UserFullName name={user?.profile.fullName} className="text-base" />
+          <div className="flex items-center gap-2 max-md:flex-col max-md:gap-0">
+            <UserFullName
+              name={user?.profile.fullName}
+              className="text-base max-lg:text-lg"
+            />
 
-            <DayLabel date={new Date()} />
+            <DayLabel date={new Date()} showIcon={!isMobile} />
           </div>
         </div>
       </div>

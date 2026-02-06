@@ -36,7 +36,7 @@ export const UserPageContent = ({ userData, isLoading }: Props) => {
         <Card className="flex w-full flex-col gap-5 max-lg:gap-3">
           <MainInfo userData={userData} isLoading={isLoading} />
 
-          <StoryRail user={userData} showCreate />
+          <StoryRail user={userData} showCreate={isMe} />
         </Card>
 
         {isMe && isMobile && (

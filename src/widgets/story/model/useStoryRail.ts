@@ -8,7 +8,7 @@ import {
   storyControllerFindAllQueryKey,
   storyControllerFindAllByUserIdOptions,
   storyControllerFindAllByUserIdQueryKey,
-  storyControllerFindOne,
+  storyControllerFindOneOptions,
   type ResponseStoryDto,
   type ResponseUserDto,
   type ResponseUserProfileDto,
@@ -207,11 +207,19 @@ export const useStoryRail = ({ user, mode: modeProp }: Props) => {
       return
     }
 
-    markStoryViewed(storyItem.id)
+    const storyId = storyItem.id
 
-    void storyControllerFindOne({
-      path: { id: String(storyItem.id) }
-    }).catch(() => undefined)
+    setTimeout(() => {
+      markStoryViewed(storyId)
+
+      void queryClient
+        .fetchQuery({
+          ...storyControllerFindOneOptions({
+            path: { id: String(storyId) }
+          })
+        })
+        .catch(() => undefined)
+    }, 0)
   }
 
   return {

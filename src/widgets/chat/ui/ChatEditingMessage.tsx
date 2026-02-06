@@ -30,7 +30,7 @@ export const ChatEditingMessage = ({
   }
 
   return (
-    <div className="flex flex-col gap-3 border-t px-4 py-2 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex justify-between gap-3 border-t px-4 py-2 max-lg:px-3">
       <div className="flex gap-3">
         <Pencil size={16} className="mt-0.5" />
 
@@ -43,7 +43,7 @@ export const ChatEditingMessage = ({
         </div>
       </div>
 
-      <Button variant="ghost" onClick={onCancelEdit}>
+      <Button variant="ghost" onClick={onCancelEdit} className="max-lg:size-7">
         <X size={16} />
       </Button>
     </div>
