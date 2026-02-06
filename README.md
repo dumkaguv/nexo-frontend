@@ -26,10 +26,6 @@ Frontend for the Nexo social platform (posts, conversations, and connections). B
 
 ### Settings
 
-![Chat](docs/screenshots/chat.png)
-
-### Settings
-
 ![Settings](docs/screenshots/settings.png)
 
 ## Tech Stack
