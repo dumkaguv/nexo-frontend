@@ -13,9 +13,10 @@ export const ConversationPage = () => {
   useConversationsWebsocket()
 
   const isNewConversationPath = pathname === paths.conversations.new
+  const isChatRoute = !!id || isNewConversationPath
 
-  const showSidebar = !isMobile || !id
-  const showChat = !isMobile || !!id
+  const showSidebar = !isMobile || !isChatRoute
+  const showChat = !isMobile || isChatRoute
 
   return (
     <div className="flex items-stretch gap-5 max-lg:gap-3">
